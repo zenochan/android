@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 按钮默认tint-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:color="@color/md.grey400" android:state_enabled="false"/>
+  <item android:color="@color/z.white_a87" android:state_pressed="true"/>
+  <item android:color="@color/z.white"/>
+</selector>

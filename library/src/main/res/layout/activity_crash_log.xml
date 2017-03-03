@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  style="@style/layout.full"
+  android:background="@color/z.white"
+  >
+
+  <name.zeno.android.widget.SimpleActionbar
+    android:id="@+id/layout_actionbar"
+    style="@style/layout.fullWidth"
+    app:actionDrawable="@mipmap/ic_send"
+    app:actionEnable="true"
+    app:preTextBackgroundTint="@color/z.white"
+    app:textColorTitle="@color/z.white"
+    app:titleText="程序奔溃"
+    />
+
+  <android.support.v7.widget.AppCompatTextView
+    style="@style/layout.fullWidth"
+    android:background="@color/md.grey100"
+    android:padding="16dp"
+    android:text="@string/string_crash_log_tip"
+    android:textColor="@color/z.black_a54"
+    android:textSize="@dimen/md.textSubhead"
+    />
+
+  <android.support.v4.widget.NestedScrollView
+    style="@style/layout.fullWidth"
+    android:background="@color/md.grey100"
+    android:padding="16dp"
+    >
+
+    <android.support.v7.widget.AppCompatTextView
+      android:id="@+id/tv_crash_log"
+      style="@style/layout.fullWidth"
+      android:textColor="@color/z.black_a26"
+      android:textSize="@dimen/md.textCaption"
+      />
+  </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

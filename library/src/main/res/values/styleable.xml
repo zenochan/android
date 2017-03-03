@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <attr name="drawableTint" format="color"/>
+  <attr name="drawableTintMode" format="integer"/>
+  <attr name="compoundDrawableTint" format="color"/>
+  <attr name="compoundDrawableTintMode" format="integer"/>
+  <attr name="drawableTop" format="reference"/>
+  <attr name="textLabel" format="string"/>
+  <!--<attr name="backgroundTint" format="color"/>-->
+  <!--<attr name="backgroundTintMode" format="integer"/>-->
+
+  <declare-styleable name="ScrollTextView">
+    <attr name="textColor" format="color"/>
+    <attr name="textSize" format="dimension"/>
+  </declare-styleable>
+
+  <declare-styleable name="SimpleActionbar">
+    <attr name="preTextBackgroundTint" format="color"/>
+    <attr name="preText" format="string"/>
+    <attr name="preEnable" format="boolean"/>
+    <attr name="titleText" format="string"/>
+    <attr name="textColorTitle" format="color"/>
+    <attr name="actionText" format="string"/>
+    <attr name="textColorAction" format="color"/>
+    <attr name="actionEnable" format="boolean"/>
+    <attr name="actionDrawable" format="reference"/>
+    <attr name="actionDrawableTint" format="color"/>
+  </declare-styleable>
+
+  <declare-styleable name="ZTextView">
+    <attr name="backgroundTint"/>
+    <attr name="backgroundTintMode"/>
+    <attr name="compoundDrawableTint"/>
+    <attr name="compoundDrawableTintMode"/>
+
+    <!--整体drawable的宽度-->
+    <attr name="drawableWidth" format="dimension"/>
+    <!--整体drawable的高度-->
+    <attr name="drawableHeight" format="dimension"/>
+    <attr name="LeftDrawableWidth" format="dimension"/>
+    <attr name="LeftDrawableHeight" format="dimension"/>
+    <attr name="TopDrawableWidth" format="dimension"/>
+    <attr name="TopDrawableHeight" format="dimension"/>
+    <attr name="RightDrawableWidth" format="dimension"/>
+    <attr name="RightDrawableHeight" format="dimension"/>
+    <attr name="BottomDrawableWidth" format="dimension"/>
+    <attr name="BottomDrawableHeight" format="dimension"/>
+  </declare-styleable>
+
+  <declare-styleable name="ZImageView">
+    <attr name="backgroundTint"/>
+    <attr name="backgroundTintMode"/>
+    <attr name="drawableTint"/>
+    <attr name="drawableTintMode"/>
+    <attr name="compoundDrawableTint"/>
+    <attr name="compoundDrawableTintMode"/>
+    <attr name="rate" format="float"/>
+    <attr name="android:src"/>
+  </declare-styleable>
+
+  <declare-styleable name="ZButton">
+    <attr name="backgroundTint"/>
+    <attr name="backgroundTintMode"/>
+  </declare-styleable>
+
+  <declare-styleable name="CircleImageView">
+    <attr name="circle_color" format="color"/>
+    <attr name="mask_color" format="color"/>
+  </declare-styleable>
+
+  <declare-styleable name="FormCell">
+    <attr name="labelDrawableLeft" format="reference"/>
+    <attr name="labelDrawableTint" format="color"/>
+    <attr name="labelDrawablePadding" format="dimension"/>
+    <attr name="labelText" format="string"/>
+    <attr name="contentHint" format="string"/>
+    <attr name="contentText" format="string"/>
+    <attr name="contentTextColor" format="color"/>
+    <attr name="nextEnable" format="boolean"/>
+    <attr name="nextTint" format="color"/>
+    <attr name="srcNext" format="reference"/>
+  </declare-styleable>
+
+  <declare-styleable name="PreviewBorderView">
+    <attr name="tipText" format="string"/>
+    <attr name="tipTextColor" format="color"/>
+    <attr name="tipTextSize" format="dimension"/>
+  </declare-styleable>
+
+  <declare-styleable name="BadgeView">
+    <attr name="drawableTop"/>
+    <attr name="compoundDrawableTint"/>
+    <attr name="textLabel"/>
+  </declare-styleable>
+
+  <declare-styleable name="ExpandableTextLayout">
+    <attr name="maxCollapsedLines" format="integer"/>
+    <attr name="animDuration" format="integer"/>
+    <attr name="animAlphaStart" format="float"/>
+    <attr name="expandDrawable" format="reference"/>
+    <attr name="collapseDrawable" format="reference"/>
+  </declare-styleable>
+
+</resources>

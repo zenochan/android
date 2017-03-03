@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/layout.full"
+  >
+
+  <View
+    android:id="@+id/view_anchor"
+    style="@style/layout.anchor"
+    />
+
+  <name.zeno.android.widget.ZImageView
+    android:id="@+id/iv_empty_default"
+    style="@style/layout.wrap"
+    android:layout_above="@+id/view_anchor"
+    android:layout_centerInParent="true"
+    android:layout_marginBottom="16dp"
+    android:src="@mipmap/ic_status_empty"
+    />
+
+  <TextView
+    android:id="@+id/tv_empty_default"
+    style="@style/zeno.text.caption"
+    android:layout_below="@id/view_anchor"
+    android:gravity="center"
+    android:lineSpacingExtra="4sp"
+    android:text="这里啥也没有"
+    android:textSize="@dimen/md.textBody"
+    />
+
+</RelativeLayout>

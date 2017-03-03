@@ -1,0 +1,32 @@
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/layout.full"
+  android:background="@android:color/black"
+  >
+
+  <name.zeno.android.widget.ClipImageLayout
+    android:id="@+id/layout_clip_img"
+    style="@style/layout.full"
+    />
+
+  <Button
+    android:id="@+id/btn_cancel"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:layout_alignParentBottom="true"
+    android:layout_margin="64dp"
+    android:alpha="0.87"
+    android:background="@mipmap/btn_cancel"
+    />
+
+  <Button
+    android:id="@+id/btn_submit"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:layout_margin="64dp"
+    android:background="@mipmap/btn_ok"
+    />
+
+</RelativeLayout>

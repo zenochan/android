@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 按钮文字颜色-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:color="@color/z.black_a54" android:state_enabled="false"/>
+  <item android:color="@color/zenoColorPrimaryA54" android:state_pressed="true"/>
+  <item android:color="?attr/colorPrimary"/>
+</selector>

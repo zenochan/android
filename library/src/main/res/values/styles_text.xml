@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="zeno.text"/>
+
+  <style name="zeno.text.title" parent="layout.fullWidth">
+    <item name="android:maxLines">1</item>
+    <item name="android:textColor">@color/z.black_a87</item>
+    <item name="android:textSize">@dimen/md.textSubhead</item>
+    <item name="android:paddingLeft">8dp</item>
+    <item name="android:paddingRight">8dp</item>
+    <item name="android:paddingTop">4dp</item>
+    <item name="android:paddingBottom">4dp</item>
+    <item name="android:ellipsize">end</item>
+  </style>
+
+  <style name="zeno.text.content" parent="layout.fullWidth">
+    <item name="android:textColor">@color/z.black_a54</item>
+    <item name="android:textSize">@dimen/md.textBody</item>
+    <item name="android:paddingLeft">8dp</item>
+    <item name="android:paddingRight">8dp</item>
+    <item name="android:paddingTop">4dp</item>
+    <item name="android:paddingBottom">4dp</item>
+  </style>
+
+  <style name="zeno.text.caption" parent="layout.fullWidth">
+    <item name="android:textColor">@color/md.grey400</item>
+    <item name="android:textSize">@dimen/md.textCaption</item>
+    <item name="android:paddingLeft">8dp</item>
+    <item name="android:paddingRight">8dp</item>
+  </style>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="BigBangLayout">
+    <attr name="itemSpace" format="dimension"/>
+    <attr name="lineSpace" format="dimension"/>
+    <attr name="textSize"/>
+  </declare-styleable>
+
+  <dimen name="big_bang_default_item_space">0dp</dimen>
+  <dimen name="big_bang_default_line_space">8dp</dimen>
+  <dimen name="big_bang_default_text_size">14sp</dimen>
+  <dimen name="big_bang_action_bar_height">42dp</dimen>
+
+  <item name="bigBang_$$" type="id"/>
+
+  <string name="accessibility_des">打开右上角开关，在弹出的对话框中点击 `确认`。\n\n开启后，在微信聊天页面中点击文字聊天气泡就会打开 BigBang 页面。</string>
+  <string name="search">搜索</string>
+  <string name="no_result">没有数据</string>
+</resources>

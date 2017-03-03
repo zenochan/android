@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="md.textDisplay4">112sp</dimen>
+  <dimen name="md.textDisplay3">56sp</dimen>
+  <dimen name="md.textDisplay2">45sp</dimen>
+  <dimen name="md.textDisplay1">34sp</dimen>
+  <dimen name="md.textHeadLine">24sp</dimen>
+  <dimen name="md.textTitle">20sp</dimen>
+  <dimen name="md.textSubhead">16sp</dimen>
+  <dimen name="md.textBody">14sp</dimen>
+  <dimen name="md.textCaption">12sp</dimen>
+  <dimen name="md.small">10sp</dimen>
+  <dimen name="md.textMenu">14sp</dimen>
+  <dimen name="md.textButton">14sp</dimen>
+</resources>

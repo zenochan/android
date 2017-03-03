@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="DefaultTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/zenoColorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/zenoColorPrimary</item>
+  </style>
+
+  <style name="DefaultTheme.Transparent">
+    <item name="android:windowBackground">@android:color/transparent</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+  </style>
+</resources>

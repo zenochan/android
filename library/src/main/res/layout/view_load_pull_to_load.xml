@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/layout.fullWidth"
+  >
+
+  <TextView
+    style="@style/layout.fullWidth"
+    android:gravity="center"
+    android:padding="8dp"
+    android:text="上来加载更多"
+    android:textColor="@color/z.black_a54"
+    android:textSize="@dimen/md.textCaption"
+    />
+</LinearLayout>
