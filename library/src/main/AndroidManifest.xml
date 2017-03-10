@@ -8,5 +8,10 @@
       android:name="name.zeno.android.presenter.bigbang.BigBangActivity"
       android:screenOrientation="portrait"
       />
+
+    <meta-data
+      android:name="name.zeno.android.third.glide.SizableUrlGlideModule"
+      android:value="GlideModule"
+      />
   </application>
 </manifest>
