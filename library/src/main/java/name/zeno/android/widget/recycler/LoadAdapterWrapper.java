@@ -25,7 +25,7 @@ import name.zeno.android.widget.adapter.item.ItemCreator;
  * @since 16/6/28
  */
 public class LoadAdapterWrapper extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements
-    RecyclerLoadMoreAdapter
+                                                                                      RecyclerLoadMoreAdapter
 {
   /**
    * view的基本类型，这里只有头/底部/普通，在子类中可以扩展

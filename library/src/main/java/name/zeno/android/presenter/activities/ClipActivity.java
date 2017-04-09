@@ -93,7 +93,7 @@ public class ClipActivity extends ZActivity
     loadingDialog.show();
     Observable.create((ObservableOnSubscribe<String>) subscriber -> {
       Bitmap bitmap = mClipImageLayout.clip();
-      bitmap = ZBitmap.zoom(bitmap, 300, 300);
+      bitmap = ZBitmap.zoom(bitmap, 500, 500);
       String fileName = +System.currentTimeMillis() + ".jpg";
       ZBitmap.savePhotoToSDCard(bitmap, cachePath, fileName);
       String filePath = cachePath + fileName;

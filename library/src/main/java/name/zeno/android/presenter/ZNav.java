@@ -2,6 +2,7 @@ package name.zeno.android.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.os.Process;
 import android.support.v4.app.Fragment;
 
@@ -20,9 +21,24 @@ public class ZNav
     fragment.startActivity(intent);
   }
 
+
+  public static void nav(Fragment fragment, Class<? extends Activity> activityClass, Parcelable data)
+  {
+    Intent intent = new Intent(fragment.getContext(), activityClass);
+    Extra.setData(intent, data);
+    fragment.startActivity(intent);
+  }
+
   public static void nav(Activity activity, Class<? extends Activity> activityClass)
   {
     Intent intent = new Intent(activity, activityClass);
+    activity.startActivity(intent);
+  }
+
+  public static void nav(Activity activity, Class<? extends Activity> activityClass, Parcelable data)
+  {
+    Intent intent = new Intent(activity, activityClass);
+    Extra.setData(intent, data);
     activity.startActivity(intent);
   }
 

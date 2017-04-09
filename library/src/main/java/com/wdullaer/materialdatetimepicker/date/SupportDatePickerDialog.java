@@ -61,9 +61,7 @@ import name.zeno.android.util.R;
  * 支持 support fragment
  * Dialog allowing users to select a date.
  */
-public class SupportDatePickerDialog extends DialogFragment implements
-    OnClickListener,
-    DatePickerController
+public class SupportDatePickerDialog extends DialogFragment implements OnClickListener, DatePickerController
 {
 
   private static final String TAG = "DatePickerDialog";
@@ -358,7 +356,8 @@ public class SupportDatePickerDialog extends DialogFragment implements
     return view;
   }
 
-  @NonNull @Override
+  @NonNull
+  @Override
   public Dialog onCreateDialog(Bundle savedInstanceState)
   {
     Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -998,7 +997,6 @@ public class SupportDatePickerDialog extends DialogFragment implements
 
     if (isAfterMax(calendar)) {
       calendar.setTimeInMillis(mMaxDate.getTimeInMillis());
-      return;
     }
   }
 

@@ -9,6 +9,12 @@
       android:screenOrientation="portrait"
       />
 
+    <activity
+      android:name="name.zeno.android.presenter.activities.UpdateActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/DefaultTheme.Transparent"
+      />
+
     <meta-data
       android:name="name.zeno.android.third.glide.SizableUrlGlideModule"
       android:value="GlideModule"

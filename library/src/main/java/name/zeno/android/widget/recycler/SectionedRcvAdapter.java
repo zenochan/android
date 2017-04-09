@@ -30,7 +30,7 @@ import name.zeno.android.widget.adapter.item.SectionItem;
  * RecyclerView. Each section can have an arbitrary number of items.
  */
 public abstract class SectionedRcvAdapter<S extends Section<I>, I> extends
-    CommonRcvAdapter<S> implements ISectionedRcvAdapter
+                                                                   CommonRcvAdapter<S> implements ISectionedRcvAdapter
 {
 
   public static final int TYPE_SECTION_HEADER = 0xf100;

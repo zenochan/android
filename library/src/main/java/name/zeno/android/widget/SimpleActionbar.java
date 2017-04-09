@@ -4,18 +4,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.orhanobut.logger.Logger;
 
 import lombok.Setter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.util.R;
+import name.zeno.android.util.ZDimen;
 
 /**
  * Create Date: 16/6/15
@@ -23,15 +31,17 @@ import name.zeno.android.util.R;
  * @author 陈治谋 (513500085@qq.com)
  */
 @SuppressWarnings("unused")
-public class SimpleActionbar extends AppBarLayout implements View.OnClickListener
+public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListener
 {
 
-  @Setter private Action0 onClickPre;
-  @Setter private Action0 onClickAction;
+  @Setter
+  private Action0 onClickPre;
+  @Setter
+  private Action0 onClickAction;
 
   private ZTextView preTv;
   private TextView  titleTv;
-  private ZTextView  actionTv;
+  private ZTextView actionTv;
 
   public SimpleActionbar(Context context)
   {
@@ -94,7 +104,8 @@ public class SimpleActionbar extends AppBarLayout implements View.OnClickListene
     return this;
   }
 
-  @Override public void onClick(View view)
+  @Override
+  public void onClick(View view)
   {
     int i = view.getId();
     if (i == R.id.tv_pre) {
@@ -107,7 +118,6 @@ public class SimpleActionbar extends AppBarLayout implements View.OnClickListene
       }
     }
   }
-
 
   private void initAttrs(Context context, AttributeSet attrs)
   {
@@ -134,6 +144,8 @@ public class SimpleActionbar extends AppBarLayout implements View.OnClickListene
 
     if (ta.hasValue(R.styleable.SimpleActionbar_titleText)) {
       titleTv.setText(ta.getString(R.styleable.SimpleActionbar_titleText));
+    } else if (isInEditMode()) {
+      titleTv.setText("app:titleText");
     }
 
     if (ta.hasValue(R.styleable.SimpleActionbar_textColorTitle)) {

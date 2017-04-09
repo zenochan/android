@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
   <attr name="drawableTint" format="color"/>
   <attr name="drawableTintMode" format="integer"/>
   <attr name="compoundDrawableTint" format="color"/>
@@ -15,7 +14,7 @@
     <attr name="textSize" format="dimension"/>
   </declare-styleable>
 
-  <declare-styleable name="SimpleActionbar">
+  <declare-styleable name="SimpleActionbar" parent="AppBarLayout">
     <attr name="preTextBackgroundTint" format="color"/>
     <attr name="preText" format="string"/>
     <attr name="preEnable" format="boolean"/>
@@ -55,9 +54,10 @@
     <attr name="drawableTintMode"/>
     <attr name="compoundDrawableTint"/>
     <attr name="compoundDrawableTintMode"/>
-    <attr name="rate" format="float"/>
+    <attr name="rate"/>
     <attr name="android:src"/>
   </declare-styleable>
+
 
   <declare-styleable name="ZButton">
     <attr name="backgroundTint"/>
@@ -100,6 +100,11 @@
     <attr name="animAlphaStart" format="float"/>
     <attr name="expandDrawable" format="reference"/>
     <attr name="collapseDrawable" format="reference"/>
+  </declare-styleable>
+
+
+  <declare-styleable name="RateLayout" parent="FrameLayout">
+    <attr name="rate" format="float"/>
   </declare-styleable>
 
 </resources>

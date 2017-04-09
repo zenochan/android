@@ -3,6 +3,7 @@ package name.zeno.android.presenter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -14,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import lombok.Getter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action2;
 import name.zeno.android.presenter.activities.AutoHideIMActivity;
+import name.zeno.android.system.ZStatusBar;
 import name.zeno.android.third.rxjava.RxActivityResult;
 
 /**
@@ -42,7 +45,8 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
 
   private Dialog loadingDialog;
 
-  @Getter private boolean afterSaveInstanceState = false;
+  @Getter
+  private boolean afterSaveInstanceState = false;
 
   private final List<LifecycleListener> listeners = new ArrayList<>();
 
@@ -53,7 +57,8 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
     TAG = getClass().getSimpleName();
   }
 
-  @Override public boolean isDestroyed()
+  @Override
+  public boolean isDestroyed()
   {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
       return super.isDestroyed();
@@ -84,33 +89,59 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
     }
   }
 
-  @Override public void setContentView(@LayoutRes int layoutResID)
+  @Override
+  public void setContentView(@LayoutRes int layoutResID)
   {
     super.setContentView(layoutResID);
     onViewCreated();
   }
 
-  @Override public void setContentView(View view)
+  @Override
+  public void setContentView(View view)
   {
     super.setContentView(view);
     onViewCreated();
   }
 
-  @Override public void setContentView(View view, ViewGroup.LayoutParams params)
+  @Override
+  public void setContentView(View view, ViewGroup.LayoutParams params)
   {
     super.setContentView(view, params);
     onViewCreated();
   }
 
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState)
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
     for (LifecycleListener listener : listeners) {
       listener.onCreate();
     }
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      Window window = getWindow();
+      window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+      window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+      window.setStatusBarColor(Color.TRANSPARENT);
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      Window window = getWindow();
+      window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+      window.getDecorView().setFitsSystemWindows(true);
+    }
+
   }
 
-  @Override protected void onResume()
+  @Override protected void onActivityResult(int requestCode, int resultCode, Intent data)
+  {
+    super.onActivityResult(requestCode, resultCode, data);
+    for (LifecycleListener listener : listeners) {
+      listener.onActivityResult(requestCode,resultCode,data);
+    }
+  }
+
+  @Override
+  protected void onResume()
   {
     super.onResume();
     for (LifecycleListener listener : listeners) {
@@ -119,7 +150,8 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
     afterSaveInstanceState = false;
   }
 
-  @Override protected void onPause()
+  @Override
+  protected void onPause()
   {
     super.onPause();
     if (loadingDialog != null) {
@@ -128,13 +160,15 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
     }
   }
 
-  @Override protected void onSaveInstanceState(Bundle outState)
+  @Override
+  protected void onSaveInstanceState(Bundle outState)
   {
     super.onSaveInstanceState(outState);
     afterSaveInstanceState = true;
   }
 
-  @Override protected void onDestroy()
+  @Override
+  protected void onDestroy()
   {
     super.onDestroy();
     isDestroyed = true;

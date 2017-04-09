@@ -32,6 +32,16 @@ public class ZString
     return !isEmpty(str);
   }
 
+  public static int length(String s)
+  {
+    return s == null ? 0 : s.length();
+  }
+
+  public static int trimLength(String s)
+  {
+    return s == null ? 0 : s.trim().length();
+  }
+
   public static String encryptPhone(String phone)
   {
     if (phone == null)

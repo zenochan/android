@@ -17,6 +17,8 @@ import android.widget.EditText;
  */
 public abstract class AutoHideIMActivity extends ZLogActivity
 {
+  private View lastFocus;
+
   @Override public boolean dispatchTouchEvent(MotionEvent ev)
   {
     boolean eventConsumed;
@@ -42,6 +44,12 @@ public abstract class AutoHideIMActivity extends ZLogActivity
   {
     enableRootViewFocus();
     if (v != null && v instanceof EditText) {
+
+      if (lastFocus != null && lastFocus != v) {
+        lastFocus = v;
+        return false;
+      }
+
       int[] leftTop = {0, 0};
       //获取输入框当前的location位置
       v.getLocationInWindow(leftTop);

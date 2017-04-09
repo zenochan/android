@@ -4,7 +4,6 @@ import android.os.NetworkOnMainThreadException;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONException;
-import com.jakewharton.retrofit2.adapter.rxjava2.HttpException;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -14,6 +13,7 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import name.zeno.android.exception.ZException;
 import name.zeno.android.listener.Action1;
+import retrofit2.HttpException;
 
 /**
  * 统一处理Exception
@@ -39,7 +39,12 @@ public class ZObserver<T> implements Observer<T>
     } else if (e instanceof ConnectException) {
       be = new ZException(ZException.ERR_CONNECT_FAILED, "网络连接失败", e);
     } else if (e instanceof HttpException) {
-      be = new ZException(ZException.ERR_NOT_FOUND, "未找到网页", e);
+      int code = ((HttpException) e).code();
+      if (code == 500) {
+        be = new ZException(ZException.ERR_SERVICE, "服务器繁忙", e);
+      } else {
+        be = new ZException(ZException.ERR_SERVICE, "服务器繁忙[" + code + "]", e);
+      }
     } else if (e instanceof ZException) {
       be = (ZException) e;
     } else {
@@ -47,23 +52,26 @@ public class ZObserver<T> implements Observer<T>
     }
     Log.w(TAG, e.getMessage(), e);
 
-    onBmError(be);
-    onComplete();
+    handleError(be);
   }
 
-  public void onBmError(ZException e) {}
+  public void handleError(ZException e) {}
 
-  @Override public void onSubscribe(Disposable d) { }
+  @Override
+  public void onSubscribe(Disposable d) { }
 
-  @Override public void onNext(T value) { }
+  @Override
+  public void onNext(T value) { }
 
-  @Override public void onComplete() { }
+  @Override
+  public void onComplete() { }
 
   public static <T> ZObserver<T> next(Action1<T> next)
   {
     return new ZObserver<T>()
     {
-      @Override public void onNext(T value)
+      @Override
+      public void onNext(T value)
       {
         super.onNext(value);
         next.call(value);
