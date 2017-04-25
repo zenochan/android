@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  style="@style/layout.full"
+  >
+
+  <name.zeno.android.widget.SimpleActionbar
+    style="@style/layout.fullWidth"
+    app:preEnable="true"
+    app:titleText="形状"
+    />
+
+</LinearLayout>

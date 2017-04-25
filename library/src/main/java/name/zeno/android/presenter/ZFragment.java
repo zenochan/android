@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wdullaer.materialdatetimepicker.date.SupportDatePickerDialog;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import name.zeno.android.listener.Action1;
 import name.zeno.android.listener.Action2;
 import name.zeno.android.third.rxjava.RxActivityResult;
 import name.zeno.android.util.ZLog;
@@ -156,8 +161,39 @@ public abstract class ZFragment extends ToastFragment implements LifeCycleObserv
     getActivity().finish();
   }
 
+  public void showCalender(Calendar min, Calendar max, Action1<Calendar> next)
+  {
+    Calendar today = Calendar.getInstance();
+    int      y     = today.get(Calendar.YEAR);
+    int      m     = today.get(Calendar.MONTH);
+    int      d     = today.get(Calendar.DAY_OF_MONTH);
+
+    SupportDatePickerDialog dialog = SupportDatePickerDialog.newInstance(y, m, d, next);
+    dialog.setMinDate(min);
+    dialog.setMaxDate(max);
+    dialog.show(getFragmentManager(), "date_picker_dialog");
+  }
+
+  /**
+   * @deprecated use {@link #startActivityForResult(Class, Action2)} or {@link #startActivityForResult(Class, Parcelable, Action2)} instead
+   */
   public void startActivityForResult(Intent intent, Action2<Boolean, Intent> onResult)
   {
     activityResult.startActivityForResult(intent, onResult);
+  }
+
+  public void startActivityForResult(Class<? extends Activity> clazz, Action2<Boolean, Intent> next)
+  {
+    startActivityForResult(clazz, null, next);
+  }
+
+
+  public void startActivityForResult(Class<? extends Activity> clazz, Parcelable data, Action2<Boolean, Intent> next)
+  {
+    Intent intent = new Intent(getContext(), clazz);
+    if (data != null) {
+      Extra.setData(intent, data);
+    }
+    activityResult.startActivityForResult(intent, next);
   }
 }

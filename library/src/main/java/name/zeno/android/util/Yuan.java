@@ -1,5 +1,7 @@
 package name.zeno.android.util;
 
+import android.annotation.SuppressLint;
+
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/11/18.
@@ -30,5 +32,15 @@ public class Yuan
       value = "￥" + value;
     }
     return value;
+  }
+
+  @SuppressLint("DefaultLocale") public static String big(double value)
+  {
+    String fmt = "%.02f";
+    if (value > 10000) {
+      value /= 10000D;
+      fmt += " 万";
+    }
+    return String.format(fmt, value);
   }
 }

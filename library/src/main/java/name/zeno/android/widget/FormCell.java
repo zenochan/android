@@ -5,11 +5,13 @@ import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Dimension;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,6 +22,7 @@ import lombok.Getter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.util.R;
 import name.zeno.android.util.R2;
+import name.zeno.android.util.ZDimen;
 
 
 /**
@@ -35,6 +38,8 @@ public class FormCell extends LinearLayout
   @Getter @BindView(R2.id.tv_label)   ZTextView         labelTv;
   @Getter @BindView(R2.id.et_content) AppCompatTextView contentTv;
   @Getter @BindView(R2.id.iv_next)    ZImageView        nextIv;
+
+  @ColorInt int colorLabelText = 0;
 
   public FormCell(Context context)
   {
@@ -158,6 +163,16 @@ public class FormCell extends LinearLayout
     } else {
       nextIv.setSupportDrawableTintList(new ColorStateList(new int[][]{{}},
           new int[]{Color.parseColor("#9e9e9e")}));
+    }
+
+    if (ta.hasValue(R.styleable.FormCell_textColorLabel)) {
+      this.colorLabelText = ta.getColor(R.styleable.FormCell_textColorLabel, this.colorLabelText);
+      labelTv.setTextColor(this.colorLabelText);
+    }
+
+    if (ta.hasValue(R.styleable.FormCell_textSizeLabel)) {
+      int dimen = ta.getDimensionPixelSize(R.styleable.FormCell_textSizeLabel, 0);
+      labelTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
     }
 
     nextIv.setVisibility(ta.getBoolean(R.styleable.FormCell_nextEnable, true) ? VISIBLE : INVISIBLE);

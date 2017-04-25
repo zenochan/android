@@ -47,7 +47,7 @@
     <attr name="BottomDrawableHeight" format="dimension"/>
   </declare-styleable>
 
-  <declare-styleable name="ZImageView">
+  <declare-styleable name="ZImageView" parent="AppCompatImageView">
     <attr name="backgroundTint"/>
     <attr name="backgroundTintMode"/>
     <attr name="drawableTint"/>
@@ -64,9 +64,13 @@
     <attr name="backgroundTintMode"/>
   </declare-styleable>
 
-  <declare-styleable name="CircleImageView">
+  <declare-styleable name="CircleImageView" parent="ImageView">
     <attr name="circle_color" format="color"/>
     <attr name="mask_color" format="color"/>
+    <attr name="clipMode" format="enum">
+      <enum name="overdraw" value="0"/>
+      <enum name="clip" value="1"/>
+    </attr>
   </declare-styleable>
 
   <declare-styleable name="FormCell">
@@ -74,6 +78,8 @@
     <attr name="labelDrawableTint" format="color"/>
     <attr name="labelDrawablePadding" format="dimension"/>
     <attr name="labelText" format="string"/>
+    <attr name="textColorLabel" format="color"/>
+    <attr name="textSizeLabel" format="dimension"/>
     <attr name="contentHint" format="string"/>
     <attr name="contentText" format="string"/>
     <attr name="contentTextColor" format="color"/>

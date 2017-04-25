@@ -4,26 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.StringRes;
-import android.support.design.widget.AppBarLayout;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
-
+import lombok.Getter;
 import lombok.Setter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.util.R;
-import name.zeno.android.util.ZDimen;
 
 /**
  * Create Date: 16/6/15
@@ -33,7 +25,6 @@ import name.zeno.android.util.ZDimen;
 @SuppressWarnings("unused")
 public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListener
 {
-
   @Setter
   private Action0 onClickPre;
   @Setter
@@ -42,6 +33,8 @@ public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListen
   private ZTextView preTv;
   private TextView  titleTv;
   private ZTextView actionTv;
+  @Getter
+  private View      appbar;
 
   public SimpleActionbar(Context context)
   {
@@ -51,10 +44,10 @@ public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListen
   public SimpleActionbar(Context context, AttributeSet attrs)
   {
     super(context, attrs);
-    View v = LayoutInflater.from(context).inflate(R.layout.view_simple_actionbar, this);
-    preTv = (ZTextView) v.findViewById(R.id.tv_pre);
-    titleTv = (TextView) v.findViewById(R.id.tv_title);
-    actionTv = (ZTextView) v.findViewById(R.id.tv_action);
+    appbar = LayoutInflater.from(context).inflate(R.layout.view_simple_actionbar, this);
+    preTv = (ZTextView) appbar.findViewById(R.id.tv_pre);
+    titleTv = (TextView) appbar.findViewById(R.id.tv_title);
+    actionTv = (ZTextView) appbar.findViewById(R.id.tv_action);
     preTv.setOnClickListener(this);
     actionTv.setOnClickListener(this);
 

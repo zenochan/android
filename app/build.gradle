@@ -1,8 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
   compileSdkVersion 25
   buildToolsVersion "25.0.2"
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+
   defaultConfig {
     applicationId "demo.android.zeno.name.zenokit"
     minSdkVersion 15
@@ -21,13 +28,9 @@ android {
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-//  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-//    exclude group: 'com.android.support', module: 'support-annotations'
-//  })
-  compile project(":library");
 
+  compile project(":library");
+  compile 'com.android.support.constraint:constraint-layout:1.0.2'
   testCompile 'junit:junit:4.12'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
-  compile 'name.zeno:statusbar:1.0'
 }

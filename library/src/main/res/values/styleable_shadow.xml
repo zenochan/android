@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="Shadow" parent="View">
+    <attr name="colorShadow" format="color|reference"/>
+    <attr name="mode">
+      <enum name="triangle" value="0"/>
+      <enum name="bezier" value="1"/>
+      <enum name="corners" value="2"/>
+    </attr>
+    <attr name="radius"/>
+  </declare-styleable>
+</resources>
