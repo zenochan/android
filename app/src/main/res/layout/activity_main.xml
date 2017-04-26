@@ -17,6 +17,15 @@
     android:id="@+id/rcv_class"
     style="@style/layout.full"
     android:padding="16dp"
+    android:visibility="gone"
+    />
+
+  <name.zeno.android.widget.Shadow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:colorShadow="@color/md.red"
+    app:mode="corners"
+    app:radius="20dp"
     />
 
 </LinearLayout>

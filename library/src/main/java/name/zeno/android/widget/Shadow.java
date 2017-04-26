@@ -62,46 +62,21 @@ public class Shadow extends View
     int w = getMeasuredWidth();
     path.reset();
     paint.setColor(color);
-    path.setFillType(Path.FillType.WINDING);
-
     switch (mode) {
       case Mode.BEZIER:
+        path.setFillType(Path.FillType.WINDING);
         path.moveTo(0, h);
         path.quadTo(w / 2, -h, w, h);
         canvas.drawPath(path, paint);
         break;
       case Mode.CORNERS:
-        // 左上
-        path.moveTo(0, cornersRadius);
-        path.lineTo(0, 0);
-        path.lineTo(cornersRadius, 0);
-        rect.set(0, 0, cornersRadius * 2, cornersRadius * 2);
-        path.arcTo(rect, -90, -90);
-
-        // 右上
-        path.moveTo(w - cornersRadius, 0);
-        path.lineTo(w, 0);
-        path.lineTo(w, cornersRadius);
-        rect.set(w - cornersRadius * 2, 0, w, cornersRadius * 2);
-        path.arcTo(rect, 0, -90);
-
-        // 右下
-        path.moveTo(w, h - cornersRadius);
-        path.lineTo(w, h);
-        path.lineTo(w - cornersRadius, h);
-        rect.set(w - cornersRadius * 2, h - cornersRadius * 2, w, h);
-        path.arcTo(rect, 90, -90);
-
-        // 左下
-        path.moveTo(cornersRadius, h);
-        path.lineTo(0, h);
-        path.lineTo(0, h - cornersRadius);
-        rect.set(0, h - cornersRadius * 2, cornersRadius * 2, h);
-        path.arcTo(rect, 180, -90);
-
+        rect.set(0, 0, w, h);
+        path.setFillType(Path.FillType.INVERSE_WINDING);
+        path.addRoundRect(rect, cornersRadius, cornersRadius, Path.Direction.CW);
         canvas.drawPath(path, paint);
         break;
       default:
+        path.setFillType(Path.FillType.WINDING);
         path.moveTo(0, h);
         path.lineTo(w / 2, 0);
         path.lineTo(w, h);
