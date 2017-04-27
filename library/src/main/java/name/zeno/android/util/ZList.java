@@ -22,7 +22,7 @@ public class ZList
   @Nullable
   public static <T> T get(List<T> list, int index)
   {
-    return list != null && list.size() > index ? list.get(index) : null;
+    return list != null && index >= 0 && list.size() > index ? list.get(index) : null;
   }
 
   public static int size(List list)

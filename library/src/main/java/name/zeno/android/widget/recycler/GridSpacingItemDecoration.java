@@ -9,9 +9,10 @@ import lombok.Setter;
 import name.zeno.android.listener.Action2;
 
 /**
- * Create Date: 16/6/21
- *
  * @author 陈治谋 (513500085@qq.com)
+ * @see <a href="http://stackoverflow.com/questions/28531996/android-recyclerview-gridlayoutmanager-column-spacing">
+ * Android Recyclerview GridLayoutManager column spacing
+ * </a>
  */
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration
 {
@@ -37,8 +38,8 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration
       spanCount = manager.getSpanCount();
     }
 
-    int position = parent.getChildAdapterPosition(view);
-    int span = manager.getSpanSizeLookup().getSpanSize(position);
+    int position  = parent.getChildAdapterPosition(view);
+    int span      = manager.getSpanSizeLookup().getSpanSize(position);
     int spanIndex = ((GridLayoutManager.LayoutParams) view.getLayoutParams()).getSpanIndex();
 
     if (span == spanCount) {
@@ -46,7 +47,7 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration
       return;
     }
 
-    boolean leftEdge = spanIndex == 0;
+    boolean leftEdge  = spanIndex == 0;
     boolean rightEdge = spanIndex + span == spanCount;
 
 

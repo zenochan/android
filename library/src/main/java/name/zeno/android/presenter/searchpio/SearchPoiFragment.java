@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import kale.adapter.CommonRcvAdapter;
+import kale.adapter.LoadAdapterWrapper;
 import kale.adapter.item.AdapterItem;
 import name.zeno.android.listener.Action1;
 import name.zeno.android.presenter.Extra;
@@ -29,24 +30,25 @@ import name.zeno.android.util.R;
 import name.zeno.android.util.R2;
 import name.zeno.android.util.ZString;
 import name.zeno.android.widget.ZTextWatcher;
-import name.zeno.android.widget.recycler.LoadAdapterWrapper;
 
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/12/14.
  */
-public class SearchPoiFragment extends ZFragment implements SearchPoiView {
-  @BindView(R2.id.rcv_search_poi) RecyclerView rcvSearchPio;
-  @BindView(R2.id.tv_keyword) AppCompatEditText etKeyword;
-  @BindView(R2.id.btn_input) Button btnInput;
+public class SearchPoiFragment extends ZFragment implements SearchPoiView
+{
+  @BindView(R2.id.rcv_search_poi) RecyclerView      rcvSearchPio;
+  @BindView(R2.id.tv_keyword)     AppCompatEditText etKeyword;
+  @BindView(R2.id.btn_input)      Button            btnInput;
   private SearchPoiPresenter presenter = new SearchPoiPresenter(this);
 
-  private SearchPoiRequest request;
+  private SearchPoiRequest          request;
   private CommonRcvAdapter<PoiInfo> adapter;
-  private LoadAdapterWrapper wrapper;
-  private Action1<PoiInfo> onClickPoi;
+  private LoadAdapterWrapper        wrapper;
+  private Action1<PoiInfo>          onClickPoi;
 
-  public static SearchPoiFragment newInstance(SearchPoiRequest request) {
+  public static SearchPoiFragment newInstance(SearchPoiRequest request)
+  {
     Bundle args = new Bundle();
     args.putParcelable(SearchPoiRequest.EXTRA_NAME, request);
 
@@ -56,14 +58,16 @@ public class SearchPoiFragment extends ZFragment implements SearchPoiView {
   }
 
   @Override
-  public void onCreate(@Nullable Bundle savedInstanceState) {
+  public void onCreate(@Nullable Bundle savedInstanceState)
+  {
     super.onCreate(savedInstanceState);
     request = getArguments().getParcelable(SearchPoiRequest.EXTRA_NAME);
   }
 
   @Nullable
   @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+  {
     View view = inflater.inflate(R.layout.fragment_search_poi, container, false);
     ButterKnife.bind(this, view);
     init(savedInstanceState);
@@ -72,7 +76,8 @@ public class SearchPoiFragment extends ZFragment implements SearchPoiView {
 
 
   @Override
-  public void requestLocationPermission(Action1<Boolean> next) {
+  public void requestLocationPermission(Action1<Boolean> next)
+  {
     new RxPermissions(getActivity()).request(
         ZPermission.WRITE_EXTERNAL_STORAGE,
         ZPermission.ACCESS_COARSE_LOCATION,
@@ -81,17 +86,21 @@ public class SearchPoiFragment extends ZFragment implements SearchPoiView {
   }
 
   @OnClick(R2.id.btn_input)
-  void onClickBtnInput() {
+  void onClickBtnInput()
+  {
     customInput(etKeyword.getText().toString());
   }
 
-  private void init(Bundle savedInstanceState) {
+  private void init(Bundle savedInstanceState)
+  {
     onClickPoi = this::onClickPoi;
 
-    adapter = new CommonRcvAdapter<PoiInfo>(presenter.getInfoList()) {
+    adapter = new CommonRcvAdapter<PoiInfo>(presenter.getInfoList())
+    {
       @NonNull
       @Override
-      public AdapterItem createItem(Object type) {
+      public AdapterItem createItem(Object type)
+      {
         PoiItem item = new PoiItem();
         item.setOnClick(onClickPoi);
         return item;
@@ -121,14 +130,16 @@ public class SearchPoiFragment extends ZFragment implements SearchPoiView {
   }
 
   // 使用用户输入的值
-  private void customInput(String text) {
+  private void customInput(String text)
+  {
     PoiInfo info = new PoiInfo();
     info.address = text;
     onClickPoi(info);
   }
 
   // 选择热点
-  private void onClickPoi(PoiInfo poiInfo) {
+  private void onClickPoi(PoiInfo poiInfo)
+  {
     PoiModel poi = new PoiModel(poiInfo);
     setActivityResult(RESULT_OK, Extra.setData(poi));
     finish();
