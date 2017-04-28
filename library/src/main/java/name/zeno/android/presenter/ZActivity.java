@@ -1,11 +1,13 @@
 package name.zeno.android.presenter;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -136,7 +138,7 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
   {
     super.onActivityResult(requestCode, resultCode, data);
     for (LifecycleListener listener : listeners) {
-      listener.onActivityResult(requestCode,resultCode,data);
+      listener.onActivityResult(requestCode, resultCode, data);
     }
   }
 
@@ -223,6 +225,13 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
   public void startActivityForResult(Intent intent, Action2<Boolean, Intent> onResult)
   {
     rxActivityResult.startActivityForResult(intent, onResult);
+  }
+
+  public void startActivityForResult(Class<? extends Activity> clazz, Parcelable data, Action2<Boolean, Intent> onResult)
+  {
+    Intent intent = new Intent(this, clazz);
+    Extra.setData(intent, data);
+    startActivityForResult(intent, onResult);
   }
 
   protected void fullScreen()

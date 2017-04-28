@@ -14,36 +14,8 @@
 #### [Lombok](https://projectlombok.org/)
 #### 事件: [otto](https://github.com/square/otto)
 #### 动态权限: RxPermission
-#### 消息推送: [个推](http://docs.getui.com/mobile/android/androidstudio_maven/)
-
-- 添加依赖
-```groovy
-  compile 'com.getui:sdk:2.10.2.1'
-```
-
-```java
-public class ZenoGetuiService extends GetuiService {}
-```
-
-```xml
-<service
-  android:name=".ZenoGetuiService"
-  android:exported="true"
-  android:label="PushService"
-  android:process=":pushservice">
-</service>
-```
-
-```java
-public class ZenoApp extends ZApplication {
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    initGetui(ChurgoGetuiService.class);
-  }
-}
-```
-
+#### [微信 open sdk](./docs/wxsdk.md)
+#### [消息推送(个推)](./docs/getui.md)
 
 #### 分析统计: U 盟+
 #### 热修复: [HotFix]
@@ -52,15 +24,21 @@ public class ZenoApp extends ZApplication {
 #### dialog: [material-dialogs](https://github.com/afollestad/material-dialogs)
 #### [Material Datetime Picker](https://github.com/wdullaer/MaterialDateTimePicker)
 
-## Update
-
-#### 1.0.1
-
-- 升级 `rxjava adapter` 不向下兼容,包名改了
 
 #### [Glide 扩展](./docs/glide.md)
 
 
 ## TODO
 
-- [数据库框架研究](https://www.zhihu.com/question/46449188?sort=created)
+- [ ] Otto 替换为 RxBus - Otto 官方推荐
+- [ ] [数据库框架研究](https://www.zhihu.com/question/46449188?sort=created)
+
+## CHANGE LOG
+
+#### 1.0.2
+- CommonAdapter 重构，提取为单独的 lib， 方便跟进原作者的更新
+- 跟新微信 sdk
+- [Glide 修复压缩过度白色变绿色现象](http://blog.mjtown.cn/blogs/104)
+
+#### 1.0.1
+- 升级 `rxjava adapter` 不向下兼容,包名改了

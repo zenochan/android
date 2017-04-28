@@ -28,7 +28,7 @@ android {
     minSdkVersion 15
     targetSdkVersion 25
     versionCode 1
-    versionName "1.0.2-SNAPSHOT"
+    versionName "1.0.2"
   }
 
   buildTypes {
@@ -47,7 +47,7 @@ dependencies {
    *              框架性依赖             *
    **************************************/
 
-  compile "name.zeno:common-adapter:1.0.0"
+  compile "name.zeno:common-adapter:1.0.1"
 
   //support 家族
   //https://developer.android.com/topic/libraries/support-library/features.html
@@ -101,6 +101,7 @@ dependencies {
   // 友盟分析 http://mvnrepository.com/artifact/com.umeng.analytics/analytics
   provided 'com.umeng.analytics:analytics:6.0.9'
   provided('com.taobao.android:alisdk-hotfix:1.4.0') { transitive = false }
+  provided 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.1.6'
 
   /**************************************
    *              控件性依赖             *

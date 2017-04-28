@@ -42,3 +42,10 @@
 
 -keep class name.zeno.** {*;}
 -keep class android.support.** {*;}
+
+################################
+#    微信 sdk 混淆              #
+################################
+-keep class com.tencent.mm.opensdk.** { *; }
+-keep class com.tencent.wxop.** { *; }
+-keep class com.tencent.mm.sdk.** { *; }

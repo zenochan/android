@@ -1,8 +1,8 @@
-package name.zeno.android.annotation;
+package name.zeno.android.third.wxapi;
 
 import android.support.annotation.IntDef;
 
-import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,11 +11,7 @@ import java.lang.annotation.RetentionPolicy;
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/6/23
  */
-@IntDef({
-    WXScene.FAVORITE,
-    WXScene.SESSION,
-    WXScene.TIMELINE
-})
+@IntDef({WXScene.FAVORITE, WXScene.SESSION, WXScene.TIMELINE})
 @Retention(RetentionPolicy.SOURCE)
 public @interface WXScene
 {
