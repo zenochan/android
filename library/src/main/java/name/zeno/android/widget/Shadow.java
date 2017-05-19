@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.support.annotation.ColorInt;
+import android.support.annotation.Dimension;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -35,8 +37,10 @@ public class Shadow extends View
   private int cornersRadius = ZDimen.dp2px(4);
   private int color         = Color.WHITE;
 
-  private RectF rect = new RectF();
-  private int   mode = Mode.CORNERS;
+  private            RectF rect        = new RectF();
+  private            int   mode        = Mode.CORNERS;
+  @ColorInt private  int   borderColor = 0;
+  @Dimension private int   borderWidth = 0;
 
   public Shadow(Context context)
   {
@@ -62,6 +66,7 @@ public class Shadow extends View
     int w = getMeasuredWidth();
     path.reset();
     paint.setColor(color);
+    paint.setStyle(Paint.Style.FILL);
     switch (mode) {
       case Mode.BEZIER:
         path.setFillType(Path.FillType.WINDING);
@@ -74,6 +79,17 @@ public class Shadow extends View
         path.setFillType(Path.FillType.INVERSE_WINDING);
         path.addRoundRect(rect, cornersRadius, cornersRadius, Path.Direction.CW);
         canvas.drawPath(path, paint);
+        if (borderWidth > 0) {
+          int halfW = (int) ((borderWidth + 0.5) / 2);
+          rect.set(halfW, halfW, w - halfW, h - halfW);
+          paint.setStrokeWidth(borderWidth);
+          paint.setColor(borderColor);
+          paint.setStyle(Paint.Style.STROKE);
+          path.reset();
+          path.setFillType(Path.FillType.WINDING);
+          path.addRoundRect(rect, cornersRadius - halfW, cornersRadius - halfW, Path.Direction.CW);
+          canvas.drawPath(path, paint);
+        }
         break;
       default:
         path.setFillType(Path.FillType.WINDING);
@@ -99,9 +115,9 @@ public class Shadow extends View
       if (ta.hasValue(R.styleable.Shadow_mode)) {
         mode = ta.getInt(R.styleable.Shadow_mode, mode);
       }
-      if (ta.hasValue(R.styleable.Shadow_radius)) {
-        cornersRadius = ta.getDimensionPixelSize(R.styleable.Shadow_radius, cornersRadius);
-      }
+      cornersRadius = ta.getDimensionPixelSize(R.styleable.Shadow_radius, cornersRadius);
+      borderWidth = ta.getDimensionPixelSize(R.styleable.Shadow_borderWidth, borderWidth);
+      borderColor = ta.getColor(R.styleable.Shadow_borderColor, borderColor);
       ta.recycle();
     }
   }

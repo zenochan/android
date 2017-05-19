@@ -8,5 +8,7 @@
       <enum name="corners" value="2"/>
     </attr>
     <attr name="radius"/>
+    <attr name="borderWidth"/>
+    <attr name="borderColor" format="color|reference"/>
   </declare-styleable>
 </resources>

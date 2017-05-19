@@ -88,10 +88,8 @@ public class TintHelper
   static void applySupportBackgroundTint(View view, TintInfo info)
   {
     final Drawable background = view.getBackground();
-    if (background != null) {
-      if (info != null) {
-        TintManager.tintDrawable(background, info, view.getDrawableState());
-      }
+    if (background != null && info != null) {
+      TintManager.tintDrawable(background, info, view.getDrawableState());
     }
   }
 

@@ -20,21 +20,24 @@ import name.zeno.android.util.ZLog;
  * @author 陈治谋 (513500085@qq.com)
  */
 @SuppressWarnings("WeakerAccess")
-public abstract class BasePresenter<T extends View> implements Presenter {
+public abstract class BasePresenter<T extends View> implements Presenter
+{
   private final String TAG;
 
   private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
   protected T view;
 
-  public BasePresenter(T view) {
+  public BasePresenter(T view)
+  {
     TAG = getClass().getSimpleName();
 
     this.view = view;
     view.registerLifecycleListener(this);
   }
 
-  public void setView(T view) {
+  public void setView(T view)
+  {
     this.view = view;
   }
 
@@ -48,55 +51,68 @@ public abstract class BasePresenter<T extends View> implements Presenter {
   public void onViewCreated() { }
 
   @Override
-  public void onDestroyView() {
+  public void onDestroyView()
+  {
   }
 
   @CallSuper
   @Override
-  public void onDestroy() {
+  public void onDestroy()
+  {
     compositeDisposable.dispose();
     view = null;
   }
 
   @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+  public void onActivityResult(int requestCode, int resultCode, Intent data)
+  {
   }
 
-  protected void addDisposable(Disposable disposable) {
+  protected void addDisposable(Disposable disposable)
+  {
     compositeDisposable.add(disposable);
   }
 
-  protected void removeDisposable(Disposable disposable) {
+  protected void removeDisposable(Disposable disposable)
+  {
     compositeDisposable.remove(disposable);
   }
 
-  protected <E> Observer<E> sub(Action1<E> onNext) {
+  protected <E> Observer<E> sub(Action1<E> onNext)
+  {
     return sub(onNext, e -> ZLog.e(TAG, "default on error", e));
   }
 
-  protected <E> Observer<E> sub(Action1<E> onNext, Action1<ZException> onError) {
+  protected <E> Observer<E> sub(Action1<E> onNext, Action1<ZException> onError)
+  {
     return sub(onNext, onError, () -> Logger.t(TAG).v("default on complete"));
   }
 
-  protected <E> Observer<E> sub(Action1<E> onNext, Action1<ZException> onError, Action0 onComplete) {
+  protected <E> Observer<E> sub(Action1<E> onNext, Action1<ZException> onError, Action0 onComplete)
+  {
     return subWithDisposable(onNext, onError, onComplete, null);
   }
 
 
-  protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<Disposable> onSub) {
+  protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<Disposable> onSub)
+  {
     return subWithDisposable(onNext, e -> ZLog.e(TAG, "default on error", e), onSub);
   }
 
 
-  protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<ZException> onError, Action1<Disposable> onSub) {
+  protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<ZException> onError, Action1<Disposable> onSub)
+  {
     return subWithDisposable(onNext, onError, () -> Logger.t(TAG).v("default on complete"), onSub);
   }
 
-  protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<ZException> onError, Action0 onComplete, Action1<Disposable> onSub) {
-    return new ZObserver<E>() {
+  protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<ZException> onError, Action0 onComplete, Action1<Disposable> onSub)
+  {
+    return new ZObserver<E>()
+    {
       private Disposable disposable;
 
-      @Override public void onSubscribe(Disposable d) {
+      @Override public void onSubscribe(Disposable d)
+      {
         addDisposable(d);
         this.disposable = d;
         if (onSub != null) {
@@ -105,18 +121,21 @@ public abstract class BasePresenter<T extends View> implements Presenter {
       }
 
       @Override
-      public void onNext(E e) {
+      public void onNext(E e)
+      {
         onNext.call(e);
       }
 
       @Override
-      public void handleError(ZException e) {
+      public void handleError(ZException e)
+      {
         onError.call(e);
         onComplete();
       }
 
       @Override
-      public void onComplete() {
+      public void onComplete()
+      {
         removeDisposable(disposable);
         onComplete.call();
       }

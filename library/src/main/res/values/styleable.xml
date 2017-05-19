@@ -47,6 +47,26 @@
     <attr name="BottomDrawableHeight" format="dimension"/>
   </declare-styleable>
 
+  <declare-styleable name="ZEditText" parent="ZTextView">
+    <attr name="backgroundTint"/>
+    <attr name="backgroundTintMode"/>
+    <attr name="compoundDrawableTint"/>
+    <attr name="compoundDrawableTintMode"/>
+
+    <!--整体drawable的宽度-->
+    <attr name="drawableWidth"/>
+    <!--整体drawable的高度-->
+    <attr name="drawableHeight"/>
+    <attr name="LeftDrawableWidth"/>
+    <attr name="LeftDrawableHeight"/>
+    <attr name="TopDrawableWidth"/>
+    <attr name="TopDrawableHeight"/>
+    <attr name="RightDrawableWidth"/>
+    <attr name="RightDrawableHeight"/>
+    <attr name="BottomDrawableWidth"/>
+    <attr name="BottomDrawableHeight"/>
+  </declare-styleable>
+
   <declare-styleable name="ZImageView" parent="AppCompatImageView">
     <attr name="backgroundTint"/>
     <attr name="backgroundTintMode"/>
@@ -71,21 +91,6 @@
       <enum name="overdraw" value="0"/>
       <enum name="clip" value="1"/>
     </attr>
-  </declare-styleable>
-
-  <declare-styleable name="FormCell">
-    <attr name="labelDrawableLeft" format="reference"/>
-    <attr name="labelDrawableTint" format="color"/>
-    <attr name="labelDrawablePadding" format="dimension"/>
-    <attr name="labelText" format="string"/>
-    <attr name="textColorLabel" format="color"/>
-    <attr name="textSizeLabel" format="dimension"/>
-    <attr name="contentHint" format="string"/>
-    <attr name="contentText" format="string"/>
-    <attr name="contentTextColor" format="color"/>
-    <attr name="nextEnable" format="boolean"/>
-    <attr name="nextTint" format="color"/>
-    <attr name="srcNext" format="reference"/>
   </declare-styleable>
 
   <declare-styleable name="PreviewBorderView">

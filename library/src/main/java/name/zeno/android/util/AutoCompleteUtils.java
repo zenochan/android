@@ -2,12 +2,17 @@ package name.zeno.android.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.widget.ArrayAdapter;
 
 import com.alibaba.fastjson.JSON;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import name.zeno.android.widget.adapter.ZArrayAdapter;
 
 /**
  * @author 陈治谋 (513500085@qq.com)
@@ -48,4 +53,18 @@ public class AutoCompleteUtils
   {
     view.setAdapter(new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1, get()));
   }
+
+
+  public static void with(AppCompatAutoCompleteTextView view, List<String> data)
+  {
+    with(view, data, android.R.layout.simple_list_item_1);
+  }
+
+  public static void with(AppCompatAutoCompleteTextView view, List<String> data, @LayoutRes int resource)
+  {
+    if (!ZList.isEmpty(data)) {
+      view.setAdapter(new ZArrayAdapter<>(view.getContext(), resource, data));
+    }
+  }
+
 }

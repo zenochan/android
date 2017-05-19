@@ -2,6 +2,7 @@ package name.zeno.android.widget.indicator;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
+import name.zeno.android.util.R;
 import name.zeno.android.widget.PageIndicator;
 import name.zeno.android.widget.autoscrollviewpager.AutoScrollViewPager;
 
@@ -17,11 +19,18 @@ import name.zeno.android.widget.autoscrollviewpager.AutoScrollViewPager;
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-public class NumberPageIndicator extends AppCompatTextView implements
-    PageIndicator
+public class NumberPageIndicator extends AppCompatTextView implements PageIndicator
 {
   private ViewPager pager;
   private Paint     paint;
+
+  private int mode = 0;
+
+  @interface Mode
+  {
+    int NORMAL   = 0; // 常规
+    int OVERTURN = 1; // 翻转
+  }
 
   public NumberPageIndicator(Context context)
   {
@@ -39,16 +48,20 @@ public class NumberPageIndicator extends AppCompatTextView implements
     setText("1/1");
     paint = new Paint();
     paint.setAntiAlias(true);
+    TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NumberPageIndicator);
+    mode = ta.getInt(R.styleable.NumberPageIndicator_indicateMode, mode);
+    ta.recycle();
   }
 
   @Override protected void onDraw(Canvas canvas)
   {
-    int w = getWidth();
-    int h = getHeight();
+    if (mode == Mode.OVERTURN) {
+      int w = getWidth();
+      int h = getHeight();
 
-    paint.setColor(Color.parseColor("#bdbdbd"));
-    canvas.drawCircle(w / 2, h / 2, Math.min(w, h) / 2, paint);
-
+      paint.setColor(Color.parseColor("#bdbdbd"));
+      canvas.drawCircle(w / 2, h / 2, Math.min(w, h) / 2, paint);
+    }
     super.onDraw(canvas);
   }
 
@@ -75,6 +88,8 @@ public class NumberPageIndicator extends AppCompatTextView implements
 
   @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
   {
+    if (mode != Mode.OVERTURN) return;
+
     float scale = (float) (Math.abs(positionOffset - 0.5) / 0.5);
     setScaleX(scale);
 

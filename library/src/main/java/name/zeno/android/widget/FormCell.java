@@ -175,6 +175,11 @@ public class FormCell extends LinearLayout
       labelTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
     }
 
+    if (ta.hasValue(R.styleable.FormCell_textSizeContent)) {
+      int dimen = ta.getDimensionPixelSize(R.styleable.FormCell_textSizeLabel, 0);
+      contentTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
+    }
+
     nextIv.setVisibility(ta.getBoolean(R.styleable.FormCell_nextEnable, true) ? VISIBLE : INVISIBLE);
     ta.recycle();
   }

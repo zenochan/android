@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
-import name.zeno.android.util.DateUtils;
+import name.zeno.android.util.ZDate;
 import name.zeno.android.util.ZLog;
 
 /**
@@ -41,7 +41,7 @@ public class AlipaySignUtil
   private String sign_type = "RSA";
 
   private String version   = "1.0";
-  private String timestamp = DateUtils.nowString("yyyy-MM-dd HH:mm:ss");
+  private String timestamp = ZDate.nowString("yyyy-MM-dd HH:mm:ss");
 
   @Data
   public static class BizContent

@@ -58,7 +58,7 @@ dependencies {
   compile 'com.android.support:gridlayout-v7:25.3.1'
   compile 'com.android.support:design:25.3.1';
   compile 'com.android.support:multidex:1.0.1'
-  compile 'com.android.support:percent:25.3.1'
+  //compile 'com.android.support:percent:25.3.1'
   compile 'com.android.support.constraint:constraint-layout:1.0.2'
   provided 'com.android.support:palette-v7:25.3.1';
 
@@ -99,7 +99,7 @@ dependencies {
    *              功能性依赖             *
    **************************************/
   // 友盟分析 http://mvnrepository.com/artifact/com.umeng.analytics/analytics
-  provided 'com.umeng.analytics:analytics:6.0.9'
+  provided 'com.umeng.analytics:analytics:6.1.0'
   provided('com.taobao.android:alisdk-hotfix:1.4.0') { transitive = false }
   provided 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.1.6'
 
@@ -115,7 +115,7 @@ dependencies {
   //BottomBar https://github.com/roughike/BottomBar
   compile 'com.roughike:bottom-bar:2.3.0'
 
-  //时间选择 120kb
+  //时间选择 120kb https://github.com/wdullaer/MaterialDateTimePicker
   compile 'com.wdullaer:materialdatetimepicker:2.5.0'
 }
 

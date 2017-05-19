@@ -50,7 +50,7 @@ public class CalendarUtils
 
   public static boolean today(long timestamp)
   {
-    return DateUtils.longToString(System.currentTimeMillis(), "yyyy-MM-dd").equals(DateUtils.longToString(timestamp, "yyyy-MM-dd"));
+    return ZDate.longToString(System.currentTimeMillis(), "yyyy-MM-dd").equals(ZDate.longToString(timestamp, "yyyy-MM-dd"));
   }
 
   public static void addDay(Calendar calendar, int deltaDay)

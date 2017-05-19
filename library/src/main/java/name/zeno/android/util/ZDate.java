@@ -14,11 +14,13 @@ import java.util.Locale;
  * @version 2015-10-19 14:00:14
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public final class DateUtils
+public final class ZDate
 {
-  private static final String TAG = "DateUtils";
+  private static final String TAG     = "ZDate";
+  /** one day in ms */
+  public static final int ONE_DAY = 1000 * 60 * 60 * 24;
 
-  private DateUtils() {}
+  private ZDate() {}
 
   public static Date now()
   {

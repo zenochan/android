@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="NumberPageIndicator" parent="AppCompatTextView">
+    <attr name="indicateMode" format="enum">
+      <enum name="normal" value="0"/>
+      <enum name="overturn" value="1"/>
+    </attr>
+  </declare-styleable>
+</resources>

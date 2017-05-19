@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="FormCell">
+    <attr name="labelDrawableLeft" format="reference"/>
+    <attr name="labelDrawableTint" format="color"/>
+    <attr name="labelDrawablePadding" format="dimension"/>
+    <attr name="labelText" format="string"/>
+    <attr name="textColorLabel" format="color"/>
+    <attr name="textSizeLabel" format="dimension"/>
+    <attr name="textSizeContent" format="dimension"/>
+    <attr name="contentHint" format="string"/>
+    <attr name="contentText" format="string"/>
+    <attr name="contentTextColor" format="color"/>
+    <attr name="nextEnable" format="boolean"/>
+    <attr name="nextTint" format="color"/>
+    <attr name="srcNext" format="reference"/>
+  </declare-styleable>
+</resources>

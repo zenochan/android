@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.SupportDatePickerDialog;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import name.zeno.android.util.ZLog;
  * @author 陈治谋 (513500085@qq.com)
  */
 @SuppressWarnings({"unused", "Convert2streamapi"})
-public abstract class ZFragment extends ToastFragment implements LifeCycleObservable
+public class ZFragment extends ToastFragment implements LifeCycleObservable
 {
   protected final String TAG;
   protected final int RESULT_OK = Activity.RESULT_OK;

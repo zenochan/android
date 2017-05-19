@@ -20,12 +20,12 @@
     android:visibility="gone"
     />
 
-  <name.zeno.android.widget.Shadow
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:colorShadow="@color/md.red"
-    app:mode="corners"
-    app:radius="20dp"
+  <name.zeno.android.widget.OrderFlowView
+    android:layout_width="wrap_content"
+    android:layout_height="80dp"
+    app:rightLineEnable="true"
+    app:rightLineWidth="32dp"
+    app:topHeight="40dp"
     />
 
 </LinearLayout>

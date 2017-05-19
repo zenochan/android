@@ -58,14 +58,13 @@ public class SearchPoiPresenter extends BasePresenter<SearchPoiView>
     super.onViewCreated();
     view.requestLocationPermission(granted -> {
       if (granted) {
-        LocationHelper.getInstance(view.getContext()).requestLocation(new ZObserver<BDLocation>()
-        {
-          @Override public void onNext(BDLocation value)
-          {
-            bdLocation = value;
-            reverseGeoCode(bdLocation);
-          }
-        });
+        LocationHelper.getInstance(view.getContext()).requestLocation(
+            sub(bdLocation -> {
+                  this.bdLocation = bdLocation;
+                  reverseGeoCode(this.bdLocation);
+                }
+            )
+        );
       }
     });
   }
@@ -82,6 +81,7 @@ public class SearchPoiPresenter extends BasePresenter<SearchPoiView>
     poiSearch.searchInCity(bdLocation == null ? "上海" : bdLocation.getCity(), keyword, pageNo);
   }
 
+  @SuppressWarnings("MissingPermission")
   private void reverseGeoCode(BDLocation bdLocation)
   {
     LatLng latLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
