@@ -29,7 +29,7 @@ dependencies{
 - [消息推送(个推)](./docs/getui.md)
 
 - 分析统计: U 盟+
-- 热修复: [HotFix]
+- 热修复: [HotFix](./docs/hotfix.md)
 
 - [BottomBar](https://github.com/roughike/BottomBar)
 - dialog: [material-dialogs](https://github.com/afollestad/material-dialogs)
@@ -43,6 +43,9 @@ dependencies{
 
 ## CHANGE LOG
 
+#### 1.0.5
+
+- `U` `HotFix` 升级至 `2.0.9`
 
 #### 1.0.4
 

@@ -2,29 +2,31 @@ package name.zeno.android.app;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.app.Service;
 import android.content.Context;
-import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.igexin.sdk.PushManager;
 import com.orhanobut.logger.Logger;
-import com.taobao.hotfix.HotFixManager;
-import com.taobao.hotfix.util.PatchStatusCode;
+import com.taobao.sophix.PatchStatus;
+import com.taobao.sophix.SophixManager;
+
+import java.util.Locale;
 
 import name.zeno.android.third.getui.GetuiService;
 import name.zeno.android.util.ZCookie;
 import name.zeno.android.util.ZLog;
 
-public abstract class ZApplication extends MultiDexApplication {
+public abstract class ZApplication extends MultiDexApplication
+{
 
   @SuppressLint("StaticFieldLeak")
   private static Application instance;
 
   @Override
-  public void onCreate() {
+  public void onCreate()
+  {
     super.onCreate();
     instance = this;
     ZCookie.init(this);
@@ -33,65 +35,70 @@ public abstract class ZApplication extends MultiDexApplication {
   }
 
   @Override
-  protected void attachBaseContext(Context base) {
+  protected void attachBaseContext(Context base)
+  {
     super.attachBaseContext(base);
     MultiDex.install(this);
   }
 
   @Override
-  public void onTerminate() {
+  public void onTerminate()
+  {
     super.onTerminate();
     instance = null;
   }
 
   // 初始化百度地图
-  protected void initBDMap() {
+  protected void initBDMap()
+  {
     SDKInitializer.initialize(this);
   }
 
-  public static Application getApplication() {
+  public static Application getApplication()
+  {
     return instance;
   }
 
   protected abstract boolean isDebug();
 
-  protected <T extends GetuiService> void initGetui(Class<T> tClazz) {
+  protected <T extends GetuiService> void initGetui(Class<T> tClazz)
+  {
     PushManager.getInstance().initialize(this.getApplicationContext(), tClazz);
   }
 
-  protected void initHotFix(String appId, String appVersion) {
-    String tag = "HOT_FIX";
-    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-      // 只支持到 安卓 6.0
-      return;
-    }
-
-    HotFixManager.getInstance().setContext(this)
+  protected void initHotFix(String appVersion)
+  {
+    SophixManager.getInstance()
+        .setContext(this)
         .setAppVersion(appVersion)
-        .setAppId(appId)
-        .setAesKey(null)
-        .setSupportHotpatch(true)
-        .setEnableDebug(true)
+        .setEnableDebug(isDebug())
         .setPatchLoadStatusStub((mode, code, info, handlePatchVersion) -> {
+          String tag = "HOT_FIX[" + handlePatchVersion + "]";
+          Logger.t(tag).e(String.format(Locale.CHINA, "[%d]%s", code, info));
+          // 补丁加载回调通知
           switch (code) {
-            case PatchStatusCode.CODE_SUCCESS_LOAD:
-              Logger.t(tag).v("补丁加载回调通知");
+            case PatchStatus.CODE_LOAD_SUCCESS:
+              // 表明补丁加载成功
               break;
-            case PatchStatusCode.CODE_ERROR_NEEDRESTART:
-              Logger.t(tag).v("新补丁生效需要重启");
+            case PatchStatus.CODE_ERR_NOTINIT:
+              Logger.t(tag).v(PatchStatus.INFO_ERR_NOTINIT);
               break;
-            case PatchStatusCode.CODE_ERROR_INNERENGINEFAIL:
-              HotFixManager.getInstance().cleanPatches(false);
-              Logger.t(tag).v("内部引擎加载异常");
+            case PatchStatus.CODE_LOAD_RELAUNCH:
+              // 表明新补丁生效需要重启. 开发者可提示用户或者强制重启;
+              // 建议: 用户可以监听进入后台事件, 然后应用自杀
               break;
-            case PatchStatusCode.CODE_ERROR_PATCHNOUPDATE:
-              Logger.t(tag).v("没有新的 patch");
+            case PatchStatus.CODE_LOAD_FAIL:
+              // 内部引擎异常, 推荐此时清空本地补丁, 防止失败补丁重复加载
+              SophixManager.getInstance().cleanPatches();
+              break;
+            case PatchStatus.CODE_REQ_NOUPDATE:
               break;
             default:
-              Logger.t(tag).v("其他错误-------> " + code);
+              // 其它错误信息, 查看PatchStatus类说明
               break;
           }
         }).initialize();
+    SophixManager.getInstance().queryAndLoadNewPatch();
   }
 
 }
