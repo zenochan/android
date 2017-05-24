@@ -11,7 +11,6 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 

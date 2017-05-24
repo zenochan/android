@@ -1,5 +1,6 @@
 package name.zeno.android.presenter.searchpio;
 
+import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action1;
 import name.zeno.android.presenter.LoadDataView;
 
@@ -9,5 +10,7 @@ import name.zeno.android.presenter.LoadDataView;
  */
 public interface SearchPoiView extends LoadDataView
 {
-  void requestLocationPermission(Action1<Boolean> next);
+  void requestLocationPermission(Action0 next);
+
+  void empty();
 }

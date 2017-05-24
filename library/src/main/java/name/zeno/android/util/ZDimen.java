@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * 尺寸工具类
@@ -14,6 +16,9 @@ import android.util.TypedValue;
 @SuppressWarnings("unused")
 public final class ZDimen
 {
+  public static final int MATCH_PARENT = ViewGroup.LayoutParams.MATCH_PARENT;
+  public static final int WRAP_CONTENT = ViewGroup.LayoutParams.WRAP_CONTENT;
+
   private ZDimen() {}
 
   public static int dp2px(float dp)

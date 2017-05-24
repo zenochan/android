@@ -75,7 +75,9 @@ public abstract class BasePresenter<T extends View> implements Presenter
 
   protected void removeDisposable(Disposable disposable)
   {
-    compositeDisposable.remove(disposable);
+    if (disposable != null) {
+      compositeDisposable.remove(disposable);
+    }
   }
 
   protected <E> Observer<E> sub(Action1<E> onNext)

@@ -43,6 +43,19 @@ dependencies{
 
 ## CHANGE LOG
 
+
+#### 1.0.4
+
+- `F` BasePresenter#removeDisposable 异常 <font color='red'>"Disposable item is null"</font>
+- `M` 调整 simpleActionBar 的返回按钮
+- `F` Poi 搜索定位失败时无反馈
+
+#### 1.0.3
+
+- ZDrawable
+    - resizeComponentDrawable: 调整 ComponentDrawable 的大小
+    - tintComponentDrawable:   对 ComponentDrawable 着色
+
 #### 1.0.2
 - CommonAdapter 重构，提取为单独的 lib， 方便跟进原作者的更新
 - 跟新微信 sdk

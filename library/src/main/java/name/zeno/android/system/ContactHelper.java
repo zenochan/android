@@ -12,6 +12,7 @@ import android.support.annotation.RequiresPermission;
 import android.support.v4.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -120,13 +121,18 @@ public class ContactHelper
 
         Uri    contactData = data.getData();
         Cursor cursor      = activity.managedQuery(contactData, null, null, null, null);
-        cursor.moveToFirst();
-        int  idColumn  = cursor.getColumnIndex(ContactsContract.Contacts._ID);
-        long contactId = cursor.getLong(idColumn);
-        //noinspection MissingPermission
-        List<Contact> contacts = contacts(activity, contactId);
-        if (onSelected != null) {
-          onSelected.call(contacts);
+        // may cursor NPE
+        if (cursor != null) {
+          cursor.moveToFirst();
+          int  idColumn  = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+          long contactId = cursor.getLong(idColumn);
+          //noinspection MissingPermission
+          List<Contact> contacts = contacts(activity, contactId);
+          if (onSelected != null) {
+            onSelected.call(contacts);
+          }
+        } else {
+          onSelected.call(Collections.emptyList());
         }
       } else if (onCancelListener != null) {
         onCancelListener.call();

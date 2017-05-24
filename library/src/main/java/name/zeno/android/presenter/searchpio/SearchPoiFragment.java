@@ -20,6 +20,7 @@ import butterknife.OnClick;
 import kale.adapter.CommonRcvAdapter;
 import kale.adapter.LoadAdapterWrapper;
 import kale.adapter.item.AdapterItem;
+import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action1;
 import name.zeno.android.presenter.Extra;
 import name.zeno.android.presenter.ZFragment;
@@ -76,13 +77,25 @@ public class SearchPoiFragment extends ZFragment implements SearchPoiView
 
 
   @Override
-  public void requestLocationPermission(Action1<Boolean> next)
+  public void requestLocationPermission(Action0 next)
   {
     new RxPermissions(getActivity()).request(
         ZPermission.WRITE_EXTERNAL_STORAGE,
         ZPermission.ACCESS_COARSE_LOCATION,
         ZPermission.ACCESS_FINE_LOCATION
-    ).subscribe(next::call);
+    ).subscribe(granted -> {
+      if (granted) {
+        next.call();
+      } else {
+        toast("地址搜索需要定位权限和文件存储权限");
+        empty();
+      }
+    });
+  }
+
+  @Override public void empty()
+  {
+    wrapper.empty();
   }
 
   @OnClick(R2.id.btn_input)
