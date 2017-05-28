@@ -15,6 +15,14 @@ dependencies{
 
 ##  Modules
 
+#### BAT
+
+- [微信 open sdk](./docs/wxsdk.md)
+- 热修复: [HotFix](./docs/hotfix.md)
+- [百度地图]()
+
+#### 其他
+
 - 日志打印: [logger](https://github.com/orhanobut/logger)
 - [图片加载 - Glide](./docs/glide.md)
     - [glide-transformations](https://github.com/wasabeef/glide-transformations)
@@ -25,11 +33,9 @@ dependencies{
 - [Lombok](https://projectlombok.org/)
 - 事件: [otto](https://github.com/square/otto)
 - 动态权限: RxPermission
-- [微信 open sdk](./docs/wxsdk.md)
 - [消息推送(个推)](./docs/getui.md)
 
 - 分析统计: U 盟+
-- 热修复: [HotFix](./docs/hotfix.md)
 
 - [BottomBar](https://github.com/roughike/BottomBar)
 - dialog: [material-dialogs](https://github.com/afollestad/material-dialogs)
