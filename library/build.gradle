@@ -28,7 +28,7 @@ android {
     minSdkVersion 15
     targetSdkVersion 25
     versionCode 1
-    versionName "1.0.6-SNAPSHOT"
+    versionName "1.0.7-SNAPSHOT"
   }
 
   buildTypes {
@@ -65,29 +65,33 @@ dependencies {
   provided 'com.belerweb:pinyin4j:2.5.1'
 
   //Logger https://github.com/orhanobut/logger
-  compile "com.orhanobut:logger:1.15";
+//  compile "com.orhanobut:logger:1.15";
+  compile 'com.orhanobut:logger:2.1.1'
 
   //Glide https://github.com/bumptech/glide
   compile "com.github.bumptech.glide:glide:3.7.0";
 
   //FastJson https://github.com/alibaba/fastjson
-  compile "com.alibaba:fastjson:1.1.56.android";
+  compile 'com.alibaba:fastjson:1.1.59.android'
 
   //https://github.com/JakeWharton/butterknife
-  compile 'com.jakewharton:butterknife:8.5.1'
-  annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+  compile 'com.jakewharton:butterknife:8.6.0'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 
   //Retrofit http://square.github.io/retrofit/
-  compile "com.squareup.retrofit2:retrofit:2.2.0";
+  compile "com.squareup.retrofit2:retrofit:2.3.0";
 
   // rx 家族
-  compile "io.reactivex.rxjava2:rxjava:2.0.7"
+  compile "io.reactivex.rxjava2:rxjava:2.1.0"
   compile "io.reactivex.rxjava2:rxandroid:2.0.1"
-  //https://github.com/JakeWharton/retrofit2-rxjava2-adapter
-  compile 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
+  //https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
+  compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
   compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
 
-//  compile 'com.github.tianzhijiexian:CommonAdapter:1.2.2'
+  // For Lifecycles, LiveData, and ViewModel
+//  compile "android.arch.lifecycle:runtime:1.0.0-alpha3"
+//  compile "android.arch.lifecycle:extensions:1.0.0-alpha3"
+//  annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha3"
 
 
   compile 'com.squareup:otto:1.3.8';
@@ -100,7 +104,6 @@ dependencies {
    **************************************/
   // 友盟分析 http://mvnrepository.com/artifact/com.umeng.analytics/analytics
   provided 'com.umeng.analytics:analytics:6.1.0'
-  //provided('com.taobao.android:alisdk-hotfix:1.4.0') { transitive = false }
   provided 'com.taobao.android:alisdk-hotfix:2.0.9'
   provided 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.1.6'
 

@@ -1,7 +1,5 @@
 package name.zeno.android.util;
 
-import com.orhanobut.logger.Logger;
-
 import lombok.Getter;
 import name.zeno.android.third.rxjava.RxUtils;
 
@@ -18,8 +16,6 @@ public class UnitTest
   public static void test()
   {
     RxUtils.openUnitTest();
-    Logger.init(TAG);
-
     test = true;
   }
 }

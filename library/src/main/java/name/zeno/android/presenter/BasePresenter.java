@@ -75,8 +75,11 @@ public abstract class BasePresenter<T extends View> implements Presenter
 
   protected void removeDisposable(Disposable disposable)
   {
-    if (disposable != null) {
-      compositeDisposable.remove(disposable);
+    try {
+      if (disposable != null) compositeDisposable.remove(disposable);
+    } catch (Exception e) {
+      // 不知道为虾米，做了空检测在 vivo 上还是抛出了空异常
+      ZLog.e(TAG, e.getMessage(), e);
     }
   }
 
@@ -95,12 +98,10 @@ public abstract class BasePresenter<T extends View> implements Presenter
     return subWithDisposable(onNext, onError, onComplete, null);
   }
 
-
   protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<Disposable> onSub)
   {
     return subWithDisposable(onNext, e -> ZLog.e(TAG, "default on error", e), onSub);
   }
-
 
   protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<ZException> onError, Action1<Disposable> onSub)
   {
@@ -115,10 +116,12 @@ public abstract class BasePresenter<T extends View> implements Presenter
 
       @Override public void onSubscribe(Disposable d)
       {
-        addDisposable(d);
-        this.disposable = d;
-        if (onSub != null) {
-          onSub.call(d);
+        if (d != null) {
+          addDisposable(d);
+          this.disposable = d;
+          if (onSub != null) {
+            onSub.call(d);
+          }
         }
       }
 
@@ -138,7 +141,9 @@ public abstract class BasePresenter<T extends View> implements Presenter
       @Override
       public void onComplete()
       {
-        removeDisposable(disposable);
+        if (disposable != null) {
+          removeDisposable(disposable);
+        }
         onComplete.call();
       }
     };

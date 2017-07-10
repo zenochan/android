@@ -2,7 +2,7 @@ package name.zeno.android.util;
 
 import android.util.Log;
 
-import com.orhanobut.logger.LogLevel;
+import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 /**
@@ -18,15 +18,18 @@ public class ZLog
   private static      boolean DEBUG = true;
 
   static {
-    Logger.init(TAG).hideThreadInfo().methodCount(1).logLevel(LogLevel.FULL);
+    Logger.addLogAdapter(new AndroidLogAdapter()
+    {
+      @Override public boolean isLoggable(int priority, String tag)
+      {
+        return DEBUG;
+      }
+    });
   }
 
   public static void debug(boolean debug)
   {
-    if (DEBUG != debug) {
-      DEBUG = debug;
-      Logger.init(TAG).hideThreadInfo().methodCount(1).logLevel(DEBUG ? LogLevel.FULL : LogLevel.NONE);
-    }
+    if (DEBUG != debug) DEBUG = debug;
   }
 
   public static void v(String msg)

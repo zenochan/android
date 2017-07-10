@@ -43,15 +43,21 @@ public class ZWebpageMessageReq extends AbsReq
       if (thumbImage != null) {
         subscriber.onNext(thumbImage);
         subscriber.onComplete();
-      } else if (thumbImageUrl != null) {
-        Bitmap bitmap = ZBitmap.bitmap(thumbImageUrl);
-        subscriber.onNext(bitmap);
-        subscriber.onComplete();
-      } else {
-        Bitmap bitmap = ZBitmap.bitmap(ContextCompat.getDrawable(ZApplication.getApplication(), R.mipmap.ic_add), true);
-        subscriber.onNext(bitmap);
-        subscriber.onComplete();
+        return;
       }
+
+      if (thumbImageUrl != null) {
+        Bitmap bitmap = ZBitmap.bitmap(thumbImageUrl);
+        if (bitmap != null) {
+          subscriber.onNext(bitmap);
+          subscriber.onComplete();
+          return;
+        }
+      }
+
+      Bitmap bitmap = ZBitmap.bitmap(ContextCompat.getDrawable(ZApplication.getApplication(), R.mipmap.ic_add), true);
+      subscriber.onNext(bitmap);
+      subscriber.onComplete();
     }).map(bitmap -> {
       // 对大图片处理
       if (bitmap.getWidth() > 256 || bitmap.getHeight() > 256) {

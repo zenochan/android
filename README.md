@@ -9,7 +9,7 @@ repositories{
   maven {url "http://maven.mjtown.cn/"}
 }
 dependencies{
-  compile "name.zeno:android:1.0.2"
+  compile "name.zeno:android:1.0.6"
 }
 ```
 
@@ -48,6 +48,18 @@ dependencies{
 - [ ] [数据库框架研究](https://www.zhihu.com/question/46449188?sort=created)
 
 ## CHANGE LOG
+
+#### 1.0.6
+
+- libs update
+
+|lib        |new version    |old version|
+|-----------|---------------|-----------|
+|logger     |2.1.1          |1.15       |
+|fastjson   |1.1.59.android |1.1.56.android|
+|butterknife|8.6.0          |8.5.1      |
+|retrofit   |2.3.0          |2.2.9      |
+|rxjava     |2.1.0          |2.0.7      |
 
 #### 1.0.5
 
