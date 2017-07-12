@@ -76,6 +76,8 @@ public class LocationHelper implements BDLocationListener
     }
   }
 
+  @Override public void onConnectHotSpotMessage(String s, int i) { /*热点消息*/ }
+
   public synchronized void requestLocation(Observer<BDLocation> observer)
   {
     if (!observers.contains(observer)) {

@@ -15,11 +15,9 @@ dependencies{
 
 ##  Modules
 
-#### BAT
-
 - [微信 open sdk](./docs/wxsdk.md)
-- 热修复: [HotFix](./docs/hotfix.md)
-- [百度地图]()
+- [HotFix](./docs/hotfix.md)
+- [百度地图](./docs/baidumap.md)
 
 #### 其他
 
@@ -48,6 +46,12 @@ dependencies{
 - [ ] [数据库框架研究](https://www.zhihu.com/question/46449188?sort=created)
 
 ## CHANGE LOG
+
+#### 1.0.7
+
+ - 重新整理了支付宝支付、百度地图依赖
+ - 简单分装了银联支付 `UnionpayHelper`
+ - 优化升级提示
 
 #### 1.0.6
 

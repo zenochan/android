@@ -1,7 +1,21 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'maven'
+
+apply from: 'http://maven.mjtown.cn/maven.gradle'
+mavenConf {
+  projectName "zenokit"
+  projectDesc "自用安卓库"
+  projectUrl "https://github.com/zenochan/android/"
+
+  groupId "name.zeno"
+  artifactId "android"
+  version "1.0.7"
+
+//  repositoryUrl "file:///Users/zenochan/.m2/repository"
+  repositoryUrl "scp://root@121.43.123.201/root/nginx/maven"
+}
+confMaven()
 
 repositories {
   maven { url "https://jitpack.io" }
@@ -28,7 +42,7 @@ android {
     minSdkVersion 15
     targetSdkVersion 25
     versionCode 1
-    versionName "1.0.7-SNAPSHOT"
+    versionName mavenConf.version
   }
 
   buildTypes {
@@ -48,6 +62,9 @@ dependencies {
    **************************************/
 
   compile "name.zeno:common-adapter:1.0.1"
+  provided 'com.alipay:alipay:20170623'
+  provided 'com.unionpay:unionpay:3.3.7'
+  provided 'com.baidu.mapapi:LocPoiLBS:4.3.1'
 
   //support 家族
   //https://developer.android.com/topic/libraries/support-library/features.html
@@ -121,66 +138,4 @@ dependencies {
 
   //时间选择 120kb https://github.com/wdullaer/MaterialDateTimePicker
   compile 'com.wdullaer:materialdatetimepicker:2.5.0'
-}
-
-
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      repository(url: "file:///Users/zenochan/.m2/repository")
-
-      pom.groupId = "name.zeno"
-      pom.artifactId = 'android'
-      pom.version = android.defaultConfig.versionName
-
-      pom.project {
-        name 'android'
-        packaging 'aar'
-        description 'Zeno\' Android App Dev Kit'
-        url 'https://github.com/zenochan/android'
-
-        scm {
-          url 'https://github.com/zenochan/android'
-          connection 'https://github.com/zenochan/android'
-          developerConnection 'https://zenochan.github.io'
-        }
-
-        licenses {
-          license {
-            name 'The Apache Software License, Version 2.0'
-            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            distribution 'Apache-2.0'
-          }
-        }
-
-        developers {
-          developer {
-            id 'zenochan'
-            name 'Zeno Chan'
-            email 'zenochan@qq.com'
-          }
-        }
-      }
-    }
-  }
-}
-
-task sourcesJar(type: Jar) {
-  from android.sourceSets.main.java.srcDirs
-  classifier = 'sources'
-}
-
-task javadoc(type: Javadoc) {
-  source = android.sourceSets.main.java.srcDirs
-  failOnError false
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-  classifier = 'javadoc'
-  from javadoc.destinationDir
-}
-
-artifacts {
-  archives javadocJar
-  archives sourcesJar
 }

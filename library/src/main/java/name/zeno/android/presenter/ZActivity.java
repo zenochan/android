@@ -30,7 +30,6 @@ import lombok.Getter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action2;
 import name.zeno.android.presenter.activities.AutoHideIMActivity;
-import name.zeno.android.system.ZStatusBar;
 import name.zeno.android.third.rxjava.RxActivityResult;
 
 /**

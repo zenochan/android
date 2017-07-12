@@ -37,22 +37,25 @@ import retrofit2.Response;
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/11/21.
  */
-public class UpdateActivity extends ZActivity {
+public class UpdateActivity extends ZActivity
+{
   public static final String EXTRA_UPDATE_INFO = "extra_update_info";
 
   private UpdateInfo updateInfo;
-  private String localFilePath;
+  private String     localFilePath;
 
   private RxPermissions rxPermissions;
 
-  public static Intent getCallingIntent(Context context, UpdateInfo updateInfo) {
+  public static Intent getCallingIntent(Context context, UpdateInfo updateInfo)
+  {
     Intent intent = new Intent(context, UpdateActivity.class);
     intent.putExtra(EXTRA_UPDATE_INFO, updateInfo);
     return intent;
   }
 
   @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
+  protected void onCreate(@Nullable Bundle savedInstanceState)
+  {
     super.onCreate(savedInstanceState);
     setContentView(new View(this));
     rxPermissions = new RxPermissions(this);
@@ -61,9 +64,11 @@ public class UpdateActivity extends ZActivity {
   }
 
 
-  public void showUpdate(UpdateInfo version) {
+  public void showUpdate(UpdateInfo version)
+  {
     MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
-        .content("发现新版本,是否现在升级?")
+        .title("发现新版本,是否现在升级?")
+        .content(version.getVersionInfo())
         .positiveText("好")
         .negativeText("取消")
         .cancelable(false)
@@ -71,7 +76,8 @@ public class UpdateActivity extends ZActivity {
         .onPositive((dialog, which) -> preDownload(version));
 
     if (version.isForceUpdate()) {
-      builder.content("发现新版本,需要升级后才能继续使用,是否现在升级?");
+      builder.title("发现新版本,需要升级后才能继续使用,是否现在升级?");
+      builder.content(version.getVersionInfo());
       builder.negativeText("退出应用");
       builder.onNegative((dialog, which) -> ZNav.exit(this));
     }
@@ -79,7 +85,8 @@ public class UpdateActivity extends ZActivity {
     builder.show();
   }
 
-  void preDownload(UpdateInfo updateInfo) {
+  void preDownload(UpdateInfo updateInfo)
+  {
     rxPermissions.request(ZPermission.READ_EXTERNAL_STORAGE, ZPermission.WRITE_EXTERNAL_STORAGE)
         .subscribe(granted -> {
           if (granted) {
@@ -90,7 +97,8 @@ public class UpdateActivity extends ZActivity {
         });
   }
 
-  void permisionDenied(boolean forceUpdate) {
+  void permisionDenied(boolean forceUpdate)
+  {
     if (forceUpdate) {
       ZNav.exit(this);
     } else {
@@ -98,8 +106,11 @@ public class UpdateActivity extends ZActivity {
     }
   }
 
-  void download(String fileUrl, int versionName) {
-    localFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + getPackageName() + "_" + versionName + ".apk";
+  void download(String fileUrl, int versionName)
+  {
+    // /downloads/{packageName}_{versionName}.apk
+    localFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()
+        + File.separator + getPackageName() + "_" + versionName + ".apk";
 
     MaterialDialog dialog = new MaterialDialog.Builder(this)
         .title("下载更新")
@@ -113,12 +124,12 @@ public class UpdateActivity extends ZActivity {
       long contentLength;
       long completeSize = 0;
 
-      InputStream is = null;
+      InputStream      is               = null;
       RandomAccessFile randomAccessFile = null;
 
       try {
         Response<ResponseBody> response = CommonConnector.download(fileUrl).execute();
-        int code = response.raw().code();
+        int                    code     = response.raw().code();
         if (code != 200) {
           if (code == 404) {
             throw new ZException(ZException.ERR_NOT_FOUND, "文件链接无效");
@@ -137,8 +148,8 @@ public class UpdateActivity extends ZActivity {
           return;
         }
 
-        int length = -1;
-        int limit = -1;
+        int    length = -1;
+        int    limit  = -1;
         byte[] buffer = new byte[1024 * 1024];
         while ((length = is.read(buffer)) != -1) {
           randomAccessFile.write(buffer, 0, length);
@@ -171,11 +182,13 @@ public class UpdateActivity extends ZActivity {
         }
       }
     }).compose(RxUtils.applySchedulers())
-        .subscribe(new ZObserver<Float>() {
+        .subscribe(new ZObserver<Float>()
+        {
           boolean err = false;
 
           @Override
-          public void handleError(ZException e) {
+          public void handleError(ZException e)
+          {
             showMessage(e.getMessage());
             dialog.setContent(e.getMessage());
             dialog.setProgress(0);
@@ -183,23 +196,34 @@ public class UpdateActivity extends ZActivity {
           }
 
           @Override
-          public void onComplete() {
+          public void onComplete()
+          {
+            File file = new File(localFilePath);
             if (!err) {
-              dialog.setContent("下载完成,请等待安装");
-              dialog.setProgress(100);
-              installAPK(new File(localFilePath));
+              dialog.dismiss();
+              new MaterialDialog.Builder(UpdateActivity.this)
+                  .content("下载完成")
+                  .positiveText("安装")
+                  .negativeText("退出")
+                  .autoDismiss(false)
+                  .cancelable(false)
+                  .onPositive((dialog, which) -> installAPK(file))
+                  .onNegative((dialog, which) -> ZNav.exit(UpdateActivity.this))
+                  .show();
+              installAPK(file);
             }
           }
 
           @Override
-          public void onNext(Float aFloat) {
+          public void onNext(Float aFloat)
+          {
             dialog.setProgress((int) (aFloat * 100));
           }
         });
   }
 
-
-  private void installAPK(File file) {
+  private void installAPK(File file)
+  {
     if (!file.exists()) return;
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -213,7 +237,7 @@ public class UpdateActivity extends ZActivity {
       startActivity(intent);
     } else {
       Intent intent = new Intent(Intent.ACTION_VIEW);
-      Uri uri = Uri.parse("file://" + file.toString());
+      Uri    uri    = Uri.parse("file://" + file.toString());
       intent.setDataAndType(uri, "application/vnd.android.package-archive");
       //在服务中开启activity必须设置flag
       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

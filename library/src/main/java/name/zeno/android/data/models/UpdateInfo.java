@@ -14,6 +14,7 @@ public class UpdateInfo implements Parcelable
 {
   private String versionName;
   private int    versionCode;
+  private String versionInfo;
   private String versionUrl;
 
   private boolean forceUpdate;
@@ -29,6 +30,7 @@ public class UpdateInfo implements Parcelable
   {
     dest.writeString(this.versionName);
     dest.writeInt(this.versionCode);
+    dest.writeString(this.versionInfo);
     dest.writeString(this.versionUrl);
     dest.writeByte(this.forceUpdate ? (byte) 1 : (byte) 0);
     dest.writeString(this.fileProvider);
@@ -38,6 +40,7 @@ public class UpdateInfo implements Parcelable
   {
     this.versionName = in.readString();
     this.versionCode = in.readInt();
+    this.versionInfo = in.readString();
     this.versionUrl = in.readString();
     this.forceUpdate = in.readByte() != 0;
     this.fileProvider = in.readString();
