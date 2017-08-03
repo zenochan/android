@@ -47,6 +47,10 @@ dependencies{
 
 ## CHANGE LOG
 
+#### 1.0.8
+
+ - FIX BUG: SearchPoiActivity NPE on destroy
+
 #### 1.0.7
 
  - 重新整理了支付宝支付、百度地图依赖

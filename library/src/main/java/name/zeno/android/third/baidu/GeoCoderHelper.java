@@ -73,7 +73,7 @@ public class GeoCoderHelper
 
   public void onDestroy()
   {
-    geoCoder.setOnGetGeoCodeResultListener(null);
+    next = null;
     geoCoder.destroy();
   }
 }

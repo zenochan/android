@@ -10,7 +10,7 @@ mavenConf {
 
   groupId "name.zeno"
   artifactId "android"
-  version "1.0.7"
+  version "1.0.8"
 
 //  repositoryUrl "file:///Users/zenochan/.m2/repository"
   repositoryUrl "scp://root@121.43.123.201/root/nginx/maven"
@@ -121,6 +121,7 @@ dependencies {
    **************************************/
   // 友盟分析 http://mvnrepository.com/artifact/com.umeng.analytics/analytics
   provided 'com.umeng.analytics:analytics:6.1.0'
+  // http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/com/taobao/android/alisdk-hotfix/
   provided 'com.taobao.android:alisdk-hotfix:2.0.9'
   provided 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.1.6'
 
