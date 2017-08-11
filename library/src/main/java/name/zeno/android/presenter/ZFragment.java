@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.SupportDatePickerDialog;
 
 import java.util.ArrayList;
@@ -87,9 +87,8 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
     }
   }
 
-  @Nullable
-  @Override
-  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+  @Nullable @Override @SuppressWarnings("NullableProblems")
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
   {
     ZLog.v(TAG, "onCreateView()");
     return super.onCreateView(inflater, container, savedInstanceState);
@@ -186,7 +185,6 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
   {
     startActivityForResult(clazz, null, next);
   }
-
 
   public void startActivityForResult(Class<? extends Activity> clazz, Parcelable data, Action2<Boolean, Intent> next)
   {

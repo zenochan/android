@@ -47,6 +47,14 @@ dependencies{
 
 ## CHANGE LOG
 
+#### 1.0.6
+
+- libs update
+
+|lib        |new version    |old version|
+|-----------|---------------|-----------|
+|glide      |4.0.0          |3.7.0      |
+
 #### 1.0.8
 
  - FIX BUG: SearchPoiActivity NPE on destroy

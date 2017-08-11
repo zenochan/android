@@ -1,15 +1,19 @@
 package name.zeno.android.system;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * @author 陈治谋 (513500085@qq.com)
@@ -102,6 +106,101 @@ public class ZStatusBar
     return context.getResources().getDimensionPixelOffset(resourceId);
   }
 
+  /**
+   * 状态栏亮色模式，设置状态栏黑色文字、图标，
+   * 适配4.4以上版本MIUIV、Flyme和6.0以上版本其他Android
+   *
+   * @return 1:MIUUI 2:Flyme 3:android6.0
+   * @see <a href="http://www.jianshu.com/p/7f5a9969be53">白底黑字！Android浅色状态栏黑色字体模式 </a>
+   */
+  public static int StatusBarLightMode(Activity activity)
+  {
+    int result = 0;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      if (miuiSetStatusBarLightMode(activity, true)) {
+        result = 1;
+      } else if (flymeSetStatusBarLightMode(activity, true)) {
+        result = 2;
+      } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        result = 3;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * 需要 MIUI V6 以上
+   *
+   * @param dark 是否把状态栏文字及图标颜色设置为深色
+   * @return boolean 成功执行返回true
+   */
+  private static boolean miuiSetStatusBarLightMode(@NonNull Activity activity, boolean dark)
+  {
+    boolean result = false;
+
+    try {
+      Window window       = activity.getWindow();
+      Class  clazz        = window.getClass();
+      Class  layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+      Field  field        = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+      int    darkModeFlag = field.getInt(layoutParams);
+      @SuppressWarnings("unchecked")
+      Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+      if (dark) {
+        extraFlagField.invoke(window, darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
+      } else {
+        extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
+      }
+      result = true;
+
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        //开发版 7.7.13 及以后版本采用了系统API，旧方法无效但不会报错，所以两个方式都要加上
+        if (dark) {
+          activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+          activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        }
+      }
+    } catch (Exception ignore) { }
+
+    return result;
+  }
+
+
+  /**
+   * 设置状态栏图标为深色和魅族特定的文字风格
+   * 可以用来判断是否为Flyme用户
+   *
+   * @param dark 是否把状态栏文字及图标颜色设置为深色
+   * @return boolean 成功执行返回true
+   */
+  private static boolean flymeSetStatusBarLightMode(@NonNull Activity activity, boolean dark)
+  {
+    boolean result = false;
+    try {
+      Window                     window = activity.getWindow();
+      WindowManager.LayoutParams lp     = window.getAttributes();
+      Field darkFlag = WindowManager.LayoutParams.class
+          .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+      Field meizuFlags = WindowManager.LayoutParams.class
+          .getDeclaredField("meizuFlags");
+      darkFlag.setAccessible(true);
+      meizuFlags.setAccessible(true);
+      int bit   = darkFlag.getInt(null);
+      int value = meizuFlags.getInt(lp);
+      if (dark) {
+        value |= bit;
+      } else {
+        value &= ~bit;
+      }
+      meizuFlags.setInt(lp, value);
+      window.setAttributes(lp);
+      result = true;
+    } catch (Exception ignore) { }
+
+    return result;
+  }
 
   /**
    * 系统 bar 高度

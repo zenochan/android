@@ -1,4 +1,4 @@
-package name.zeno.android.third.glide;
+package name.zeno.android.third.glide.sizableurl;
 
 /**
  * @author 陈治谋 (513500085@qq.com)

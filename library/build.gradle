@@ -10,10 +10,10 @@ mavenConf {
 
   groupId "name.zeno"
   artifactId "android"
-  version "1.0.8"
+  version "1.0.9"
 
 //  repositoryUrl "file:///Users/zenochan/.m2/repository"
-  repositoryUrl "scp://root@121.43.123.201/root/nginx/maven"
+  repositoryUrl "scp://root@47.52.98.182/root/nginx/maven"
 }
 confMaven()
 
@@ -86,14 +86,20 @@ dependencies {
   compile 'com.orhanobut:logger:2.1.1'
 
   //Glide https://github.com/bumptech/glide
-  compile "com.github.bumptech.glide:glide:3.7.0";
+  //compile "com.github.bumptech.glide:glide:3.7.0";
+  compile 'com.github.bumptech.glide:glide:4.0.0'
+  compile('com.github.bumptech.glide:okhttp3-integration:4.0.0') {
+    exclude(module: 'okhttp')
+    exclude(module: 'support-annotations')
+  }
+  annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
 
   //FastJson https://github.com/alibaba/fastjson
   compile 'com.alibaba:fastjson:1.1.59.android'
 
   //https://github.com/JakeWharton/butterknife
-  compile 'com.jakewharton:butterknife:8.6.0'
-  annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+  compile 'com.jakewharton:butterknife:8.8.1'
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
   //Retrofit http://square.github.io/retrofit/
   compile "com.squareup.retrofit2:retrofit:2.3.0";
@@ -103,7 +109,7 @@ dependencies {
   compile "io.reactivex.rxjava2:rxandroid:2.0.1"
   //https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
   compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-  compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
+  compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
 
   // For Lifecycles, LiveData, and ViewModel
 //  compile "android.arch.lifecycle:runtime:1.0.0-alpha3"
@@ -135,7 +141,7 @@ dependencies {
   compile 'me.zhanghai.android.materialprogressbar:library:1.1.7'
 
   //BottomBar https://github.com/roughike/BottomBar
-  compile 'com.roughike:bottom-bar:2.3.0'
+  compile 'com.roughike:bottom-bar:2.3.1'
 
   //时间选择 120kb https://github.com/wdullaer/MaterialDateTimePicker
   compile 'com.wdullaer:materialdatetimepicker:2.5.0'

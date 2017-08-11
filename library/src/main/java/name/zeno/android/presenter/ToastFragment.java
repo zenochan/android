@@ -43,7 +43,13 @@ public class ToastFragment extends Fragment
   //<editor-fold desc="snack & toast">
   protected void snack(String msg)
   {
-    Snackbar.make(fragmentView, msg, Snackbar.LENGTH_LONG).show();
+    try {
+      Snackbar.make(fragmentView, msg, Snackbar.LENGTH_LONG).show();
+    } catch (IllegalStateException | IllegalArgumentException e) {
+      //java.lang.IllegalStateException: Fatal Exception thrown on Scheduler.
+      //Caused by: java.lang.IllegalArgumentException: No suitable parent found from the given view. Please provide a valid view.
+      toast(msg);
+    }
   }
 
   protected void snack(String msg, String button)
@@ -53,13 +59,19 @@ public class ToastFragment extends Fragment
 
   protected void snack(String msg, String button, Action0 onNext)
   {
-    Snackbar.make(fragmentView, msg, Snackbar.LENGTH_LONG)
-        .setAction(button, view -> {
-          if (onNext != null) {
-            onNext.call();
-          }
-        })
-        .show();
+    try {
+      Snackbar.make(fragmentView, msg, Snackbar.LENGTH_LONG)
+          .setAction(button, view -> {
+            if (onNext != null) {
+              onNext.call();
+            }
+          })
+          .show();
+    } catch (IllegalStateException | IllegalArgumentException e) {
+      //java.lang.IllegalStateException: Fatal Exception thrown on Scheduler.
+      //Caused by: java.lang.IllegalArgumentException: No suitable parent found from the given view. Please provide a valid view.
+      toast(msg);
+    }
   }
 
   protected void snack(@StringRes int resId)

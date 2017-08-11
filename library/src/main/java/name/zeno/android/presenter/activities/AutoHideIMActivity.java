@@ -21,19 +21,23 @@ public abstract class AutoHideIMActivity extends ZLogActivity
 
   @Override public boolean dispatchTouchEvent(MotionEvent ev)
   {
-    boolean eventConsumed;
+    boolean eventConsumed = false;
 
-    if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-      View v = getCurrentFocus();
-      if (v != null && isShouldHideInput(v, ev)) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-          imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    try {
+      if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+        View v = getCurrentFocus();
+        if (v != null && isShouldHideInput(v, ev)) {
+          InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+          if (imm != null) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+          }
         }
+        eventConsumed = super.dispatchTouchEvent(ev);
+      } else {
+        eventConsumed = getWindow().superDispatchTouchEvent(ev) || onTouchEvent(ev);
       }
-      eventConsumed = super.dispatchTouchEvent(ev);
-    } else {
-      eventConsumed = getWindow().superDispatchTouchEvent(ev) || onTouchEvent(ev);
+    } catch (IllegalArgumentException ignore) {
+      //pointerIndex out of range pointerIndex=-1 pointerCount=1
     }
 
     return eventConsumed;
