@@ -113,7 +113,7 @@ public class ZStatusBar
    * @return 1:MIUUI 2:Flyme 3:android6.0
    * @see <a href="http://www.jianshu.com/p/7f5a9969be53">白底黑字！Android浅色状态栏黑色字体模式 </a>
    */
-  public static int StatusBarLightMode(Activity activity)
+  public static int lightMode(Activity activity)
   {
     int result = 0;
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

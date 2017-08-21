@@ -5,6 +5,12 @@
 
   <application>
     <activity
+      android:name="name.zeno.android.app.CrashLogActivity"
+      android:launchMode="singleTask"
+      android:screenOrientation="portrait"
+      />
+
+    <activity
       android:name="name.zeno.android.presenter.bigbang.BigBangActivity"
       android:screenOrientation="portrait"
       />
@@ -13,6 +19,12 @@
       android:name="name.zeno.android.presenter.activities.UpdateActivity"
       android:screenOrientation="portrait"
       android:theme="@style/DefaultTheme.Transparent"
+      />
+
+    <activity
+      android:name="name.zeno.android.presenter.input.InputActivity"
+      android:launchMode="singleTop"
+      android:screenOrientation="portrait"
       />
   </application>
 </manifest>

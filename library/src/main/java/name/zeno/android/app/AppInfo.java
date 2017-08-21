@@ -1,19 +1,25 @@
 package name.zeno.android.app;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.StringBuilderPrinter;
 
-import com.alibaba.fastjson.JSON;
-import com.orhanobut.logger.Logger;
+import java.security.Permission;
+import java.util.jar.Manifest;
 
+import name.zeno.android.system.ZPermission;
 import name.zeno.android.util.PrintUtils;
 import name.zeno.android.util.SystemUtils;
 import name.zeno.android.util.ZLog;
+
+import static android.content.Context.TELEPHONY_SERVICE;
 
 /**
  * Create Date: 16/6/9
@@ -27,10 +33,13 @@ public class AppInfo
 
   public static String dType;
   public static String dVersion;
+  public static String imei;
+  public static String phoneNumber;
 
-  public static int    appCode;
-  public static String appVersion;
   public static String appName;
+  public static String packageName;
+  public static int    versionCode;
+  public static String versionName;
 
   /** 屏幕宽度 */
   public static int   width;
@@ -46,10 +55,20 @@ public class AppInfo
     initDisplay();
   }
 
+  @SuppressLint("HardwareIds")
   public static void init(Context context)
   {
     dType = Build.MODEL;
     dVersion = Build.VERSION.SDK_INT + "_" + Build.VERSION.RELEASE;
+
+    try {
+      TelephonyManager tm = (TelephonyManager) context.getSystemService(TELEPHONY_SERVICE);
+      if (ContextCompat.checkSelfPermission(context, ZPermission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+        imei = tm.getDeviceId();
+        phoneNumber = tm.getLine1Number();
+      }
+    } catch (Exception ignore) { }
+
     PackageInfo pi = null;
     try {
       pi = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -57,11 +76,12 @@ public class AppInfo
       ZLog.e(TAG, e.getMessage(), e);
     }
     if (null != pi) {
-      appVersion = pi.versionName;
-      appCode = pi.versionCode;
+      versionName = pi.versionName;
+      versionCode = pi.versionCode;
+      packageName = pi.packageName;
     } else {
-      appVersion = "";
-      appCode = 0;
+      versionName = "";
+      versionCode = 0;
     }
     appName = SystemUtils.getApplicationName(context);
     btAddress = PrintUtils.getDefaultBluetoothDeviceAddress(context);
@@ -85,8 +105,8 @@ public class AppInfo
         "-------------   app info  -------------------\r\n" +
             "dType" + ":" + dType + "\r\n" +
             "dVersion:" + dVersion + "\r\n" +
-            "appCode:" + appCode + "\r\n" +
-            "appVersion:" + appVersion + "\r\n" +
+            "versionCode:" + versionCode + "\r\n" +
+            "versionName:" + versionName + "\r\n" +
             "width:" + width + "\r\n" +
             "height:" + height + "\r\n" +
             "density:" + density + "\r\n" +

@@ -59,6 +59,7 @@ public class ZAppBarLayout extends AppBarLayout
       int c = ta.getColor(R.styleable.ZAppBarLayout_backgroundStatusBar, Color.BLACK);
       if (c != Color.BLACK) {
         statusBarView.setBackgroundColor(c);
+        this.setBackgroundColor(c);
       }
     }
     ta.recycle();

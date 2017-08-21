@@ -9,33 +9,39 @@ import com.igexin.sdk.GTServiceManager;
 /**
  * 个推 service
  */
-public class GetuiService extends Service {
+public abstract class ZGetuiService extends Service
+{
   @Override
-  public void onCreate() {
+  public void onCreate()
+  {
     super.onCreate();
     GTServiceManager.getInstance().onCreate(this);
   }
 
   @Override
-  public int onStartCommand(Intent intent, int flags, int startId) {
+  public int onStartCommand(Intent intent, int flags, int startId)
+  {
     super.onStartCommand(intent, flags, startId);
     //noinspection WrongConstant
     return GTServiceManager.getInstance().onStartCommand(this, intent, flags, startId);
   }
 
   @Override
-  public IBinder onBind(Intent intent) {
+  public IBinder onBind(Intent intent)
+  {
     return GTServiceManager.getInstance().onBind(intent);
   }
 
   @Override
-  public void onDestroy() {
+  public void onDestroy()
+  {
     super.onDestroy();
     GTServiceManager.getInstance().onDestroy();
   }
 
   @Override
-  public void onLowMemory() {
+  public void onLowMemory()
+  {
     super.onLowMemory();
     GTServiceManager.getInstance().onLowMemory();
   }

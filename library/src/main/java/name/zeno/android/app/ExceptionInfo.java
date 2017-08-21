@@ -17,39 +17,29 @@ public class ExceptionInfo implements Parcelable
   public static final String EXTRA_NAME = "exception_info";
 
   Throwable                 throwable;
-  String                    appName;
-  String                    versionName;
-  int                       versionCode;
-  String                    subscribeEmail;
+  String                    email;
   Class<? extends Activity> mainActivityClass;
+  String                    accountJson;
 
-  public ExceptionInfo()
-  {
-
-  }
-
+  public ExceptionInfo() { }
 
   @Override public int describeContents() { return 0; }
 
   @Override public void writeToParcel(Parcel dest, int flags)
   {
     dest.writeSerializable(this.throwable);
-    dest.writeString(this.appName);
-    dest.writeString(this.versionName);
-    dest.writeInt(this.versionCode);
-    dest.writeString(this.subscribeEmail);
+    dest.writeString(this.email);
     dest.writeSerializable(this.mainActivityClass);
+    dest.writeString(this.accountJson);
   }
 
   protected ExceptionInfo(Parcel in)
   {
     this.throwable = (Throwable) in.readSerializable();
-    this.appName = in.readString();
-    this.versionName = in.readString();
-    this.versionCode = in.readInt();
-    this.subscribeEmail = in.readString();
+    this.email = in.readString();
     //noinspection unchecked
     this.mainActivityClass = (Class<? extends Activity>) in.readSerializable();
+    this.accountJson = in.readString();
   }
 
   public static final Creator<ExceptionInfo> CREATOR = new Creator<ExceptionInfo>()

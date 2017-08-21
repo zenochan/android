@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.WindowManager;
@@ -22,7 +23,7 @@ import java.net.URLEncoder;
 import lombok.Setter;
 import name.zeno.android.util.R;
 
-public class FloatingView extends ImageView
+public class FloatingView extends AppCompatImageView
 {
 
   private static final int ANIMATION_DURATION = 500;

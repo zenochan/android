@@ -14,7 +14,8 @@ import com.taobao.sophix.SophixManager;
 
 import java.util.Locale;
 
-import name.zeno.android.third.getui.GetuiService;
+import name.zeno.android.third.getui.ZGetuiService;
+import name.zeno.android.third.getui.ZGTIntentService;
 import name.zeno.android.util.ZCookie;
 import name.zeno.android.util.ZLog;
 
@@ -61,9 +62,18 @@ public abstract class ZApplication extends MultiDexApplication
 
   protected abstract boolean isDebug();
 
-  protected <T extends GetuiService> void initGetui(Class<T> tClazz)
+  /**
+   * @deprecated 个推官方推荐使用 GTIntentService 代替 BroadcastReceiver 来接受消息， 使用 {@link #initGetui(Class, Class)} 注册个推
+   */
+  protected <T extends ZGetuiService> void initGetui(Class<T> tClazz)
   {
     PushManager.getInstance().initialize(this.getApplicationContext(), tClazz);
+  }
+
+  protected <T extends ZGetuiService, I extends ZGTIntentService> void initGetui(Class<T> tClazz, Class<I> intentServiceClass)
+  {
+    PushManager.getInstance().initialize(this.getApplicationContext(), tClazz);
+    PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), intentServiceClass);
   }
 
   protected void initHotFix(String appVersion)

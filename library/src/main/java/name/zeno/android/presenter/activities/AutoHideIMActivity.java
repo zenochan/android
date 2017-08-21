@@ -1,6 +1,7 @@
 package name.zeno.android.presenter.activities;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,19 +50,14 @@ public abstract class AutoHideIMActivity extends ZLogActivity
     enableRootViewFocus();
     if (v != null && v instanceof EditText) {
 
-      if (lastFocus != null && lastFocus != v) {
+      if (lastFocus == null) {
+        lastFocus = v;
+      } else if (lastFocus != v) {
         lastFocus = v;
         return false;
       }
 
-      int[] leftTop = {0, 0};
-      //获取输入框当前的location位置
-      v.getLocationInWindow(leftTop);
-      int left   = leftTop[0];
-      int top    = leftTop[1];
-      int bottom = top + v.getHeight();
-      int right  = left + v.getWidth();
-      if (event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom) {
+      if (eventInFocusView(v, event)) {
         //点击的是输入框区域，保留点击EditText的事件
         return false;
       } else {
@@ -72,6 +68,20 @@ public abstract class AutoHideIMActivity extends ZLogActivity
       }
     }
     return false;
+  }
+
+  private boolean eventInFocusView(View v, MotionEvent event)
+  {
+    int[] leftTop = {0, 0};
+    //获取输入框当前的location位置
+    v.getLocationInWindow(leftTop);
+    Rect rect = new Rect();
+    rect.left = leftTop[0];
+    rect.top = leftTop[1];
+    rect.bottom = rect.top + v.getHeight();
+    rect.right = rect.left + v.getWidth();
+
+    return rect.contains((int) event.getX(), (int) event.getY());
   }
 
   private void enableRootViewFocus()

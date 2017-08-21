@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.StringRes;
@@ -171,7 +172,22 @@ public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListen
       actionTv.setVisibility(enable ? VISIBLE : GONE);
     }
 
+    boolean whiteBar = ta.getBoolean(R.styleable.SimpleActionbar_whiteBar, false);
+    if (whiteBar) {
+      setBackgroundColor(Color.WHITE);
+    }
 
     ta.recycle();
+  }
+
+  public void setTitleColor(@ColorInt int color)
+  {
+    titleTv.setTextColor(color);
+  }
+
+  public void setPreTint(@ColorInt int color)
+  {
+    ColorStateList tint = new ColorStateList(new int[][]{{}}, new int[]{color});
+    preTv.setSupportCompoundDrawableTintList(tint);
   }
 }

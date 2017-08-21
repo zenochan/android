@@ -11,7 +11,9 @@
     style="@style/layout.fullWidth"
     app:actionDrawable="@mipmap/ic_send"
     app:actionEnable="true"
+    app:actionText="发送邮件"
     app:preTextBackgroundTint="@color/z.white"
+    app:textColorAction="@color/z.white"
     app:textColorTitle="@color/z.white"
     app:titleText="程序奔溃"
     />

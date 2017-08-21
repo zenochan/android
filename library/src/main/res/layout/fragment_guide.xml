@@ -11,7 +11,6 @@
     style="@style/layout.full"
     />
 
-
   <android.support.v7.widget.AppCompatButton
     android:id="@+id/btn_skip"
     android:layout_width="64sp"

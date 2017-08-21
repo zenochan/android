@@ -10,10 +10,10 @@ mavenConf {
 
   groupId "name.zeno"
   artifactId "android"
-  version "1.0.9"
+  version "1.1.0-SNAPSHOT"
 
-//  repositoryUrl "file:///Users/zenochan/.m2/repository"
-  repositoryUrl "scp://root@47.52.98.182/root/nginx/maven"
+  repositoryUrl "file:///Users/zenochan/.m2/repository"
+//  repositoryUrl "scp://root@47.52.98.182/root/nginx/maven"
 }
 confMaven()
 
@@ -21,6 +21,7 @@ repositories {
   maven { url "https://jitpack.io" }
 
   // 个推 http://docs.getui.com/mobile/android/androidstudio_maven/
+  // http://mvn.gt.igexin.com/nexus/content/repositories/releases/com/getui/sdk/
   maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/" }
 
   // 阿里百川 HotFix

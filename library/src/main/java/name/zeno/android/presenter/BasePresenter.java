@@ -8,6 +8,8 @@ import com.orhanobut.logger.Logger;
 import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import lombok.Getter;
+import lombok.Setter;
 import name.zeno.android.exception.ZException;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action1;
@@ -26,7 +28,7 @@ public abstract class BasePresenter<T extends View> implements Presenter
 
   private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-  protected T view;
+  @Getter @Setter protected T view;
 
   public BasePresenter(T view)
   {
@@ -36,10 +38,6 @@ public abstract class BasePresenter<T extends View> implements Presenter
     view.registerLifecycleListener(this);
   }
 
-  public void setView(T view)
-  {
-    this.view = view;
-  }
 
   @Override
   public void onCreate() { }

@@ -27,7 +27,7 @@ import name.zeno.android.util.ZLog;
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-@SuppressWarnings({"unused", "Convert2streamapi"})
+@SuppressWarnings({"unused", "Convert2streamapi", "NullableProblems"})
 public class ZFragment extends ToastFragment implements LifeCycleObservable
 {
   protected final String TAG;
@@ -96,10 +96,10 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
 
   @CallSuper
   @Override
-  public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
   {
-    ZLog.v(TAG, "onViewCreated()");
     super.onViewCreated(view, savedInstanceState);
+    ZLog.v(TAG, "onViewCreated()");
     for (LifecycleListener l : listenerList) {
       l.onViewCreated();
     }

@@ -1,6 +1,7 @@
 package name.zeno.android.presenter;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
@@ -105,12 +106,12 @@ public class ToastFragment extends Fragment
     Snackbar.make(fragmentView, resId, Snackbar.LENGTH_LONG).show();
   }
 
-  protected void toast(String msg)
+  public void toast(@NonNull String msg)
   {
     Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
   }
 
-  protected void toast(@StringRes int resId)
+  public void toast(@StringRes int resId)
   {
     Toast.makeText(getContext(), resId, Toast.LENGTH_SHORT).show();
   }

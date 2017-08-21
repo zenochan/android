@@ -15,6 +15,10 @@ public interface View extends LifeCycleObservable
 
   String getString(@StringRes int res);
 
+  void toast(String msg);
+
+  void toast(@StringRes int resId);
+
   void showMessage(String msg);
 
   void showMessage(@StringRes int resId);

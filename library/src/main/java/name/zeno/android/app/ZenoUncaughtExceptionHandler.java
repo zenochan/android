@@ -21,10 +21,8 @@ public class ZenoUncaughtExceptionHandler implements Thread.UncaughtExceptionHan
   @SuppressWarnings("unused")
   @Setter private Action1<Throwable> onError;
 
-  @Setter private String                    subscribeEmail;
-  @Setter private String                    appName;
-  @Setter private String                    versionName;
-  @Setter private int                       versionCode;
+  @Setter private String                    email;
+  @Setter private String                    accountJson;
   @Setter private Class<? extends Activity> mainActivityClass;
 
 
@@ -42,12 +40,10 @@ public class ZenoUncaughtExceptionHandler implements Thread.UncaughtExceptionHan
     Intent intent = new Intent(application, CrashLogActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     ExceptionInfo info = new ExceptionInfo();
-    info.appName = this.appName;
-    info.versionName = this.versionName;
-    info.versionCode = this.versionCode;
-    info.subscribeEmail = this.subscribeEmail;
+    info.email = email;
+    info.accountJson = accountJson;
     info.throwable = throwable;
-    info.mainActivityClass = this.mainActivityClass;
+    info.mainActivityClass = mainActivityClass;
     intent.putExtra(ExceptionInfo.EXTRA_NAME, info);
     application.startActivity(intent);
 

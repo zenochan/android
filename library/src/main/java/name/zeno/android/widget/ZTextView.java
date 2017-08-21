@@ -3,7 +3,12 @@ package name.zeno.android.widget;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
@@ -14,6 +19,10 @@ import name.zeno.android.tint.TintInfo;
 import name.zeno.android.tint.TintableCompoundDrawableView;
 import name.zeno.android.util.R;
 
+import static android.R.attr.cacheColorHint;
+import static android.R.attr.drawable;
+import static android.R.attr.drawableLeft;
+
 /**
  * Create Date: 16/6/16
  *
@@ -23,6 +32,7 @@ public class ZTextView extends AppCompatTextView implements TintableCompoundDraw
 {
   private TintInfo compoundDrawableTint;
 
+  int drawableGravity      = -1;
   int drawableWidth        = -1;
   int drawableHeight       = -1;
   int LeftDrawableWidth    = -1;
@@ -92,37 +102,27 @@ public class ZTextView extends AppCompatTextView implements TintableCompoundDraw
     setSupportCompoundDrawableTintList(getSupportCompoundDrawableTintList());
   }
 
+  private static Bitmap getBitmap(Drawable drawable)
+  {
+    BitmapDrawable bd = (BitmapDrawable) drawable;
+    return bd.getBitmap();
+  }
+
   private void initCompoundDrawableSize(TypedArray tArray)
   {
-    //遍历参数:
-    //A.将index从TypedArray中读出来
-    //B.得到的这个index对应于attrs.xml中设置的参数名称在R中编译得到的数
-    //C.获取宽和高
-    int index;
-    for (int i = 0; i < tArray.getIndexCount(); i++) {
-      index = tArray.getIndex(i);
-      if (index == R.styleable.ZTextView_drawableWidth) {
-        drawableWidth = tArray.getDimensionPixelSize(index, -1);
-      } else if (index == R.styleable.ZTextView_drawableHeight) {
-        drawableHeight = tArray.getDimensionPixelSize(index, -1);
-      } else if (index == R.styleable.ZTextView_LeftDrawableWidth) {
-        LeftDrawableWidth = tArray.getDimensionPixelSize(index, -1);
-      } else if (index == R.styleable.ZTextView_LeftDrawableHeight) {
-        LeftDrawableHeight = tArray.getDimensionPixelSize(index, -1);
-      } else if (index == R.styleable.ZTextView_TopDrawableWidth) {
-        TopDrawableWidth = tArray.getDimensionPixelSize(index, -1);
-      } else if (index == R.styleable.ZTextView_TopDrawableHeight) {
-        TopDrawableHeight = tArray.getDimensionPixelSize(index, -1);
-      } else if (index == R.styleable.ZTextView_RightDrawableWidth) {
-        RightDrawableWidth = tArray.getDimensionPixelSize(index, -1);
-      } else if (index == R.styleable.ZTextView_RightDrawableHeight) {
-        RightDrawableHeight = tArray.getDimensionPixelSize(index, -1);
-      } else if (index == R.styleable.ZTextView_BottomDrawableWidth) {
-        BottomDrawableWidth = tArray.getDimensionPixelSize(index, -1);
-      } else if (index == R.styleable.ZTextView_BottomDrawableHeight) {
-        BottomDrawableHeight = tArray.getDimensionPixelSize(index, -1);
-      }
-    }
+    //遍历参数
+    drawableGravity = tArray.getInt(R.styleable.ZTextView_drawableGravity, -1);
+    drawableWidth = tArray.getDimensionPixelSize(R.styleable.ZTextView_drawableWidth, -1);
+    drawableHeight = tArray.getDimensionPixelSize(R.styleable.ZTextView_drawableHeight, -1);
+    LeftDrawableWidth = tArray.getDimensionPixelSize(R.styleable.ZTextView_LeftDrawableWidth, -1);
+    LeftDrawableHeight = tArray.getDimensionPixelSize(R.styleable.ZTextView_LeftDrawableHeight, -1);
+    TopDrawableWidth = tArray.getDimensionPixelSize(R.styleable.ZTextView_TopDrawableWidth, -1);
+    TopDrawableHeight = tArray.getDimensionPixelSize(R.styleable.ZTextView_TopDrawableHeight, -1);
+    RightDrawableWidth = tArray.getDimensionPixelSize(R.styleable.ZTextView_RightDrawableWidth, -1);
+    RightDrawableHeight = tArray.getDimensionPixelSize(R.styleable.ZTextView_RightDrawableHeight, -1);
+    BottomDrawableWidth = tArray.getDimensionPixelSize(R.styleable.ZTextView_BottomDrawableWidth, -1);
+    BottomDrawableHeight = tArray.getDimensionPixelSize(R.styleable.ZTextView_BottomDrawableHeight, -1);
+
 
     // 获取各个方向的图片，按照：l-t-r-b(左-上-右-下) 的顺序存于数组中
     Drawable[] drawables = getCompoundDrawables();
@@ -136,7 +136,7 @@ public class ZTextView extends AppCompatTextView implements TintableCompoundDraw
   private void setImageSize(Drawable drawable, int position)
   {
     if (null != drawable) {
-      int width = -1;
+      int width  = -1;
       int height = -1;
       // 0-left; 1-top; 2-right; 3-bottom;
       switch (position) {
@@ -164,8 +164,80 @@ public class ZTextView extends AppCompatTextView implements TintableCompoundDraw
         height = drawableHeight;
       }
       if (width != -1 && height != -1) {
+        int offset = 20;
         drawable.setBounds(0, 0, width, height);
       }
+    }
+  }
+
+  @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+  {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+  }
+
+  @Override protected void onDraw(Canvas canvas)
+  {
+    Drawable[] drawables = getCompoundDrawables();
+    switch (drawableGravity) {
+      case 0://l
+        drawableAtLeft(drawables[1]);
+        drawableAtLeft(drawables[3]);
+        break;
+      case 1://t
+        drawableAtTop(drawables[0]);
+        drawableAtTop(drawables[2]);
+        break;
+      case 2://r
+        drawableAtRight(drawables[1]);
+        drawableAtRight(drawables[3]);
+        break;
+      case 3://b
+        drawableAtBottom(drawables[0]);
+        drawableAtBottom(drawables[2]);
+        break;
+    }
+    super.onDraw(canvas);
+  }
+
+  private void drawableAtTop(@Nullable Drawable drawable)
+  {
+    if (drawable != null) {
+      Rect bounds = drawable.getBounds();
+      int  height = bounds.bottom - bounds.top;
+      bounds.top = (height - getHeight()) / 2;
+      bounds.bottom = bounds.top + height;
+    }
+  }
+
+  private void drawableAtBottom(@Nullable Drawable drawable)
+  {
+    if (drawable != null) {
+      Rect bounds = drawable.getBounds();
+      int  height = bounds.bottom - bounds.top;
+      bounds.top = (-height + getHeight()) / 2;
+      bounds.bottom = bounds.top + height;
+    }
+  }
+
+
+  private void drawableAtLeft(@Nullable Drawable drawable)
+  {
+    if (drawable != null) {
+      Rect bounds = drawable.getBounds();
+      int  width  = bounds.right - bounds.left;
+      bounds.left = (width - getWidth()) / 2;
+      bounds.right = bounds.left + width;
+    }
+  }
+
+
+  private void drawableAtRight(@Nullable Drawable drawable)
+  {
+    if (drawable != null) {
+      Rect bounds = drawable.getBounds();
+      int  width  = bounds.right - bounds.left;
+      bounds.left = (-width + getWidth()) / 2;
+      bounds.right = bounds.left + width;
     }
   }
 }

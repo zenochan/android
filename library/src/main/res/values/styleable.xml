@@ -14,7 +14,7 @@
     <attr name="textSize" format="dimension"/>
   </declare-styleable>
 
-  <declare-styleable name="SimpleActionbar" parent="AppBarLayout">
+  <declare-styleable name="SimpleActionbar" parent="ZAppBarLayout">
     <attr name="preTextBackgroundTint" format="color"/>
     <attr name="preText" format="string"/>
     <attr name="preEnable" format="boolean"/>
@@ -25,6 +25,7 @@
     <attr name="actionEnable" format="boolean"/>
     <attr name="actionDrawable" format="reference"/>
     <attr name="actionDrawableTint" format="color"/>
+    <attr name="whiteBar" format="boolean"/>
   </declare-styleable>
 
   <declare-styleable name="ZTextView">
@@ -45,6 +46,14 @@
     <attr name="RightDrawableHeight" format="dimension"/>
     <attr name="BottomDrawableWidth" format="dimension"/>
     <attr name="BottomDrawableHeight" format="dimension"/>
+
+    <attr name="drawableGravity" format="enum">
+      <enum name="center" value="-1"/>
+      <enum name="left" value="0"/>
+      <enum name="top" value="1"/>
+      <enum name="right" value="2"/>
+      <enum name="bottom" value="3"/>
+    </attr>
   </declare-styleable>
 
   <declare-styleable name="ZEditText" parent="ZTextView">

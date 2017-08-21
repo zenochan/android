@@ -18,6 +18,7 @@ import name.zeno.android.util.ZLog;
  *
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/8/18
+ * @deprecated 使用 ZGTIntentService
  */
 public abstract class AbsGetuiReceiver extends BroadcastReceiver
 {
@@ -101,8 +102,7 @@ public abstract class AbsGetuiReceiver extends BroadcastReceiver
 
   private void saveCid(Context context, String cid)
   {
-    context.getSharedPreferences(TAG, Context.MODE_PRIVATE)
-        .edit().putString(TAG, cid).apply();
+    context.getSharedPreferences(TAG, Context.MODE_PRIVATE).edit().putString(TAG, cid).apply();
   }
 
   @NonNull

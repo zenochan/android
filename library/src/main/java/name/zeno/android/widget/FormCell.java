@@ -176,7 +176,7 @@ public class FormCell extends LinearLayout
     }
 
     if (ta.hasValue(R.styleable.FormCell_textSizeContent)) {
-      int dimen = ta.getDimensionPixelSize(R.styleable.FormCell_textSizeLabel, 0);
+      int dimen = ta.getDimensionPixelSize(R.styleable.FormCell_textSizeContent, 0);
       contentTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, dimen);
     }
 

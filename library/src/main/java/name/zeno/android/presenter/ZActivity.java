@@ -199,12 +199,12 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
     }
   }
 
-  protected void toast(String text)
+  public void toast(@NonNull String text)
   {
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
   }
 
-  protected void toast(@StringRes int resId)
+  public void toast(@StringRes int resId)
   {
     Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
   }
