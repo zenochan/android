@@ -121,7 +121,7 @@ dependencies {
   compile 'com.squareup:otto:1.3.8';
   compile 'org.projectlombok:lombok:1.16.16';
   // 个推 http://docs.getui.com/mobile/android/androidstudio/
-  provided 'com.getui:sdk:2.10.2.1'
+  provided 'com.getui:sdk:2.11.1.0'
 
   /**************************************
    *              功能性依赖             *

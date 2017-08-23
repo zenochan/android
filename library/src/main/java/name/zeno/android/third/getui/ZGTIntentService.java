@@ -43,6 +43,8 @@ abstract public class ZGTIntentService extends GTIntentService
     onReceiveMessageData(context, new GetuiMessage(gtTransmitMessage));
   }
 
+  @Override public void onReceiveOnlineState(Context context, boolean b) { }
+
   abstract public void onReceiveMessageData(Context context, GetuiMessage message);
 
   @Override public void onReceiveCommandResult(Context context, GTCmdMessage gtCmdMessage) { }

@@ -20,6 +20,7 @@ import java.io.RandomAccessFile;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
+import name.zeno.android.app.AppInfo;
 import name.zeno.android.data.CommonConnector;
 import name.zeno.android.data.models.UpdateInfo;
 import name.zeno.android.exception.ZException;
@@ -228,7 +229,7 @@ public class UpdateActivity extends ZActivity
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
       //通过FileProvider创建一个content类型的Uri
-      Uri uri = FileProvider.getUriForFile(this, updateInfo.getFileProvider(), file);
+      Uri uri = FileProvider.getUriForFile(this, AppInfo.downloadFileProvider, file);
 
       Intent intent = new Intent(Intent.ACTION_VIEW);
       intent.setDataAndType(uri, "application/vnd.android.package-archive");

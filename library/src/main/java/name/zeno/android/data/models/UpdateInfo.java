@@ -19,9 +19,6 @@ public class UpdateInfo implements Parcelable
 
   private boolean forceUpdate;
 
-  //android 7.0 后需要
-  private String fileProvider;
-
   public UpdateInfo() {}
 
   @Override public int describeContents() { return 0; }
@@ -33,7 +30,6 @@ public class UpdateInfo implements Parcelable
     dest.writeString(this.versionInfo);
     dest.writeString(this.versionUrl);
     dest.writeByte(this.forceUpdate ? (byte) 1 : (byte) 0);
-    dest.writeString(this.fileProvider);
   }
 
   protected UpdateInfo(Parcel in)
@@ -43,7 +39,6 @@ public class UpdateInfo implements Parcelable
     this.versionInfo = in.readString();
     this.versionUrl = in.readString();
     this.forceUpdate = in.readByte() != 0;
-    this.fileProvider = in.readString();
   }
 
   public static final Creator<UpdateInfo> CREATOR = new Creator<UpdateInfo>()

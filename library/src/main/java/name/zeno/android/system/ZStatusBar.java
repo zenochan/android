@@ -25,7 +25,7 @@ public class ZStatusBar
 
 
   /**
-   * 将acitivity中的activity中的状态栏设置为一个纯色
+   * 将 activity 中的状态栏设置为一个纯色
    *
    * @param activity 需要设置的activity
    * @param color    设置的颜色（一般是titlebar的颜色）
@@ -46,6 +46,32 @@ public class ZStatusBar
       decorView.addView(statusView);
       //让我们的activity_main。xml中的布局适应屏幕
       setRootView(activity);
+    }
+  }
+
+  /**
+   * 填充状态栏
+   */
+  public static void transparentAndFit(@NonNull Activity activity)
+  {
+    transparentAndFit(activity.getWindow());
+  }
+
+  public static void transparentAndFit(@NonNull Window window)
+  {
+    //window.requestFeature(Window.FEATURE_NO_TITLE);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+          | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+      window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+          | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+          | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+      window.setStatusBarColor(Color.TRANSPARENT);
+      window.setNavigationBarColor(Color.TRANSPARENT);
+    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+      window.getDecorView().setFitsSystemWindows(true);
     }
   }
 
@@ -129,6 +155,22 @@ public class ZStatusBar
     return result;
   }
 
+  public static int lightMode(@NonNull Window window)
+  {
+    int result = 0;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      if (miuiSetStatusBarLightMode(window, true)) {
+        result = 1;
+      } else if (flymeSetStatusBarLightMode(window, true)) {
+        result = 2;
+      } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        result = 3;
+      }
+    }
+    return result;
+  }
+
   /**
    * 需要 MIUI V6 以上
    *
@@ -137,14 +179,18 @@ public class ZStatusBar
    */
   private static boolean miuiSetStatusBarLightMode(@NonNull Activity activity, boolean dark)
   {
+    return miuiSetStatusBarLightMode(activity.getWindow(), dark);
+  }
+
+  private static boolean miuiSetStatusBarLightMode(@NonNull Window window, boolean dark)
+  {
     boolean result = false;
 
     try {
-      Window window       = activity.getWindow();
-      Class  clazz        = window.getClass();
-      Class  layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
-      Field  field        = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
-      int    darkModeFlag = field.getInt(layoutParams);
+      Class clazz        = window.getClass();
+      Class layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+      Field field        = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+      int   darkModeFlag = field.getInt(layoutParams);
       @SuppressWarnings("unchecked")
       Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
       if (dark) {
@@ -157,9 +203,9 @@ public class ZStatusBar
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         //开发版 7.7.13 及以后版本采用了系统API，旧方法无效但不会报错，所以两个方式都要加上
         if (dark) {
-          activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+          window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         } else {
-          activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+          window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         }
       }
     } catch (Exception ignore) { }
@@ -177,10 +223,15 @@ public class ZStatusBar
    */
   private static boolean flymeSetStatusBarLightMode(@NonNull Activity activity, boolean dark)
   {
+    return flymeSetStatusBarLightMode(activity.getWindow(), dark);
+  }
+
+
+  private static boolean flymeSetStatusBarLightMode(@NonNull Window window, boolean dark)
+  {
     boolean result = false;
     try {
-      Window                     window = activity.getWindow();
-      WindowManager.LayoutParams lp     = window.getAttributes();
+      WindowManager.LayoutParams lp = window.getAttributes();
       Field darkFlag = WindowManager.LayoutParams.class
           .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
       Field meizuFlags = WindowManager.LayoutParams.class

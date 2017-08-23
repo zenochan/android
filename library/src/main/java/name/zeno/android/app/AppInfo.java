@@ -51,6 +51,8 @@ public class AppInfo
   public static String btAddress; //蓝牙地址
   public static String btName;    //蓝牙名称
 
+  public static String downloadFileProvider;
+
   static {
     initDisplay();
   }
@@ -79,6 +81,8 @@ public class AppInfo
       versionName = pi.versionName;
       versionCode = pi.versionCode;
       packageName = pi.packageName;
+
+      downloadFileProvider = packageName + ".fileprovider";
     } else {
       versionName = "";
       versionCode = 0;
