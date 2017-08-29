@@ -16,6 +16,12 @@ public class NotiUtils
     return Uri.parse("android.resource://" + context.getPackageName() + "/" + soundId);
   }
 
+  public static void cancel(Context context, int id)
+  {
+    NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    nm.cancel(id);
+  }
+
   public static void cancelAll(Context context)
   {
     NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

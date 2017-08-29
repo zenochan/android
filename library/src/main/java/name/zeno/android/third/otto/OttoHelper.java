@@ -1,6 +1,15 @@
 package name.zeno.android.third.otto;
 
+import android.os.Looper;
+import android.support.annotation.UiThread;
+
 import com.squareup.otto.Bus;
+
+import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import name.zeno.android.third.rxjava.RxUtils;
+import name.zeno.android.third.rxjava.ZObserver;
 
 /**
  * Create Date: 16/5/30
@@ -32,7 +41,13 @@ public class OttoHelper
 
   public void post(Object event)
   {
-    bus.post(event);
+    if (Looper.myLooper() == Looper.getMainLooper()) {
+      bus.post(event);
+    } else {
+      // 切换到主线程发送事件
+      // Event bus [Bus "default"] accessed from non-main thread Looper
+      Observable.just(event).compose(RxUtils.applySchedulers()).subscribe(bus::post);
+    }
   }
 
   public void register(Object object)

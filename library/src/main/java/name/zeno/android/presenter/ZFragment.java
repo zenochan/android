@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wdullaer.materialdatetimepicker.date.SupportDatePickerDialog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -167,7 +167,11 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
     int      m     = today.get(Calendar.MONTH);
     int      d     = today.get(Calendar.DAY_OF_MONTH);
 
-    SupportDatePickerDialog dialog = SupportDatePickerDialog.newInstance(y, m, d, next);
+    DatePickerDialog dialog = DatePickerDialog.newInstance((_dialog, _y, _m, _d) -> {
+      Calendar calendar = Calendar.getInstance();
+      calendar.set(_y, _m, _d);
+      next.call(calendar);
+    }, y, m, d);
     dialog.setMinDate(min);
     dialog.setMaxDate(max);
     dialog.show(getFragmentManager(), "date_picker_dialog");
