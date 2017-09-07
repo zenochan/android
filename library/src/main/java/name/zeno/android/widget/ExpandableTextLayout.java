@@ -207,7 +207,7 @@ public class ExpandableTextLayout extends LinearLayout implements View.OnClickLi
     // Measure
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-    // If the text fits in collapsed mode, we are done.
+    // If the text fits in collapsed mode, we are actionDone.
     if (mTv.getLineCount() <= mMaxCollapsedLines) {
       return;
     }

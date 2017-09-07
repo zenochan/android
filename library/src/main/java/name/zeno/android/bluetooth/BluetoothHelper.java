@@ -44,11 +44,11 @@ public class BluetoothHelper
     if (requestCode == REQUEST_CODE_OPEN_BLUETOOTH && resultCode == Activity.RESULT_OK) {
       adapter = getBluetoothAdapter();
       if (listener != null) {
-        listener.onOpenBluetoothResult(0, "打开蓝牙成功");
+        listener.onOpenBluetoothResult(BluetoothListener.CODE_SUCCESS, "打开蓝牙成功");
       }
     } else if (requestCode == REQUEST_CODE_OPEN_BLUETOOTH && resultCode == Activity.RESULT_CANCELED) {
       if (listener != null) {
-        listener.onOpenBluetoothResult(-2, "已拒绝使用蓝牙");
+        listener.onOpenBluetoothResult(BluetoothListener.CODE_USER_DENIED, "已拒绝使用蓝牙");
       }
     }
 

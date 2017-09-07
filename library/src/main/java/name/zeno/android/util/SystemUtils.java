@@ -3,6 +3,7 @@ package name.zeno.android.util;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 
 @SuppressWarnings("unused")
 public class SystemUtils
@@ -108,10 +110,11 @@ public class SystemUtils
       "android.permission.ACCESS_WIFI_STATE",
       "android.permission.INTERNET"
   })
+
   /**
    * @see <a href="http://www.cnblogs.com/android100/p/Android-get-ip.html">android手机两种方式获取IP地址</a>
    */
-  public static String getIP(Context context)
+  public static String getIP(Application context)
   {
     String ip = null;
 
@@ -123,7 +126,7 @@ public class SystemUtils
       WifiInfo wifiInfo  = wifiManager.getConnectionInfo();
       int      ipAddress = wifiInfo.getIpAddress();
 
-      ip = String.format("%d.%d.%d.%d",
+      ip = String.format(Locale.CHINA, "%d.%d.%d.%d",
           ipAddress & 0xFF, (ipAddress >> 8) & 0xFF, (ipAddress >> 16) & 0xFF, ipAddress >> 24 & 0xFF);
     } else {
       try {
@@ -146,24 +149,22 @@ public class SystemUtils
     return ip;
   }
 
+  /** @deprecated use {@link ZEditor#toggleInputMethod(View)} */
   public static void toggleInputMethod(View view)
   {
-    InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-    imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+    ZEditor.toggleInputMethod(view);
   }
 
-  // 显示输入法
+  /** @deprecated use {@link ZEditor#showInputMethod(EditText)} (View)} */
   public static void showInputMethod(EditText view)
   {
-    InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-    imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+    ZEditor.showInputMethod(view);
   }
 
-  /** 隐藏输入法 */
+  /** @deprecated use {@link ZEditor#hideInputMethod(View)} (EditText)} (View)} */
   public static void hideInputMethod(View view)
   {
-    InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    ZEditor.hideInputMethod(view);
   }
 
   /**

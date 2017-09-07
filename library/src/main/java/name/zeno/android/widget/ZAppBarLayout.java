@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
+
 import lombok.Getter;
 import name.zeno.android.system.ZStatusBar;
 import name.zeno.android.util.R;
@@ -52,17 +54,17 @@ public class ZAppBarLayout extends AppBarLayout
       int color = Color.parseColor(typedValue.coerceToString().toString());
       statusBarView = ZStatusBar.createStatusBarView((Activity) getContext(), color);
       addView(statusBarView);
-    }
 
-    TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ZAppBarLayout);
-    if (ta.hasValue(R.styleable.ZAppBarLayout_backgroundStatusBar)) {
-      int c = ta.getColor(R.styleable.ZAppBarLayout_backgroundStatusBar, Color.BLACK);
-      if (c != Color.BLACK) {
-        statusBarView.setBackgroundColor(c);
-        this.setBackgroundColor(c);
+      TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ZAppBarLayout);
+      if (ta.hasValue(R.styleable.ZAppBarLayout_backgroundStatusBar)) {
+        int c = ta.getColor(R.styleable.ZAppBarLayout_backgroundStatusBar, Color.BLACK);
+        if (c != Color.BLACK) {
+          statusBarView.setBackgroundColor(c);
+          this.setBackgroundColor(c);
+        }
       }
+      ta.recycle();
     }
-    ta.recycle();
   }
 
   public void setStatusBarViewBackgroundColor(@ColorInt int color)

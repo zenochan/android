@@ -4,9 +4,10 @@ import android.os.Build;
 import android.webkit.WebView;
 
 /**
- * Create Date: 16/6/30
+ * <h1>加载 html 内容, 根据版本设置 MIME 和 ENCODING</h1>
  *
  * @author 陈治谋 (513500085@qq.com)
+ * @since 16/6/30
  */
 public class WebViewHelper
 {

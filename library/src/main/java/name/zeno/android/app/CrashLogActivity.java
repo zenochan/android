@@ -39,8 +39,8 @@ public class CrashLogActivity extends ZActivity
     Intent intent = getIntent();
     info = intent.getParcelableExtra(ExceptionInfo.EXTRA_NAME);
 
-    tvInfo = (TextView) findViewById(R.id.tv_crash_log);
-    SimpleActionbar actionbar = (SimpleActionbar) findViewById(R.id.layout_actionbar);
+    tvInfo = findViewById(R.id.tv_crash_log);
+    SimpleActionbar actionbar = findViewById(R.id.layout_actionbar);
     actionbar.setOnClickAction(this::sendLog);
 
     crashLog = ZException.info(info.throwable);

@@ -10,10 +10,10 @@ mavenConf {
 
   groupId "name.zeno"
   artifactId "android"
-  version "1.1.0"
+  version "1.1.2-SNAPSHOT"
 
-//  repositoryUrl "file:///Users/zenochan/.m2/repository"
-  repositoryUrl "scp://root@47.52.98.182/root/nginx/maven"
+  repositoryUrl "file:///Users/zenochan/.m2/repository"
+//  repositoryUrl "scp://root@47.52.98.182/root/nginx/maven"
 }
 confMaven()
 
@@ -54,7 +54,7 @@ android {
   }
 }
 
-ext.support_version = "26.0.1"
+ext.support_version = "26.0.2"
 
 dependencies {
   testCompile 'junit:junit:4.12';
@@ -81,13 +81,12 @@ dependencies {
   compile "com.android.support:support-v13:$support_version"
   compile "com.android.support:design:$support_version"
   //compile 'com.android.support:percent:25.3.1'
-  compile "com.android.support:multidex:1.0.1"
+  compile "com.android.support:multidex:1.0.2"
   compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
   provided 'com.belerweb:pinyin4j:2.5.1'
 
   //Logger https://github.com/orhanobut/logger
-//  compile "com.orhanobut:logger:1.15";
   compile 'com.orhanobut:logger:2.1.1'
 
   //Glide https://github.com/bumptech/glide
@@ -99,7 +98,9 @@ dependencies {
   }
   annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
 
+  // 目前1.1.59 使用起来比较稳定
   //FastJson https://github.com/alibaba/fastjson
+  //noinspection GradleDependency
   compile 'com.alibaba:fastjson:1.1.59.android'
 
   //https://github.com/JakeWharton/butterknife
@@ -110,11 +111,11 @@ dependencies {
   compile "com.squareup.retrofit2:retrofit:2.3.0";
 
   // rx 家族
-  compile "io.reactivex.rxjava2:rxjava:2.1.0"
+  compile "io.reactivex.rxjava2:rxjava:2.1.3"
   compile "io.reactivex.rxjava2:rxandroid:2.0.1"
   //https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
   compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-  compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
+  compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4'
 
   // For Lifecycles, LiveData, and ViewModel
 //  compile "android.arch.lifecycle:runtime:1.0.0-alpha3"
@@ -123,7 +124,7 @@ dependencies {
 
 
   compile 'com.squareup:otto:1.3.8';
-  compile 'org.projectlombok:lombok:1.16.16';
+  compile 'org.projectlombok:lombok:1.16.18';
   // 个推 http://docs.getui.com/mobile/android/androidstudio/
   provided 'com.getui:sdk:2.11.1.0'
 
@@ -131,7 +132,7 @@ dependencies {
    *              功能性依赖             *
    **************************************/
   // 友盟分析 http://mvnrepository.com/artifact/com.umeng.analytics/analytics
-  provided 'com.umeng.analytics:analytics:6.1.0'
+  provided 'com.umeng.analytics:analytics:6.1.2'
   // http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/com/taobao/android/alisdk-hotfix/
   provided 'com.taobao.android:alisdk-hotfix:2.0.9'
   provided 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.1.6'
@@ -140,10 +141,9 @@ dependencies {
    *              控件性依赖             *
    **************************************/
   //  https://github.com/afollestad/material-dialogs
-  compile "com.afollestad.material-dialogs:core:0.9.4.4"
-  compile "com.afollestad.material-dialogs:commons:0.9.4.4"
-
-  compile 'me.zhanghai.android.materialprogressbar:library:1.1.7'
+  compile "com.afollestad.material-dialogs:core:0.9.4.7"
+  compile "com.afollestad.material-dialogs:commons:0.9.4.7"
+  compile 'me.zhanghai.android.materialprogressbar:library:1.4.1'
 
   //BottomBar https://github.com/roughike/BottomBar
   compile 'com.roughike:bottom-bar:2.3.1'

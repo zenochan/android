@@ -28,17 +28,14 @@ public class RxUtils
   /**
    * 把异步变成同步，方便测试
    */
-  public static void openUnitTest()
+  public static synchronized void openUnitTest()
   {
-    if (UNIT_TEST) {
-      return;
+    if (!UNIT_TEST) {
+      UNIT_TEST = true;
+      RxAndroidPlugins.setMainThreadSchedulerHandler(scheduler -> Schedulers.trampoline());
+      RxJavaPlugins.setIoSchedulerHandler(scheduler -> Schedulers.trampoline());
+      RxJavaPlugins.setNewThreadSchedulerHandler(scheduler -> Schedulers.trampoline());
     }
-
-    UNIT_TEST = true;
-
-    RxAndroidPlugins.setMainThreadSchedulerHandler(scheduler -> Schedulers.trampoline());
-    RxJavaPlugins.setIoSchedulerHandler(scheduler -> Schedulers.trampoline());
-    RxJavaPlugins.setNewThreadSchedulerHandler(scheduler -> Schedulers.trampoline());
   }
 
 }

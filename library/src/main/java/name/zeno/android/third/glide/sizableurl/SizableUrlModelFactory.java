@@ -1,6 +1,8 @@
 package name.zeno.android.third.glide.sizableurl;
 
+import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.ModelCache;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
 import com.bumptech.glide.load.model.MultiModelLoaderFactory;
@@ -17,7 +19,8 @@ public class SizableUrlModelFactory implements ModelLoaderFactory<SizableUrlMode
   public ModelLoader<SizableUrlModel, InputStream> build(MultiModelLoaderFactory multiFactory)
   {
     ModelLoader<GlideUrl, InputStream> concreteLoader = multiFactory.build(GlideUrl.class, InputStream.class);
-    return new SizableUrlLoader(concreteLoader);
+
+    return new SizableUrlLoader(concreteLoader, new ModelCache<>());
   }
 
   @Override public void teardown() { }

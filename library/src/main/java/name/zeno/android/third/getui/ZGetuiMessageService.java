@@ -20,9 +20,9 @@ import name.zeno.android.data.models.GetuiMessage;
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/8/21
  */
-abstract public class ZGTIntentService extends GTIntentService
+abstract public class ZGetuiMessageService extends GTIntentService
 {
-  private static final String TAG = "ZGTIntentService";
+  private static final String TAG = "ZGetuiMessageService";
 
   @Override public void onReceiveServicePid(Context context, int i) { }
 

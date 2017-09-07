@@ -18,7 +18,6 @@ public class ZenoUncaughtExceptionHandler implements Thread.UncaughtExceptionHan
   @SuppressWarnings("FieldCanBeLocal,unused")
   private Thread.UncaughtExceptionHandler defaultHandler;
 
-  @SuppressWarnings("unused")
   @Setter private Action1<Throwable> onError;
 
   @Setter private String                    email;

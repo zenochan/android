@@ -19,16 +19,18 @@ import java.util.List;
 
 import name.zeno.android.listener.Action1;
 import name.zeno.android.listener.Action2;
+import name.zeno.android.third.otto.OttoHelper;
 import name.zeno.android.third.rxjava.RxActivityResult;
+import name.zeno.android.third.umeng.ZUmeng;
 import name.zeno.android.util.ZLog;
+import name.zeno.android.util.ZString;
 
 /**
- * Create Date: 16/6/9
- *
  * @author 陈治谋 (513500085@qq.com)
+ * @since 16/6/9
  */
 @SuppressWarnings({"unused", "Convert2streamapi", "NullableProblems"})
-public class ZFragment extends ToastFragment implements LifeCycleObservable
+public abstract class ZFragment extends ToastFragment implements LifeCycleObservable
 {
   protected final String TAG;
   protected final int RESULT_OK = Activity.RESULT_OK;
@@ -63,6 +65,7 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
     for (LifecycleListener l : listenerList) {
       l.onCreate();
     }
+    OttoHelper.instance().register(this);
   }
 
   @CallSuper
@@ -74,6 +77,15 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
     for (LifecycleListener l : listenerList) {
       l.onResume();
     }
+    String pageName = TAG;
+    if (ZString.notEmpty(pageName())) pageName += " | " + pageName();
+    ZUmeng.onPageStart(pageName);
+  }
+
+  /** 友盟统计页面名称，如果集成了友盟，应当重写此方法 */
+  @NonNull public String pageName()
+  {
+    return "";
   }
 
   @CallSuper
@@ -133,6 +145,7 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
     for (LifecycleListener l : listenerList) {
       l.onDestroy();
     }
+    OttoHelper.instance().unregister(this);
   }
 
   public void setActivityResultOk(Intent data)

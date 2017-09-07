@@ -30,16 +30,16 @@ import java.util.List;
 import lombok.Getter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action2;
+import name.zeno.android.listener.Provider0;
 import name.zeno.android.presenter.activities.AutoHideIMActivity;
 import name.zeno.android.third.rxjava.RxActivityResult;
+import name.zeno.android.util.R;
 
 /**
- * Create Date: 16/6/9
- *
  * @author 陈治谋 (513500085@qq.com)
+ * @since 16/6/9
  */
 @SuppressWarnings("unused")
-//public abstract class ZActivity extends AutoHideIMActivity
 public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleObservable
 {
   protected final String TAG;
@@ -257,6 +257,19 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
     transaction.commit();
   }
 
+  /**
+   * 使用默认的布局加载一个Fragment
+   *
+   * @param provider fragment provider
+   */
+  protected <T extends Fragment> void setContentView(Provider0<T> provider)
+  {
+    Fragment fragment = provider.get();
+    setContentView(R.layout.z_activity_default);
+    addFragment(R.id.layout_container, fragment);
+  }
+
+  //<editor-fold desc="snack">
   protected void snack(String text)
   {
     Snackbar.make(getRootView(), text, Snackbar.LENGTH_SHORT).show();
@@ -273,16 +286,15 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
     snack(msg, button, null);
   }
 
-  protected void snack(String msg, String button, Action0 onNext)
+  protected void snack(String msg, String button, @Nullable Action0 onNext)
   {
     Snackbar.make(getRootView(), msg, Snackbar.LENGTH_LONG)
         .setAction(button, view -> {
-          if (onNext != null) {
-            onNext.call();
-          }
+          if (onNext != null) onNext.call();
         })
         .show();
   }
+  //</editor-fold>
 
   protected View getRootView()
   {

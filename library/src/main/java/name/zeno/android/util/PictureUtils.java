@@ -10,9 +10,8 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 /**
- * Create Date: 16/3/1
- *
  * @author 陈治谋 (513500085@qq.com)
+ * @since 16/3/1
  */
 public class PictureUtils
 {
@@ -38,12 +37,13 @@ public class PictureUtils
   public static String getPath(final Context context, final Uri uri)
   {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-        && DocumentsContract.isDocumentUri(context, uri)) {
+        && DocumentsContract.isDocumentUri(context, uri))
+    {
       // DocumentProvider
 
-      String docId;
+      String   docId;
       String[] split;
-      String type;
+      String   type;
       switch (getUriType(uri)) {
         case UriType.EXTERNAL_STORAGE_DOCUMENT:
           // ExternalStorageProvider
@@ -102,8 +102,8 @@ public class PictureUtils
 
   public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs)
   {
-    Cursor cursor = null;
-    final String column = "_data";
+    Cursor         cursor     = null;
+    final String   column     = "_data";
     final String[] projection = {column};
     try {
       cursor = context.getContentResolver().query(uri, projection,

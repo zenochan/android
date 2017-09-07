@@ -19,6 +19,7 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 
+import java.util.Collections;
 import java.util.List;
 
 import name.zeno.android.util.SystemUtils;
@@ -46,7 +47,9 @@ public class GeoCoderHelper
       @Override public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult)
       {
         if (next != null) {
-          next.call(reverseGeoCodeResult.getPoiList());
+          List<PoiInfo> result = reverseGeoCodeResult.getPoiList();
+          if (result == null) result = Collections.EMPTY_LIST;
+          next.call(result);
           next = null;
         }
       }

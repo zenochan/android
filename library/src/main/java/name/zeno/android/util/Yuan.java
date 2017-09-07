@@ -2,6 +2,8 @@ package name.zeno.android.util;
 
 import android.annotation.SuppressLint;
 
+import java.util.Locale;
+
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/11/18.
@@ -15,7 +17,7 @@ public class Yuan
 
   public static String y(String prefix, double value)
   {
-    return prefix + String.format("%.02f", value);
+    return prefix + String.format(Locale.CHINA,"%.02f", value);
   }
 
   /**
@@ -23,7 +25,7 @@ public class Yuan
    */
   public static String ys(double value)
   {
-    return String.format("%.0f", value);
+    return String.format(Locale.CHINA,"%.0f", value);
   }
 
   public static String prefix(String value)

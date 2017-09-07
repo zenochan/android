@@ -29,13 +29,13 @@ dependencies{
 android.useDeprecatedNdk=true
 ```
 
-#### 定义 service 和 receiver
+#### 定义 service
 ```java
 public class GetuiService extends ZGetuiService {}
 ```
 
 ```java
-public class GetuiMessageService extends ZGTIntentService{
+public class GetuiMessageService extends ZGetuiMessageService{
 
   @Override
   public final void onReceiveMessageData(Context context, GetuiMessage message)
@@ -45,24 +45,12 @@ public class GetuiMessageService extends ZGTIntentService{
 }
 ```
 
-```java
-public class AppGetuiReceiver extends AbsGetuiReceiver
-{
-  @Override protected void onGetMsgData(Context context, String messageId, String msgData)
-  {
-    super.onGetMsgData(context, messageId, msgData);
-    // TODO: 处理透传消息
-  }
-}
-```
 
 ```java
 public class ZenoApp extends ZApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    
-    //initGetui(GetuiService.class);
     initGetui(GetuiService.class,GetuiMessageService.class);
   }
 }
@@ -86,18 +74,7 @@ public class ZenoApp extends ZApplication {
       android:label="PushService"
       android:process=":pushservice">
     </service>
-    
     <service android:name=".GetuiMessageService"/>
-
-    <!-- deprecated ，个推官方推荐使用 GTIntentService 代替 BroadcastReceiver 来接受消息 -->
-    <receiver
-      android:name=".receiver.ChurgoGetuiReceiver"
-      android:exported="false"
-      >
-      <intent-filter>
-        <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}"/>
-      </intent-filter>
-    </receiver>
   </application>
 </manifest>
 ```

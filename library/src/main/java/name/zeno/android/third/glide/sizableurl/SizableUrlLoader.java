@@ -31,7 +31,6 @@ public class SizableUrlLoader extends BaseGlideUrlLoader<SizableUrlModel>
   @Override
   protected String getUrl(SizableUrlModel sizableUrlModel, int width, int height, Options options)
   {
-    Logger.i(width + " , " + height);
     return sizableUrlModel.requestCustomSizeUrl(width, height);
   }
 

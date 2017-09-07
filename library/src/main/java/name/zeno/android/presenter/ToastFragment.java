@@ -18,7 +18,7 @@ import name.zeno.android.listener.Action0;
  * @since 2016/9/27.
  */
 @SuppressWarnings("unused")
-public class ToastFragment extends Fragment
+public abstract class ToastFragment extends Fragment
 {
   private android.view.View fragmentView;
   private MaterialDialog    progressDialog;
