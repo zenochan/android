@@ -23,6 +23,7 @@
     <activity android:name=".TimeButtonActivity"/>
     <activity android:name=".ShapeActivity">
     </activity>
+    <activity android:name=".CircleIndicatorActivity"/>
   </application>
 
 </manifest>

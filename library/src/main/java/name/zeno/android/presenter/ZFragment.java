@@ -29,8 +29,8 @@ import name.zeno.android.util.ZString;
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/6/9
  */
-@SuppressWarnings({"unused", "Convert2streamapi", "NullableProblems"})
-public abstract class ZFragment extends ToastFragment implements LifeCycleObservable
+@SuppressWarnings({"unused", "Convert2streamapi", "NullableProblems", "SameParameterValue"})
+public class ZFragment extends ToastFragment implements LifeCycleObservable
 {
   protected final String TAG;
   protected final int RESULT_OK = Activity.RESULT_OK;
@@ -190,12 +190,27 @@ public abstract class ZFragment extends ToastFragment implements LifeCycleObserv
     dialog.show(getFragmentManager(), "date_picker_dialog");
   }
 
+
   /**
    * @deprecated use {@link #startActivityForResult(Class, Action2)} or {@link #startActivityForResult(Class, Parcelable, Action2)} instead
    */
   public void startActivityForResult(Intent intent, Action2<Boolean, Intent> onResult)
   {
     activityResult.startActivityForResult(intent, onResult);
+  }
+
+  public void startActivity(Class<? extends Activity> clazz)
+  {
+    startActivity(clazz, null);
+  }
+
+  public void startActivity(Class<? extends Activity> clazz, Parcelable data)
+  {
+    Intent intent = new Intent(getContext(), clazz);
+    if (data != null) {
+      Extra.setData(intent, data);
+    }
+    startActivity(intent);
   }
 
   public void startActivityForResult(Class<? extends Activity> clazz, Action2<Boolean, Intent> next)

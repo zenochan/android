@@ -49,7 +49,7 @@ public abstract class ZUmeng
       //2. 使用 MobclickAgent.onPageStart 和 MobclickAgent.onPageEnd 方法统计页面(针对页面,页面可能是Activity 也可能是Fragment或View)
       MobclickAgent.openActivityDurationTrack(false);
     } catch (ClassNotFoundException e) {
-      ZLog.e(TAG, "umeng module not supported", e);
+      ZLog.i(TAG, "umeng module not supported");
     }
 
     supported = support;

@@ -109,7 +109,8 @@ public class PoiSearchHelper implements OnGetPoiSearchResultListener
 
   public void destroy()
   {
-    poiSearch.setOnGetPoiSearchResultListener(null);
+    // 不需要注销监听，设置为 null 会抛异常
+    //poiSearch.setOnGetPoiSearchResultListener(null);
     poiSearch.destroy();
   }
 
@@ -117,10 +118,12 @@ public class PoiSearchHelper implements OnGetPoiSearchResultListener
   public void onGetPoiResult(PoiResult result)
   {
     if (result == null || result.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
-      Log.v(TAG, "未找到结果");
       onSuccess(Collections.emptyList());
     } else if (result.error == SearchResult.ERRORNO.NO_ERROR) {
-      onSuccess(result.getAllPoi());
+      // mmp, 命名没有错误，但是竟然有时候会返回空的结果
+      List<PoiInfo> pois = result.getAllPoi();
+      if (pois == null) pois = Collections.emptyList();
+      onSuccess(pois);
     } else if (result.error == SearchResult.ERRORNO.AMBIGUOUS_KEYWORD) {
       // 当输入关键字在本市没有找到，但在其他城市找到时，返回包含该关键字信息的城市列表
       onSuccess(Collections.emptyList());

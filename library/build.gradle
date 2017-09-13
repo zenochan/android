@@ -81,7 +81,7 @@ dependencies {
   compile "com.android.support:support-v13:$support_version"
   compile "com.android.support:design:$support_version"
   //compile 'com.android.support:percent:25.3.1'
-  compile "com.android.support:multidex:1.0.2"
+  compile "com.android.support:multidex:1.0.1"
   compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
   provided 'com.belerweb:pinyin4j:2.5.1'
@@ -98,10 +98,10 @@ dependencies {
   }
   annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
 
-  // 目前1.1.59 使用起来比较稳定
+  // 目前1.1.61.android 使用起来比较稳定
   //FastJson https://github.com/alibaba/fastjson
   //noinspection GradleDependency
-  compile 'com.alibaba:fastjson:1.1.59.android'
+  compile 'com.alibaba:fastjson:1.1.61.android'
 
   //https://github.com/JakeWharton/butterknife
   compile 'com.jakewharton:butterknife:8.8.1'

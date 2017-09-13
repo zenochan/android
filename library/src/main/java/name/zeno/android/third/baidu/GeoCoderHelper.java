@@ -1,10 +1,5 @@
 package name.zeno.android.third.baidu;
 
-/**
- * Create Date: 16/6/19
- *
- * @author 陈治谋 (513500085@qq.com)
- */
 
 import android.Manifest;
 import android.content.Context;
@@ -22,10 +17,14 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import java.util.Collections;
 import java.util.List;
 
+import name.zeno.android.listener.Action1;
 import name.zeno.android.util.SystemUtils;
 import name.zeno.android.util.ZLog;
-import name.zeno.android.listener.Action1;
 
+/**
+ * @author 陈治谋 (513500085@qq.com)
+ * @since 16/6/19
+ */
 public class GeoCoderHelper
 {
   private static final String TAG = "GeoCoderHelper";
@@ -47,8 +46,9 @@ public class GeoCoderHelper
       @Override public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult)
       {
         if (next != null) {
+          // 结果可能为空，需要处理
           List<PoiInfo> result = reverseGeoCodeResult.getPoiList();
-          if (result == null) result = Collections.EMPTY_LIST;
+          if (result == null) result = Collections.emptyList();
           next.call(result);
           next = null;
         }

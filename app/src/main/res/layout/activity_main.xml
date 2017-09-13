@@ -17,15 +17,6 @@
     android:id="@+id/rcv_class"
     style="@style/layout.full"
     android:padding="16dp"
-    android:visibility="gone"
-    />
-
-  <name.zeno.android.widget.OrderFlowView
-    android:layout_width="wrap_content"
-    android:layout_height="80dp"
-    app:rightLineEnable="true"
-    app:rightLineWidth="32dp"
-    app:topHeight="40dp"
     />
 
 </LinearLayout>
