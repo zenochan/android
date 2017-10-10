@@ -5,7 +5,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import lombok.Setter;
 import name.zeno.android.listener.Action2;
 
 /**
@@ -21,8 +20,12 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration
   private int spacing;
   private boolean includeEdge = true;
 
-  @Setter
   Action2<Rect, Integer> rectHook;
+
+  public void setRectHook(Action2<Rect, Integer> rectHook)
+  {
+    this.rectHook = rectHook;
+  }
 
   public GridSpacingItemDecoration(int spacing, boolean includeEdge)
   {

@@ -6,7 +6,6 @@ package name.zeno.android.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -18,12 +17,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-import lombok.Setter;
 import name.zeno.android.util.R;
 
 /**
@@ -35,8 +32,13 @@ public class FloatingView extends AppCompatImageView
   private static final int ANIMATION_DURATION = 500;
 
   private final WindowManager mWindowManager;
-  @Setter
   private       int           mMargin;
+
+  public void setmMargin(int mMargin)
+  {
+    this.mMargin = mMargin;
+  }
+
   private Runnable mDismissTask = this::dismiss;
   private boolean show;
   private String  mText;

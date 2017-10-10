@@ -8,9 +8,6 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Create Date: 16/7/13
  *
@@ -18,8 +15,17 @@ import lombok.Setter;
  */
 public abstract class ZPagerAdapter<T> extends PagerAdapter
 {
-  @Setter @Getter
   List<T> data;
+
+  public List<T> getData()
+  {
+    return data;
+  }
+
+  public void setData(List<T> data)
+  {
+    this.data = data;
+  }
 
   public ZPagerAdapter()
   {

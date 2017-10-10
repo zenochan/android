@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 
-import lombok.Setter;
 import name.zeno.android.util.R;
 
 /**
@@ -14,7 +13,12 @@ import name.zeno.android.util.R;
  */
 public class RateLayout extends FrameLayout
 {
-  @Setter private float rate = 0;
+  private float rate = 0;
+
+  public void setRate(float rate)
+  {
+    this.rate = rate;
+  }
 
   public RateLayout(Context context)
   {

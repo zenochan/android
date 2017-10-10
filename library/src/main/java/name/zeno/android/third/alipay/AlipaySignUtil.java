@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Data;
 import name.zeno.android.util.ZDate;
 import name.zeno.android.util.ZLog;
 
@@ -23,7 +22,6 @@ import name.zeno.android.util.ZLog;
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/11/23.
  */
-@Data
 public class AlipaySignUtil
 {
   private static final String TAG = "AlipaySignUtil";
@@ -43,7 +41,101 @@ public class AlipaySignUtil
   private String version   = "1.0";
   private String timestamp = ZDate.nowString("yyyy-MM-dd HH:mm:ss");
 
-  @Data
+  public static String getALGORITHM()
+  {
+    return ALGORITHM;
+  }
+
+  public static String getSignAlgorithms()
+  {
+    return SIGN_ALGORITHMS;
+  }
+
+  public static String getDefaultCharset()
+  {
+    return DEFAULT_CHARSET;
+  }
+
+  public String getAppId()
+  {
+    return appId;
+  }
+
+  public void setAppId(String appId)
+  {
+    this.appId = appId;
+  }
+
+  public BizContent getBizContent()
+  {
+    return bizContent;
+  }
+
+  public void setBizContent(BizContent bizContent)
+  {
+    this.bizContent = bizContent;
+  }
+
+  public String getNotifyUrl()
+  {
+    return notifyUrl;
+  }
+
+  public void setNotifyUrl(String notifyUrl)
+  {
+    this.notifyUrl = notifyUrl;
+  }
+
+  public String getCharset()
+  {
+    return charset;
+  }
+
+  public void setCharset(String charset)
+  {
+    this.charset = charset;
+  }
+
+  public String getMethod()
+  {
+    return method;
+  }
+
+  public void setMethod(String method)
+  {
+    this.method = method;
+  }
+
+  public String getSign_type()
+  {
+    return sign_type;
+  }
+
+  public void setSign_type(String sign_type)
+  {
+    this.sign_type = sign_type;
+  }
+
+  public String getVersion()
+  {
+    return version;
+  }
+
+  public void setVersion(String version)
+  {
+    this.version = version;
+  }
+
+  public String getTimestamp()
+  {
+    return timestamp;
+  }
+
+  public void setTimestamp(String timestamp)
+  {
+    this.timestamp = timestamp;
+  }
+
   public static class BizContent
   {
     private String timeout_express = "30m";
@@ -55,6 +147,66 @@ public class AlipaySignUtil
     private String body;
     @JSONField(name = "out_trade_no")
     private String outTradeNo;
+
+    public String getTimeout_express()
+    {
+      return timeout_express;
+    }
+
+    public void setTimeout_express(String timeout_express)
+    {
+      this.timeout_express = timeout_express;
+    }
+
+    public String getProduct_code()
+    {
+      return product_code;
+    }
+
+    public void setProduct_code(String product_code)
+    {
+      this.product_code = product_code;
+    }
+
+    public String getTotolAmount()
+    {
+      return totolAmount;
+    }
+
+    public void setTotolAmount(String totolAmount)
+    {
+      this.totolAmount = totolAmount;
+    }
+
+    public String getSubject()
+    {
+      return subject;
+    }
+
+    public void setSubject(String subject)
+    {
+      this.subject = subject;
+    }
+
+    public String getBody()
+    {
+      return body;
+    }
+
+    public void setBody(String body)
+    {
+      this.body = body;
+    }
+
+    public String getOutTradeNo()
+    {
+      return outTradeNo;
+    }
+
+    public void setOutTradeNo(String outTradeNo)
+    {
+      this.outTradeNo = outTradeNo;
+    }
   }
 
   public String sign(String rsaKey)

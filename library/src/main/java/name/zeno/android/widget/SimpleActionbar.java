@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import lombok.Getter;
-import lombok.Setter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.util.R;
 
@@ -26,16 +24,28 @@ import name.zeno.android.util.R;
 @SuppressWarnings("unused")
 public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListener
 {
-  @Setter
   private Action0 onClickPre;
-  @Setter
   private Action0 onClickAction;
+
+  public void setOnClickPre(Action0 onClickPre)
+  {
+    this.onClickPre = onClickPre;
+  }
+
+  public void setOnClickAction(Action0 onClickAction)
+  {
+    this.onClickAction = onClickAction;
+  }
 
   private ZTextView preTv;
   private TextView  titleTv;
   private ZTextView actionTv;
-  @Getter
   private View      appbar;
+
+  public View getAppbar()
+  {
+    return appbar;
+  }
 
   public SimpleActionbar(Context context)
   {

@@ -2,13 +2,10 @@ package name.zeno.android.data.models;
 
 import com.igexin.sdk.message.GTTransmitMessage;
 
-import lombok.Data;
-
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/8/21
  */
-@Data
 public class GetuiMessage
 {
   // base
@@ -21,6 +18,76 @@ public class GetuiMessage
   private String taskId;    // 推送任务id
   private String payLoadId; // 透传id
   private String payLoad;   // 透传内容
+
+  public String getAppid()
+  {
+    return appid;
+  }
+
+  public void setAppid(String appid)
+  {
+    this.appid = appid;
+  }
+
+  public String getPkgName()
+  {
+    return pkgName;
+  }
+
+  public void setPkgName(String pkgName)
+  {
+    this.pkgName = pkgName;
+  }
+
+  public String getClientId()
+  {
+    return clientId;
+  }
+
+  public void setClientId(String clientId)
+  {
+    this.clientId = clientId;
+  }
+
+  public String getMessageId()
+  {
+    return messageId;
+  }
+
+  public void setMessageId(String messageId)
+  {
+    this.messageId = messageId;
+  }
+
+  public String getTaskId()
+  {
+    return taskId;
+  }
+
+  public void setTaskId(String taskId)
+  {
+    this.taskId = taskId;
+  }
+
+  public String getPayLoadId()
+  {
+    return payLoadId;
+  }
+
+  public void setPayLoadId(String payLoadId)
+  {
+    this.payLoadId = payLoadId;
+  }
+
+  public String getPayLoad()
+  {
+    return payLoad;
+  }
+
+  public void setPayLoad(String payLoad)
+  {
+    this.payLoad = payLoad;
+  }
 
   public GetuiMessage() { }
 

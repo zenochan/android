@@ -8,15 +8,23 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-import lombok.Setter;
 import name.zeno.android.presenter.ZActivity;
 
 public class AutoScrollPagerAdapter extends PagerAdapter
 {
   private static final String TAG = "AutoScrollPagerAdapter";
 
-  @Setter
   private boolean infinite = true;
+
+  public boolean isInfinite()
+  {
+    return infinite;
+  }
+
+  public void setInfinite(boolean infinite)
+  {
+    this.infinite = infinite;
+  }
 
   private PagerAdapter wrappedAdapter;
 

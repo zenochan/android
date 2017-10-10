@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import lombok.Setter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.util.R;
 import name.zeno.android.util.R2;
@@ -36,8 +35,12 @@ public class GuideFragment extends ZFragment
   @BindView(R2.id.btn_start)   AppCompatButton     btnStart;
   @BindView(R2.id.indicator)   CirclePageIndicator indicator;
 
-  @Setter
   private Action0 onStartListener;
+
+  public void setOnStartListener(Action0 onStartListener)
+  {
+    this.onStartListener = onStartListener;
+  }
 
   private int[] resIds;
 

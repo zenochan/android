@@ -7,7 +7,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.ColorInt;
 import android.text.style.ImageSpan;
 
-import lombok.Setter;
 
 /**
  * <pre>
@@ -28,13 +27,23 @@ public class TagImageSpan extends ImageSpan
   private int expandWidth  = 0; //设置之后可能会出现显示不全的问题，可通过TextView的 padding解决
   private int expandHeight = 0;//设置之后可能会出现显示不全的问题，可通过TextView的 padding解决
 
-  @Setter(onParam = @__({@ColorInt})) @ColorInt
+  @ColorInt
   private int textColor = Color.WHITE;
 
   private int backgroundColor = Color.BLUE;
 
-  @Setter private int lineExtra = 0;
+  private int lineExtra = 0;
 
+
+  public void setTextColor(int textColor)
+  {
+    this.textColor = textColor;
+  }
+
+  public void setLineExtra(int lineExtra)
+  {
+    this.lineExtra = lineExtra;
+  }
 
   public TagImageSpan()
   {

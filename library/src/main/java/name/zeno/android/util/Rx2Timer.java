@@ -11,7 +11,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import lombok.Setter;
 import name.zeno.android.exception.ZException;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action1;
@@ -27,13 +26,31 @@ public class Rx2Timer implements LifecycleListener
 {
   private static final String TAG = "Rx2Timer";
   private Disposable disposable;
-  @Setter private long expiredIn = 0;
+  private long expiredIn = 0;
   // 周期 s
-  @Setter
-  private         int  period    = 1;
-  @Setter private Action1<Long> onNext;
-  @Setter private Action0       onComplete;
+  private int  period    = 1;
+  private Action1<Long> onNext;
+  private Action0       onComplete;
 
+  public void setExpiredIn(long expiredIn)
+  {
+    this.expiredIn = expiredIn;
+  }
+
+  public void setPeriod(int period)
+  {
+    this.period = period;
+  }
+
+  public void setOnNext(Action1<Long> onNext)
+  {
+    this.onNext = onNext;
+  }
+
+  public void setOnComplete(Action0 onComplete)
+  {
+    this.onComplete = onComplete;
+  }
 
   private Rx2Timer() { }
 

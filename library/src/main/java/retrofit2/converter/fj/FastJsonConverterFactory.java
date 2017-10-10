@@ -10,7 +10,6 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import lombok.Setter;
 import name.zeno.android.third.rxjava.ValueTransformer;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -36,7 +35,12 @@ public class FastJsonConverterFactory extends Converter.Factory
   private SerializeConfig     serializeConfig;
   private SerializerFeature[] serializerFeatures;
 
-  @Setter private ValueTransformer<String, String> resTransformer;
+ private ValueTransformer<String, String> resTransformer;
+
+  public void setResTransformer(ValueTransformer<String, String> resTransformer)
+  {
+    this.resTransformer = resTransformer;
+  }
 
   /**
    * Create an default instance for conversion. Encoding to JSON and

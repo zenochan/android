@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 
-import lombok.Data;
 
 /**
  * 微信响应结果封装
@@ -13,7 +12,7 @@ import lombok.Data;
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-@Data @SuppressWarnings("WeakerAccess")
+ @SuppressWarnings("WeakerAccess")
 public class WxRespWrapper implements Parcelable
 {
   /**
@@ -40,6 +39,46 @@ public class WxRespWrapper implements Parcelable
   private String code;//授权登录获取的code
 
   private String desc;//描述
+
+  public int getType()
+  {
+    return type;
+  }
+
+  public void setType(int type)
+  {
+    this.type = type;
+  }
+
+  public int getErrCode()
+  {
+    return errCode;
+  }
+
+  public void setErrCode(int errCode)
+  {
+    this.errCode = errCode;
+  }
+
+  public String getCode()
+  {
+    return code;
+  }
+
+  public void setCode(String code)
+  {
+    this.code = code;
+  }
+
+  public String getDesc()
+  {
+    return desc;
+  }
+
+  public void setDesc(String desc)
+  {
+    this.desc = desc;
+  }
 
   public WxRespWrapper() {}
 

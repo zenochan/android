@@ -3,13 +3,10 @@ package name.zeno.android.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import lombok.Data;
-
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/11/21.
  */
-@Data
 public class UpdateInfo implements Parcelable
 {
   private String versionName;
@@ -20,6 +17,56 @@ public class UpdateInfo implements Parcelable
   private boolean forceUpdate;
 
   public UpdateInfo() {}
+
+  public String getVersionName()
+  {
+    return versionName;
+  }
+
+  public void setVersionName(String versionName)
+  {
+    this.versionName = versionName;
+  }
+
+  public int getVersionCode()
+  {
+    return versionCode;
+  }
+
+  public void setVersionCode(int versionCode)
+  {
+    this.versionCode = versionCode;
+  }
+
+  public String getVersionInfo()
+  {
+    return versionInfo;
+  }
+
+  public void setVersionInfo(String versionInfo)
+  {
+    this.versionInfo = versionInfo;
+  }
+
+  public String getVersionUrl()
+  {
+    return versionUrl;
+  }
+
+  public void setVersionUrl(String versionUrl)
+  {
+    this.versionUrl = versionUrl;
+  }
+
+  public boolean isForceUpdate()
+  {
+    return forceUpdate;
+  }
+
+  public void setForceUpdate(boolean forceUpdate)
+  {
+    this.forceUpdate = forceUpdate;
+  }
 
   @Override public int describeContents() { return 0; }
 

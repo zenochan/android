@@ -5,15 +5,11 @@ import android.os.Parcelable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 
-import lombok.Data;
-import lombok.Setter;
-
 /**
  * Create Date: 16/6/16
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-@Data
 public class TextData implements Parcelable
 {
   public static final int TYPE_TEXT    = 0;//单行文本
@@ -25,7 +21,6 @@ public class TextData implements Parcelable
 
   private String title;
   @Type
-  @Setter(onParam = @__({@Type}))
   private int    type;
   private String result;
   private String preFill;
@@ -37,6 +32,96 @@ public class TextData implements Parcelable
   private boolean whiteStatusBar;
   @DrawableRes
   private int     btnBackground;
+
+  public String getTitle()
+  {
+    return title;
+  }
+
+  public void setTitle(String title)
+  {
+    this.title = title;
+  }
+
+  public int getType()
+  {
+    return type;
+  }
+
+  public void setType(int type)
+  {
+    this.type = type;
+  }
+
+  public String getResult()
+  {
+    return result;
+  }
+
+  public void setResult(String result)
+  {
+    this.result = result;
+  }
+
+  public String getPreFill()
+  {
+    return preFill;
+  }
+
+  public void setPreFill(String preFill)
+  {
+    this.preFill = preFill;
+  }
+
+  public String getHint()
+  {
+    return hint;
+  }
+
+  public void setHint(String hint)
+  {
+    this.hint = hint;
+  }
+
+  public String getRegex()
+  {
+    return regex;
+  }
+
+  public void setRegex(String regex)
+  {
+    this.regex = regex;
+  }
+
+  public String getRegexHint()
+  {
+    return regexHint;
+  }
+
+  public void setRegexHint(String regexHint)
+  {
+    this.regexHint = regexHint;
+  }
+
+  public boolean isWhiteStatusBar()
+  {
+    return whiteStatusBar;
+  }
+
+  public void setWhiteStatusBar(boolean whiteStatusBar)
+  {
+    this.whiteStatusBar = whiteStatusBar;
+  }
+
+  public int getBtnBackground()
+  {
+    return btnBackground;
+  }
+
+  public void setBtnBackground(int btnBackground)
+  {
+    this.btnBackground = btnBackground;
+  }
 
   public static TextData text(String title, String hint, String preFill)
   {

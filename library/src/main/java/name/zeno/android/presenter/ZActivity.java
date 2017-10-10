@@ -27,7 +27,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action2;
 import name.zeno.android.listener.Provider0;
@@ -47,7 +46,6 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
 
   private Dialog loadingDialog;
 
-  @Getter
   private boolean afterSaveInstanceState = false;
 
   private final List<LifecycleListener> listeners = new ArrayList<>();
@@ -308,4 +306,6 @@ public abstract class ZActivity extends AutoHideIMActivity implements LifeCycleO
     }
   }
 
+  public boolean isAfterSaveInstanceState()
+  {return this.afterSaveInstanceState;}
 }

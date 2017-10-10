@@ -7,12 +7,11 @@ import android.support.annotation.NonNull;
 
 import com.baidu.mapapi.search.core.PoiInfo;
 
-import lombok.Data;
 
 /**
  * 百度地图POI
  */
-@Data @SuppressWarnings("WrongConstant")
+@SuppressWarnings("WrongConstant")
 public class PoiModel implements Parcelable
 {
   public static final String COOKIE_LAST_POI = "bd_last_poi";
@@ -28,6 +27,76 @@ public class PoiModel implements Parcelable
   public PoiModel()
   {
     time = System.currentTimeMillis();
+  }
+
+  public String getName()
+  {
+    return name;
+  }
+
+  public void setName(String name)
+  {
+    this.name = name;
+  }
+
+  public String getAddress()
+  {
+    return address;
+  }
+
+  public void setAddress(String address)
+  {
+    this.address = address;
+  }
+
+  public String getCity()
+  {
+    return city;
+  }
+
+  public void setCity(String city)
+  {
+    this.city = city;
+  }
+
+  public int getType()
+  {
+    return type;
+  }
+
+  public void setType(int type)
+  {
+    this.type = type;
+  }
+
+  public double getLatitude()
+  {
+    return latitude;
+  }
+
+  public void setLatitude(double latitude)
+  {
+    this.latitude = latitude;
+  }
+
+  public double getLongitude()
+  {
+    return longitude;
+  }
+
+  public void setLongitude(double longitude)
+  {
+    this.longitude = longitude;
+  }
+
+  public long getTime()
+  {
+    return time;
+  }
+
+  public void setTime(long time)
+  {
+    this.time = time;
   }
 
   public PoiModel(@NonNull PoiInfo poiInfo)

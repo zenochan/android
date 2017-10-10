@@ -13,7 +13,6 @@ import android.view.View;
 
 import com.orhanobut.logger.Logger;
 
-import lombok.Getter;
 import name.zeno.android.system.ZStatusBar;
 import name.zeno.android.util.R;
 
@@ -25,7 +24,12 @@ import name.zeno.android.util.R;
 @SuppressWarnings("unused")
 public class ZAppBarLayout extends AppBarLayout
 {
-  @Getter private View statusBarView;
+  private View statusBarView;
+
+  public View getStatusBarView()
+  {
+    return statusBarView;
+  }
 
   public ZAppBarLayout(Context context)
   {

@@ -11,19 +11,19 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.animation.Interpolator;
 
-import com.orhanobut.logger.Logger;
-
 import java.lang.reflect.Field;
 
-import lombok.Getter;
-import lombok.Setter;
 import name.zeno.android.listener.Action2;
 
 public class AutoScrollViewPager extends ViewPager implements Handler.Callback
 {
 
-  @Getter
   private boolean infinite = true;
+
+  public boolean isInfinite()
+  {
+    return infinite;
+  }
 
   private static final int MSG_AUTO_SCROLL            = 0;
   private static final int DEFAULT_INTERNAL_IM_MILLIS = 2000;
@@ -43,8 +43,17 @@ public class AutoScrollViewPager extends ViewPager implements Handler.Callback
   private float mLastMotionY;
   private int   touchSlop;
 
-  @Getter @Setter
   private Action2<AutoScrollViewPager, Integer> onClickPage;
+
+  public Action2<AutoScrollViewPager, Integer> getOnClickPage()
+  {
+    return onClickPage;
+  }
+
+  public void setOnClickPage(Action2<AutoScrollViewPager, Integer> onClickPage)
+  {
+    this.onClickPage = onClickPage;
+  }
 
   @Override public boolean handleMessage(Message message)
   {

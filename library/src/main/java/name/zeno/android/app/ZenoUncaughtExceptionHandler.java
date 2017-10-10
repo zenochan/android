@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 
-import lombok.Setter;
 import name.zeno.android.listener.Action1;
 
 /**
@@ -18,12 +17,31 @@ public class ZenoUncaughtExceptionHandler implements Thread.UncaughtExceptionHan
   @SuppressWarnings("FieldCanBeLocal,unused")
   private Thread.UncaughtExceptionHandler defaultHandler;
 
-  @Setter private Action1<Throwable> onError;
+  private Action1<Throwable> onError;
 
-  @Setter private String                    email;
-  @Setter private String                    accountJson;
-  @Setter private Class<? extends Activity> mainActivityClass;
+  private String                    email;
+  private String                    accountJson;
+  private Class<? extends Activity> mainActivityClass;
 
+  public void setOnError(Action1<Throwable> onError)
+  {
+    this.onError = onError;
+  }
+
+  public void setEmail(String email)
+  {
+    this.email = email;
+  }
+
+  public void setAccountJson(String accountJson)
+  {
+    this.accountJson = accountJson;
+  }
+
+  public void setMainActivityClass(Class<? extends Activity> mainActivityClass)
+  {
+    this.mainActivityClass = mainActivityClass;
+  }
 
   public ZenoUncaughtExceptionHandler(Application application)
   {

@@ -8,7 +8,6 @@ import com.baidu.mapapi.search.core.PoiInfo;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import kale.adapter.item.AdapterItem;
-import lombok.Setter;
 import name.zeno.android.listener.Action1;
 import name.zeno.android.util.R;
 import name.zeno.android.util.R2;
@@ -22,8 +21,12 @@ public class PoiItem implements AdapterItem<PoiInfo>
   @BindView(R2.id.tv_poi_title)   TextView tvPoiTitle;
   @BindView(R2.id.tv_poi_address) TextView tvPoiAddress;
 
-  @Setter
   Action1<PoiInfo> onClick;
+
+  public void setOnClick(Action1<PoiInfo> onClick)
+  {
+    this.onClick = onClick;
+  }
 
   private PoiInfo poiInfo;
 

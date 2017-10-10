@@ -48,6 +48,8 @@ public class SearchPoiFragment extends ZFragment implements SearchPoiView
   private LoadAdapterWrapper        wrapper;
   private Action1<PoiInfo>          onClickPoi;
 
+
+
   public static SearchPoiFragment newInstance(SearchPoiRequest request)
   {
     Bundle args = new Bundle();

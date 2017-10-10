@@ -1,7 +1,5 @@
 package name.zeno.android.system;
 
-import lombok.Data;
-
 /**
  * Create Date: 16/7/5
  *
@@ -11,7 +9,6 @@ import lombok.Data;
  * @see <a href='http://www.cnblogs.com/android100/p/android-tel-book.html'>
  * Android通讯录管理（获取联系人、通话记录、短信消息）</a>
  */
-@Data
 public class Contact
 {
   //contacts 表
@@ -27,4 +24,104 @@ public class Contact
   private String number;//data1 -> 187 1234 5678
   private String normalizedNumber;//data4 -> +8618712345678
   private String sortKey;//首字母 -> z
+
+  public Long getId()
+  {
+    return id;
+  }
+
+  public void setId(Long id)
+  {
+    this.id = id;
+  }
+
+  public String getDisplayName()
+  {
+    return displayName;
+  }
+
+  public void setDisplayName(String displayName)
+  {
+    this.displayName = displayName;
+  }
+
+  public Long getPhotoId()
+  {
+    return photoId;
+  }
+
+  public void setPhotoId(Long photoId)
+  {
+    this.photoId = photoId;
+  }
+
+  public Integer getTimesContacted()
+  {
+    return timesContacted;
+  }
+
+  public void setTimesContacted(Integer timesContacted)
+  {
+    this.timesContacted = timesContacted;
+  }
+
+  public Long getLastTimeContacted()
+  {
+    return lastTimeContacted;
+  }
+
+  public void setLastTimeContacted(Long lastTimeContacted)
+  {
+    this.lastTimeContacted = lastTimeContacted;
+  }
+
+  public String getLookup()
+  {
+    return lookup;
+  }
+
+  public void setLookup(String lookup)
+  {
+    this.lookup = lookup;
+  }
+
+  public Long getContactId()
+  {
+    return contactId;
+  }
+
+  public void setContactId(Long contactId)
+  {
+    this.contactId = contactId;
+  }
+
+  public String getNumber()
+  {
+    return number;
+  }
+
+  public void setNumber(String number)
+  {
+    this.number = number;
+  }
+
+  public String getNormalizedNumber()
+  {
+    return normalizedNumber;
+  }
+
+  public void setNormalizedNumber(String normalizedNumber)
+  {
+    this.normalizedNumber = normalizedNumber;
+  }
+
+  public String getSortKey()
+  {
+    return sortKey;
+  }
+
+  public void setSortKey(String sortKey)
+  {
+    this.sortKey = sortKey;
+  }
 }

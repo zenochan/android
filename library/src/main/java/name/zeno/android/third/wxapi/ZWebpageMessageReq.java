@@ -11,10 +11,6 @@ import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import name.zeno.android.app.ZApplication;
 import name.zeno.android.util.R;
 import name.zeno.android.util.ZBitmap;
@@ -25,7 +21,6 @@ import name.zeno.android.util.ZBitmap;
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/4/27
  */
-@Data @NoArgsConstructor @EqualsAndHashCode(callSuper = false)
 public class ZWebpageMessageReq extends AbsReq
 {
   private String webpageUrl;
@@ -33,8 +28,68 @@ public class ZWebpageMessageReq extends AbsReq
   private String description;
   private String thumbImageUrl;
   private Bitmap thumbImage;
-  @WXScene @Setter(onMethod = @__({@WXScene}))
+  @WXScene
   private int    scene;
+
+  public String getWebpageUrl()
+  {
+    return webpageUrl;
+  }
+
+  public void setWebpageUrl(String webpageUrl)
+  {
+    this.webpageUrl = webpageUrl;
+  }
+
+  public String getTitle()
+  {
+    return title;
+  }
+
+  public void setTitle(String title)
+  {
+    this.title = title;
+  }
+
+  public String getDescription()
+  {
+    return description;
+  }
+
+  public void setDescription(String description)
+  {
+    this.description = description;
+  }
+
+  public String getThumbImageUrl()
+  {
+    return thumbImageUrl;
+  }
+
+  public void setThumbImageUrl(String thumbImageUrl)
+  {
+    this.thumbImageUrl = thumbImageUrl;
+  }
+
+  public Bitmap getThumbImage()
+  {
+    return thumbImage;
+  }
+
+  public void setThumbImage(Bitmap thumbImage)
+  {
+    this.thumbImage = thumbImage;
+  }
+
+  public int getScene()
+  {
+    return scene;
+  }
+
+  public void setScene(int scene)
+  {
+    this.scene = scene;
+  }
 
   @Override public Observable<BaseReq> build()
   {

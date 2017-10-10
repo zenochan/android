@@ -17,8 +17,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import lombok.Data;
-import lombok.Setter;
 import name.zeno.android.listener.Action1;
 import name.zeno.android.util.R;
 
@@ -30,8 +28,12 @@ public class SortHeaderView extends LinearLayout
 {
   private List<SortFiled> sortFiledList = Collections.emptyList();
   private OnClickListener    onCLickListener;
-  @Setter
   private Action1<SortFiled> onSort;
+
+  public void setOnSort(Action1<SortFiled> onSort)
+  {
+    this.onSort = onSort;
+  }
 
   private int drawableRes[] = {
       R.mipmap.ic_sortable,
@@ -141,7 +143,6 @@ public class SortHeaderView extends LinearLayout
     return drawable;
   }
 
-  @Data
   public static class SortFiled
   {
     private String name;
@@ -156,6 +157,46 @@ public class SortHeaderView extends LinearLayout
       int NONE = 0;
       int ASC  = 1;
       int DESC = 2;
+    }
+
+    public String getName()
+    {
+      return name;
+    }
+
+    public void setName(String name)
+    {
+      this.name = name;
+    }
+
+    public String getFiled()
+    {
+      return filed;
+    }
+
+    public void setFiled(String filed)
+    {
+      this.filed = filed;
+    }
+
+    public int getSort()
+    {
+      return sort;
+    }
+
+    public void setSort(int sort)
+    {
+      this.sort = sort;
+    }
+
+    public float getWeight()
+    {
+      return weight;
+    }
+
+    public void setWeight(float weight)
+    {
+      this.weight = weight;
     }
 
     public static SortFiled newInstance(String name, String filed)

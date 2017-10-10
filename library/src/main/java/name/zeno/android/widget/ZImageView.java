@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
-import lombok.Setter;
 import name.zeno.android.tint.TintHelper;
 import name.zeno.android.tint.TintInfo;
 import name.zeno.android.tint.TintableDrawableView;
@@ -23,7 +22,12 @@ public class ZImageView extends AppCompatImageView implements TintableDrawableVi
 {
   private TintInfo drawableTintInfo;
 
-  @Setter private float rate = 0;
+  private float rate = 0;
+
+  public void setRate(float rate)
+  {
+    this.rate = rate;
+  }
 
   public ZImageView(Context context)
   {

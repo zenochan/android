@@ -4,14 +4,11 @@ import android.app.Activity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import lombok.Data;
-
 /**
  * Create Date: 16/6/30
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-@Data
 public class ExceptionInfo implements Parcelable
 {
   public static final String EXTRA_NAME = "exception_info";
@@ -22,6 +19,46 @@ public class ExceptionInfo implements Parcelable
   String                    accountJson;
 
   public ExceptionInfo() { }
+
+  public Throwable getThrowable()
+  {
+    return throwable;
+  }
+
+  public void setThrowable(Throwable throwable)
+  {
+    this.throwable = throwable;
+  }
+
+  public String getEmail()
+  {
+    return email;
+  }
+
+  public void setEmail(String email)
+  {
+    this.email = email;
+  }
+
+  public Class<? extends Activity> getMainActivityClass()
+  {
+    return mainActivityClass;
+  }
+
+  public void setMainActivityClass(Class<? extends Activity> mainActivityClass)
+  {
+    this.mainActivityClass = mainActivityClass;
+  }
+
+  public String getAccountJson()
+  {
+    return accountJson;
+  }
+
+  public void setAccountJson(String accountJson)
+  {
+    this.accountJson = accountJson;
+  }
 
   @Override public int describeContents() { return 0; }
 

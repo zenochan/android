@@ -6,9 +6,6 @@ import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import io.reactivex.Observable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 /**
  * 授权登陆
@@ -16,11 +13,30 @@ import lombok.NoArgsConstructor;
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/4/27
  */
-@Data @NoArgsConstructor @EqualsAndHashCode(callSuper = false)
 public class ZAuthReq extends AbsReq
 {
   private String scope = "snsapi_userinfo";
   private String state = "wx_sdk_" + System.currentTimeMillis();
+
+  public String getScope()
+  {
+    return scope;
+  }
+
+  public void setScope(String scope)
+  {
+    this.scope = scope;
+  }
+
+  public String getState()
+  {
+    return state;
+  }
+
+  public void setState(String state)
+  {
+    this.state = state;
+  }
 
   @Override public Observable<BaseReq> build()
   {

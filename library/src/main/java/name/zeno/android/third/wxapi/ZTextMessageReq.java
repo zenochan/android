@@ -8,10 +8,6 @@ import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXTextObject;
 
 import io.reactivex.Observable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * 发送文本消息
@@ -19,12 +15,31 @@ import lombok.Setter;
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/4/27
  */
-@Data @NoArgsConstructor @EqualsAndHashCode(callSuper = false)
 public class ZTextMessageReq extends AbsReq
 {
   private String text;
-  @WXScene @Setter(onMethod = @__({@WXScene}))
+  @WXScene
   private int scene = WXScene.SESSION;
+
+  public String getText()
+  {
+    return text;
+  }
+
+  public void setText(String text)
+  {
+    this.text = text;
+  }
+
+  public int getScene()
+  {
+    return scene;
+  }
+
+  public void setScene(@WXScene int scene)
+  {
+    this.scene = scene;
+  }
 
   @Override public Observable<BaseReq> build()
   {

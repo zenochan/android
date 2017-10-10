@@ -2,7 +2,6 @@ package name.zeno.android.widget;
 
 import android.support.design.widget.TabLayout;
 
-import lombok.Setter;
 import name.zeno.android.listener.Action1;
 
 /**
@@ -12,8 +11,12 @@ import name.zeno.android.listener.Action1;
 public class TabLayoutListener implements TabLayout.OnTabSelectedListener
 {
   private TabLayout        tabLayout;
-  @Setter
   private Action1<Integer> next;
+
+  public void setNext(Action1<Integer> next)
+  {
+    this.next = next;
+  }
 
   private TabLayoutListener() {}
 

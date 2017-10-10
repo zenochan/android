@@ -19,7 +19,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.ArrayList;
 
-import lombok.Setter;
 import name.zeno.android.listener.Action1;
 import name.zeno.android.util.ZDimen;
 import name.zeno.android.util.R;
@@ -51,8 +50,12 @@ public class PswInputView extends View
   private RectF   roundRect;   //外面的圆角矩形
   private int     roundRadius; //圆角矩形的圆角程度
 
-  @Setter
   private Action1<String> onFinishListener;//输入完成的回调
+
+  public void setOnFinishListener(Action1<String> onFinishListener)
+  {
+    this.onFinishListener = onFinishListener;
+  }
 
   private int colorAccent;
   private int colorDefault;
@@ -134,7 +137,7 @@ public class PswInputView extends View
   protected void onDraw(Canvas canvas)
   {
     super.onDraw(canvas);
-    final int width = getWidth() - 2;
+    final int width  = getWidth() - 2;
     final int height = getHeight() - 2;
 
     //先画个圆角矩形
@@ -176,8 +179,8 @@ public class PswInputView extends View
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
   {
-    int w = measureWidth(widthMeasureSpec);
-    int h = measureHeight(heightMeasureSpec);
+    int w     = measureWidth(widthMeasureSpec);
+    int h     = measureHeight(heightMeasureSpec);
     int wsize = MeasureSpec.getSize(widthMeasureSpec);
     int hsize = MeasureSpec.getSize(heightMeasureSpec);
     //宽度没指定,但高度指定

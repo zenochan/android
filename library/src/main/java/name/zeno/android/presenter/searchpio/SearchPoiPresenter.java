@@ -8,7 +8,6 @@ import com.baidu.mapapi.search.core.PoiInfo;
 
 import java.util.List;
 
-import lombok.Getter;
 import name.zeno.android.presenter.BasePresenter;
 import name.zeno.android.third.baidu.GeoCoderHelper;
 import name.zeno.android.third.baidu.LocationHelper;
@@ -31,8 +30,18 @@ public class SearchPoiPresenter extends BasePresenter<SearchPoiView>
   private PoiSearchHelper poiSearch = new PoiSearchHelper();
   private GeoCoderHelper  geoCoder  = new GeoCoderHelper();
 
-  @Getter
   private List<PoiInfo> infoList = new ObservableArrayList<>();
+
+
+  public void setInfoList(List<PoiInfo> infoList)
+  {
+    this.infoList = infoList;
+  }
+
+  public List<PoiInfo> getInfoList()
+  {
+    return infoList;
+  }
 
   @Override public void onCreate()
   {

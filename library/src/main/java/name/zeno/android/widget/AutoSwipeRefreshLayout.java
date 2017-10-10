@@ -8,7 +8,6 @@ import android.view.View;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import lombok.Getter;
 import name.zeno.android.util.ZLog;
 
 /**
@@ -21,8 +20,12 @@ public class AutoSwipeRefreshLayout extends SwipeRefreshLayout
 {
   private static final String TAG = "AutoSwipeRefreshLayout";
 
-  @Getter
   private boolean firstAutoRefreshed = false;
+
+  public boolean isFirstAutoRefreshed()
+  {
+    return firstAutoRefreshed;
+  }
 
   public AutoSwipeRefreshLayout(Context context)
   {

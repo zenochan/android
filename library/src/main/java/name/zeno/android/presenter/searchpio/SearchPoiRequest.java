@@ -3,13 +3,11 @@ package name.zeno.android.presenter.searchpio;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import lombok.Data;
 
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/12/23.
  */
-@Data
 public class SearchPoiRequest implements Parcelable
 {
   public static final String EXTRA_NAME = "SearchPoiRequest";
@@ -18,6 +16,27 @@ public class SearchPoiRequest implements Parcelable
   private String  fill;
   //是否允许使用用户输入的值作为结果
   private boolean enableOriginInput;
+
+
+  public String getFill()
+  {
+    return fill;
+  }
+
+  public void setFill(String fill)
+  {
+    this.fill = fill;
+  }
+
+  public boolean isEnableOriginInput()
+  {
+    return enableOriginInput;
+  }
+
+  public void setEnableOriginInput(boolean enableOriginInput)
+  {
+    this.enableOriginInput = enableOriginInput;
+  }
 
   public SearchPoiRequest() { }
 

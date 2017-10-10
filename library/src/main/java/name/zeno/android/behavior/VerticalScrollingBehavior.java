@@ -1,5 +1,6 @@
 package name.zeno.android.behavior;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.design.widget.CoordinatorLayout;
@@ -10,7 +11,6 @@ import android.view.View;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import lombok.Getter;
 
 /**
  * <h1>垂直滚动</h1>
@@ -34,10 +34,20 @@ public abstract class VerticalScrollingBehavior<V extends View> extends Coordina
   private int mTotalDyUnconsumed = 0;
   private int mTotalDy           = 0;
 
-  @ScrollDirection @Getter
+  @ScrollDirection
   private int mOverScrollDirection = ScrollDirection.SCROLL_NONE;
-  @ScrollDirection @Getter
+  @ScrollDirection
   private int mScrollDirection     = ScrollDirection.SCROLL_NONE;
+
+  public void setmOverScrollDirection(int mOverScrollDirection)
+  {
+    this.mOverScrollDirection = mOverScrollDirection;
+  }
+
+  public void setmScrollDirection(int mScrollDirection)
+  {
+    this.mScrollDirection = mScrollDirection;
+  }
 
   public VerticalScrollingBehavior()
   {
@@ -64,7 +74,7 @@ public abstract class VerticalScrollingBehavior<V extends View> extends Coordina
     return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
   }
 
-  @Override
+  @SuppressLint("WrongConstant") @Override
   public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, V child, View target, int dx, int dy, int[] consumed)
   {
     super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed);
@@ -79,7 +89,7 @@ public abstract class VerticalScrollingBehavior<V extends View> extends Coordina
     onDirectionNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, mScrollDirection);
   }
 
-  @Override
+  @SuppressLint("WrongConstant") @Override
   public void onNestedScroll(CoordinatorLayout coordinatorLayout, V child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed)
   {
     super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
@@ -94,7 +104,7 @@ public abstract class VerticalScrollingBehavior<V extends View> extends Coordina
     onNestedVerticalOverScroll(coordinatorLayout, child, mOverScrollDirection, dyConsumed, mTotalDyUnconsumed);
   }
 
-  @Override
+  @SuppressLint("WrongConstant") @Override
   public boolean onNestedFling(CoordinatorLayout coordinatorLayout, V child, View target, float velocityX, float velocityY, boolean consumed)
   {
     super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
