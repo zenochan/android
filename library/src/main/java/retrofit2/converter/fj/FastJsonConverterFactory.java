@@ -4,13 +4,13 @@ package retrofit2.converter.fj;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.serializer.PropertyPreFilter;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-import lombok.Setter;
 import name.zeno.android.third.rxjava.ValueTransformer;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -35,8 +35,10 @@ public class FastJsonConverterFactory extends Converter.Factory
 
   private SerializeConfig     serializeConfig;
   private SerializerFeature[] serializerFeatures;
+  private PropertyPreFilter   propertyPreFilter;
 
-  @Setter private ValueTransformer<String, String> resTransformer;
+
+  private ValueTransformer<String, String> resTransformer;
 
   /**
    * Create an default instance for conversion. Encoding to JSON and
@@ -121,5 +123,8 @@ public class FastJsonConverterFactory extends Converter.Factory
     this.serializerFeatures = features;
     return this;
   }
+
+  public void setResTransformer(ValueTransformer<String, String> resTransformer)
+  {this.resTransformer = resTransformer; }
 }
 

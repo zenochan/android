@@ -42,7 +42,7 @@ public class ToastFragment extends Fragment
   }
 
   //<editor-fold desc="snack & toast">
-  protected void snack(String msg)
+  public void snack(String msg)
   {
     try {
       Snackbar.make(fragmentView, msg, Snackbar.LENGTH_LONG).show();
@@ -53,12 +53,12 @@ public class ToastFragment extends Fragment
     }
   }
 
-  protected void snack(String msg, String button)
+  public void snack(String msg, String button)
   {
     snack(msg, button, null);
   }
 
-  protected void snack(String msg, String button, Action0 onNext)
+  public void snack(String msg, String button, Action0 onNext)
   {
     try {
       Snackbar.make(fragmentView, msg, Snackbar.LENGTH_LONG)
@@ -75,17 +75,17 @@ public class ToastFragment extends Fragment
     }
   }
 
-  protected void snack(@StringRes int resId)
+  public void snack(@StringRes int resId)
   {
     Snackbar.make(fragmentView, resId, Snackbar.LENGTH_SHORT).show();
   }
 
-  protected void snack(@StringRes int resId, String button)
+  public void snack(@StringRes int resId, String button)
   {
     snack(resId, button, null);
   }
 
-  protected void snack(@StringRes int resId, String button, Action0 onNext)
+  public void snack(@StringRes int resId, String button, Action0 onNext)
   {
     Snackbar.make(fragmentView, resId, Snackbar.LENGTH_LONG)
         .setAction(button, view -> {
@@ -96,12 +96,12 @@ public class ToastFragment extends Fragment
         .show();
   }
 
-  protected void longSnack(String msg)
+  public void longSnack(String msg)
   {
     Snackbar.make(fragmentView, msg, Snackbar.LENGTH_LONG).show();
   }
 
-  protected void longSnack(@StringRes int resId)
+  public void longSnack(@StringRes int resId)
   {
     Snackbar.make(fragmentView, resId, Snackbar.LENGTH_LONG).show();
   }
@@ -157,6 +157,7 @@ public class ToastFragment extends Fragment
         .content(confirm)
         .neutralText("好")
         .onNeutral((dialog, which) -> {
+          dialog.dismiss();
           getActivity().finish();
         })
         .cancelable(false)

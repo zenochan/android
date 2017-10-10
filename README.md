@@ -42,6 +42,7 @@ dependencies{
 
 ## TODO
 
+- [ ] 添加 kotlin 后必须依赖 Provider 依赖才能使用 lib，待优化
 - [ ] Otto 替换为 RxBus - Otto 官方推荐
 - [ ] [数据库框架研究](https://www.zhihu.com/question/46449188?sort=created)
 

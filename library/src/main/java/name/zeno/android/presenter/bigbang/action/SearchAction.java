@@ -9,9 +9,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 /**
  * Created by baoyongzhang on 2016/10/26.
  */

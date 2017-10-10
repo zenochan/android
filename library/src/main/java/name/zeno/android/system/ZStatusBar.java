@@ -136,12 +136,12 @@ public class ZStatusBar
    * 状态栏亮色模式，设置状态栏黑色文字、图标，
    * 适配4.4以上版本MIUIV、Flyme和6.0以上版本其他Android
    *
-   * @return 1:MIUUI 2:Flyme 3:android6.0
+   * @return -1: not support， 1:MIUUI 2:Flyme 3:android6.0
    * @see <a href="http://www.jianshu.com/p/7f5a9969be53">白底黑字！Android浅色状态栏黑色字体模式 </a>
    */
   public static int lightMode(Activity activity)
   {
-    int result = 0;
+    int result = -1;
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       if (miuiSetStatusBarLightMode(activity, true)) {
         result = 1;

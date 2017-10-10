@@ -173,7 +173,7 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
     getActivity().finish();
   }
 
-  public void showCalender(Calendar min, Calendar max, Action1<Calendar> next)
+  public void showCalender(@Nullable Calendar min, @Nullable Calendar max, Action1<Calendar> next)
   {
     Calendar today = Calendar.getInstance();
     int      y     = today.get(Calendar.YEAR);
@@ -185,8 +185,8 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
       calendar.set(_y, _m, _d);
       next.call(calendar);
     }, y, m, d);
-    dialog.setMinDate(min);
-    dialog.setMaxDate(max);
+    if (min != null) dialog.setMinDate(min);
+    if (max != null) dialog.setMaxDate(max);
     dialog.show(getFragmentManager(), "date_picker_dialog");
   }
 

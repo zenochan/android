@@ -1,7 +1,6 @@
 package name.zeno.android.presenter.searchpio;
 
 import name.zeno.android.listener.Action0;
-import name.zeno.android.listener.Action1;
 import name.zeno.android.presenter.LoadDataView;
 
 /**

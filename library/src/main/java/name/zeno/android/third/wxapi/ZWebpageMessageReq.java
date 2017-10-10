@@ -11,10 +11,6 @@ import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import name.zeno.android.app.ZApplication;
 import name.zeno.android.util.R;
 import name.zeno.android.util.ZBitmap;
@@ -25,7 +21,6 @@ import name.zeno.android.util.ZBitmap;
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/4/27
  */
-@Data @NoArgsConstructor @EqualsAndHashCode(callSuper = false)
 public class ZWebpageMessageReq extends AbsReq
 {
   private String webpageUrl;
@@ -33,8 +28,10 @@ public class ZWebpageMessageReq extends AbsReq
   private String description;
   private String thumbImageUrl;
   private Bitmap thumbImage;
-  @WXScene @Setter(onMethod = @__({@WXScene}))
+  @WXScene
   private int    scene;
+
+  public ZWebpageMessageReq() {}
 
   @Override public Observable<BaseReq> build()
   {
@@ -111,4 +108,93 @@ public class ZWebpageMessageReq extends AbsReq
 
     @Override public ZWebpageMessageReq[] newArray(int size) {return new ZWebpageMessageReq[size];}
   };
+
+  public String getWebpageUrl()
+  {return this.webpageUrl;}
+
+  public String getTitle()
+  {return this.title;}
+
+  public String getDescription()
+  {return this.description;}
+
+  public String getThumbImageUrl()
+  {return this.thumbImageUrl;}
+
+  public Bitmap getThumbImage()
+  {return this.thumbImage;}
+
+  public int getScene()
+  {return this.scene;}
+
+  public void setWebpageUrl(String webpageUrl)
+  {this.webpageUrl = webpageUrl; }
+
+  public void setTitle(String title)
+  {this.title = title; }
+
+  public void setDescription(String description)
+  {this.description = description; }
+
+  public void setThumbImageUrl(String thumbImageUrl)
+  {this.thumbImageUrl = thumbImageUrl; }
+
+  public void setThumbImage(Bitmap thumbImage)
+  {this.thumbImage = thumbImage; }
+
+  public String toString()
+  {return "ZWebpageMessageReq(webpageUrl=" + this.getWebpageUrl() + ", title=" + this.getTitle() + ", description=" + this.getDescription() + ", thumbImageUrl=" + this.getThumbImageUrl() + ", thumbImage=" + this.getThumbImage() + ", scene=" + this.getScene() + ")";}
+
+  public boolean equals(Object o)
+  {
+    if (o == this) return true;
+    if (!(o instanceof ZWebpageMessageReq)) return false;
+    final ZWebpageMessageReq other = (ZWebpageMessageReq) o;
+    if (!other.canEqual((Object) this)) return false;
+    final Object this$webpageUrl  = this.getWebpageUrl();
+    final Object other$webpageUrl = other.getWebpageUrl();
+    if (this$webpageUrl == null ? other$webpageUrl != null : !this$webpageUrl.equals(other$webpageUrl))
+      return false;
+    final Object this$title  = this.getTitle();
+    final Object other$title = other.getTitle();
+    if (this$title == null ? other$title != null : !this$title.equals(other$title)) return false;
+    final Object this$description  = this.getDescription();
+    final Object other$description = other.getDescription();
+    if (this$description == null ? other$description != null : !this$description.equals(other$description))
+      return false;
+    final Object this$thumbImageUrl  = this.getThumbImageUrl();
+    final Object other$thumbImageUrl = other.getThumbImageUrl();
+    if (this$thumbImageUrl == null ? other$thumbImageUrl != null : !this$thumbImageUrl.equals(other$thumbImageUrl))
+      return false;
+    final Object this$thumbImage  = this.getThumbImage();
+    final Object other$thumbImage = other.getThumbImage();
+    if (this$thumbImage == null ? other$thumbImage != null : !this$thumbImage.equals(other$thumbImage))
+      return false;
+    if (this.getScene() != other.getScene()) return false;
+    return true;
+  }
+
+  public int hashCode()
+  {
+    final int    PRIME       = 59;
+    int          result      = 1;
+    final Object $webpageUrl = this.getWebpageUrl();
+    result = result * PRIME + ($webpageUrl == null ? 43 : $webpageUrl.hashCode());
+    final Object $title = this.getTitle();
+    result = result * PRIME + ($title == null ? 43 : $title.hashCode());
+    final Object $description = this.getDescription();
+    result = result * PRIME + ($description == null ? 43 : $description.hashCode());
+    final Object $thumbImageUrl = this.getThumbImageUrl();
+    result = result * PRIME + ($thumbImageUrl == null ? 43 : $thumbImageUrl.hashCode());
+    final Object $thumbImage = this.getThumbImage();
+    result = result * PRIME + ($thumbImage == null ? 43 : $thumbImage.hashCode());
+    result = result * PRIME + this.getScene();
+    return result;
+  }
+
+  protected boolean canEqual(Object other)
+  {return other instanceof ZWebpageMessageReq;}
+
+  public void setScene(@WXScene int scene)
+  {this.scene = scene; }
 }

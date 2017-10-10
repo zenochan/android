@@ -3,13 +3,10 @@ package name.zeno.android.presenter.searchpio;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import lombok.Data;
-
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/12/23.
  */
-@Data
 public class SearchPoiRequest implements Parcelable
 {
   public static final String EXTRA_NAME = "SearchPoiRequest";
@@ -42,4 +39,45 @@ public class SearchPoiRequest implements Parcelable
 
     @Override public SearchPoiRequest[] newArray(int size) {return new SearchPoiRequest[size];}
   };
+
+  public String getFill()
+  {return this.fill;}
+
+  public boolean isEnableOriginInput()
+  {return this.enableOriginInput;}
+
+  public void setFill(String fill)
+  {this.fill = fill; }
+
+  public void setEnableOriginInput(boolean enableOriginInput)
+  {this.enableOriginInput = enableOriginInput; }
+
+  public boolean equals(Object o)
+  {
+    if (o == this) return true;
+    if (!(o instanceof SearchPoiRequest)) return false;
+    final SearchPoiRequest other = (SearchPoiRequest) o;
+    if (!other.canEqual((Object) this)) return false;
+    final Object this$fill  = this.getFill();
+    final Object other$fill = other.getFill();
+    if (this$fill == null ? other$fill != null : !this$fill.equals(other$fill)) return false;
+    if (this.isEnableOriginInput() != other.isEnableOriginInput()) return false;
+    return true;
+  }
+
+  public int hashCode()
+  {
+    final int    PRIME  = 59;
+    int          result = 1;
+    final Object $fill  = this.getFill();
+    result = result * PRIME + ($fill == null ? 43 : $fill.hashCode());
+    result = result * PRIME + (this.isEnableOriginInput() ? 79 : 97);
+    return result;
+  }
+
+  protected boolean canEqual(Object other)
+  {return other instanceof SearchPoiRequest;}
+
+  public String toString()
+  {return "SearchPoiRequest(fill=" + this.getFill() + ", enableOriginInput=" + this.isEnableOriginInput() + ")";}
 }

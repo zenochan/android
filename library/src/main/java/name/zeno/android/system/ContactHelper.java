@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
-import lombok.Setter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action1;
 
@@ -33,7 +32,7 @@ public class ContactHelper
   private Fragment fragment;
 
   private         Action1<List<Contact>> onSelected;
-  @Setter private Action0                onCancelListener;
+  private Action0                onCancelListener;
 
   public ContactHelper(Activity activity)
   {
@@ -152,4 +151,7 @@ public class ContactHelper
 
     onSelected = next;
   }
+
+  public void setOnCancelListener(Action0 onCancelListener)
+  {this.onCancelListener = onCancelListener; }
 }

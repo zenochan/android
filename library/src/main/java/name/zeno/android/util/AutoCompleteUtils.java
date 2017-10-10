@@ -3,13 +3,11 @@ package name.zeno.android.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.widget.ArrayAdapter;
 
 import com.alibaba.fastjson.JSON;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import name.zeno.android.widget.adapter.ZArrayAdapter;

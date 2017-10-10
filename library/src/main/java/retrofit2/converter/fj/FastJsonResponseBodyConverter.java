@@ -7,7 +7,6 @@ import com.alibaba.fastjson.parser.ParserConfig;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
-import lombok.Setter;
 import name.zeno.android.third.rxjava.ValueTransformer;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
@@ -24,7 +23,6 @@ public class FastJsonResponseBodyConverter<T> implements Converter<ResponseBody,
   private int          featureValues;
   private Feature[]    features;
 
-  @Setter
   private ValueTransformer<String, String> resTransformer;
 
   public FastJsonResponseBodyConverter(Type type, ParserConfig config, int featureValues, Feature... features)
@@ -48,4 +46,6 @@ public class FastJsonResponseBodyConverter<T> implements Converter<ResponseBody,
       value.close();
     }
   }
+
+  public void setResTransformer(ValueTransformer<String, String> resTransformer) {this.resTransformer = resTransformer; }
 }

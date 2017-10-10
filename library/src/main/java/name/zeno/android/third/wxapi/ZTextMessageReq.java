@@ -8,10 +8,6 @@ import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXTextObject;
 
 import io.reactivex.Observable;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /**
  * 发送文本消息
@@ -19,12 +15,13 @@ import lombok.Setter;
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/4/27
  */
-@Data @NoArgsConstructor @EqualsAndHashCode(callSuper = false)
 public class ZTextMessageReq extends AbsReq
 {
   private String text;
-  @WXScene @Setter(onMethod = @__({@WXScene}))
+  @WXScene
   private int scene = WXScene.SESSION;
+
+  public ZTextMessageReq() {}
 
   @Override public Observable<BaseReq> build()
   {
@@ -53,4 +50,45 @@ public class ZTextMessageReq extends AbsReq
 
     @Override public ZTextMessageReq[] newArray(int size) {return new ZTextMessageReq[size];}
   };
+
+  public String getText()
+  {return this.text;}
+
+  public int getScene()
+  {return this.scene;}
+
+  public void setText(String text)
+  {this.text = text; }
+
+  public String toString()
+  {return "ZTextMessageReq(text=" + this.getText() + ", scene=" + this.getScene() + ")";}
+
+  public boolean equals(Object o)
+  {
+    if (o == this) return true;
+    if (!(o instanceof ZTextMessageReq)) return false;
+    final ZTextMessageReq other = (ZTextMessageReq) o;
+    if (!other.canEqual((Object) this)) return false;
+    final Object this$text  = this.getText();
+    final Object other$text = other.getText();
+    if (this$text == null ? other$text != null : !this$text.equals(other$text)) return false;
+    if (this.getScene() != other.getScene()) return false;
+    return true;
+  }
+
+  public int hashCode()
+  {
+    final int    PRIME  = 59;
+    int          result = 1;
+    final Object $text  = this.getText();
+    result = result * PRIME + ($text == null ? 43 : $text.hashCode());
+    result = result * PRIME + this.getScene();
+    return result;
+  }
+
+  protected boolean canEqual(Object other)
+  {return other instanceof ZTextMessageReq;}
+
+  @WXScene public void setScene(int scene)
+  {this.scene = scene; }
 }

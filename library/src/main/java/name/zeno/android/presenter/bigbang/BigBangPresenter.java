@@ -4,7 +4,6 @@ import android.net.Uri;
 
 import com.alibaba.fastjson.JSON;
 
-import java.net.URLEncoder;
 import java.util.List;
 
 import name.zeno.android.data.CommonConnector;

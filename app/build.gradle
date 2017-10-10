@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-noarg'
@@ -10,7 +9,7 @@ allOpen { annotations('name.zeno.zervice.annontations.DataClass') }
 
 android {
   compileSdkVersion 26
-  buildToolsVersion "26.0.1"
+  buildToolsVersion '26.0.2'
 
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8

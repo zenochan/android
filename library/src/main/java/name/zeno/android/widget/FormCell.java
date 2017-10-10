@@ -18,11 +18,9 @@ import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lombok.Getter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.util.R;
 import name.zeno.android.util.R2;
-import name.zeno.android.util.ZDimen;
 
 
 /**
@@ -35,9 +33,9 @@ public class FormCell extends LinearLayout
 {
   private View root;
 
-  @Getter @BindView(R2.id.tv_label)   ZTextView         labelTv;
-  @Getter @BindView(R2.id.et_content) AppCompatTextView contentTv;
-  @Getter @BindView(R2.id.iv_next)    ZImageView        nextIv;
+  @BindView(R2.id.tv_label)   ZTextView         labelTv;
+  @BindView(R2.id.et_content) AppCompatTextView contentTv;
+  @BindView(R2.id.iv_next)    ZImageView        nextIv;
 
   @ColorInt int colorLabelText = 0;
 
@@ -184,4 +182,12 @@ public class FormCell extends LinearLayout
     ta.recycle();
   }
 
+  public ZTextView getLabelTv()
+  {return this.labelTv;}
+
+  public AppCompatTextView getContentTv()
+  {return this.contentTv;}
+
+  public ZImageView getNextIv()
+  {return this.nextIv;}
 }

@@ -5,8 +5,6 @@
 package name.zeno.android.presenter.bigbang.action;
 
 import android.content.Context;
-import android.content.Intent;
-import android.text.TextUtils;
 
 import name.zeno.android.util.ZAction;
 

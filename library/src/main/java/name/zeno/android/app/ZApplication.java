@@ -16,8 +16,8 @@ import com.taobao.sophix.SophixManager;
 
 import java.util.Locale;
 
-import name.zeno.android.third.getui.ZGetuiService;
 import name.zeno.android.third.getui.ZGetuiMessageService;
+import name.zeno.android.third.getui.ZGetuiService;
 import name.zeno.android.util.ZCookie;
 import name.zeno.android.util.ZLog;
 
@@ -38,40 +38,19 @@ public abstract class ZApplication extends MultiDexApplication
 
     registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks()
     {
-      @Override public void onActivityCreated(Activity activity, Bundle bundle)
-      {
+      @Override public void onActivityCreated(Activity activity, Bundle bundle) { }
 
-      }
+      @Override public void onActivityStarted(Activity activity) { }
 
-      @Override public void onActivityStarted(Activity activity)
-      {
+      @Override public void onActivityResumed(Activity activity) { }
 
-      }
+      @Override public void onActivityPaused(Activity activity) { }
 
-      @Override public void onActivityResumed(Activity activity)
-      {
+      @Override public void onActivityStopped(Activity activity) { }
 
-      }
+      @Override public void onActivitySaveInstanceState(Activity activity, Bundle bundle) { }
 
-      @Override public void onActivityPaused(Activity activity)
-      {
-
-      }
-
-      @Override public void onActivityStopped(Activity activity)
-      {
-
-      }
-
-      @Override public void onActivitySaveInstanceState(Activity activity, Bundle bundle)
-      {
-
-      }
-
-      @Override public void onActivityDestroyed(Activity activity)
-      {
-
-      }
+      @Override public void onActivityDestroyed(Activity activity) { }
     });
   }
 

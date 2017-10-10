@@ -8,7 +8,6 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelCache;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.stream.BaseGlideUrlLoader;
-import com.orhanobut.logger.Logger;
 
 import java.io.InputStream;
 

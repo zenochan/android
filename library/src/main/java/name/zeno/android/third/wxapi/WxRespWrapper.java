@@ -5,15 +5,13 @@ import android.os.Parcelable;
 
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 
-import lombok.Data;
-
 /**
  * 微信响应结果封装
  * Create Date: 16/6/9
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-@Data @SuppressWarnings("WeakerAccess")
+@SuppressWarnings("WeakerAccess")
 public class WxRespWrapper implements Parcelable
 {
   /**
@@ -74,5 +72,65 @@ public class WxRespWrapper implements Parcelable
 
     @Override public WxRespWrapper[] newArray(int size) {return new WxRespWrapper[size];}
   };
+
+  public int getType()
+  {return this.type;}
+
+  public int getErrCode()
+  {return this.errCode;}
+
+  public String getCode()
+  {return this.code;}
+
+  public String getDesc()
+  {return this.desc;}
+
+  public void setType(int type)
+  {this.type = type; }
+
+  public void setErrCode(int errCode)
+  {this.errCode = errCode; }
+
+  public void setCode(String code)
+  {this.code = code; }
+
+  public void setDesc(String desc)
+  {this.desc = desc; }
+
+  public boolean equals(Object o)
+  {
+    if (o == this) return true;
+    if (!(o instanceof WxRespWrapper)) return false;
+    final WxRespWrapper other = (WxRespWrapper) o;
+    if (!other.canEqual((Object) this)) return false;
+    if (this.getType() != other.getType()) return false;
+    if (this.getErrCode() != other.getErrCode()) return false;
+    final Object this$code  = this.getCode();
+    final Object other$code = other.getCode();
+    if (this$code == null ? other$code != null : !this$code.equals(other$code)) return false;
+    final Object this$desc  = this.getDesc();
+    final Object other$desc = other.getDesc();
+    if (this$desc == null ? other$desc != null : !this$desc.equals(other$desc)) return false;
+    return true;
+  }
+
+  public int hashCode()
+  {
+    final int PRIME  = 59;
+    int       result = 1;
+    result = result * PRIME + this.getType();
+    result = result * PRIME + this.getErrCode();
+    final Object $code = this.getCode();
+    result = result * PRIME + ($code == null ? 43 : $code.hashCode());
+    final Object $desc = this.getDesc();
+    result = result * PRIME + ($desc == null ? 43 : $desc.hashCode());
+    return result;
+  }
+
+  protected boolean canEqual(Object other)
+  {return other instanceof WxRespWrapper;}
+
+  public String toString()
+  {return "WxRespWrapper(type=" + this.getType() + ", errCode=" + this.getErrCode() + ", code=" + this.getCode() + ", desc=" + this.getDesc() + ")";}
   //</editor-fold>
 }

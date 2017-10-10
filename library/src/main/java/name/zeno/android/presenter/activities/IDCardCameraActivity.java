@@ -21,8 +21,8 @@ import io.reactivex.disposables.Disposable;
 import name.zeno.android.camera.CameraManager;
 import name.zeno.android.presenter.ZActivity;
 import name.zeno.android.third.rxjava.RxUtils;
-import name.zeno.android.util.ZBitmap;
 import name.zeno.android.util.R;
+import name.zeno.android.util.ZBitmap;
 
 /**
  * Create Date: 16/6/19

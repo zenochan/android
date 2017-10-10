@@ -1,15 +1,11 @@
 package name.zeno.android.third.otto;
 
 import android.os.Looper;
-import android.support.annotation.UiThread;
 
 import com.squareup.otto.Bus;
 
 import io.reactivex.Observable;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 import name.zeno.android.third.rxjava.RxUtils;
-import name.zeno.android.third.rxjava.ZObserver;
 
 /**
  * Create Date: 16/5/30

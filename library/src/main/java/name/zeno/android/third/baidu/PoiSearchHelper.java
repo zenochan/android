@@ -3,7 +3,6 @@ package name.zeno.android.third.baidu;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.CityInfo;
 import com.baidu.mapapi.search.core.PoiInfo;
@@ -17,20 +16,14 @@ import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
 import com.baidu.mapapi.search.poi.PoiSortType;
-import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener;
-import com.baidu.mapapi.search.sug.SuggestionResult;
 import com.baidu.mapapi.search.sug.SuggestionSearch;
 import com.baidu.mapapi.search.sug.SuggestionSearchOption;
 import com.orhanobut.logger.Logger;
-
 
 import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observer;
-import lombok.Getter;
-import lombok.Setter;
-import retrofit2.http.GET;
 
 /**
  * Create Date: 16/6/19
@@ -49,7 +42,6 @@ public class PoiSearchHelper implements OnGetPoiSearchResultListener
   private final PoiSearch        poiSearch;
   private final SuggestionSearch suggestionSearch;
 
-  @Getter @Setter
   private Observer<List<PoiInfo>> subscriber;
 
   public PoiSearchHelper()
@@ -149,4 +141,9 @@ public class PoiSearchHelper implements OnGetPoiSearchResultListener
     subscriber.onComplete();
   }
 
+  public Observer<List<PoiInfo>> getSubscriber()
+  {return this.subscriber;}
+
+  public void setSubscriber(Observer<List<PoiInfo>> subscriber)
+  {this.subscriber = subscriber; }
 }

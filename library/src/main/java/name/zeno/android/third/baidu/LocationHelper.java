@@ -76,7 +76,7 @@ public class LocationHelper implements BDLocationListener
     }
   }
 
-  @Override public void onConnectHotSpotMessage(String s, int i) { /*热点消息*/ }
+//  @Override public void onConnectHotSpotMessage(String s, int i) { /*热点消息*/ }
 
   public synchronized void requestLocation(Observer<BDLocation> observer)
   {
@@ -91,7 +91,7 @@ public class LocationHelper implements BDLocationListener
     if (locationClient.isStarted()) {
       locationClient.requestLocation();
     } else {
-      Observable.create(subscriber1 -> {
+      Observable.create(sub -> {
         int t = 0;
         while (!locationClient.isStarted() && t < 20) {
           try {
@@ -103,17 +103,20 @@ public class LocationHelper implements BDLocationListener
           }
         }
         if (locationClient.isStarted()) {
-          subscriber1.onNext(1);
-          subscriber1.onComplete();
+          sub.onNext(1);
+          sub.onComplete();
         } else {
-          subscriber1.onError(new Exception("开启百度定位失败"));
+          sub.onError(new Exception("开启百度定位失败"));
         }
       }).compose(RxUtils.applySchedulers()).subscribe(
           o -> {
             ZLog.w(TAG, "start request");
             locationClient.requestLocation();
           },
-          throwable -> ZLog.e(TAG, throwable.getMessage()));
+          throwable -> {
+            ZLog.e(TAG, throwable.getMessage());
+            onLocationFailed();
+          });
     }
   }
 

@@ -8,8 +8,6 @@ import com.orhanobut.logger.Logger;
 import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import lombok.Getter;
-import lombok.Setter;
 import name.zeno.android.exception.ZException;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.listener.Action1;
@@ -28,7 +26,7 @@ public abstract class BasePresenter<T extends View> implements Presenter
 
   private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
-  @Getter @Setter protected T view;
+  protected T view;
 
   public BasePresenter(T view)
   {
@@ -66,12 +64,12 @@ public abstract class BasePresenter<T extends View> implements Presenter
   {
   }
 
-  protected void addDisposable(Disposable disposable)
+  public void addDisposable(Disposable disposable)
   {
     compositeDisposable.add(disposable);
   }
 
-  protected void removeDisposable(Disposable disposable)
+  public void removeDisposable(Disposable disposable)
   {
     try {
       if (disposable != null) compositeDisposable.remove(disposable);
@@ -81,32 +79,32 @@ public abstract class BasePresenter<T extends View> implements Presenter
     }
   }
 
-  protected <E> Observer<E> sub(Action1<E> onNext)
+  public <E> Observer<E> sub(Action1<E> onNext)
   {
     return sub(onNext, e -> ZLog.e(TAG, "default on error", e));
   }
 
-  protected <E> Observer<E> sub(Action1<E> onNext, Action1<ZException> onError)
+  public <E> Observer<E> sub(Action1<E> onNext, Action1<ZException> onError)
   {
     return sub(onNext, onError, () -> Logger.t(TAG).v("default on complete"));
   }
 
-  protected <E> Observer<E> sub(Action1<E> onNext, Action1<ZException> onError, Action0 onComplete)
+  public <E> Observer<E> sub(Action1<E> onNext, Action1<ZException> onError, Action0 onComplete)
   {
     return subWithDisposable(onNext, onError, onComplete, null);
   }
 
-  protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<Disposable> onSub)
+  public <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<Disposable> onSub)
   {
     return subWithDisposable(onNext, e -> ZLog.e(TAG, "default on error", e), onSub);
   }
 
-  protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<ZException> onError, Action1<Disposable> onSub)
+  public <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<ZException> onError, Action1<Disposable> onSub)
   {
     return subWithDisposable(onNext, onError, () -> Logger.t(TAG).v("default on complete"), onSub);
   }
 
-  protected <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<ZException> onError, Action0 onComplete, Action1<Disposable> onSub)
+  public <E> Observer<E> subWithDisposable(Action1<E> onNext, Action1<ZException> onError, Action0 onComplete, Action1<Disposable> onSub)
   {
     return new ZObserver<E>()
     {
@@ -147,4 +145,7 @@ public abstract class BasePresenter<T extends View> implements Presenter
     };
   }
 
+  public T getView() {return this.view;}
+
+  public void setView(T view) {this.view = view; }
 }

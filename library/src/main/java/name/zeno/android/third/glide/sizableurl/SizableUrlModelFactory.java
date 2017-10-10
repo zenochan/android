@@ -1,6 +1,5 @@
 package name.zeno.android.third.glide.sizableurl;
 
-import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelCache;
 import com.bumptech.glide.load.model.ModelLoader;

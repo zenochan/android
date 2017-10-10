@@ -15,8 +15,6 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import lombok.Getter;
-import lombok.Setter;
 import name.zeno.android.listener.Action1;
 
 /**
@@ -44,7 +42,7 @@ public class WxEntryHelper implements IWXAPIEventHandler
   private IWXAPI   api;
   private BaseResp resp;
 
-  @Getter @Setter private Action1<WxRespWrapper> onPayRespListener;
+  private Action1<WxRespWrapper> onPayRespListener;
 
   private Context context;
 
@@ -143,4 +141,10 @@ public class WxEntryHelper implements IWXAPIEventHandler
 
     api.sendReq(req);
   }
+
+  public Action1<WxRespWrapper> getOnPayRespListener()
+  {return this.onPayRespListener;}
+
+  public void setOnPayRespListener(Action1<WxRespWrapper> onPayRespListener)
+  {this.onPayRespListener = onPayRespListener; }
 }

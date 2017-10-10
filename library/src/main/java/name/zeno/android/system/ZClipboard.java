@@ -4,8 +4,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 
-import name.zeno.android.util.ZLog;
-
 /**
  * 剪贴板
  *

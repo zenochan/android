@@ -11,9 +11,6 @@ import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import java.security.Permission;
-import java.util.jar.Manifest;
-
 import name.zeno.android.system.ZPermission;
 import name.zeno.android.util.PrintUtils;
 import name.zeno.android.util.SystemUtils;
@@ -57,7 +54,7 @@ public class AppInfo
     initDisplay();
   }
 
-  @SuppressLint("HardwareIds")
+  @SuppressLint({"HardwareIds", "MissingPermission"})
   public static void init(Context context)
   {
     dType = Build.MODEL;

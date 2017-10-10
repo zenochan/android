@@ -13,8 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import lombok.Getter;
-import lombok.Setter;
 import name.zeno.android.listener.Action0;
 import name.zeno.android.util.R;
 
@@ -26,15 +24,12 @@ import name.zeno.android.util.R;
 @SuppressWarnings("unused")
 public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListener
 {
-  @Setter
   private Action0 onClickPre;
-  @Setter
   private Action0 onClickAction;
 
   private ZTextView preTv;
   private TextView  titleTv;
   private ZTextView actionTv;
-  @Getter
   private View      appbar;
 
   public SimpleActionbar(Context context)
@@ -175,6 +170,8 @@ public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListen
     boolean whiteBar = ta.getBoolean(R.styleable.SimpleActionbar_whiteBar, false);
     if (whiteBar) {
       setBackgroundColor(Color.WHITE);
+      View v = getStatusBarView();
+      if (v != null) v.setBackgroundColor(Color.WHITE);
     }
 
     ta.recycle();
@@ -190,4 +187,13 @@ public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListen
     ColorStateList tint = new ColorStateList(new int[][]{{}}, new int[]{color});
     preTv.setSupportCompoundDrawableTintList(tint);
   }
+
+  public View getAppbar()
+  {return this.appbar;}
+
+  public void setOnClickPre(Action0 onClickPre)
+  {this.onClickPre = onClickPre; }
+
+  public void setOnClickAction(Action0 onClickAction)
+  {this.onClickAction = onClickAction; }
 }

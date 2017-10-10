@@ -9,11 +9,8 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.support.annotation.IntDef;
-import android.support.annotation.InterpolatorRes;
 import android.util.AttributeSet;
-import android.view.View;
 
-import lombok.Setter;
 import name.zeno.android.util.R;
 
 
@@ -28,6 +25,18 @@ import name.zeno.android.util.R;
 public class CircleImageView extends ZImageView
 {
 
+  public void setBorderColor(int borderColor)
+  {this.borderColor = borderColor; }
+
+  public void setBorderWidth(float borderWidth)
+  {this.borderWidth = borderWidth; }
+
+  public void setMaskColor(int maskColor)
+  {this.maskColor = maskColor; }
+
+  public void setMode(int mode)
+  {this.mode = mode; }
+
   @IntDef({Mode.OVERDRAW, Mode.CLIP}) @interface Mode
   {
     int OVERDRAW = 0;   // 覆盖绘制
@@ -40,12 +49,12 @@ public class CircleImageView extends ZImageView
   private RectF   rect = new RectF();
   private Context mContext;
 
-  @Setter private int   borderColor;
-  @Setter private float borderWidth;
-  @Setter private int   maskColor;
+  private int   borderColor;
+  private float borderWidth;
+  private int   maskColor;
 
   @Mode
-  @Setter private int mode = Mode.OVERDRAW;
+  private int mode = Mode.OVERDRAW;
 
   public CircleImageView(Context context)
   {

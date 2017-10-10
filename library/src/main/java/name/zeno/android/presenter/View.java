@@ -1,7 +1,6 @@
 package name.zeno.android.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.StringRes;
 
 /**

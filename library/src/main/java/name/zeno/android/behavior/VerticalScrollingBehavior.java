@@ -10,8 +10,6 @@ import android.view.View;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import lombok.Getter;
-
 /**
  * <h1>垂直滚动</h1>
  * <p>
@@ -34,9 +32,9 @@ public abstract class VerticalScrollingBehavior<V extends View> extends Coordina
   private int mTotalDyUnconsumed = 0;
   private int mTotalDy           = 0;
 
-  @ScrollDirection @Getter
+  @ScrollDirection
   private int mOverScrollDirection = ScrollDirection.SCROLL_NONE;
-  @ScrollDirection @Getter
+  @ScrollDirection
   private int mScrollDirection     = ScrollDirection.SCROLL_NONE;
 
   public VerticalScrollingBehavior()
@@ -48,6 +46,12 @@ public abstract class VerticalScrollingBehavior<V extends View> extends Coordina
   {
     super(context, attrs);
   }
+
+  public int getMOverScrollDirection()
+  {return this.mOverScrollDirection;}
+
+  public int getMScrollDirection()
+  {return this.mScrollDirection;}
 
   @Retention(RetentionPolicy.SOURCE)
   @IntDef({ScrollDirection.SCROLL_DIRECTION_UP, ScrollDirection.SCROLL_DIRECTION_DOWN})

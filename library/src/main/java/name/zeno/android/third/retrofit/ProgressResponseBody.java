@@ -2,7 +2,6 @@ package name.zeno.android.third.retrofit;
 
 import java.io.IOException;
 
-import lombok.Setter;
 import name.zeno.android.listener.Action3;
 import okhttp3.MediaType;
 import okhttp3.ResponseBody;
@@ -20,7 +19,6 @@ public class ProgressResponseBody extends ResponseBody
 {
   private final ResponseBody                 responseBody;
   private       BufferedSource               bufferedSource;
-  @Setter
   private       Action3<Long, Long, Boolean> onProgressChanged;
 
   public ProgressResponseBody(ResponseBody responseBody)
@@ -67,4 +65,7 @@ public class ProgressResponseBody extends ResponseBody
       }
     };
   }
+
+  public void setOnProgressChanged(Action3<Long, Long, Boolean> onProgressChanged)
+  {this.onProgressChanged = onProgressChanged; }
 }

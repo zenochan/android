@@ -1,15 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-  ext.kotlin_version = "1.1.4-3"
+  ext.kotlin_version = "1.1.51"
+  ext.support_version = "26.1.0"
+  ext.butterknif_version = "9.0.0-SNAPSHOT"
+
 
   repositories {
     jcenter()
-    mavenCentral();
+    google()
+    mavenCentral()
+
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.3.3'
-    classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
+    classpath 'com.android.tools.build:gradle:3.0.0-beta7'
+    classpath "com.jakewharton:butterknife-gradle-plugin:$butterknif_version"
     classpath 'me.tatarka:gradle-retrolambda:3.2.4'
 
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -24,9 +30,15 @@ buildscript {
 allprojects {
   repositories {
     jcenter()
+    google()
     maven { url "https://jitpack.io" }
     maven { url "http://maven.mjtown.cn" }
     maven { url 'https://maven.google.com' }
+
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+
+    // 阿里百川 HotFix
+    maven { url "http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories" }
   }
 }
 

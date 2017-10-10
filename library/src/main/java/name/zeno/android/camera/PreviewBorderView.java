@@ -12,9 +12,9 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import name.zeno.android.util.ZDimen;
 import name.zeno.android.util.MeasureUtils;
 import name.zeno.android.util.R;
+import name.zeno.android.util.ZDimen;
 
 /**
  * Create Date: 16/6/19

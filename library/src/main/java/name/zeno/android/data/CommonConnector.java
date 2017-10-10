@@ -1,18 +1,14 @@
 package name.zeno.android.data;
 
 
-import android.os.Build;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import name.zeno.android.app.AppInfo;
 import name.zeno.android.data.models.Crash;
 import name.zeno.android.data.service.CommonService;
-import name.zeno.android.exception.ZException;
 import name.zeno.android.third.rxjava.RxUtils;
 import name.zeno.android.third.rxjava.ZObserver;
 import okhttp3.OkHttpClient;

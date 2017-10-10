@@ -1,8 +1,11 @@
 package name.zeno.android.util;
 
+import android.util.Base64;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -73,4 +76,25 @@ public class Encode
 
     return result;
   }
+
+  public static String base64AndUriEncode(String content)
+  {
+    String encodedString = new String(Base64.encode(content.getBytes(), Base64.DEFAULT));
+    encodedString = URLEncoder.encode(encodedString);
+    return encodedString;
+  }
+
+  public static String base64AndUriEncode(long content)
+  {
+    return base64AndUriEncode("" + content);
+  }
+
+
+  public static String debase64AndUriDecode(String content)
+  {
+    String encodedString = URLDecoder.decode(content);
+    new String(Base64.decode(encodedString.getBytes(), Base64.DEFAULT));
+    return encodedString;
+  }
+
 }

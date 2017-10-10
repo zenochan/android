@@ -17,10 +17,8 @@ import com.orhanobut.logger.Logger;
 
 import java.io.File;
 
-import lombok.Getter;
-import lombok.Setter;
-import name.zeno.android.presenter.activities.IDCardCameraActivity;
 import name.zeno.android.listener.Action1;
+import name.zeno.android.presenter.activities.IDCardCameraActivity;
 
 /**
  * <h1>获取图片帮助类</h1>
@@ -53,7 +51,6 @@ public class PhotoCaptureHelper
   private String  cachePath;
   private String  fileName;
 
-  @Setter @Getter
   private Action1<String> listener;
 
 
@@ -199,4 +196,9 @@ public class PhotoCaptureHelper
     return cacheDir.getAbsolutePath() + "/";
   }
 
+  public Action1<String> getListener()
+  {return this.listener;}
+
+  public void setListener(Action1<String> listener)
+  {this.listener = listener; }
 }

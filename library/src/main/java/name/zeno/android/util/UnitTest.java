@@ -1,6 +1,5 @@
 package name.zeno.android.util;
 
-import lombok.Getter;
 import name.zeno.android.third.rxjava.RxUtils;
 
 /**
@@ -13,11 +12,14 @@ public class UnitTest
 {
   private static final String TAG = "UnitTest";
 
-  @Getter public static boolean test = false;
+  public static boolean test = false;
 
   public static void test()
   {
     RxUtils.openUnitTest();
     test = true;
   }
+
+  public static boolean isTest()
+  {return UnitTest.test;}
 }

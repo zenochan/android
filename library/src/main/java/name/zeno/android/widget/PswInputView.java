@@ -19,10 +19,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.ArrayList;
 
-import lombok.Setter;
 import name.zeno.android.listener.Action1;
-import name.zeno.android.util.ZDimen;
 import name.zeno.android.util.R;
+import name.zeno.android.util.ZDimen;
 
 /**
  * 仿照支付宝的密码输入控件,输入固定长度的数字密码或验证码
@@ -51,7 +50,6 @@ public class PswInputView extends View
   private RectF   roundRect;   //外面的圆角矩形
   private int     roundRadius; //圆角矩形的圆角程度
 
-  @Setter
   private Action1<String> onFinishListener;//输入完成的回调
 
   private int colorAccent;
@@ -325,6 +323,9 @@ public class PswInputView extends View
     }
     return hsize;
   }
+
+  public void setOnFinishListener(Action1<String> onFinishListener)
+  {this.onFinishListener = onFinishListener; }
 
   class MyInputConnection extends BaseInputConnection
   {

@@ -2,7 +2,6 @@ package name.zeno.android.presenter.items;
 
 import android.view.View;
 
-import butterknife.ButterKnife;
 import kale.adapter.item.AdapterItem;
 import name.zeno.android.util.R;
 

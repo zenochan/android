@@ -4,7 +4,6 @@ import android.content.res.Resources;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.ViewGroup;
 
 /**

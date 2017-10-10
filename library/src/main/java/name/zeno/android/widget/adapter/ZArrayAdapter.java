@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +16,6 @@ import java.util.List;
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/5/19
  */
-import android.widget.Filter;
-import android.widget.TextView;
 
 public class ZArrayAdapter<T> extends BaseAdapter implements Filterable
 {
