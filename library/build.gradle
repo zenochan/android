@@ -1,8 +1,9 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'kotlin-android'
-//apply plugin: 'kotlin-android-extensions'
-//apply plugin: 'kotlin-noarg'
-//apply plugin: 'kotlin-allopen'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-noarg'
+//apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-allopen'
 apply plugin: 'com.jakewharton.butterknife'
 
 apply from: 'http://maven.mjtown.cn/maven.gradle'
@@ -64,9 +65,13 @@ dependencies {
    **************************************/
 
   compile "name.zeno:common-adapter:1.0.2"
+
+  //   本来是provided 的，测试改为 compile
   provided 'com.alipay:alipay:20170623'
   provided 'com.unionpay:unionpay:3.3.7'
   provided 'com.baidu.mapapi:LocPoiLBSMap:4.5.0'
+  provided 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.1.6'
+  //   本来是provided 的，测试改为 compile end
 
   //support 家族
   //https://developer.android.com/topic/libraries/support-library/features.html
@@ -96,6 +101,7 @@ dependencies {
     exclude(module: 'support-annotations')
   }
   annotationProcessor 'com.github.bumptech.glide:compiler:4.1.1'
+//  kapt 'com.github.bumptech.glide:compiler:4.1.1'
 
   // 目前1.1.61.android 使用起来比较稳定
   //FastJson https://github.com/alibaba/fastjson
@@ -105,6 +111,7 @@ dependencies {
   //https://github.com/JakeWharton/butterknife
   compile "com.jakewharton:butterknife:$butterknif_version"
   annotationProcessor "com.jakewharton:butterknife-compiler:$butterknif_version"
+//  kapt "com.jakewharton:butterknife-compiler:$butterknif_version"
 
   //Retrofit http://square.github.io/retrofit/
   compile "com.squareup.retrofit2:retrofit:2.3.0";
@@ -133,8 +140,7 @@ dependencies {
   // 友盟分析 http://mvnrepository.com/artifact/com.umeng.analytics/analytics
   provided 'com.umeng.analytics:analytics:6.1.2'
   // http://repo.baichuan-android.taobao.com/content/groups/BaichuanRepositories/com/taobao/android/alisdk-hotfix/
-  compile 'com.taobao.android:alisdk-hotfix:2.0.9'
-  provided 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.1.6'
+  provided 'com.taobao.android:alisdk-hotfix:2.0.9'
 
   /**************************************
    *              控件性依赖             *
@@ -156,7 +162,7 @@ dependencies {
   //https://github.com/amitshekhariitbhu/Android-Debug-Database
   debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
 
-  //  kotlin kits
-//  implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-//  implementation"org.jetbrains.anko:anko:0.10.1"
+//    kotlin kits
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  implementation "org.jetbrains.anko:anko:0.10.1"
 }

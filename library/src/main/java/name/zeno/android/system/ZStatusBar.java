@@ -1,5 +1,6 @@
 package name.zeno.android.system;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -131,6 +132,29 @@ public class ZStatusBar
     int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
     return context.getResources().getDimensionPixelOffset(resourceId);
   }
+
+
+  @SuppressLint("PrivateApi")
+  public static boolean isSupportLightMode(Window window)
+  {
+    Class lpClass  = null;
+    Field darkFlag = null;
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      try {
+        lpClass = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+
+        WindowManager.LayoutParams lp = window.getAttributes();
+        darkFlag = WindowManager.LayoutParams.class
+            .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
+      } catch (Throwable e) {
+        e.printStackTrace();
+      }
+
+    }
+    return lpClass != null || darkFlag != null || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+  }
+
 
   /**
    * 状态栏亮色模式，设置状态栏黑色文字、图标，

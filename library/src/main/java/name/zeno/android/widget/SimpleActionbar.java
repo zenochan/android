@@ -41,9 +41,9 @@ public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListen
   {
     super(context, attrs);
     appbar = LayoutInflater.from(context).inflate(R.layout.view_simple_actionbar, this);
-    preTv = (ZTextView) appbar.findViewById(R.id.tv_pre);
-    titleTv = (TextView) appbar.findViewById(R.id.tv_title);
-    actionTv = (ZTextView) appbar.findViewById(R.id.tv_action);
+    preTv = appbar.findViewById(R.id.tv_pre);
+    titleTv = appbar.findViewById(R.id.tv_title);
+    actionTv = appbar.findViewById(R.id.tv_action);
     preTv.setOnClickListener(this);
     actionTv.setOnClickListener(this);
 
@@ -116,6 +116,15 @@ public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListen
 
     TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SimpleActionbar);
 
+
+    boolean whiteBar = ta.getBoolean(R.styleable.SimpleActionbar_whiteBar, false);
+    boolean a        = ta.hasValue(R.styleable.ZAppBarLayout_backgroundStatusBar);
+    if (whiteBar) {
+      setBackgroundColor(Color.WHITE);
+      View v = getStatusBarView();
+      if (!a && v != null) v.setBackgroundColor(Color.WHITE);
+    }
+
     if (ta.hasValue(R.styleable.SimpleActionbar_preTextBackgroundTint)) {
       ColorStateList tint = ta.getColorStateList(R.styleable.SimpleActionbar_preTextBackgroundTint);
       preTv.setSupportCompoundDrawableTintList(tint);
@@ -167,13 +176,6 @@ public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListen
       actionTv.setVisibility(enable ? VISIBLE : GONE);
     }
 
-    boolean whiteBar = ta.getBoolean(R.styleable.SimpleActionbar_whiteBar, false);
-    if (whiteBar) {
-      setBackgroundColor(Color.WHITE);
-      View v = getStatusBarView();
-      if (v != null) v.setBackgroundColor(Color.WHITE);
-    }
-
     ta.recycle();
   }
 
@@ -195,5 +197,7 @@ public class SimpleActionbar extends ZAppBarLayout implements View.OnClickListen
   {this.onClickPre = onClickPre; }
 
   public void setOnClickAction(Action0 onClickAction)
-  {this.onClickAction = onClickAction; }
+  {
+    this.onClickAction = onClickAction;
+  }
 }

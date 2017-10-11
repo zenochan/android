@@ -33,20 +33,24 @@ public class CrashLogActivity extends ZActivity
   protected void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_crash_log);
+    try {
+      setContentView(R.layout.activity_crash_log);
 
-    //接收异常对象
-    Intent intent = getIntent();
-    info = intent.getParcelableExtra(ExceptionInfo.EXTRA_NAME);
+      //接收异常对象
+      Intent intent = getIntent();
+      info = intent.getParcelableExtra(ExceptionInfo.EXTRA_NAME);
 
-    tvInfo = findViewById(R.id.tv_crash_log);
-    SimpleActionbar actionbar = findViewById(R.id.layout_actionbar);
-    actionbar.setOnClickAction(this::sendLog);
+      tvInfo = findViewById(R.id.tv_crash_log);
+      SimpleActionbar actionbar = findViewById(R.id.layout_actionbar);
+      actionbar.setOnClickAction(this::sendLog);
 
-    crashLog = ZException.info(info.throwable);
-    CommonConnector.sendCrash(info.throwable, info.accountJson);
-    tvInfo.setText(crashLog);
-    ZLog.e(TAG, crashLog);
+      crashLog = ZException.info(info.throwable);
+      CommonConnector.sendCrash(info.throwable, info.accountJson);
+      tvInfo.setText(crashLog);
+      ZLog.e(TAG, crashLog);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void sendLog()
