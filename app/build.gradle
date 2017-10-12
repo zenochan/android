@@ -37,7 +37,7 @@ dependencies {
 
   testCompile 'junit:junit:4.12'
 
-  compile project(":library");
+  compile project(':android');
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   compile "org.jetbrains.anko:anko:0.10.1"
   compile 'com.android.support.constraint:constraint-layout:1.0.2'

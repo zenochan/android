@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+apply from: 'http://maven.mjtown.cn/maven.gradle'
+mavenConf {
+  groupId "name.zeno.ext"
+  artifactId "BaiduMap"
+  version "0.0.2-SNAPSHOT"
+
+  repositoryUrl "file:///Users/zenochan/.m2/repository"
+//  repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"
+}
+confMaven()
+
+android {
+  compileSdkVersion 26
+  buildToolsVersion build_tools_version
+
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 26
+    versionCode 1
+    versionName mavenConf.version
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  api fileTree(dir: 'libs', include: ['*.jar'])
+  provided 'com.android.support:appcompat-v7:26.1.0'
+  testApi 'junit:junit:4.12'
+  androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+  provided "com.baidu.mapapi:LocPoiLBSMap:4.5.0"
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
