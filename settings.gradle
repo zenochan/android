@@ -1,1 +1,1 @@
-include ':app', ':android', ':ext-baidumap'
+include ':app', ':library', ':ext-baidumap'
