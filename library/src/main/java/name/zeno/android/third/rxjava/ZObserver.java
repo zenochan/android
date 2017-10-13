@@ -1,6 +1,7 @@
 package name.zeno.android.third.rxjava;
 
 import android.os.NetworkOnMainThreadException;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONException;
@@ -58,7 +59,7 @@ public class ZObserver<T> implements Observer<T>
   public void handleError(ZException e) {}
 
   @Override
-  public void onSubscribe(Disposable d) { }
+  public void onSubscribe(@Nullable  Disposable d) { }
 
   @Override
   public void onNext(T value) { }

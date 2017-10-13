@@ -174,13 +174,9 @@ public class CircleZoomView extends View
     interpolation = 0;
     interpolationAnim = new InterpolationObservableAnimation();
     interpolationAnim.setDuration(300);
-    interpolationAnim.setOnInterpolatedListener(new InterpolationObservableAnimation.OnInterpolatedListener()
-    {
-      @Override public void onInterpolated(float interpolatedTime)
-      {
-        interpolation = interpolatedTime;
-        CircleZoomView.this.invalidate();
-      }
+    interpolationAnim.setOnInterpolatedListener(interpolatedTime -> {
+      interpolation = interpolatedTime;
+      CircleZoomView.this.invalidate();
     });
   }
 

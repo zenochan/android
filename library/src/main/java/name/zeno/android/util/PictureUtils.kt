@@ -10,8 +10,10 @@ import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.support.v4.content.PermissionChecker
 import name.zeno.android.app.AppInfo
+import name.zeno.android.util.PictureUtils.getDataColumn
+import name.zeno.android.util.PictureUtils.getPath
+import name.zeno.android.util.PictureUtils.getUriType
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -133,7 +135,7 @@ object PictureUtils {
 
   /**
    * # 保存文件到指定路径
-   * [Android保存图片到系统相册](http://www.jianshu.com/p/8cede074ba5b)
+   * - [Android保存图片到系统相册](http://www.jianshu.com/p/8cede074ba5b)
    */
   fun saveImageToGallery(context: Context, bmp: Bitmap): Boolean {
     // 首先保存图片

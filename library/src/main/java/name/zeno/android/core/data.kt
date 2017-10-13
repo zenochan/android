@@ -26,3 +26,5 @@ fun <T : Fragment> T.args(data: Parcelable?): T {
   this.arguments = args
   return this
 }
+
+

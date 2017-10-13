@@ -68,13 +68,12 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
 
 
   private fun init() = with(fragmentView) {
-    onClickPoi = { onClickPoi(it) }
+    val onClickPoi: (PoiInfo) -> Unit = { onClickPoi(it) }
     btn_input.setOnClickListener { customInput(tv_keyword.text.toString()) }
 
     adapter = object : CommonRcvAdapter<PoiInfo>(presenter.getInfoList()) {
       override fun createItem(type: Any): AdapterItem<*> {
-        val item = PoiItem()
-        item.setOnClick(onClickPoi)
+        val item = PoiItem(onClickPoi)
         return item
       }
     }
