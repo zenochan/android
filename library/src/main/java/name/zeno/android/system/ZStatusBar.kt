@@ -163,12 +163,8 @@ object ZStatusBar {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       try {
         lpClass = Class.forName("android.view.MiuiWindowManager\$LayoutParams")
-
-        val lp = window.attributes
-        darkFlag = WindowManager.LayoutParams::class.java
-            .getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON")
-      } catch (e: Throwable) {
-        e.printStackTrace()
+        darkFlag = WindowManager.LayoutParams::class.java.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON")
+      } catch (ignore: Throwable) {
       }
 
     }

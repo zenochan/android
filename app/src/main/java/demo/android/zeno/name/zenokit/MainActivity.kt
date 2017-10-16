@@ -7,6 +7,9 @@ import demo.android.zeno.name.zenokit.item.MenuItem
 import kale.adapter.CommonRcvAdapter
 import kale.adapter.item.AdapterItem
 import kotlinx.android.synthetic.main.activity_main.*
+import name.zeno.android.core.ZType
+import name.zeno.android.core.type
+import name.zeno.android.data.models.BaseData
 import name.zeno.android.listener.Action1
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.presenter.ZNav
@@ -37,5 +40,7 @@ class MainActivity : ZActivity() {
 
     rcv_class.layoutManager = LinearLayoutManager(context)
     rcv_class.adapter = adapter
+
+    println(ZType<List<BaseData>> {}.type)
   }
 }

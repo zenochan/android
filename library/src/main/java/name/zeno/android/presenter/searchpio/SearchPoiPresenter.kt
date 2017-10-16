@@ -27,13 +27,11 @@ class SearchPoiPresenter(view: SearchPoiView) : BasePresenter<SearchPoiView>(vie
   override fun onCreate() {
     super.onCreate()
     poiSearch.subscriber = sub { value ->
-      try {
+      if (value != null) {
         if (pageNo == 1) {
           infoList.clear()
         }
         infoList.addAll(value)
-      } catch (e: Exception) {
-        CommonConnector.sendCrash(e, "")
       }
     }
   }

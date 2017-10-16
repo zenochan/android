@@ -11,6 +11,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
+
+import name.zeno.android.util.ZLog;
+
 /**
  * <h1><a href='https://github.com/xmuSistone/android-vertical-slide-view'>xmuSistone/android-vertical-slide-view</a></h1>
  * 需要重写 children 的 dispatchTouchEvent 方法
@@ -34,6 +38,7 @@ public class DragLayout extends ViewGroup
   private static final int DISTANCE_THRESHOLD = 100; // 单位是像素，当上下滑动速度不够时，通过这个阈值来判定是应该粘到顶部还是底部
   private int                  downTop1; // 手指按下的时候，frameView1的getTop值
   private ShowNextPageNotifier nextPageListener; // 手指松开是否加载下一页的notifier
+  private OnDragListener       onDrag; // 拖动改变时回掉
 
   public DragLayout(Context context)
   {
@@ -48,16 +53,15 @@ public class DragLayout extends ViewGroup
   public DragLayout(Context context, AttributeSet attrs, int defStyle)
   {
     super(context, attrs, defStyle);
-    mDragHelper = ViewDragHelper
-        .create(this, 10f, new DragHelperCallback());
+    mDragHelper = ViewDragHelper.create(this, 10f, new DragHelperCallback());
     mDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_BOTTOM);
-    gestureDetector = new GestureDetectorCompat(context,
-        new YScrollDetector());
+    gestureDetector = new GestureDetectorCompat(context, new YScrollDetector());
   }
 
   @Override
   protected void onFinishInflate()
   {
+    super.onFinishInflate();
     // 跟findviewbyId一样，初始化上下两个view
     frameView1 = getChildAt(0);
     frameView2 = getChildAt(1);
@@ -67,8 +71,7 @@ public class DragLayout extends ViewGroup
   {
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float dx,
-        float dy)
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float dx, float dy)
     {
       // 垂直滑动时dy>dx，才被认定是上下拖动
       return Math.abs(dy) > Math.abs(dx);
@@ -154,12 +157,10 @@ public class DragLayout extends ViewGroup
   private void onViewPosChanged(int viewIndex, int posTop)
   {
     if (viewIndex == 1) {
-      int offsetTopBottom = viewHeight + frameView1.getTop()
-          - frameView2.getTop();
+      int offsetTopBottom = viewHeight + frameView1.getTop() - frameView2.getTop();
       frameView2.offsetTopAndBottom(offsetTopBottom);
     } else if (viewIndex == 2) {
-      int offsetTopBottom = frameView2.getTop() - viewHeight
-          - frameView1.getTop();
+      int offsetTopBottom = frameView2.getTop() - viewHeight - frameView1.getTop();
       frameView1.offsetTopAndBottom(offsetTopBottom);
     }
 
@@ -186,15 +187,14 @@ public class DragLayout extends ViewGroup
       }
     } else {
       // 拖动第二个view松手
-      if (yvel > VEL_THRESHOLD
-          || (downTop1 == -viewHeight && releasedChild.getTop() > DISTANCE_THRESHOLD))
-      {
+      if (yvel > VEL_THRESHOLD || (downTop1 == -viewHeight && releasedChild.getTop() > DISTANCE_THRESHOLD)) {
         // 保持原地不动
         finalTop = viewHeight;
       }
     }
 
     if (mDragHelper.smoothSlideViewTo(releasedChild, 0, finalTop)) {
+      if (onDrag != null) onDrag.onDrag(releasedChild == frameView1 ? 1 : 0);
       ViewCompat.postInvalidateOnAnimation(this);
     }
   }
@@ -298,8 +298,20 @@ public class DragLayout extends ViewGroup
     this.nextPageListener = nextPageListener;
   }
 
+  public void setOnDrag(OnDragListener onDrag)
+  {
+    this.onDrag = onDrag;
+  }
+
   public interface ShowNextPageNotifier
   {
-    public void onDragNext();
+    void onDragNext();
+  }
+
+
+  public interface OnDragListener
+  {
+    // 0 :top , 1: bottom
+    void onDrag(int position);
   }
 }
