@@ -36,7 +36,7 @@ public abstract class ZLogActivity extends AppCompatActivity
   {
     super.onResume();
     ZLog.v(TAG, "onResume()");
-    ZUmeng.onResume(this);
+    ZUmeng.INSTANCE.onResume(this);
   }
 
   @Override protected void onNewIntent(Intent intent)
@@ -49,7 +49,7 @@ public abstract class ZLogActivity extends AppCompatActivity
   {
     super.onPause();
     ZLog.v(TAG, "onPause()");
-    ZUmeng.onPause(this);
+    ZUmeng.INSTANCE.onPause(this);
   }
 
   @Override protected void onSaveInstanceState(Bundle outState)

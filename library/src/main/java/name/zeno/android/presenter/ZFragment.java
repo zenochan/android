@@ -79,7 +79,7 @@ public class ZFragment extends ToastFragment implements LifeCycleObservable
     }
     String pageName = TAG;
     if (ZString.INSTANCE.notEmpty(pageName())) pageName += " | " + pageName();
-    ZUmeng.onPageStart(pageName);
+    ZUmeng.INSTANCE.onPageStart(pageName);
   }
 
   /** 友盟统计页面名称，如果集成了友盟，应当重写此方法 */
