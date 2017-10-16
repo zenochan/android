@@ -33,7 +33,6 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
   private lateinit var request: SearchPoiRequest
   private var adapter: CommonRcvAdapter<PoiInfo>? = null
   private var wrapper: LoadAdapterWrapper? = null
-  private var onClickPoi: ((PoiInfo) -> Unit)? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -43,7 +42,7 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     fragmentView = inflater.inflate(R.layout.fragment_search_poi, container, false)
     init()
-    return view
+    return fragmentView
   }
 
 

@@ -21,6 +21,7 @@ class PoiItem(
   override fun getLayoutResId(): Int = R.layout.item_poi_info
 
   override fun bindViews(root: View) {
+    this.root = root
     root.setOnClickListener { onClick.invoke(data) }
   }
 

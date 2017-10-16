@@ -48,10 +48,11 @@ class FormCell @JvmOverloads constructor(
   var text: String?
     get() = tv_content.text.toString()
     set(content) {
-      tv_content.text = content
+      root.tv_content.text = content
     }
 
-  val value = text!!
+  val value: String
+    get() = text!!
 
 
   var textRes: Int
