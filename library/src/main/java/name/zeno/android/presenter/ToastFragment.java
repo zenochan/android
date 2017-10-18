@@ -20,8 +20,8 @@ import name.zeno.android.listener.Action0;
 @SuppressWarnings("unused")
 public class ToastFragment extends Fragment
 {
-  private android.view.View fragmentView;
-  private MaterialDialog    progressDialog;
+  private View           fragmentView;
+  private MaterialDialog progressDialog;
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState)

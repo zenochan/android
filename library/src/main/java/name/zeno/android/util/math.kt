@@ -23,6 +23,11 @@ fun max(vararg values: Float): Float {
   return max
 }
 
+fun max(vararg values: Long): Long {
+  var max = values[0]
+  values.forEach { max = Math.max(max, it) }
+  return max
+}
 
 /**
  * @param decimal 小数保留位数
