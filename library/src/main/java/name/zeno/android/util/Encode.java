@@ -77,6 +77,17 @@ public class Encode
     return result;
   }
 
+  public static String base64Encode(String content)
+  {
+    return new String(Base64.encode(content.getBytes(), Base64.DEFAULT));
+  }
+
+  public static String base64Decode(String content)
+  {
+    return new String(Base64.decode(content.getBytes(), Base64.DEFAULT));
+  }
+
+
   public static String base64AndUriEncode(String content)
   {
     String encodedString = new String(Base64.encode(content.getBytes(), Base64.DEFAULT));

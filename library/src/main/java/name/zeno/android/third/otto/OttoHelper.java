@@ -42,7 +42,7 @@ public class OttoHelper
     } else {
       // 切换到主线程发送事件
       // Event bus [Bus "default"] accessed from non-main thread Looper
-      Observable.just(event).compose(RxUtils.applySchedulers()).subscribe(bus::post);
+      Observable.just(event).compose(RxUtils.INSTANCE.applySchedulers()).subscribe(bus::post);
     }
   }
 

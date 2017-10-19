@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import com.umeng.analytics.MobclickAgent
+import name.zeno.android.presenter.Extra
 import name.zeno.android.third.umeng.ZUmeng
 import name.zeno.android.util.ZLog
 
@@ -32,15 +33,11 @@ class ZenoUncaughtExceptionHandler @JvmOverloads constructor(
       MobclickAgent.onKillProcess(app)
     }
 
-    val info = ExceptionInfo()
-    info.email = email
-    info.accountJson = accountJson
-    info.throwable = throwable
-    info.mainActivityClass = mainClass
+    val info = ExceptionInfo(throwable, email, mainClass, accountJson)
 
     val intent = Intent(app, CrashLogActivity::class.java)
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    intent.putExtra(ExceptionInfo.EXTRA_NAME, info)
+    Extra.setData(intent, info)
     app.startActivity(intent)
 
     System.exit(1)

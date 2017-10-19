@@ -27,7 +27,7 @@ abstract class ZApplication : MultiDexApplication() {
     super.onCreate()
     application = this
     ZCookie.init(this)
-    ZLog.debug(isDebug)
+    ZLog.DEBUG = isDebug
     AppInfo.init(this)
 
     registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {

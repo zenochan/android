@@ -30,7 +30,7 @@ import java.util.List;
 import name.zeno.android.util.R;
 
 public class BigBangLayout extends ViewGroup implements BigBangActionBar.ActionListener,
-    NestedScrollingChild
+                                                        NestedScrollingChild
 {
 
   private int        mLineSpace;
@@ -428,21 +428,21 @@ public class BigBangLayout extends ViewGroup implements BigBangActionBar.ActionL
   public void onSearch()
   {
     String text = makeSelectedText();
-    BigBang.startAction(getContext(), BigBang.ACTION_SEARCH, text);
+    BigBang.INSTANCE.startAction(getContext(), BigBang.ACTION_SEARCH, text);
   }
 
   @Override
   public void onShare()
   {
     String text = makeSelectedText();
-    BigBang.startAction(getContext(), BigBang.ACTION_SHARE, text);
+    BigBang.INSTANCE.startAction(getContext(), BigBang.ACTION_SHARE, text);
   }
 
   @Override
   public void onCopy()
   {
     String text = makeSelectedText();
-    BigBang.startAction(getContext(), BigBang.ACTION_COPY, text);
+    BigBang.INSTANCE.startAction(getContext(), BigBang.ACTION_COPY, text);
   }
 
   static class Line

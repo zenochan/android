@@ -38,9 +38,9 @@ class MainActivity : ZActivity() {
       override fun createItem(type: Any): AdapterItem<*> = MenuItem(onClick)
     }
 
-    rcv_class.layoutManager = LinearLayoutManager(context)
+    rcv_class.layoutManager = LinearLayoutManager(this)
     rcv_class.adapter = adapter
 
-    println(ZType<List<BaseData>> {}.type)
+    println(ZType<List<BaseData>> {}.type())
   }
 }

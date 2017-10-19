@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
 import kotlinx.android.synthetic.main.activity_input.*
+import name.zeno.android.core.data
 import name.zeno.android.data.models.TextData
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.system.ZStatusBar
-import name.zeno.android.util.R
-import name.zeno.android.util.ZDimen
-import name.zeno.android.util.ZRex
-import name.zeno.android.util.ZString
+import name.zeno.android.util.*
 import name.zeno.android.widget.ZTextWatcher
 import java.util.regex.Pattern
 
@@ -32,7 +30,7 @@ class InputActivity : ZActivity() {
     ZTextWatcher.watch(et_content, { _, s -> textData.result = s })
     btn_submit.setOnClickListener { submit() }
 
-    textData = Extra.getData(intent)
+    textData = data()
 
     if (textData.isWhiteStatusBar) {
       ZStatusBar.lightMode(this)
@@ -67,10 +65,7 @@ class InputActivity : ZActivity() {
     et_content.hint = textData.hint
     et_content.setText(textData.preFill)
     et_content.setSelection(et_content.text.length)
-    et_content.setOnEditorActionListener { textView, i, keyEvent ->
-      submit()
-      true
-    }
+    ZEditor.actionDone(et_content) { submit() }
   }
 
 
@@ -81,12 +76,11 @@ class InputActivity : ZActivity() {
     }
 
     if (pattern != null && !pattern!!.matcher(textData.result).matches()) {
-      snack(textData.regexHint)
+      snack(textData.regexHint ?: "")
       return
     }
 
     setResult(RESULT_OK, Extra.setData(textData))
     finish()
   }
-
 }

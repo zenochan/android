@@ -115,7 +115,7 @@ public class PhotoCaptureHelper
   public void getIdCardFromCamera()
   {
     fileName = newFileName();
-    Intent intent = IDCardCameraActivity.getCallingIntent(context, cachePath + fileName);
+    Intent intent = IDCardCameraActivity.Companion.getCallingIntent(context, cachePath + fileName);
     if (fragment != null) {
       fragment.startActivityForResult(intent, REQUEST_CODE_CAMERA);
     } else {

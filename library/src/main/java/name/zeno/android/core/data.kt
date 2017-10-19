@@ -11,9 +11,9 @@ import name.zeno.android.presenter.Extra
  * @since 2017/10/13
  */
 
-fun <R : Parcelable> Activity.data(): R = Extra.getData(intent)
+fun <R : Parcelable> Activity.data(): R = Extra.getData(intent)!!
 
-fun <R : Parcelable> Fragment.data(): R = Extra.getData(arguments)
+fun <R : Parcelable> Fragment.data(): R = Extra.getData(arguments)!!
 
 fun <R : Parcelable> Activity.dataOrNull(): R? = Extra.getData(intent)
 fun <R : Parcelable> Fragment.dataOrNull(): R? = Extra.getData(arguments)
@@ -21,10 +21,20 @@ fun <R : Parcelable> Fragment.dataOrNull(): R? = Extra.getData(arguments)
 
 fun <T : Fragment, A : Activity> T.args(activity: A): T = args<T>(activity.data())
 fun <T : Fragment> T.args(data: Parcelable?): T {
-  val args = this.arguments ?: Bundle()
-  Extra.setData(args, data)
-  this.arguments = args
+  if (data != null) {
+    val args = this.arguments ?: Bundle()
+    Extra.setData(args, data)
+    this.arguments = args
+  }
   return this
 }
 
+fun Fragment.ok(data: Parcelable?, finish: Boolean = false) {
+  if (data == null) {
+    activity?.setResult(Activity.RESULT_OK)
+  } else {
+    activity?.setResult(Activity.RESULT_OK)
+  }
 
+  if (finish) activity?.finish()
+}
