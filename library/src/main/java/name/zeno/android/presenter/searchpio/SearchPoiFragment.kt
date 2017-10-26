@@ -47,14 +47,14 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
   }
 
 
-  override fun requestLocationPermission(next: Action0) {
+  override fun requestLocationPermission(next: () -> Unit) {
     RxPermissions(activity).request(
         ZPermission.WRITE_EXTERNAL_STORAGE,
         ZPermission.ACCESS_COARSE_LOCATION,
         ZPermission.ACCESS_FINE_LOCATION
     ).subscribe { granted ->
       if (granted!!) {
-        next.call()
+        next.invoke()
       } else {
         toast("地址搜索需要定位权限和文件存储权限")
         empty()

@@ -15,6 +15,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 
 import io.reactivex.disposables.Disposable
+import name.zeno.android.core.dataOrNull
 import name.zeno.android.exception.ZException
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
@@ -27,7 +28,7 @@ import name.zeno.android.third.rxjava.ZObserver
  */
 abstract class AbsWxEntryActivity : ZActivity(), IWXAPIEventHandler {
 
-  private var api: IWXAPI? = null
+  private lateinit var api: IWXAPI
   private var disposable: Disposable? = null
 
   private var finishIfNullRes = false
@@ -42,39 +43,38 @@ abstract class AbsWxEntryActivity : ZActivity(), IWXAPIEventHandler {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     api = WXAPIFactory.createWXAPI(this, appId, true)
-    api!!.registerApp(appId)
-    val req = Extra.getData<AbsReq>(intent)
-    if (req != null) {
-      dialog = MaterialDialog.Builder(this)
-          .progress(true, 5000, true)
-          .content("正在打开微信...")
-          .cancelListener { dialogInterface -> finish() }
-          .show()
+    api.registerApp(appId)
+    val req: AbsReq? = dataOrNull()
 
-      req.build().compose(RxUtils.applySchedulers()).subscribe(object : ZObserver<BaseReq>() {
-        override fun onNext(value: BaseReq) {
-          api!!.sendReq(value)
-          finishIfNullRes = true
-        }
-
-        override fun handleError(e: ZException) {
-          super.handleError(e)
-          finish()
-        }
-
-        override fun onSubscribe(d: Disposable) {
-          disposable = d
-        }
-      })
-    } else {
+    if (req == null) {
       finish()
+      return
     }
+
+    dialog = MaterialDialog.Builder(this)
+        .progress(true, 5000, true)
+        .content("正在打开微信...")
+        .cancelListener { finish() }
+        .show()
+
+    req.build().compose(RxUtils.applySchedulers()).subscribe(object : ZObserver<BaseReq>() {
+      override fun onNext(value: BaseReq) {
+        api.sendReq(value)
+        finishIfNullRes = true
+      }
+
+      override fun handleError(e: ZException) = finish()
+
+      override fun onSubscribe(d: Disposable) {
+        disposable = d
+      }
+    })
   }
 
   override fun onNewIntent(intent: Intent) {
     super.onNewIntent(intent)
     setIntent(intent)
-    api!!.handleIntent(intent, this)
+    api.handleIntent(intent, this)
   }
 
   override fun onResume() {
@@ -86,32 +86,31 @@ abstract class AbsWxEntryActivity : ZActivity(), IWXAPIEventHandler {
       val respWrapper = WxRespWrapper()
       respWrapper.type = type
       respWrapper.errCode = errCode
-      when (type) {
-        ConstantsAPI.COMMAND_PAY_BY_WX//微信支付
-        -> if (errCode == BaseResp.ErrCode.ERR_OK) {
-          respWrapper.desc = "支付成功"
-        } else if (errCode == BaseResp.ErrCode.ERR_USER_CANCEL) {
-          respWrapper.desc = "取消支付"
-        } else {
-          respWrapper.desc = "支付未完成"
+      respWrapper.desc = when (type) {
+
+        ConstantsAPI.COMMAND_PAY_BY_WX -> when (errCode) {                //微信支付
+          BaseResp.ErrCode.ERR_OK -> "支付成功"
+          BaseResp.ErrCode.ERR_USER_CANCEL -> "取消支付"
+          else -> "支付未完成"
         }
-        ConstantsAPI.COMMAND_SENDAUTH //微信登录
-        -> if (BaseResp.ErrCode.ERR_OK == errCode) {
-          respWrapper.code = (resp as SendAuth.Resp).code
-          respWrapper.desc = "登录成功"
-        } else if (BaseResp.ErrCode.ERR_USER_CANCEL == errCode) {
-          respWrapper.desc = "取消登录"
-        } else if (BaseResp.ErrCode.ERR_AUTH_DENIED == errCode) {
-          respWrapper.desc = "拒绝登录"
+
+        ConstantsAPI.COMMAND_SENDAUTH -> when (errCode) {               //微信登录
+          BaseResp.ErrCode.ERR_OK -> {
+            respWrapper.code = (resp as SendAuth.Resp).code
+            "登录成功"
+          }
+          BaseResp.ErrCode.ERR_USER_CANCEL -> "取消登录"
+          BaseResp.ErrCode.ERR_AUTH_DENIED -> "拒绝登录"
+          else -> null
         }
-        ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX //发送消息到微信（如 分享）
-        -> if (BaseResp.ErrCode.ERR_OK == errCode) {
-          respWrapper.desc = "分享成功"
-        } else if (BaseResp.ErrCode.ERR_USER_CANCEL == errCode) {
-          respWrapper.desc = "取消分享"
-        } else {
-          respWrapper.desc = "分享失败"
+
+        ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX -> when (errCode) {      //发送消息到微信（如 分享）
+          BaseResp.ErrCode.ERR_OK -> "分享成功"
+          BaseResp.ErrCode.ERR_USER_CANCEL -> "取消分享"
+          else -> "分享失败"
         }
+
+        else -> null
       }
       setResult(Activity.RESULT_OK, Extra.setData(respWrapper))
       finish()
@@ -144,14 +143,14 @@ abstract class AbsWxEntryActivity : ZActivity(), IWXAPIEventHandler {
   }
 
   companion object {
-    private val TAG = "AbsWxEntryActivity"
-
     /** 微信是否已安装  */
+    @JvmStatic
     fun isWxAppInstalled(context: Context): Boolean {
       return WXAPIFactory.createWXAPI(context, null).isWXAppInstalled
     }
 
     /** 注册 App 到微信  */
+    @JvmStatic
     fun register(context: Context, appId: String): Boolean {
       val api = WXAPIFactory.createWXAPI(context, appId, true)
       return api.isWXAppInstalled && api.registerApp(appId)

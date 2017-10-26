@@ -1,4 +1,4 @@
-package me.kaelaela.verticalviewpager.transforms;
+package me.kaelaela.verticalviewpager.transforms
 
 /**
  * Copyright (C) 2015 Kaelaela
@@ -14,13 +14,12 @@ package me.kaelaela.verticalviewpager.transforms;
  * the License.
  */
 
-import android.support.v4.view.ViewPager;
-import android.view.View;
+import android.support.v4.view.ViewPager
+import android.view.View
 
-public class StackTransformer implements ViewPager.PageTransformer {
-    @Override
-    public void transformPage(View page, float position) {
-        page.setTranslationX(page.getWidth() * -position);
-        page.setTranslationY(position < 0 ? position * page.getHeight() : 0f);
-    }
+class StackTransformer : ViewPager.PageTransformer {
+  override fun transformPage(page: View, position: Float) {
+    page.translationX = page.width * -position
+    page.translationY = if (position < 0) position * page.height else 0f
+  }
 }

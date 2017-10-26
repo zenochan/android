@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import butterknife.ButterKnife
 import kotlinx.android.synthetic.main.activity_bigbang.*
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
@@ -24,7 +23,6 @@ class BigBangActivity : ZActivity(), BigBangView {
     super.onCreate(savedInstanceState)
     ZStatusBar.setImage(this)
     setContentView(R.layout.activity_bigbang)
-    ButterKnife.bind(this)
     segments(intent.getStringExtra(Extra.KEY))
 
   }

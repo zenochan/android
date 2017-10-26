@@ -18,25 +18,30 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import name.zeno.android.listener.Action1
 
 /**
- * 微信入口帮助类
- * Create Date: 16/6/8
+ * # 微信入口帮助类
  *
  *
- * <h3>将下列方法与 Activity 同步</h3>
+ * ### API
+ * - [isWXAppInstalled]
+ * - [pay]
+ * - [shareText]
  *
- *  * [.onCreate]
- *  * [.onNewIntent]
- *  * [.onResume]
+ * ### 将下列方法与 Activity 同步
  *
+ *  - [onCreate]
+ *  - [onNewIntent]
+ *  - [onResume]
  *
  * @author 陈治谋 (513500085@qq.com)
+ * @since  16/6/8
  */
+@Deprecated("")
 class WxEntryHelper : IWXAPIEventHandler {
 
   private var api: IWXAPI? = null
   private var resp: BaseResp? = null
 
-  var onPayRespListener: Action1<WxRespWrapper>? = null
+  var onPayRespListener: ((WxRespWrapper) -> Unit)? = null
 
   private var context: Context? = null
 
@@ -58,29 +63,19 @@ class WxEntryHelper : IWXAPIEventHandler {
   }
 
   fun onResume() {
-    if (resp == null) {
-      return
-    }
+    val resp = resp ?: return
+    this.resp = null
 
-    val type = resp!!.type
-    val errCode = resp!!.errCode
-    val respWrapper = WxRespWrapper()
-    respWrapper.type = type
-    respWrapper.errCode = errCode
-    when (type) {
-      ConstantsAPI.COMMAND_PAY_BY_WX//微信支付
-      -> if (onPayRespListener != null) {
-        if (errCode == BaseResp.ErrCode.ERR_OK) {
-          respWrapper.desc = "支付成功"
-        } else if (errCode == BaseResp.ErrCode.ERR_USER_CANCEL) {
-          respWrapper.desc = "取消支付"
-        } else {
-          respWrapper.desc = "支付未完成"
+    onPayRespListener?.invoke(WxRespWrapper(
+        type = resp.type,
+        errCode = resp.errCode,
+        desc = when {
+          resp.type != ConstantsAPI.COMMAND_PAY_BY_WX -> null
+          resp.errCode == BaseResp.ErrCode.ERR_OK -> "支付成功"
+          resp.errCode == BaseResp.ErrCode.ERR_USER_CANCEL -> "取消支付"
+          else -> "支付未完成"
         }
-        onPayRespListener!!.call(respWrapper)
-      }
-    }
-    resp = null
+    ))
   }
 
   override fun onReq(baseReq: BaseReq) {}
@@ -104,13 +99,13 @@ class WxEntryHelper : IWXAPIEventHandler {
 
   fun pay(payReq: PayReq) {
     if (isWXAppInstalled) {
-      api!!.sendReq(payReq)
-    } else if (onPayRespListener != null) {
-      val res = WxRespWrapper()
-      res.type = ConstantsAPI.COMMAND_PAY_BY_WX
-      res.desc = "未安装微信,不能完成支付"
-      res.errCode = BaseResp.ErrCode.ERR_UNSUPPORT
-      onPayRespListener!!.call(res)
+      api?.sendReq(payReq)
+    } else {
+      onPayRespListener?.invoke(WxRespWrapper(
+          type = ConstantsAPI.COMMAND_PAY_BY_WX,
+          desc = "未安装微信,不能完成支付",
+          errCode = BaseResp.ErrCode.ERR_UNSUPPORT
+      ))
     }
   }
 

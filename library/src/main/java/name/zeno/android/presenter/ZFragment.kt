@@ -9,9 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import name.zeno.android.core.ok
 import name.zeno.android.listener.Action1
-import name.zeno.android.listener.Action2
-import name.zeno.android.third.otto.OttoHelper
+import name.zeno.android.third.otto.ZOtto
 import name.zeno.android.third.rxjava.RxActivityResult
 import name.zeno.android.third.umeng.ZUmeng
 import name.zeno.android.util.ZLog
@@ -19,6 +19,7 @@ import name.zeno.android.util.ZString
 import java.util.*
 
 /**
+ *
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/6/9
  */
@@ -39,9 +40,7 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
   override fun showLoading() = super.showLoading("加载中...")
 
   /** 友盟统计页面名称，如果集成了友盟，应当重写此方法  */
-  fun pageName(): String {
-    return ""
-  }
+  fun pageName(): String = ""
 
   //<editor-fold desc="life circle">
   @CallSuper
@@ -49,7 +48,7 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     super.onCreate(savedInstanceState)
     ZLog.v(TAG, "onCreate()")
     listenerList.forEach { it.onCreate() }
-    OttoHelper.instance().register(this)
+    ZOtto.register(this)
   }
 
 
@@ -100,25 +99,31 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     super.onDestroy()
     ZLog.v(TAG, "onDestroy()")
     listenerList.forEach { it.onDestroy() }
-    OttoHelper.instance().unregister(this)
+    ZOtto.unregister(this)
   }
   //</editor-fold>
 
+  //<editor-fold desc="Deprecated">
+  @Deprecated("use Fragment.ok or Fragment.cancel")
   fun setActivityResultOk(data: Intent) {
     activity.setResult(Activity.RESULT_OK, data)
   }
 
+  @Deprecated("use Fragment.ok or Fragment.cancel")
   fun setActivityResult(resultCode: Int) {
     activity.setResult(resultCode)
   }
 
+  @Deprecated("use Fragment.ok or Fragment.cancel")
   fun setActivityResult(resultCode: Int, data: Intent) {
     activity.setResult(resultCode, data)
   }
 
+  @Deprecated("use Fragment.ok or Fragment.cancel")
   fun setActivityResult(resultCode: Int, data: Parcelable) {
     activity.setResult(resultCode, Extra.setData(data))
   }
+  //</editor-fold>
 
   override fun finish() = activity.finish()
 

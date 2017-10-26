@@ -51,10 +51,8 @@ open class ZObserver<T> : Observer<T> {
   companion object {
     private val TAG = "ZObserver"
 
-    fun <T> next(next: (T) -> Unit): ZObserver<T> {
-      return object : ZObserver<T>() {
-        override fun onNext(value: T) = next(value)
-      }
+    fun <T> next(next: (T) -> Unit) = object : ZObserver<T>() {
+      override fun onNext(value: T) = next(value)
     }
   }
 }

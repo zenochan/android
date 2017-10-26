@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import name.zeno.android.core.ZType
 import name.zeno.android.core.type
 import name.zeno.android.data.models.BaseData
-import name.zeno.android.listener.Action1
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.presenter.ZNav
 
@@ -26,7 +25,6 @@ class MainActivity : ZActivity() {
   }
 
   private fun init(savedInstanceState: Bundle?) {
-    val onClick = Action1<Class<out Activity>> { ZNav.nav(this, it) }
 
     classes = listOf(
         TimeButtonActivity::class.java,
@@ -35,6 +33,7 @@ class MainActivity : ZActivity() {
     )
 
     adapter = object : CommonRcvAdapter<Class<out Activity>>(classes) {
+      val onClick = { clazz: Class<out Activity> -> ZNav.nav(this@MainActivity, clazz) }
       override fun createItem(type: Any): AdapterItem<*> = MenuItem(onClick)
     }
 

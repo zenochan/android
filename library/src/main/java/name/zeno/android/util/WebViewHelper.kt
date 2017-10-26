@@ -14,12 +14,12 @@ import android.webkit.WebView
 object WebViewHelper {
   val MIME: String
   val ENCODING: String?
+
   const val DEFAULT_STYLE =
       """
       <style type="text/css">
         *{font-size:13px;color:rgba(0,0,0,0.87);}
-        img{width: 100%;height:auto;display:block;margin-top:-1px}
-        p{padding:0;margin:0}
+        img{width: 100%;height:auto;margin-top:-1px}
         body{padding:8px;margin:0px}
       </style>
       """
@@ -42,11 +42,11 @@ object WebViewHelper {
     }
   }
 
-  fun loadData(webView: WebView, data: String?) {
-    webView.loadData(DEFAULT_STYLE + (data ?: ""), MIME, ENCODING)
-  }
-
-  fun loadData(webView: WebView, data: String?, baseUrl: String) {
-    webView.loadDataWithBaseURL(baseUrl, DEFAULT_STYLE + (data ?: ""), MIME, ENCODING, null)
+  fun loadData(webView: WebView, data: String?, baseUrl: String? = null) {
+    if (baseUrl == null) {
+      webView.loadData(DEFAULT_STYLE + (data ?: ""), MIME, ENCODING)
+    } else {
+      webView.loadDataWithBaseURL(baseUrl, DEFAULT_STYLE + (data ?: ""), MIME, ENCODING, null)
+    }
   }
 }

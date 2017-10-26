@@ -102,17 +102,11 @@ dependencies {
     exclude(module: 'support-annotations')
   }
   kapt 'com.github.bumptech.glide:compiler:4.1.1'
-//  kapt 'com.github.bumptech.glide:compiler:4.1.1'
 
   // 目前1.1.61.android 使用起来比较稳定
   //FastJson https://github.com/alibaba/fastjson
   //noinspection GradleDependency
   compile 'com.alibaba:fastjson:1.1.61.android'
-
-  //https://github.com/JakeWharton/butterknife
-  compile "com.jakewharton:butterknife:$butterknif_version"
-  annotationProcessor "com.jakewharton:butterknife-compiler:$butterknif_version"
-  //  kapt "com.jakewharton:butterknife-compiler:$butterknif_version"
 
   //Retrofit http://square.github.io/retrofit/
   compile "com.squareup.retrofit2:retrofit:2.3.0";

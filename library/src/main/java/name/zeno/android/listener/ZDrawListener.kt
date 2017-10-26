@@ -7,7 +7,7 @@ import android.view.View
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/8/5
  */
-class DefaultDrawListener : DrawerLayout.DrawerListener {
+class ZDrawListener : DrawerLayout.DrawerListener {
   internal var onClosed: ((View) -> Unit)? = null
   internal var onSlide: ((View, slideOffset: Float) -> Unit)? = null
   internal var onOpened: ((View) -> Unit)? = null
@@ -29,22 +29,22 @@ class DefaultDrawListener : DrawerLayout.DrawerListener {
     onStateChanged?.invoke(newState)
   }
 
-  fun onClosed(onClosed: (View) -> Unit): DefaultDrawListener {
+  fun onClosed(onClosed: (View) -> Unit): ZDrawListener {
     this.onClosed = onClosed
     return this
   }
 
-  fun onSlide(onSlide: (View, slideOffset: Float) -> Unit): DefaultDrawListener {
+  fun onSlide(onSlide: (View, slideOffset: Float) -> Unit): ZDrawListener {
     this.onSlide = onSlide
     return this
   }
 
-  fun onOpened(onOpened: (View) -> Unit): DefaultDrawListener {
+  fun onOpened(onOpened: (View) -> Unit): ZDrawListener {
     this.onOpened = onOpened
     return this
   }
 
-  fun onStateChanged(onStateChanged: (newState: Int) -> Unit): DefaultDrawListener {
+  fun onStateChanged(onStateChanged: (newState: Int) -> Unit): ZDrawListener {
     this.onStateChanged = onStateChanged
     return this
   }

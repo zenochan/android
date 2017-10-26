@@ -11,6 +11,8 @@ import name.zeno.android.presenter.Extra
  * @since 2017/10/13
  */
 
+fun now() = System.currentTimeMillis()
+
 fun <R : Parcelable> Activity.data(): R = Extra.getData(intent)!!
 
 fun <R : Parcelable> Fragment.data(): R = Extra.getData(arguments)!!
@@ -29,11 +31,22 @@ fun <T : Fragment> T.args(data: Parcelable?): T {
   return this
 }
 
+
+fun Fragment.cancel(data: Parcelable?, finish: Boolean = false) {
+  if (data == null) {
+    activity?.setResult(Activity.RESULT_CANCELED)
+  } else {
+    activity?.setResult(Activity.RESULT_CANCELED, Extra.setData(data))
+  }
+
+  if (finish) activity?.finish()
+}
+
 fun Fragment.ok(data: Parcelable?, finish: Boolean = false) {
   if (data == null) {
     activity?.setResult(Activity.RESULT_OK)
   } else {
-    activity?.setResult(Activity.RESULT_OK)
+    activity?.setResult(Activity.RESULT_OK, Extra.setData(data))
   }
 
   if (finish) activity?.finish()
