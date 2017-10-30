@@ -36,7 +36,7 @@ object AppInfo {
   var width: Int = 0
   /** 屏幕高度  */
   var height: Int = 0
-  var density: Float = 0.toFloat()
+  var density: Float = 0F
   var densityDpi: Int = 0
 
   lateinit var btAddress: String //蓝牙地址

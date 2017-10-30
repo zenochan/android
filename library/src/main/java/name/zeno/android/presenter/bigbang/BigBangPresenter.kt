@@ -6,13 +6,13 @@ import com.alibaba.fastjson.JSON
 
 import name.zeno.android.data.CommonConnector
 import name.zeno.android.exception.ZException
-import name.zeno.android.presenter.BasePresenter
+import name.zeno.android.presenter.ZPresenter
 
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/1/4.
  */
-internal class BigBangPresenter(view: BigBangView) : BasePresenter<BigBangView>(view) {
+internal class BigBangPresenter(view: BigBangView) : ZPresenter<BigBangView>(view) {
 
   fun segments(text: String, next: (List<String>) -> Unit) {
 
@@ -24,7 +24,7 @@ internal class BigBangPresenter(view: BigBangView) : BasePresenter<BigBangView>(
           } else {
             throw ZException(res.errMsg).code(res.errCode)
           }
-        }.subscribe(sub(next))
+        }.sub(next)
   }
 
   class SegmentRes {

@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatAutoCompleteTextView
 import android.widget.ArrayAdapter
 
 import com.alibaba.fastjson.JSON
+import name.zeno.android.TAG
 
 import name.zeno.android.widget.adapter.ZArrayAdapter
 
@@ -16,11 +17,7 @@ import name.zeno.android.widget.adapter.ZArrayAdapter
  */
 class AutoCompleteUtils(context: Context, private val key: String) {
 
-  private val preferences: SharedPreferences
-
-  init {
-    preferences = context.applicationContext.getSharedPreferences(TAG, Context.MODE_PRIVATE)
-  }
+  private val preferences: SharedPreferences = context.applicationContext.getSharedPreferences(TAG, Context.MODE_PRIVATE)
 
   fun add(item: String) {
     var s = preferences.getString(key, "[]")
@@ -43,11 +40,9 @@ class AutoCompleteUtils(context: Context, private val key: String) {
   }
 
   companion object {
-    private val TAG = "AutoCompleteUtils"
-
     @JvmOverloads
     fun with(view: AppCompatAutoCompleteTextView, data: List<String>, @LayoutRes resource: Int = android.R.layout.simple_list_item_1) {
-      if (!ZList.isEmpty(data)) {
+      if (data.isNotEmpty()) {
         view.setAdapter(ZArrayAdapter(view.context, resource, data))
       }
     }

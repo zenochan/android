@@ -2,9 +2,8 @@ package name.zeno.android.presenter
 
 import android.content.Intent
 import android.support.annotation.CallSuper
-
 import com.orhanobut.logger.Logger
-
+import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -13,18 +12,24 @@ import name.zeno.android.data.CommonConnector
 import name.zeno.android.exception.ZException
 import name.zeno.android.third.rxjava.ZObserver
 import name.zeno.android.util.ZLog
+import java.lang.ref.WeakReference
 
 /**
  * Create Date: 16/6/7
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-abstract class BasePresenter<T : View>(var view: T?) : Presenter {
+abstract class ZPresenter<T : View>(view: T) : Presenter {
   private val compositeDisposable = CompositeDisposable()
 
+  private val viewRef: WeakReference<T> = WeakReference(view)
+
   init {
-    view?.registerLifecycleListener(this)
+    view.registerLifecycleListener(this)
   }
+
+  val view: T
+    get() = viewRef.get()!!
 
   override fun onCreate() {}
   override fun onResume() {}
@@ -34,7 +39,7 @@ abstract class BasePresenter<T : View>(var view: T?) : Presenter {
   @CallSuper
   override fun onDestroy() {
     compositeDisposable.dispose()
-    view = null
+    viewRef.clear()
   }
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {}
@@ -51,48 +56,35 @@ abstract class BasePresenter<T : View>(var view: T?) : Presenter {
     }
   }
 
-  fun <E> sub(onNext: (E) -> Unit) =
-      sub(onNext, { e -> ZLog.e(TAG, "default on error", e) })
-
-  fun <E> sub(onNext: (E) -> Unit, onError: (ZException) -> Unit): Observer<E> =
-      sub(onNext, onError, { Logger.t(TAG).v("default on complete") })
-
-  fun <E> sub(onNext: (E) -> Unit, onError: (ZException) -> Unit, onComplete: () -> Unit): Observer<E> =
-      subWithDisposable(onNext, onError, onComplete, null)
-
-  fun <E> subWithDisposable(onNext: (E) -> Unit, onSub: (Disposable) -> Unit): Observer<E> =
-      subWithDisposable(onNext, { e -> ZLog.e(TAG, "default on error", e) }, onSub)
-
-  fun <E> subWithDisposable(onNext: (E) -> Unit, onError: (ZException) -> Unit, onSub: (Disposable) -> Unit): Observer<E> =
-      subWithDisposable(onNext, onError, { Logger.t(TAG).v("default on complete") }, onSub)
-
-  fun <E> subWithDisposable(
-      onNext: (E) -> Unit,
-      onError: (ZException) -> Unit,
-      onComplete: () -> Unit,
-      onSub: ((Disposable) -> Unit)?
+  @JvmOverloads
+  fun <E> sub(
+      next: (E) -> Unit,
+      error: (ZException) -> Unit = { e -> ZLog.e(TAG, "ERROR!", e) },
+      complete: () -> Unit = { Logger.t(TAG).v("COMPLETE!") },
+      sub: ((Disposable) -> Unit)? = null
   ): Observer<E> = object : ZObserver<E>() {
     private var disposable: Disposable? = null
 
     override fun onSubscribe(d: Disposable) {
       addDisposable(d)
       this.disposable = d
-      onSub?.invoke(d)
+      sub?.invoke(d)
     }
 
-    override fun onNext(value: E) {
-      onNext.invoke(value)
-    }
-
-    override fun handleError(e: ZException) {
-      onError.invoke(e)
-      onComplete()
-    }
+    override fun onNext(value: E) = next.invoke(value)
+    override fun handleError(e: ZException) = error.invoke(e)
 
     override fun onComplete() {
-      onComplete.invoke()
+      complete.invoke()
       val d = disposable ?: return
       removeDisposable(d)
     }
   }
+
+  protected fun <E> Observable<E>.sub(
+      next: (E) -> Unit,
+      error: (ZException) -> Unit = { e -> ZLog.e(TAG, "ERROR!", e) },
+      complete: () -> Unit = { Logger.t(TAG).v("COMPLETE!") },
+      sub: ((Disposable) -> Unit)? = null
+  ) = this.subscribe(this@ZPresenter.sub(next, error, complete, sub))
 }

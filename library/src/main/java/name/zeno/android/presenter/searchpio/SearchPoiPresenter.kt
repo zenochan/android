@@ -5,7 +5,7 @@ import android.databinding.ObservableArrayList
 import com.baidu.location.BDLocation
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.core.PoiInfo
-import name.zeno.android.presenter.BasePresenter
+import name.zeno.android.presenter.ZPresenter
 import name.zeno.android.third.baidu.GeoCoderHelper
 import name.zeno.android.third.baidu.LocationHelper
 import name.zeno.android.third.baidu.PoiSearchHelper
@@ -14,7 +14,7 @@ import name.zeno.android.third.baidu.PoiSearchHelper
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/12/14.
  */
-class SearchPoiPresenter(view: SearchPoiView) : BasePresenter<SearchPoiView>(view) {
+class SearchPoiPresenter(view: SearchPoiView) : ZPresenter<SearchPoiView>(view) {
   private var pageNo: Int = 0
 
   private var bdLocation: BDLocation? = null
@@ -25,18 +25,16 @@ class SearchPoiPresenter(view: SearchPoiView) : BasePresenter<SearchPoiView>(vie
 
   override fun onCreate() {
     super.onCreate()
-    poiSearch.subscriber = sub { value ->
+    poiSearch.subscriber = sub({ value ->
       if (pageNo == 1) {
         infoList.clear()
       }
       infoList.addAll(value)
-    }
+    })
   }
 
   override fun onViewCreated() {
     super.onViewCreated()
-    val view = view ?: return
-
     view.requestLocationPermission {
       LocationHelper.getInstance(view.getContext()).requestLocation(sub({
         this.bdLocation = it
@@ -60,8 +58,6 @@ class SearchPoiPresenter(view: SearchPoiView) : BasePresenter<SearchPoiView>(vie
 
   @SuppressLint("MissingPermission")
   private fun reverseGeoCode(bdLocation: BDLocation?) {
-    val view = view ?: return
-
     val latLng = LatLng(bdLocation!!.latitude, bdLocation.longitude)
     geoCoder.reverseGeoCode(view.getContext(), latLng) { poiInfos ->
       infoList.clear()

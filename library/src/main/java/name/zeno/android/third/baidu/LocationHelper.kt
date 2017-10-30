@@ -60,7 +60,7 @@ class LocationHelper private constructor(context: Context) : BDLocationListener 
   init {
     this.context = context.applicationContext
     locationClient = LocationClient(this.context)
-    locationClient!!.locOption = locationOption
+    locationClient.locOption = locationOption
     locationClient.registerLocationListener(this)
     registerSdkReceiver()
   }

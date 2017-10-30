@@ -15,32 +15,30 @@ import java.util.ArrayList
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/5/19
  */
-
-class ZArrayAdapter<T>(context: Context, TextViewResouceId: Int, objects: List<T>) : BaseAdapter(), Filterable {
+class ZArrayAdapter<T>(
+    context: Context,
+    textViewResouceId: Int,
+    objects: List<T>)
+  : BaseAdapter(), Filterable {
   private var mOriginalValues: List<T>? = null
-  private var mObject: List<T>? = null
+  private var mObject: List<T>
   private val mLock = Any()
-  private var mResouce: Int = 0
+  private var mResouce: Int
   private var myFilter: MyFilter? = null
-  private var inflater: LayoutInflater? = null
+  private var inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
   init {
-    init(context, TextViewResouceId, objects)
-  }
-
-  private fun init(context: Context, textViewResouceId: Int, objects: List<T>) {
-    inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     mObject = objects
     mResouce = textViewResouceId
     myFilter = MyFilter()
   }
 
   override fun getCount(): Int {
-    return mObject!!.size
+    return mObject.size
   }
 
   override fun getItem(position: Int): T {
-    return mObject!![position]
+    return mObject[position]
   }
 
   override fun getItemId(position: Int): Long {
@@ -52,7 +50,7 @@ class ZArrayAdapter<T>(context: Context, TextViewResouceId: Int, objects: List<T
   }
 
   private fun getViewFromResouce(position: Int, convertView: View?, parent: ViewGroup, layoutRes: Int): View {
-    val tv: TextView = convertView as? TextView ?: inflater!!.inflate(layoutRes, parent, false) as TextView
+    val tv: TextView = (convertView ?: inflater.inflate(layoutRes, parent, false)) as TextView
     val item = getItem(position)
     if (item is CharSequence) {
       tv.text = item
@@ -71,10 +69,9 @@ class ZArrayAdapter<T>(context: Context, TextViewResouceId: Int, objects: List<T
   private inner class MyFilter : Filter() {
     //得到过滤结果
     override fun performFiltering(constraint: CharSequence?): Filter.FilterResults {
-      val results = Filter.FilterResults()
       if (mOriginalValues == null) {
         synchronized(mLock) {
-          mOriginalValues = ArrayList(mObject!!)
+          mOriginalValues = ArrayList(mObject)
         }
       }
 
@@ -98,6 +95,8 @@ class ZArrayAdapter<T>(context: Context, TextViewResouceId: Int, objects: List<T
           }
         }
       }
+
+      val results = Filter.FilterResults()
       results.values = values
       results.count = values.size
       return results

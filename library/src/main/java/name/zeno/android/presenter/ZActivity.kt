@@ -1,12 +1,10 @@
 package name.zeno.android.presenter
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
@@ -17,7 +15,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
-import name.zeno.android.listener.Action2
 import name.zeno.android.presenter.activities.AutoHideIMActivity
 import name.zeno.android.third.rxjava.RxActivityResult
 import name.zeno.android.util.R
@@ -39,8 +36,6 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
 
   private val rxActivityResult = RxActivityResult(this)
   override fun getContext() = this
-
-  //</editor-fold>
 
   protected val rootView: View
     get() = (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)
@@ -165,6 +160,10 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
     rxActivityResult.startActivityForResult(intent, onResult)
   }
 
+  private fun onViewCreated() {
+    listeners.forEach { it.onViewCreated() }
+  }
+
 //  fun startActivityForResult(clazz: Class<out Activity>, data: Parcelable?, onResult: Action2<Boolean, Intent>) {
 //    val intent = Intent(this, clazz)
 //    Extra.setData(intent, data)
@@ -202,7 +201,6 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
     addFragment(R.id.layout_container, fragment)
   }
 
-  //<editor-fold desc="snack">
   protected fun snack(text: String) {
     Snackbar.make(rootView, text, Snackbar.LENGTH_SHORT).show()
   }
@@ -211,15 +209,11 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
     Snackbar.make(rootView, resId, Snackbar.LENGTH_SHORT).show()
   }
 
-  @JvmOverloads protected fun snack(msg: String, button: String, action: (() -> Unit)? = null) {
+  @JvmOverloads
+  protected fun snack(msg: String, button: String, action: (() -> Unit)? = null) {
     Snackbar.make(rootView, msg, Snackbar.LENGTH_LONG)
         .setAction(button) { action?.invoke() }
         .show()
   }
 
-  private fun onViewCreated() {
-    for (listener in listeners) {
-      listener.onViewCreated()
-    }
-  }
 }
