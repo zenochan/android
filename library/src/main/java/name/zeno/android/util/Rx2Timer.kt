@@ -1,20 +1,24 @@
 package name.zeno.android.util
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.Fragment
+import android.app.FragmentManager
 import android.content.Intent
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import name.zeno.android.core.JELLY_BEAN_MR1
 import name.zeno.android.core.now
+import name.zeno.android.core.sdkInt
 import name.zeno.android.exception.ZException
 import name.zeno.android.presenter.LifecycleListener
 import name.zeno.android.presenter.ZFragment
 import name.zeno.android.third.rxjava.ZObserver
 import java.util.concurrent.TimeUnit
 
+@Suppress("unused")
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/5/9
@@ -30,13 +34,13 @@ class Rx2Timer private constructor() : LifecycleListener {
   fun start() {
     if (period < 1) period = 1
     Observable.interval(0, period.toLong(), TimeUnit.SECONDS)
-        .takeWhile { now() <= expiredIn + 1000 }
+        .takeWhile { now <= expiredIn + 1000 }
         .subscribeOn(Schedulers.single())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(object : ZObserver<Long>() {
 
           override fun onNext(value: Long) {
-            val remain = (expiredIn - now()) / 1000
+            val remain = (expiredIn - now) / 1000
             onNext?.invoke(if (remain < 0) 0 else remain)
           }
 
@@ -63,21 +67,12 @@ class Rx2Timer private constructor() : LifecycleListener {
     expiredIn = 0
   }
 
-  //<editor-fold desc="lifecycle listener">
   override fun onCreate() {}
-
   override fun onResume() {}
-
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {}
-
   override fun onViewCreated() {}
-
   override fun onDestroyView() {}
-
-  override fun onDestroy() {
-    stop()
-  }
-  //</editor-fold>
+  override fun onDestroy() = stop()
 
   private fun registLifecycle(fragmentManager: FragmentManager) {
     var fragment: ZFragment? = fragmentManager.findFragmentByTag(TAG) as? ZFragment
@@ -108,15 +103,22 @@ class Rx2Timer private constructor() : LifecycleListener {
   companion object {
     private val TAG = "Rx2Timer"
 
-    fun with(activity: FragmentActivity): Rx2Timer {
+    @JvmStatic
+    fun with(activity: Activity): Rx2Timer {
       val rx2Timer = Rx2Timer()
-      rx2Timer.registLifecycle(activity.supportFragmentManager)
+      rx2Timer.registLifecycle(activity.fragmentManager)
       return rx2Timer
     }
 
+    @SuppressLint("NewApi")
+    @JvmStatic
     fun with(fragment: Fragment): Rx2Timer {
       val rx2Timer = Rx2Timer()
-      rx2Timer.registLifecycle(fragment.fragmentManager)
+      val fm = when {
+        sdkInt >= JELLY_BEAN_MR1 -> fragment.childFragmentManager
+        else -> fragment.fragmentManager
+      }
+      rx2Timer.registLifecycle(fm)
       return rx2Timer
     }
   }

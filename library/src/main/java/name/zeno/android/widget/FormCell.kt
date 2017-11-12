@@ -15,8 +15,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 import kotlinx.android.synthetic.main.view_form_cell.view.*
-import name.zeno.android.listener.Action0
+import name.zeno.android.presenter.exts.show
 import name.zeno.android.util.R
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
 
 /**
@@ -75,8 +76,8 @@ class FormCell @JvmOverloads constructor(
     }
 
 
-  fun setTextSizeLabel(sp: Float) {
-    tv_label.setTextSize(Dimension.SP, sp)
+  fun setTextSizeLabel(size: Float, unit: Int = Dimension.SP) {
+    tv_label.setTextSize(unit, size)
   }
 
   fun setHint(hint: String) {
@@ -88,18 +89,13 @@ class FormCell @JvmOverloads constructor(
   }
 
   var nextEnable: Boolean
-    get() = iv_next.visibility == View.VISIBLE
+    get() = iv_next.show
     set(value) {
-      iv_next.visibility = if (value) View.VISIBLE else View.INVISIBLE
+      iv_next.show = value
     }
 
-
-  fun setOnClickNextListener(onClick: Action0?) {
-    if (onClick == null) {
-      iv_next.setOnClickListener(null)
-    } else {
-      iv_next.setOnClickListener { onClick.call() }
-    }
+  fun setOnClickNextListener(onClick: (() -> Unit)?) {
+    iv_next.onClick { onClick?.invoke() }
   }
 
   private fun initAttr(context: Context, attrs: AttributeSet?) {

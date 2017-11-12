@@ -16,22 +16,20 @@
  */
 package name.zeno.android.widget.viewpagerindicator
 
+
 import android.content.Context
-import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v4.view.ViewPager.OnPageChangeListener
 import android.util.AttributeSet
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TextView
-
-
 import name.zeno.android.util.R
-
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 
 /**
  * This widget implements the dynamic action bar tab behavior that can change
@@ -187,20 +185,15 @@ class TabPageIndicator @JvmOverloads constructor(context: Context, attrs: Attrib
   override fun notifyDataSetChanged() {
     mTabLayout.removeAllViews()
     val adapter = mViewPager!!.adapter
-    var iconAdapter: IconPagerAdapter? = null
-    if (adapter is IconPagerAdapter) {
-      iconAdapter = adapter
-    }
-    val count = adapter.count
+    val iconAdapter: IconPagerAdapter? = adapter as? IconPagerAdapter
+
+    val count = adapter!!.count
     for (i in 0 until count) {
       var title: CharSequence? = adapter.getPageTitle(i)
       if (title == null) {
         title = EMPTY_TITLE
       }
-      var iconResId = 0
-      if (iconAdapter != null) {
-        iconResId = iconAdapter.getIconResId(i)
-      }
+      val iconResId = iconAdapter?.getIconResId(i) ?: 0
       addTab(i, title, iconResId)
     }
     if (mSelectedTabIndex > count) {

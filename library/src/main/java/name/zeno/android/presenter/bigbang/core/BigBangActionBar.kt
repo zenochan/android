@@ -20,25 +20,21 @@ import android.widget.ImageView
 
 import name.zeno.android.util.R
 
-internal class BigBangActionBar : ViewGroup, View.OnClickListener {
-  lateinit var mSearch: ImageView
-  lateinit var mShare: ImageView
-  lateinit var mCopy: ImageView
-  lateinit var mBorder: Drawable
+internal class BigBangActionBar @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : ViewGroup(context, attrs, defStyleAttr), View.OnClickListener {
+  var mSearch: ImageView
+  var mShare: ImageView
+  var mCopy: ImageView
+  var mBorder: Drawable
 
   private var mActionGap: Int = 0
   var contentPadding: Int = 0
     private set
   private var mActionListener: ActionListener? = null
 
-  @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr) {
-    initSubViews()
-  }
-
-  private fun initSubViews() {
-    val context = context
-
-    mBorder = ContextCompat.getDrawable(context, R.drawable.bigbang_action_bar_bg)
+  init {
+    mBorder = ContextCompat.getDrawable(context, R.drawable.bigbang_action_bar_bg)!!
     mBorder.callback = this
 
     mSearch = ImageView(context)

@@ -13,8 +13,8 @@ import java.io.InputStream
  * @since 2017/3/10.
  */
 class SizableUrlLoader : BaseGlideUrlLoader<SizableUrlModel> {
-  constructor(concreteLoader: ModelLoader<GlideUrl, InputStream>) : super(concreteLoader) {}
-  constructor(concreteLoader: ModelLoader<GlideUrl, InputStream>, modelCache: ModelCache<SizableUrlModel, GlideUrl>?) : super(concreteLoader, modelCache) {}
+  constructor(concreteLoader: ModelLoader<GlideUrl, InputStream>) : super(concreteLoader)
+  constructor(concreteLoader: ModelLoader<GlideUrl, InputStream>, modelCache: ModelCache<SizableUrlModel, GlideUrl>?) : super(concreteLoader, modelCache)
 
   override fun getUrl(sizableUrlModel: SizableUrlModel, width: Int, height: Int, options: Options): String? =
       sizableUrlModel.requestCustomSizeUrl(width, height)

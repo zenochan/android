@@ -2,12 +2,7 @@ package name.zeno.android.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.TypedArray
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.RectF
+import android.graphics.*
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.KeyEvent
@@ -17,30 +12,25 @@ import android.view.inputmethod.BaseInputConnection
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
-
-import java.util.ArrayList
-
-import name.zeno.android.listener.Action1
 import name.zeno.android.util.R
 import name.zeno.android.util.ZDimen
+import java.util.*
 
 /**
- * 仿照支付宝的密码输入控件,输入固定长度的数字密码或验证码
+ * # 仿照支付宝的密码输入控件,输入固定长度的数字密码或验证码
  *
- *
- *
- *
- * <h1>API</h1>
- *
- *  * [.clearResult]:清空输入结果
- *  * [.setOnDragListener]:设置输入完成监听
- *
+ * * [clearResult] 清空输入结果
+ * * [setOnDragListener] 设置输入完成监听
  *
  * @see [PswInputViewDemo](https://github.com/huage2580/PswInputViewDemo)
  */
-class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
+class PswInputView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
   private var input: InputMethodManager? = null       //输入法管理
-  private var result: ArrayList<Int>? = null      //输入结果保存
+  private var result: ArrayList<Int> = ArrayList()   //输入结果保存
   private var count: Int = 0       //密码位数
 
   private var passwordModel: Boolean = false
@@ -51,7 +41,7 @@ class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeS
   private var roundRect: RectF? = null   //外面的圆角矩形
   private var roundRadius: Int = 0 //圆角矩形的圆角程度
 
-  private var onFinishListener: Action1<String>? = null//输入完成的回调
+  private var onFinishListener: ((String) -> Unit)? = null//输入完成的回调
 
   private var colorAccent: Int = 0
   private var colorDefault: Int = 0
@@ -62,7 +52,7 @@ class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeS
   }
 
   fun clearResult() {
-    result!!.clear()
+    result.clear()
     invalidate()
   }
 
@@ -124,15 +114,16 @@ class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeS
     //画掩盖点
     //这是前面定义的变量 private ArrayList<Integer> result;//输入结果保存
     val dotRadius = size / 6     //圆圈占格子的三分之一
-    for (i in result!!.indices) {
+    result.forEachIndexed { i, value ->
       val x = (size * (i + 0.5)).toFloat()
       val y = (size / 2).toFloat()
+
       if (passwordModel) {
         canvas.drawCircle(x, y, dotRadius.toFloat(), contentPaint!!)
       } else {
         contentPaint!!.textSize = (dotRadius * 2).toFloat()
-        val txtW = contentPaint!!.measureText(result!![i].toString())
-        canvas.drawText(result!![i].toString(), x - txtW / 2, y + dotRadius * 0.75f, contentPaint!!)
+        val txtW = contentPaint!!.measureText(value.toString())
+        canvas.drawText(value.toString(), x - txtW / 2, y + dotRadius * 0.75f, contentPaint!!)
       }
     }
   }
@@ -141,7 +132,7 @@ class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeS
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     if (isFocused) {
-      input!!.showSoftInput(this, InputMethodManager.SHOW_FORCED)
+      input?.showSoftInput(this, InputMethodManager.SHOW_FORCED)
     }
   }
 
@@ -195,7 +186,7 @@ class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     this.isFocusable = true
     this.isFocusableInTouchMode = true
-    result = ArrayList()
+    result
 
 
     size = ZDimen.dp2px(30f)//默认30dp一格
@@ -231,8 +222,8 @@ class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
       //键入数字
       if (keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) {
-        if (result!!.size < count) {
-          result!!.add(keyCode - 7)
+        if (result.size < count) {
+          result.add(keyCode - 7)
           invalidate()
           ensureFinishInput()
         }
@@ -241,7 +232,7 @@ class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
       //键入删除
       if (keyCode == KeyEvent.KEYCODE_DEL && !result!!.isEmpty()) {
-        result!!.removeAt(result!!.size - 1)
+        result.removeAt(result.size - 1)
         invalidate()
         return@listener true
       }
@@ -260,12 +251,8 @@ class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeS
    */
   private fun ensureFinishInput() {
     //输入完成
-    if (result!!.size == count && onFinishListener != null) {
-      val sb = StringBuilder()
-      for (i in result!!) {
-        sb.append(i)
-      }
-      onFinishListener!!.call(sb.toString())
+    if (result.size == count && onFinishListener != null) {
+      onFinishListener?.invoke(result.joinToString(""))
     }
   }
 
@@ -287,7 +274,7 @@ class PswInputView @JvmOverloads constructor(context: Context, attrs: AttributeS
     } else hsize
   }
 
-  fun setOnFinishListener(onFinishListener: Action1<String>) {
+  fun setOnFinishListener(onFinishListener: (String) -> Unit) {
     this.onFinishListener = onFinishListener
   }
 

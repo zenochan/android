@@ -17,7 +17,7 @@ import io.reactivex.Observable
 class ZAuthReq(
     val scope: String = "snsapi_userinfo",
     val state: String = "wx_sdk_" + System.currentTimeMillis()
-) : AbsReq(), Parcelable {
+) : WxReq(), Parcelable {
   override fun build(): Observable<BaseReq> {
     val req = SendAuth.Req()
     req.scope = scope

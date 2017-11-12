@@ -3,4 +3,5 @@
   <!--<item name="bigBang_$$" type="id"/>-->
   <item name="tag_item" type="id"/>
   <item name="tag_item_type" type="id"/>
+  <item name="layout_container" type="id"/>
 </resources>

@@ -174,17 +174,16 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
     super.onDraw(canvas)
     val count: Int
 
-    if (isInEditMode) {
-      count = 5
-      mCurrentPage = 2
-    } else if (mViewPager == null) {
-      return
-    } else {
-      count = mViewPager!!.adapter.count
-    }
-
-    if (count == 0) {
-      return
+    when {
+      isInEditMode -> {
+        count = 5
+        mCurrentPage = 2
+      }
+      mViewPager?.adapter != null -> {
+        count = mViewPager!!.adapter!!.count
+        if (count == 0) return
+      }
+      else -> return
     }
 
     if (mCurrentPage >= count) {
@@ -269,9 +268,10 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
     if (super.onTouchEvent(ev)) {
       return true
     }
-    if (mViewPager == null || mViewPager!!.adapter.count == 0) {
-      return false
-    }
+
+    val count = mViewPager?.adapter?.count ?: 0
+    if (count <= 0) return false
+
 
     val action = ev.action and MotionEventCompat.ACTION_MASK
     when (action) {
@@ -301,7 +301,7 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
 
       MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
         if (!mIsDragging) {
-          val count = mViewPager!!.adapter.count
+          val count = mViewPager!!.adapter!!.count
           val width = width
           val halfWidth = width / 2f
           val sixthWidth = width / 6f
@@ -440,7 +440,7 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
       result = specSize
     } else {
       //Calculate the width according the views count
-      val count = mViewPager!!.adapter.count
+      val count = mViewPager!!.adapter!!.count
       result = (paddingLeft.toFloat() + paddingRight.toFloat()
           + count.toFloat() * 2f * radiusNormal + (count - 1) * radiusNormal + 1f).toInt()
       //Respect AT_MOST value if that was what is called for by measureSpec

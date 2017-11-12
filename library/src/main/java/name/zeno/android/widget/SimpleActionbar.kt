@@ -10,7 +10,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
-import name.zeno.android.listener.Action0
 import name.zeno.android.util.R
 
 @Suppress("unused")
@@ -162,12 +161,6 @@ class SimpleActionbar @JvmOverloads constructor(
     val tint = ColorStateList(arrayOf(intArrayOf()), intArrayOf(color))
     preTv.supportCompoundDrawableTintList = tint
   }
-
-  @Deprecated(message = "20171019", replaceWith = ReplaceWith("a"))
-  fun setOnClickPre(onClickPre: Action0) = onPre { onClickPre.call() }
-
-  @Deprecated(message = "20171019", replaceWith = ReplaceWith("onAction"))
-  fun setOnClickAction(onClickAction: Action0) = onAction { onClickAction.call() }
 
   fun onAction(action: () -> Unit) {
     this.onClickAction = action

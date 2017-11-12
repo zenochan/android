@@ -42,7 +42,7 @@ class GuideFragment : ZFragment() {
     indicator.strokeColor = Color.parseColor("#d82c3b")
     indicator.pageColor = Color.TRANSPARENT
 
-    resIds = arguments.getIntArray(PARAM_RES_IDS)
+    resIds = arguments?.getIntArray(PARAM_RES_IDS)
 
     pager_guide.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
       override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -64,7 +64,7 @@ class GuideFragment : ZFragment() {
     pager_guide.adapter = object : BasePagerAdapter<AppCompatImageView>() {
       override fun getCount() = resIds?.size ?: 0
 
-      override fun isViewFromObject(view: View?, any: Any) = view === any
+      override fun isViewFromObject(view: View, any: Any) = view === any
 
       override fun createItem(viewPager: ViewGroup, position: Int): AppCompatImageView {
         val v = AppCompatImageView(view.context)

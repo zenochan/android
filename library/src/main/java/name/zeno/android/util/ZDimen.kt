@@ -26,6 +26,7 @@ object ZDimen {
       return Point(dm.widthPixels, dm.heightPixels)
     }
 
+  @Deprecated(message = "使用 anko dip()")
   fun dp2px(dp: Float): Int {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics).toInt()
   }

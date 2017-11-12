@@ -24,6 +24,7 @@
     <activity android:name=".ShapeActivity">
     </activity>
     <activity android:name=".CircleIndicatorActivity"/>
+    <activity android:name=".DragLayoutActivity"/>
   </application>
 
 </manifest>

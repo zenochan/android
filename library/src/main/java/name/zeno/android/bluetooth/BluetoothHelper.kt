@@ -8,9 +8,8 @@ import android.support.annotation.RequiresPermission
 import android.support.v4.app.Fragment
 
 /**
- * Create Date: 16/6/9
- *
  * @author 陈治谋 (513500085@qq.com)
+ * @since  16/6/9
  */
 class BluetoothHelper {
 
@@ -69,14 +68,10 @@ class BluetoothHelper {
   @RequiresPermission(anyOf = arrayOf(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN))
   fun openBluetooth() {
     if (!isBluetoothEnable) {
-      if (this.listener != null) {
-        this.listener!!.onOpenBluetoothResult(-1, "该设备不支持蓝牙功能")
-      }
+      this.listener?.onOpenBluetoothResult(-1, "该设备不支持蓝牙功能")
     } else if (isBluetoothOpened) {
       adapter = bluetoothAdapter
-      if (this.listener != null) {
-        this.listener!!.onOpenBluetoothResult(0, "蓝牙功能已打开")
-      }
+      this.listener?.onOpenBluetoothResult(0, "蓝牙功能已打开")
     } else {
       val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
       if (activity != null) {
@@ -90,14 +85,14 @@ class BluetoothHelper {
   /**
    * Android 6.0 需要位置访问权限才能扫描到蓝牙
    */
-  @RequiresPermission(anyOf = arrayOf(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION))
+  @RequiresPermission(allOf = arrayOf(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION))
   fun discoveryDevices() {
     if (adapter != null && !adapter!!.isDiscovering) {
       adapter!!.startDiscovery()
     }
   }
 
-  @RequiresPermission(anyOf = arrayOf(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN))
+  @RequiresPermission(allOf = arrayOf(Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN))
   fun cancelDiscovery() {
     if (adapter != null && adapter!!.isDiscovering) {
       adapter!!.cancelDiscovery()
@@ -106,9 +101,9 @@ class BluetoothHelper {
 
   private fun registerReceiver() {
     if (activity != null) {
-      activity!!.registerReceiver(btReceiver, btReceiver.filter)
+      activity?.registerReceiver(btReceiver, btReceiver.filter)
     } else {
-      fragment!!.activity.registerReceiver(btReceiver, btReceiver.filter)
+      fragment?.activity?.registerReceiver(btReceiver, btReceiver.filter)
     }
   }
 
@@ -116,7 +111,7 @@ class BluetoothHelper {
     if (activity != null) {
       activity!!.unregisterReceiver(btReceiver)
     } else {
-      fragment!!.activity.unregisterReceiver(btReceiver)
+      fragment!!.activity?.unregisterReceiver(btReceiver)
     }
   }
 

@@ -5,20 +5,15 @@ import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
 import android.support.annotation.FloatRange
 import android.support.annotation.IntDef
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
-
-import java.util.ArrayList
-import java.util.Arrays
-import java.util.Collections
-
-import name.zeno.android.listener.Action1
+import name.zeno.android.core.drawable
 import name.zeno.android.util.R
+import java.util.*
 
 /**
  * @author 陈治谋 (513500085@qq.com)
@@ -110,7 +105,7 @@ class SortHeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
   }
 
   private fun getDrawable(@DrawableRes res: Int): Drawable {
-    val drawable = ContextCompat.getDrawable(context, res)
+    val drawable = context.drawable(res)
     drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
     return drawable
   }

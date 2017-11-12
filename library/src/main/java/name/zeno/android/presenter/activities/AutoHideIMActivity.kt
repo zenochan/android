@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import name.zeno.android.data.CommonConnector
 
 
 /**
@@ -22,18 +23,18 @@ abstract class AutoHideIMActivity : ZLogActivity() {
     var eventConsumed = false
 
     try {
-      if (ev.action == MotionEvent.ACTION_DOWN) {
+      eventConsumed = if (ev.action == MotionEvent.ACTION_DOWN) {
         val v = currentFocus
         if (v != null && isShouldHideInput(v, ev)) {
           val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
           imm.hideSoftInputFromWindow(v.windowToken, 0)
         }
-        eventConsumed = super.dispatchTouchEvent(ev)
+        super.dispatchTouchEvent(ev)
       } else {
-        eventConsumed = window.superDispatchTouchEvent(ev) || onTouchEvent(ev)
+        window.superDispatchTouchEvent(ev) || onTouchEvent(ev)
       }
-    } catch (ignore: IllegalArgumentException) {
-      //pointerIndex out of range pointerIndex=-1 pointerCount=1
+    } catch (e: IllegalArgumentException) {
+      CommonConnector.sendCrash(e)
     }
 
     return eventConsumed

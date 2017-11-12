@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  style="@style/layout.full"
+  >
+
+  <LinearLayout
+    style="@style/layout.fullWidth"
+    >
+
+    <android.support.v7.widget.AppCompatTextView
+      style="@style/layout.fullWidth"
+      android:padding="8dp"
+      android:text="setColor(),SetARGB() 就不练习了，主要看着色器"
+      />
+
+    <name.zeno.demo.hencoder.widget.ColorShaderView
+      android:id="@+id/shaderView"
+      android:layout_width="match_parent"
+      android:layout_height="300dp"
+      android:background="@color/md.grey100"
+      />
+
+    <RadioGroup
+      android:id="@+id/shaderRG"
+      style="@style/layout.fullWidth.H"
+      >
+
+      <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/linear"
+        style="@style/layout.wrap"
+        android:text="linear"
+        />
+
+      <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/radial"
+        style="@style/layout.wrap"
+        android:text="radial"
+        />
+
+      <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/sweep"
+        style="@style/layout.wrap"
+        android:text="sweap"
+        />
+
+      <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/bitmap"
+        style="@style/layout.wrap"
+        android:text="bitmap"
+        />
+
+      <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/compose"
+        style="@style/layout.wrap"
+        android:text="compose"
+        />
+    </RadioGroup>
+
+    <RadioGroup
+      android:id="@+id/tileModeRG"
+      style="@style/layout.fullWidth.H"
+      >
+
+      <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/clamp"
+        style="@style/layout.wrap"
+        android:text="CLAMP"
+        />
+
+      <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/mirror"
+        style="@style/layout.wrap"
+        android:text="MIRROR"
+        />
+
+      <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/repeat"
+        style="@style/layout.wrap"
+        android:text="REPEAT"
+        />
+    </RadioGroup>
+
+
+    <android.support.v7.widget.AppCompatSeekBar
+      android:id="@+id/mulR"
+      style="@style/layout.fullWidth"
+      android:max="255"
+      android:padding="8dp"
+      />
+
+    <android.support.v7.widget.AppCompatSeekBar
+      android:id="@+id/mulG"
+      style="@style/layout.fullWidth"
+      android:max="255"
+      android:padding="8dp"
+      />
+
+    <android.support.v7.widget.AppCompatSeekBar
+      android:id="@+id/mulB"
+      style="@style/layout.fullWidth"
+      android:max="255"
+      android:padding="8dp"
+      />
+
+    <android.support.v7.widget.AppCompatSeekBar
+      android:id="@+id/addR"
+      style="@style/layout.fullWidth"
+      android:max="255"
+      android:padding="8dp"
+      />
+
+    <android.support.v7.widget.AppCompatSeekBar
+      android:id="@+id/addG"
+      style="@style/layout.fullWidth"
+      android:max="255"
+      android:padding="8dp"
+      />
+
+    <android.support.v7.widget.AppCompatSeekBar
+      android:id="@+id/addB"
+      style="@style/layout.fullWidth"
+      android:max="255"
+      android:padding="8dp"
+      />
+
+  </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -42,7 +42,7 @@ object CommonConnector {
     return commonService.download(apkUrl)
   }
 
-  operator fun get(url: String): Observable<String> {
+  fun get(url: String): Observable<String> {
     return commonService.get(url).compose(RxUtils.applySchedulers())
   }
 

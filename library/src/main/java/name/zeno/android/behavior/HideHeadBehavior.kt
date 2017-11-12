@@ -48,8 +48,4 @@ class HideHeadBehavior : VerticalScrollingBehavior<View> {
     //    target.setPadding(target.getPaddingLeft(), pt, target.getPaddingRight(), target.getPaddingBottom());
   }
 
-  companion object {
-    private val TAG = "name.zeno.android.behavior.HideHeadBehavior"
-  }
-
 }

@@ -1,9 +1,12 @@
+@file:Suppress("unused")
+
 package name.zeno.android.core
 
 import android.app.Activity
+import android.app.Fragment
+import android.app.FragmentManager
 import android.content.Intent
 import android.os.Parcelable
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
@@ -26,20 +29,13 @@ fun <T : Parcelable> AppCompatActivity.nav(clazz: Class<out Activity>, data: Par
   val intent = Intent(this, clazz)
   Extra.setData(intent, data)
   if (onResult != null) {
-    if (this is ZActivity) {
-      startActivityForResult(intent) { ok, intentData -> onResult(ok, Extra.getData(intentData)) }
-    } else {
-      // get or register a ZFragment
-      val tag = "zeno:nav"
-      var fragment: ZFragment? = supportFragmentManager.findFragmentByTag(tag) as? ZFragment
-      if (fragment == null) {
-        fragment = ZFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(fragment, tag)
-        transaction.commit()
-      }
 
-      fragment.startActivityForResult(intent) { ok, intentData -> onResult(ok, Extra.getData(intentData)) }
+    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, Extra.getData(intentData)) }
+
+    if (this is ZActivity) {
+      startActivityForResult(intent, next)
+    } else {
+      navigator().startActivityForResult(intent, next)
     }
   } else {
     startActivity(intent)
@@ -57,22 +53,30 @@ fun <T : Parcelable> Fragment.nav(clazz: Class<out Activity>, data: Parcelable? 
   val intent = Intent(this.activity, clazz)
   Extra.setData(intent, data)
   if (onResult != null) {
-    if (this is ZFragment) {
-      startActivityForResult(intent) { ok, intentData -> onResult(ok, Extra.getData(intentData)) }
-    } else {
-      // get or register a ZFragment
-      val tag = "zeno:nav"
-      var fragment: ZFragment? = fragmentManager.findFragmentByTag(tag) as? ZFragment
-      if (fragment == null) {
-        fragment = ZFragment()
-        val transaction = fragmentManager.beginTransaction()
-        transaction.add(fragment, tag)
-        transaction.commit()
-      }
 
-      fragment.startActivityForResult(intent) { ok, intentData -> onResult(ok, Extra.getData(intentData)) }
+    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, Extra.getData(intentData)) }
+    if (this is ZFragment) {
+      startActivityForResult(intent, next)
+    } else {
+      navigator().startActivityForResult(intent, next)
     }
   } else {
     startActivity(intent)
   }
+}
+
+fun Fragment.navigator() = fragmentManager.navigator()
+fun AppCompatActivity.navigator() = fragmentManager.navigator()
+
+private fun FragmentManager.navigator(): ZFragment {
+  val tag = "zeno:nav"
+  var fragment: ZFragment? = findFragmentByTag(tag) as? ZFragment
+  if (fragment == null) {
+    fragment = ZFragment()
+    val transaction = beginTransaction()
+    transaction.add(fragment, tag)
+    transaction.commit()
+  }
+
+  return fragment
 }

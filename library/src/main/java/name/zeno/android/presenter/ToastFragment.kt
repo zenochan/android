@@ -1,9 +1,10 @@
 package name.zeno.android.presenter
 
+import android.app.Fragment
+import android.content.Context
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.Toast
 
@@ -21,6 +22,9 @@ open class ToastFragment : Fragment() {
     super.onViewCreated(view, savedInstanceState)
     fragmentView = view
   }
+
+  // TODO 强制返回非空了，需要一个更好的处理方式
+  override fun getContext(): Context = super.getContext()!!
 
   override fun onDestroy() {
     super.onDestroy()
@@ -131,5 +135,4 @@ open class ToastFragment : Fragment() {
 
   open fun showMessage(msg: String?) = snack(msg ?: "")
   open fun showMessage(@StringRes resId: Int) = snack(resId)
-
 }

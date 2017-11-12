@@ -10,6 +10,7 @@ import name.zeno.android.common.annotations.DataClass
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/10/11
  */
+@Suppress("unused")
 @DataClass data class BaseData(
     val string: String = "",
     val boolean: Boolean = false,

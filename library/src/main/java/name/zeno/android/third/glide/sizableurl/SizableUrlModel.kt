@@ -10,10 +10,8 @@ abstract class SizableUrlModel {
   internal abstract fun requestCustomSizeUrl(width: Int, height: Int): String?
 
   override fun equals(other: Any?): Boolean {
-    if (other is ZQiniuUrl) {
-      return baseUrl == other.baseUrl
-    }
-    return false
+    return other === this
+        || other is SizableUrlModel && baseUrl == other.baseUrl
   }
 
   override fun hashCode(): Int {

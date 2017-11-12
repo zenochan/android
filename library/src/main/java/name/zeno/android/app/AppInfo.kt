@@ -93,7 +93,7 @@ object AppInfo {
   }
 
   private fun printAppInfo() {
-    val appInfo =
+    Logger.t(TAG).d(
         """
         -------------   app info  -------------------
         dType       : $dType
@@ -106,8 +106,7 @@ object AppInfo {
         densityDpi  : $densityDpi
         ---------------------------------------------
         """
-
-    Logger.t(TAG).d(appInfo)
+    )
   }
 }
 

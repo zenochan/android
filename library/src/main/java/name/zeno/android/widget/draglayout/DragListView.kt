@@ -3,24 +3,24 @@ package name.zeno.android.widget.draglayout
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewConfiguration
 import android.widget.ListView
 
 
-class DragListView @JvmOverloads constructor(arg0: Context, arg1: AttributeSet? = null, arg2: Int = 0) : ListView(arg0, arg1, arg2) {
-
+class DragListView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : ListView(context, attrs, defStyle) {
   private var scrollMode: Int = 0
-  private var downX: Float = 0.toFloat()
-  private var downY: Float = 0.toFloat()
+  private var downX: Float = 0F
+  private var downY: Float = 0F
 
-  internal var isAtTop = true // 如果是true，则允许拖动至底部的下一页
+  private var isAtTop = true // 如果是true，则允许拖动至底部的下一页
   private var mTouchSlop = 4 // 判定为滑动的阈值，单位是像素
 
   init {
-
-    val configuration = ViewConfiguration.get(context)
-    mTouchSlop = configuration.scaledTouchSlop
+    mTouchSlop = ViewConfiguration.get(context).scaledTouchSlop
   }
 
   override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

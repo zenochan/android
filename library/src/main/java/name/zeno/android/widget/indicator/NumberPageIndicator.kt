@@ -74,7 +74,7 @@ class NumberPageIndicator @JvmOverloads constructor(
     scaleX = scale
 
     var currP: Int
-    val count = pager.adapter.count
+    val count = pager.adapter!!.count
 
     if (pager is AutoScrollViewPager && (pager as AutoScrollViewPager).isInfinite) {
       currP = pager.currentItem
@@ -95,7 +95,7 @@ class NumberPageIndicator @JvmOverloads constructor(
   @SuppressLint("DefaultLocale")
   override fun onPageSelected(position: Int) {
     var newP = position
-    val count = pager.adapter.count
+    val count = pager.adapter!!.count
     newP %= count
     newP += 1
     text = String.format("%d/%d", newP, count)

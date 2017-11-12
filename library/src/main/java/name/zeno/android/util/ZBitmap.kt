@@ -184,18 +184,18 @@ object ZBitmap {
    *
    * @param bitmap ：源图片资源
    */
-  fun zoom(bitmap: Bitmap?, @FloatRange(from = 0.0, to = 1.0) scale: Float): Bitmap? {
-    if (bitmap == null || scale < 0 || scale > 1) {
+  fun zoom(bitmap: Bitmap, @FloatRange(from = 0.0) scale: Float): Bitmap? {
+    if (scale < 0) {
       return bitmap
     }
     // 获取这个图片的宽和高
-    val width = bitmap.width.toFloat()
-    val height = bitmap.height.toFloat()
+    val width = bitmap.width
+    val height = bitmap.height
     // 创建操作图片用的matrix对象
     val matrix = Matrix()
     // 缩放图片动作
     matrix.postScale(scale, scale)
-    return Bitmap.createBitmap(bitmap, 0, 0, width.toInt(), height.toInt(), matrix, true)
+    return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true)
   }
 
   /***
@@ -222,8 +222,8 @@ object ZBitmap {
   /**
    * @param maxSize 图片允许最大空间   单位：KB
    */
-  fun zoom(bigImage: Bitmap, maxSize: Int): Bitmap {
-    var bigImage = bigImage
+  fun zoom(src: Bitmap, maxSize: Int): Bitmap {
+    var bigImage = src
     var maxSize = maxSize
     if (maxSize < 0) {
       maxSize = 400

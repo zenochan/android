@@ -6,20 +6,22 @@ import android.view.MotionEvent
 import android.view.ViewConfiguration
 import android.webkit.WebView
 
-class DragWebView @JvmOverloads constructor(arg0: Context, arg1: AttributeSet? = null, arg2: Int = 0) : WebView(arg0, arg1, arg2) {
+class DragWebView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : WebView(context, attrs, defStyle) {
 
   private var scrollMode: Int = 0
-  private var downX: Float = 0.toFloat()
-  private var downY: Float = 0.toFloat()
+  private var downX: Float = 0F
+  private var downY: Float = 0F
 
   internal var isAtTop = true // 如果是true，则允许拖动至底部的下一页
   private var mTouchSlop = 4 // 判定为滑动的阈值，单位是像素
 
   init {
     //    disableZoomController();
-
-    val configuration = ViewConfiguration.get(context)
-    mTouchSlop = configuration.scaledTouchSlop
+    mTouchSlop = ViewConfiguration.get(context).scaledTouchSlop
   }
 
   // 使得控制按钮不可用

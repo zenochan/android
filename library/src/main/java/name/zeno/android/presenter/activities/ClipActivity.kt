@@ -61,6 +61,7 @@ class ClipActivity : ZActivity() {
   private fun onSubmit() {
     loadingDialog.show()
     Observable.create<String> { emitter ->
+
       var bitmap = layout_clip_img.clip()
       bitmap = ZBitmap.zoom(bitmap, 500.0, 500.0)
       val fileName = (+System.currentTimeMillis()).toString() + ".jpg"
@@ -68,6 +69,7 @@ class ClipActivity : ZActivity() {
       val filePath = cachePath + fileName
       emitter.onNext(filePath)
       emitter.onComplete()
+
     }.compose(RxUtils.applySchedulers()).subscribe(object : ZObserver<String>() {
       override fun onComplete() = loadingDialog.dismiss()
       override fun onNext(path: String) {

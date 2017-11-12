@@ -40,7 +40,7 @@ class PhotoCaptureHelper(
 ) {
 
 
-  private var context: WeakReference<Context> = WeakReference(activity ?: fragment!!.context)
+  private var context: WeakReference<Context> = WeakReference(activity ?: fragment!!.context!!)
   private var cachePath: String? = null
   private var fileName: String? = null
 
@@ -74,7 +74,7 @@ class PhotoCaptureHelper(
     val imageUri: Uri = when {
       Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
         //通过FileProvider创建一个content类型的Uri
-        FileProvider.getUriForFile(context.get(), fileProvider, photoFile)
+        FileProvider.getUriForFile(context.get()!!, fileProvider, photoFile)
       }
       else -> Uri.fromFile(photoFile)
     }

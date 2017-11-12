@@ -3,7 +3,6 @@ package name.zeno.android.third.wxapi
 import android.graphics.Bitmap
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.v4.content.ContextCompat
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
@@ -12,6 +11,7 @@ import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import name.zeno.android.app.ZApplication
 import name.zeno.android.common.annotations.DataClass
+import name.zeno.android.core.drawable
 import name.zeno.android.util.R
 import name.zeno.android.util.ZBitmap
 
@@ -29,7 +29,7 @@ import name.zeno.android.util.ZBitmap
     var thumbImage: Bitmap? = null,
     @field:WXScene
     var scene: Int = 0
-) : AbsReq(), Parcelable {
+) : WxReq(), Parcelable {
   override fun build(): Observable<BaseReq> {
     return Observable.create<Bitmap>(source@ { subscriber: ObservableEmitter<Bitmap> ->
       // 选择分享主图
@@ -48,7 +48,7 @@ import name.zeno.android.util.ZBitmap
         }
       }
 
-      val bitmap = ZBitmap.bitmap(ContextCompat.getDrawable(ZApplication.application!!, R.mipmap.ic_add), true)
+      val bitmap = ZBitmap.bitmap(ZApplication.application.drawable(R.mipmap.ic_add), true)
       subscriber.onNext(bitmap)
       subscriber.onComplete()
     }).map { bitmap ->

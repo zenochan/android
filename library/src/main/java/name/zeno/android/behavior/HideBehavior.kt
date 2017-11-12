@@ -17,30 +17,28 @@ class HideBehavior(context: Context, attrs: AttributeSet) : VerticalScrollingBeh
   private var hide = false
 
   override fun onDirectionNestedPreScroll(coordinatorLayout: CoordinatorLayout, child: View, target: View, dx: Int, dy: Int, consumed: IntArray, @ScrollDirection scrollDirection: Int) {
-    showOrHideView(child, target, scrollDirection)
+    showOrHideView(child, scrollDirection)
   }
 
-  protected override fun onNestedDirectionFling(coordinatorLayout: CoordinatorLayout, child: View, target: View, velocityX: Float, velocityY: Float, @ScrollDirection scrollDirection: Int): Boolean {
-    showOrHideView(child, target, scrollDirection)
+  override fun onNestedDirectionFling(coordinatorLayout: CoordinatorLayout, child: View, target: View, velocityX: Float, velocityY: Float, @ScrollDirection scrollDirection: Int): Boolean {
+    showOrHideView(child, scrollDirection)
     return true
   }
 
-  private fun showOrHideView(child: View, target: View, @ScrollDirection direction: Int) {
-    val willHide = direction == VerticalScrollingBehavior.SCROLL_DIRECTION_UP
-    if (this.hide == willHide) return
+  private fun showOrHideView(child: View, @ScrollDirection direction: Int) {
+    val hide = direction == VerticalScrollingBehavior.SCROLL_DIRECTION_UP
+    if (this.hide == hide) return
 
-    this.hide = willHide
+    this.hide = hide
 
     if (anim == null) {
       anim = ViewCompat.animate(child)
-      anim!!.duration = 300
-      anim!!.interpolator = LinearOutSlowInInterpolator()
+      anim?.duration = 300
+      anim?.interpolator = LinearOutSlowInInterpolator()
     } else {
-      anim!!.cancel()
+      anim?.cancel()
     }
-    anim!!.scaleX((if (direction == VerticalScrollingBehavior.SCROLL_DIRECTION_UP) 0 else 1).toFloat())
-        .scaleY((if (direction == VerticalScrollingBehavior.SCROLL_DIRECTION_UP) 0 else 1).toFloat())
-        .start()
+    val scale = (if (hide) 0 else 1).toFloat()
+    anim!!.scaleX(scale).scaleY(scale).start()
   }
-
 }

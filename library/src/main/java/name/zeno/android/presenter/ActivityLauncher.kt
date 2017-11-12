@@ -8,7 +8,7 @@ import android.support.annotation.RequiresPermission
  * @since 2017/10/18
  */
 
-interface ActivityLauncher:LifeCycleObservable {
+interface ActivityLauncher : LifeCycleObservable {
   fun startActivity(intent: Intent)
   fun startActivityForResult(@RequiresPermission intent: Intent, requestCode: Int)
 }

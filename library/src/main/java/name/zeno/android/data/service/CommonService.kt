@@ -20,7 +20,8 @@ interface CommonService {
   @Streaming
   fun download(@Url fileUrl: String): Call<ResponseBody>
 
-  @GET operator fun get(@Url url: String): Observable<String>
+  @GET
+  fun get(@Url url: String): Observable<String>
 
   /** 上传错误到个人服务器 */
   @POST("http://blogapi.mjtown.cn/api/crash")

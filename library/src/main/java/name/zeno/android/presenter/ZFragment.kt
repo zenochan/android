@@ -3,15 +3,13 @@ package name.zeno.android.presenter
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.annotation.CallSuper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import name.zeno.android.core.ok
-import name.zeno.android.listener.Action1
-import name.zeno.android.third.otto.ZOtto
+import name.zeno.android.third.otto.registerOtto
+import name.zeno.android.third.otto.unregisterOtto
 import name.zeno.android.third.rxjava.RxActivityResult
 import name.zeno.android.third.umeng.ZUmeng
 import name.zeno.android.util.ZLog
@@ -19,6 +17,8 @@ import name.zeno.android.util.ZString
 import java.util.*
 
 /**
+ * - auto register and unregister Otto
+ * - implement [ActivityLauncher],[LoadDataView]
  *
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/6/9
@@ -48,7 +48,7 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     super.onCreate(savedInstanceState)
     ZLog.v(TAG, "onCreate()")
     listenerList.forEach { it.onCreate() }
-    ZOtto.register(this)
+    registerOtto(this)
   }
 
 
@@ -99,44 +99,22 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     super.onDestroy()
     ZLog.v(TAG, "onDestroy()")
     listenerList.forEach { it.onDestroy() }
-    ZOtto.unregister(this)
+    unregisterOtto(this)
   }
   //</editor-fold>
 
-  //<editor-fold desc="Deprecated">
-  @Deprecated("use Fragment.ok or Fragment.cancel")
-  fun setActivityResultOk(data: Intent) {
-    activity.setResult(Activity.RESULT_OK, data)
-  }
+  override fun finish() = activity?.finish() ?: Unit
 
-  @Deprecated("use Fragment.ok or Fragment.cancel")
-  fun setActivityResult(resultCode: Int) {
-    activity.setResult(resultCode)
-  }
-
-  @Deprecated("use Fragment.ok or Fragment.cancel")
-  fun setActivityResult(resultCode: Int, data: Intent) {
-    activity.setResult(resultCode, data)
-  }
-
-  @Deprecated("use Fragment.ok or Fragment.cancel")
-  fun setActivityResult(resultCode: Int, data: Parcelable) {
-    activity.setResult(resultCode, Extra.setData(data))
-  }
-  //</editor-fold>
-
-  override fun finish() = activity.finish()
-
-  fun showCalender(min: Calendar?, max: Calendar?, next: Action1<Calendar>) {
+  fun showCalender(min: Calendar? = null, max: Calendar? = null, next: (Calendar) -> Unit) {
     val today = Calendar.getInstance()
     val y = today.get(Calendar.YEAR)
     val m = today.get(Calendar.MONTH)
     val d = today.get(Calendar.DAY_OF_MONTH)
 
-    val dialog = DatePickerDialog.newInstance({ _dialog, _y, _m, _d ->
+    val dialog = DatePickerDialog.newInstance({ _, _y, _m, _d ->
       val calendar = Calendar.getInstance()
       calendar.set(_y, _m, _d)
-      next.call(calendar)
+      next(calendar)
     }, y, m, d)
     if (min != null) dialog.minDate = min
     if (max != null) dialog.maxDate = max

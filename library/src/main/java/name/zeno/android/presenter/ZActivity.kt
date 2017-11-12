@@ -1,6 +1,7 @@
 package name.zeno.android.presenter
 
 import android.app.Dialog
+import android.app.Fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -9,7 +10,6 @@ import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -18,6 +18,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import name.zeno.android.presenter.activities.AutoHideIMActivity
 import name.zeno.android.third.rxjava.RxActivityResult
 import name.zeno.android.util.R
+import org.jetbrains.anko.frameLayout
 import java.util.*
 
 /**
@@ -164,12 +165,6 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
     listeners.forEach { it.onViewCreated() }
   }
 
-//  fun startActivityForResult(clazz: Class<out Activity>, data: Parcelable?, onResult: Action2<Boolean, Intent>) {
-//    val intent = Intent(this, clazz)
-//    Extra.setData(intent, data)
-//    startActivityForResult(intent, onResult)
-//  }
-
   protected fun fullScreen() {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
       window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -178,13 +173,8 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
     }
   }
 
-  protected fun addFragment(@IdRes container: Int, fragment: Fragment) {
-    val transaction = supportFragmentManager.beginTransaction()
-    transaction.add(container, fragment)
-    transaction.commit()
-  }
 
-  protected fun addFragment(@IdRes container: Int, fragment: android.app.Fragment) {
+  protected fun addFragment(@IdRes container: Int, fragment: Fragment) {
     val transaction = fragmentManager.beginTransaction()
     transaction.add(container, fragment)
     transaction.commit()
@@ -195,9 +185,11 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
    *
    * @param provider fragment provider
    */
-  protected fun <T : Fragment> setContentView(provider: () -> T) {
-    val fragment = provider()
-    setContentView(R.layout.z_activity_default)
+  protected inline fun <T : Fragment> setContentView(provider: () -> T)
+      = setContentView(provider())
+
+  protected fun setContentView(fragment: Fragment) {
+    frameLayout { id = R.id.layout_container }
     addFragment(R.id.layout_container, fragment)
   }
 

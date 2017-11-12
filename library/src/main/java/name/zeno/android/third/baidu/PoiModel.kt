@@ -57,13 +57,9 @@ class PoiModel(
     const val COOKIE_LAST_POI = "bd_last_poi"
 
     const val POINT = 0
-
     const val BUS_STATION = 1
-
     const val BUS_LINE = 2
-
     const val SUBWAY_STATION = 3
-
     const val SUBWAY_LINE = 4
 
     @JvmField

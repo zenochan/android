@@ -8,33 +8,31 @@ import com.orhanobut.logger.Logger
 import com.unionpay.UPPayAssistEx
 
 /**
- * <h1> 银联支付简单封装  </h1>
- * <pre>
- * `
+ * # 银联支付简单封装
  *
+ * ```
  * protected void onActivityResult(int requestCode, int resultCode, Intent data)
  * {
- * super.onActivityResult(requestCode, resultCode, data);
- * UnionpayHelper.onActivityResult(data);
+ *   super.onActivityResult(requestCode, resultCode, data);
+ *   UnionpayHelper.onActivityResult(data);
  * }
  *
  *
  * public void callUnionpay()
  * {
- * String tn = "";
- * String serverMode = BuildConfig.DEBUG
- * ? UnionpayHelper.Mode.DEV
- * : UnionpayHelper.Mode.PROD;
- * UnionpayHelper.startPay(this, tn, serverMode, (ok, msg) -> {
- * if (ok) {
- * this.onPaySuccess();
- * } else {
- * this.showMessage(msg);
+ *   String tn = "";
+ *   String serverMode = BuildConfig.DEBUG
+ *   ? UnionpayHelper.Mode.DEV
+ *   : UnionpayHelper.Mode.PROD;
+ *   UnionpayHelper.startPay(this, tn, serverMode, (ok, msg) -> {
+ *     if (ok) {
+ *       this.onPaySuccess();
+ *     } else {
+ *       this.showMessage(msg);
+ *     }
+ *   });
  * }
- * });
- * }
-` *
-</pre> *
+ * ```
  *
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/7/11
@@ -64,23 +62,32 @@ object UnionpayHelper {
     }
   }
 
-  fun startPay(activity: Activity, orderInfo: String, @Mode mode: String = PROD, onResult: (ok: Boolean, msg: String) -> Unit): Int {
-    return startPay(activity, null, null, orderInfo, mode, onResult)
+  fun startPay(activity: Activity, orderInfo: String, prod: Boolean = true, onResult: (ok: Boolean, msg: String) -> Unit): Int {
+    return startPay(activity, orderInfo, prod, null, null, onResult)
   }
+
 
   /**
    * see [UPPayAssistEx.startPay]
    *
    * @param activity    用于启动支付控件的活动对象
+   * @param orderInfo   订单信息为交易流水号，即TN，为商户后台从银联后台获取。
+   * @param prod        生产环境
    * @param spId        保留使用，这里输入null
    * @param sysProvider 保留使用，这里输入null
-   * @param orderInfo   订单信息为交易流水号，即TN，为商户后台从银联后台获取。
-   * @param mode        银联后台环境标识，“00”将在银联正式环境发起交易,“01”将在银联测试环境发起交易
    * @param onResult    支付结果 success:boolean,msg:String
-   * @return [UPPayAssistEx.PLUGIN_VALID] or [UPPayAssistEx.PLUGIN_VALID]
+   * @return [UPPayAssistEx.PLUGIN_VALID] or [UPPayAssistEx.PLUGIN_NOT_FOUND]
    */
-  private fun startPay(activity: Context, spId: String?, sysProvider: String?, orderInfo: String, @Mode mode: String, onResult: (ok: Boolean, msg: String) -> Unit): Int {
+  private fun startPay(
+      activity: Context,
+      orderInfo: String,
+      prod: Boolean = true,
+      spId: String? = null,
+      sysProvider: String? = null,
+      onResult: (ok: Boolean, msg: String) -> Unit
+  ): Int {
     UnionpayHelper.onResult = onResult
+    val mode = if (prod) PROD else DEV
     return UPPayAssistEx.startPay(activity, spId, sysProvider, orderInfo, mode)
   }
 }

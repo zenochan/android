@@ -11,21 +11,20 @@ import android.view.MotionEvent
 import android.view.ViewConfiguration
 import android.view.animation.Interpolator
 
-import name.zeno.android.listener.Action2
-
-class AutoScrollViewPager @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ViewPager(context, attrs), Handler.Callback {
+class AutoScrollViewPager @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : ViewPager(context, attrs), Handler.Callback {
 
   var isInfinite = true
     set(infinite) {
       field = infinite
-      if (adapterWrapper != null) {
-        adapterWrapper!!.setInfinite(this.isInfinite)
-      }
+      adapterWrapper?.infinite = this.isInfinite
     }
 
   private var adapter: PagerAdapter? = null
   private var adapterWrapper: AutoScrollPagerAdapter? = null
-  private var listener: InnerOnPageChangeListener? = null
+  private lateinit var listener: InnerOnPageChangeListener
   private var scroller: AutoScrollFactorScroller? = null
   private val _handler = Handler(this)
 
@@ -38,7 +37,7 @@ class AutoScrollViewPager @JvmOverloads constructor(context: Context, attrs: Att
   private var mLastMotionY: Float = 0.toFloat()
   private var touchSlop: Int = 0
 
-  var onClickPage: Action2<AutoScrollViewPager, Int>? = null
+  var onClickPage: ((pager: AutoScrollViewPager, position: Int) -> Unit)? = null
 
   // wrapper item 位置
   private val currentItemOfWrapper: Int
@@ -92,11 +91,11 @@ class AutoScrollViewPager @JvmOverloads constructor(context: Context, attrs: Att
 
   fun setScrollFactgor(factor: Double) {
     setScrollerIfNeeded()
-    scroller!!.factor = factor
+    scroller?.factor = factor
   }
 
   override fun setOnPageChangeListener(listener: ViewPager.OnPageChangeListener) {
-    this.listener!!.setOnPageChangeListener(listener)
+    this.listener.setOnPageChangeListener(listener)
   }
 
   override fun setAdapter(adapter: PagerAdapter?) {
@@ -104,8 +103,8 @@ class AutoScrollViewPager @JvmOverloads constructor(context: Context, attrs: Att
     if (this.adapter == null) {
       adapterWrapper = null
     } else {
-      adapterWrapper = AutoScrollPagerAdapter(adapter)
-      adapterWrapper!!.setInfinite(this.isInfinite)
+      adapterWrapper = AutoScrollPagerAdapter(adapter!!)
+      adapterWrapper?.infinite = this.isInfinite
     }
     super.setAdapter(adapterWrapper)
 
@@ -114,10 +113,8 @@ class AutoScrollViewPager @JvmOverloads constructor(context: Context, attrs: Att
     }
   }
 
-  override fun getAdapter(): PagerAdapter? {
-    // In order to be compatible with ViewPagerIndicator
-    return adapter
-  }
+  // 为了兼容 ViewPagerIndicator
+  override fun getAdapter() = adapter
 
   override fun setCurrentItem(item: Int) {
     var item = item
@@ -190,9 +187,8 @@ class AutoScrollViewPager @JvmOverloads constructor(context: Context, attrs: Att
             mInitialMotionY = 0.0f
             mLastMotionX = 0.0f
             mLastMotionY = 0.0f
-            if (onClickPage != null) {
-              onClickPage!!.call(this, currentItem)
-            }
+
+            onClickPage?.invoke(this, currentItem)
           }
         }
       }

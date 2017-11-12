@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.TextView
 
 import kale.adapter.item.AdapterItem
-import name.zeno.android.listener.Action1
 
 /**
  * @author 陈治谋 (微信: puppet2436)

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  style="@style/layout.full"
+  tools:context="name.zeno.demo.hencoder.MainActivity"
+  >
+
+  <android.support.design.widget.TabLayout
+    android:id="@+id/tabLayout"
+    style="@style/layout.fullWidth"
+    />
+
+  <android.support.v4.view.ViewPager
+    android:id="@+id/pager"
+    style="@style/layout.full"
+    />
+</LinearLayout>

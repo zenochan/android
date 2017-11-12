@@ -25,12 +25,12 @@ class MainActivity : ZActivity() {
   }
 
   private fun init(savedInstanceState: Bundle?) {
-
     classes = listOf(
-        TimeButtonActivity::class.java,
-        ShapeActivity::class.java,
-        CircleIndicatorActivity::class.java
-    )
+        TimeButtonActivity::class,
+        ShapeActivity::class,
+        CircleIndicatorActivity::class,
+        DragLayoutActivity::class
+    ).map { it.java }
 
     adapter = object : CommonRcvAdapter<Class<out Activity>>(classes) {
       val onClick = { clazz: Class<out Activity> -> ZNav.nav(this@MainActivity, clazz) }

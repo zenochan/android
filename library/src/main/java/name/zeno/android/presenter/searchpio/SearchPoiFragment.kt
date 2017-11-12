@@ -1,6 +1,5 @@
 package name.zeno.android.presenter.searchpio
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -13,7 +12,7 @@ import kale.adapter.LoadAdapterWrapper
 import kale.adapter.item.AdapterItem
 import kotlinx.android.synthetic.main.fragment_search_poi.view.*
 import name.zeno.android.core.data
-import name.zeno.android.listener.Action0
+import name.zeno.android.core.ok
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZFragment
 import name.zeno.android.presenter.items.PoiItem
@@ -48,7 +47,7 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
 
 
   override fun requestLocationPermission(next: () -> Unit) {
-    RxPermissions(activity).request(
+    RxPermissions(activity!!).request(
         ZPermission.WRITE_EXTERNAL_STORAGE,
         ZPermission.ACCESS_COARSE_LOCATION,
         ZPermission.ACCESS_FINE_LOCATION
@@ -86,7 +85,7 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
 
     tv_keyword.setText(request.fill)
     ZTextWatcher.watch(tv_keyword) { _, txt ->
-      if (!request.isEnableOriginInput || txt.isNullOrEmpty()) {
+      if (!request.isEnableOriginInput || txt.isEmpty()) {
         btn_input.visibility = View.GONE
       } else {
         btn_input.text = txt
@@ -109,8 +108,6 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
 
   // 选择热点
   private fun onClickPoi(poiInfo: PoiInfo) {
-    val poi = PoiModel(poiInfo)
-    setActivityResult(RESULT_OK, Extra.setData(poi))
-    finish()
+    ok(PoiModel(poiInfo), true)
   }
 }

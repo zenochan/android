@@ -22,7 +22,7 @@ class ZPayReq(
     var nonceStr: String? = null,
     var timeStamp: String? = null,
     var sign: String? = null
-) : AbsReq(), Parcelable {
+) : WxReq(), Parcelable {
   override fun build(): Observable<BaseReq> {
     val payReq = PayReq()
     payReq.appId = appId

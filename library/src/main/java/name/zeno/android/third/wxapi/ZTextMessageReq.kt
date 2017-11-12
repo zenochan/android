@@ -21,7 +21,7 @@ import name.zeno.android.common.annotations.DataClass
     var text: String? = null,
     @WXScene
     var scene: Int = WXScene.SESSION
-) : AbsReq(), Parcelable {
+) : WxReq(), Parcelable {
   override fun build(): Observable<BaseReq> {
     val textObject = WXTextObject(text)
     val msg = WXMediaMessage(textObject)

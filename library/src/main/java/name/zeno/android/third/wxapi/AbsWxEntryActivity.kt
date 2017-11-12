@@ -23,6 +23,9 @@ import name.zeno.android.third.rxjava.RxUtils
 import name.zeno.android.third.rxjava.ZObserver
 
 /**
+ * * [register] 注册 App 到微信
+ * * [isWxAppInstalled] 是否安装微信
+ *
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/4/27
  */
@@ -31,6 +34,7 @@ abstract class AbsWxEntryActivity : ZActivity(), IWXAPIEventHandler {
   private lateinit var api: IWXAPI
   private var disposable: Disposable? = null
 
+  // 处理分享到微信但是没有立马返回 App 的场景
   private var finishIfNullRes = false
   private var resp: BaseResp? = null
   private var dialog: MaterialDialog? = null
@@ -44,7 +48,7 @@ abstract class AbsWxEntryActivity : ZActivity(), IWXAPIEventHandler {
     super.onCreate(savedInstanceState)
     api = WXAPIFactory.createWXAPI(this, appId, true)
     api.registerApp(appId)
-    val req: AbsReq? = dataOrNull()
+    val req: WxReq? = dataOrNull()
 
     if (req == null) {
       finish()
@@ -133,10 +137,7 @@ abstract class AbsWxEntryActivity : ZActivity(), IWXAPIEventHandler {
     }
   }
 
-  override fun onReq(baseReq: BaseReq) {
-    // do nothing
-    finish()
-  }
+  override fun onReq(baseReq: BaseReq) = finish()
 
   override fun onResp(baseResp: BaseResp) {
     this.resp = baseResp

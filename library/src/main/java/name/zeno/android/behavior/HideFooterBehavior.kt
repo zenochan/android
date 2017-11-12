@@ -20,16 +20,16 @@ class HideFooterBehavior(context: Context, attrs: AttributeSet) : VerticalScroll
     showOrHideView(child, target, scrollDirection)
   }
 
-  protected override fun onNestedDirectionFling(coordinatorLayout: CoordinatorLayout, child: View, target: View, velocityX: Float, velocityY: Float, @ScrollDirection scrollDirection: Int): Boolean {
+  override fun onNestedDirectionFling(coordinatorLayout: CoordinatorLayout, child: View, target: View, velocityX: Float, velocityY: Float, @ScrollDirection scrollDirection: Int): Boolean {
     showOrHideView(child, target, scrollDirection)
     return true
   }
 
   private fun showOrHideView(child: View, target: View, @ScrollDirection direction: Int) {
-    val willHide = direction == VerticalScrollingBehavior.SCROLL_DIRECTION_UP
-    if (this.hide == willHide) return
+    val hide = direction == VerticalScrollingBehavior.SCROLL_DIRECTION_UP
+    if (this.hide == hide) return
 
-    this.hide = willHide
+    this.hide = hide
 
     if (anim == null) {
       anim = ViewCompat.animate(child)
@@ -38,7 +38,7 @@ class HideFooterBehavior(context: Context, attrs: AttributeSet) : VerticalScroll
     } else {
       anim!!.cancel()
     }
-    anim!!.translationY((if (direction == VerticalScrollingBehavior.SCROLL_DIRECTION_UP) child.measuredHeight else 0).toFloat()).start()
+    anim!!.translationY((if (hide) child.measuredHeight else 0).toFloat()).start()
   }
 
 }

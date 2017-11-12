@@ -102,8 +102,7 @@ class AssetsDatabaseManager private constructor(
     var istream: InputStream? = null
     var ostream: OutputStream? = null
     try {
-      val am = context!!.assets
-      istream = am.open(assetsSrc)
+      istream = context.assets.open(assetsSrc)
       ostream = FileOutputStream(des)
       val buffer = ByteArray(1024)
       var length: Int

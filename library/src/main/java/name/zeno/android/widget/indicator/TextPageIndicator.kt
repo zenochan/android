@@ -8,9 +8,8 @@ import android.util.AttributeSet
 import name.zeno.android.widget.PageIndicator
 
 /**
- * Create Date: 16/7/4
- *
  * @author 陈治谋 (513500085@qq.com)
+ * @since  16/7/4
  */
 class TextPageIndicator @JvmOverloads constructor(
     context: Context,
@@ -42,7 +41,7 @@ class TextPageIndicator @JvmOverloads constructor(
     alpha = scale
 
     var currP = pager!!.currentItem
-    val count = pager!!.adapter.count
+    val count = pager!!.adapter!!.count
     if (currP == position) {
       currP = currP + count - 1 % count
     }
@@ -50,10 +49,9 @@ class TextPageIndicator @JvmOverloads constructor(
   }
 
   override fun onPageSelected(position: Int) {
-    var position = position
-    val count = pager!!.adapter.count
-    position = position % count
-    text = pager!!.adapter.getPageTitle(position)
+    val count = pager?.adapter?.count ?: return
+    val p = position % count
+    text = pager?.adapter?.getPageTitle(p)
   }
 
   override fun onPageScrollStateChanged(state: Int) {
