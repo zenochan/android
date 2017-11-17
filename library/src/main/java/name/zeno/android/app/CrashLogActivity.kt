@@ -1,5 +1,6 @@
 package name.zeno.android.app
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
@@ -28,6 +29,7 @@ class CrashLogActivity : ZActivity() {
 
   private var info: ExceptionInfo? = null
 
+  override val ctx: Context = this
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

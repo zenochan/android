@@ -46,7 +46,7 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
 
 
   override fun requestLocationPermission(next: () -> Unit) {
-    RxPermissions(activity!!).request(
+    RxPermissions(activity).request(
         ZPermission.WRITE_EXTERNAL_STORAGE,
         ZPermission.ACCESS_COARSE_LOCATION,
         ZPermission.ACCESS_FINE_LOCATION

@@ -7,16 +7,22 @@ apply plugin: 'kotlin-allopen'
 noArg { annotations('name.zeno.zervice.annontations.DataClass') }
 allOpen { annotations('name.zeno.zervice.annontations.DataClass') }
 
+repositories {
+  mavenLocal()
+}
+
 android {
   compileSdkVersion 27
   buildToolsVersion '27.0.0'
 
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
+//  compileOptions {
+//    sourceCompatibility JavaVersion.VERSION_1_8
+//    targetCompatibility JavaVersion.VERSION_1_8
+//  }
+
 
   defaultConfig {
+    multiDexEnabled true
     applicationId "demo.android.zeno.name.zenokit"
     minSdkVersion 15
     targetSdkVersion 27
@@ -25,6 +31,7 @@ android {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
+
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -33,14 +40,12 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-
+  api fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
-
-  compile project(':library')
-  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  compile "org.jetbrains.anko:anko:0.10.1"
+  api project(':library')
+  api 'com.baidu.mapapi:LocPoiLBSMap:4.5.0'
 }
+
 kotlin {
   experimental {
     coroutines "enable"

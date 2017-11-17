@@ -1,6 +1,8 @@
 package name.zeno.android.presenter
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.CallSuper
@@ -8,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import name.zeno.android.core.sdkInt
 import name.zeno.android.third.otto.registerOtto
 import name.zeno.android.third.otto.unregisterOtto
 import name.zeno.android.third.rxjava.RxActivityResult
@@ -37,6 +40,13 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
       listenerList.add(listener)
     }
   }
+
+  @SuppressLint("NewApi")
+  override fun getContext(): Context? = if (sdkInt >= 23) super.getContext() else activity
+
+  override val ctx: Context
+    @SuppressLint("NewApi")
+    get() = if (sdkInt >= 23) super.getContext() else activity
 
   override fun showLoading() = super.showLoading("加载中...")
 

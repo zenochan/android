@@ -2,6 +2,7 @@ package name.zeno.android.presenter
 
 import android.app.Dialog
 import android.app.Fragment
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -35,8 +36,9 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
 
   private val listeners = ArrayList<LifecycleListener>()
 
+  override val ctx: Context = this
+
   private val rxActivityResult = RxActivityResult(this)
-  override fun getContext() = this
 
   protected val rootView: View
     get() = (findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0)

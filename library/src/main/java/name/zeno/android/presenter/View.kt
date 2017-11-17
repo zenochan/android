@@ -9,7 +9,7 @@ import android.support.annotation.StringRes
  * @author 陈治谋 (513500085@qq.com)
  */
 interface View : LifeCycleObservable {
-  fun getContext(): Context
+  val ctx: Context
 
   fun getString(@StringRes res: Int): String
 

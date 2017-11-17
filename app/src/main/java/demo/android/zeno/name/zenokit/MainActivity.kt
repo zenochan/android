@@ -1,5 +1,6 @@
 package demo.android.zeno.name.zenokit
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -12,13 +13,16 @@ import name.zeno.android.core.nav
 import name.zeno.android.core.type
 import name.zeno.android.data.models.BaseData
 import name.zeno.android.presenter.ZActivity
-import name.zeno.android.sensor.Shake
+import name.zeno.android.presenter.searchpio.SearchPoiActivity
+import name.zeno.android.presenter.searchpio.SearchPoiRequest
+import name.zeno.android.third.baidu.PoiModel
 
 class MainActivity : ZActivity() {
 
   private var classes: List<Class<out Activity>>? = null
   private var adapter: CommonRcvAdapter<Class<out Activity>>? = null
 
+  @SuppressLint("MissingSuperCall")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
@@ -26,7 +30,7 @@ class MainActivity : ZActivity() {
   }
 
   private fun init() {
-    Shake.with(this).onShake { toast("Shake !!") }
+    nav<PoiModel>(SearchPoiActivity::class, SearchPoiRequest()) { ok, data -> }
 
     classes = listOf(
         TimeButtonActivity::class,

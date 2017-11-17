@@ -5,10 +5,8 @@ package name.zeno.android.app
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.os.Bundle
 import android.support.annotation.CallSuper
-import android.support.multidex.MultiDex
 import android.support.multidex.MultiDexApplication
 import com.baidu.mapapi.SDKInitializer
 import com.igexin.sdk.PushManager
@@ -23,9 +21,9 @@ import name.zeno.android.util.ZLog
  * - [initGetui]
  */
 @SuppressLint("MissingSuperCall")
-abstract class ZApplication : MultiDexApplication() {
+open class ZApplication : MultiDexApplication() {
 
-  protected abstract val isDebug: Boolean
+  open val isDebug: Boolean = false
 
   @CallSuper
   override fun onCreate() {
@@ -44,11 +42,6 @@ abstract class ZApplication : MultiDexApplication() {
       override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
       override fun onActivityDestroyed(activity: Activity) {}
     })
-  }
-
-  override fun attachBaseContext(base: Context) {
-    super.attachBaseContext(base)
-    MultiDex.install(this)
   }
 
   override fun onTerminate() {

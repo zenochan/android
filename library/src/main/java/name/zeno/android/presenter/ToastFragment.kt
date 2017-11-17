@@ -1,13 +1,11 @@
 package name.zeno.android.presenter
 
 import android.app.Fragment
-import android.content.Context
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Toast
-
 import com.afollestad.materialdialogs.MaterialDialog
 
 /**
@@ -83,17 +81,17 @@ open class ToastFragment : Fragment() {
   }
 
   open fun toast(msg: String?) {
-    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show()
   }
 
   open fun toast(@StringRes resId: Int) {
-    Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
+    Toast.makeText(activity, resId, Toast.LENGTH_SHORT).show()
   }
 
   @JvmOverloads
   open fun showLoading(content: String = "加载中...") {
     if (progressDialog == null) {
-      progressDialog = MaterialDialog.Builder(context)
+      progressDialog = MaterialDialog.Builder(activity)
           .progress(true, 10000, true)
           .cancelable(false)
           .build()
@@ -109,7 +107,7 @@ open class ToastFragment : Fragment() {
   }
 
   fun confirm(confirm: String, ok: String, cancel: String, onOk: () -> Unit) {
-    MaterialDialog.Builder(context)
+    MaterialDialog.Builder(activity)
         .content(confirm)
         .positiveText(ok)
         .neutralText(cancel)
@@ -118,7 +116,7 @@ open class ToastFragment : Fragment() {
   }
 
   fun showMessageAndFinish(message: String?) {
-    MaterialDialog.Builder(context)
+    MaterialDialog.Builder(activity)
         .title("提示")
         .content(message ?: "")
         .neutralText("好")

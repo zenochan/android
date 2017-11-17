@@ -20,6 +20,7 @@ class SearchPoiPresenter(view: SearchPoiView) : ZPresenter<SearchPoiView>(view) 
   private var bdLocation: BDLocation? = null
   private val poiSearch = PoiSearchHelper()
   private val geoCoder = GeoCoderHelper()
+  private var requestLocation = true
 
   private val infoList = ObservableArrayList<PoiInfo>()
 
@@ -33,10 +34,13 @@ class SearchPoiPresenter(view: SearchPoiView) : ZPresenter<SearchPoiView>(view) 
     })
   }
 
-  override fun onViewCreated() {
+  override fun onResume() {
     super.onViewCreated()
+    if (!requestLocation) return
+    requestLocation = false
+
     view.requestLocationPermission {
-      LocationHelper.getInstance(view.getContext()).requestLocation(sub({
+      LocationHelper.getInstance(view.ctx).requestLocation(sub({
         this.bdLocation = it
         reverseGeoCode(this.bdLocation)
       }, {
@@ -59,13 +63,11 @@ class SearchPoiPresenter(view: SearchPoiView) : ZPresenter<SearchPoiView>(view) 
   @SuppressLint("MissingPermission")
   private fun reverseGeoCode(bdLocation: BDLocation?) {
     val latLng = LatLng(bdLocation!!.latitude, bdLocation.longitude)
-    geoCoder.reverseGeoCode(view.getContext(), latLng) { poiInfos ->
+    geoCoder.reverseGeoCode(view.ctx, latLng) { poiInfos ->
       infoList.clear()
       infoList.addAll(poiInfos)
     }
   }
 
-  fun getInfoList(): List<PoiInfo> {
-    return this.infoList
-  }
+  fun getInfoList(): List<PoiInfo> = this.infoList
 }

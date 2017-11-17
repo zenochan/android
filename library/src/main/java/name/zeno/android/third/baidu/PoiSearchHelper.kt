@@ -1,39 +1,22 @@
 package name.zeno.android.third.baidu
 
 import android.util.Log
-
 import com.alibaba.fastjson.JSON
 import com.baidu.mapapi.model.LatLng
-import com.baidu.mapapi.search.core.CityInfo
 import com.baidu.mapapi.search.core.PoiInfo
 import com.baidu.mapapi.search.core.SearchResult
-import com.baidu.mapapi.search.poi.OnGetPoiSearchResultListener
-import com.baidu.mapapi.search.poi.PoiCitySearchOption
-import com.baidu.mapapi.search.poi.PoiDetailResult
-import com.baidu.mapapi.search.poi.PoiDetailSearchOption
-import com.baidu.mapapi.search.poi.PoiIndoorResult
-import com.baidu.mapapi.search.poi.PoiNearbySearchOption
-import com.baidu.mapapi.search.poi.PoiResult
-import com.baidu.mapapi.search.poi.PoiSearch
-import com.baidu.mapapi.search.poi.PoiSortType
+import com.baidu.mapapi.search.poi.*
 import com.baidu.mapapi.search.sug.SuggestionSearch
 import com.baidu.mapapi.search.sug.SuggestionSearchOption
 import com.orhanobut.logger.Logger
-
-import java.util.Collections
-
 import io.reactivex.Observer
 
 /**
- * Create Date: 16/6/19
- *
- *
- *
- *  * [.searchInCity]
- *  * [.searchNearby]
- *
+ *  - [searchInCity]
+ *  - [searchNearby]
  *
  * @author 陈治谋 (513500085@qq.com)
+ * @since  16/6/19
  */
 class PoiSearchHelper : OnGetPoiSearchResultListener {
 
@@ -116,8 +99,8 @@ class PoiSearchHelper : OnGetPoiSearchResultListener {
   override fun onGetPoiIndoorResult(poiIndoorResult: PoiIndoorResult) {}
 
   private fun onSuccess(infoList: List<PoiInfo>) {
-    subscriber!!.onNext(infoList)
-    subscriber!!.onComplete()
+    subscriber?.onNext(infoList)
+    subscriber?.onComplete()
   }
 
   companion object {

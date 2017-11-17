@@ -4,15 +4,22 @@
           package="demo.android.zeno.name.zenokit"
   >
 
+
   <application
+    android:name="android.support.multidex.MultiDexApplication"
     android:allowBackup="false"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
-    android:supportsRtl="false"
     android:theme="@style/AppTheme"
     tools:ignore="GoogleAppIndexingWarning"
     tools:replace="android:allowBackup"
     >
+
+    <activity
+      android:name="name.zeno.android.presenter.searchpio.SearchPoiActivity"
+      android:screenOrientation="portrait"
+      />
+
     <activity android:name=".MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -26,5 +33,6 @@
     <activity android:name=".CircleIndicatorActivity"/>
     <activity android:name=".DragLayoutActivity"/>
   </application>
+
 
 </manifest>
