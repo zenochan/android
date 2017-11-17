@@ -34,26 +34,25 @@ class ContactHelper {
   }
 
   @SuppressLint("MissingPermission")
-  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-    if (requestCode == REQUEST_SELECT_CONTACT) {
-      if (resultCode == Activity.RESULT_OK) {
+  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    if (requestCode != REQUEST_SELECT_CONTACT) return
 
-        val contactData = data.data
-        val cursor = activity!!.managedQuery(contactData, null, null, null, null)
-        // may cursor NPE
-        if (cursor != null) {
-          cursor.moveToFirst()
-          val idColumn = cursor.getColumnIndex(ContactsContract.Contacts._ID)
-          val contactId = cursor.getLong(idColumn)
+    if (resultCode == Activity.RESULT_OK && data != null) {
+      val contactData = data.data
+      val cursor = activity!!.managedQuery(contactData, null, null, null, null)
+      // may cursor NPE
+      if (cursor != null) {
+        cursor.moveToFirst()
+        val idColumn = cursor.getColumnIndex(ContactsContract.Contacts._ID)
+        val contactId = cursor.getLong(idColumn)
 
-          val contacts = contacts(activity!!, contactId)
-          onSelected?.invoke(contacts)
-        } else {
-          onSelected?.invoke(emptyList())
-        }
+        val contacts = contacts(activity!!, contactId)
+        onSelected?.invoke(contacts)
       } else {
-        onCancelListener?.invoke()
+        onSelected?.invoke(emptyList())
       }
+    } else {
+      onCancelListener?.invoke()
     }
   }
 
@@ -97,34 +96,32 @@ class ContactHelper {
     fun contacts(context: Context, concatId: Long? = null): List<Contact> {
       var cnd: String? = null
       if (concatId != null) {
-        cnd = String.format("%s=%d", ContactsContract.CommonDataKinds.Phone.CONTACT_ID, concatId)
+        // contact_id = ？
+        cnd = ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + concatId
       }
 
       val r = ArrayList<Contact>()
       // 获取手机联系人
       val resolver = context.contentResolver
       val cursor = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection, cnd, null, null)
-      if (cursor != null) {
-        cursor.moveToFirst() // 游标移动到第一项
-        for (i in 0 until cursor.count) {
-          cursor.moveToPosition(i)
-
-          val contact = Contact()
-          contact.id = cursor.getLong(0)
-          contact.displayName = cursor.getString(1)
-          contact.sortKey = cursor.getString(2)
-          contact.timesContacted = cursor.getInt(3)
-          contact.lastTimeContacted = cursor.getLong(4)
-          contact.lookup = cursor.getString(5)
-          contact.contactId = cursor.getLong(6)
-          contact.number = cursor.getString(7)
-          contact.normalizedNumber = cursor.getString(8)
-
-          r.add(contact)
+      cursor?.run {
+        moveToFirst() // 游标移动到第一项
+        for (i in 0 until count) {
+          moveToPosition(i)
+          r.add(Contact(
+              id = getLong(0),
+              displayName = getString(1),
+              sortKey = getString(2),
+              timesContacted = getInt(3),
+              lastTimeContacted = getLong(4),
+              lookup = getString(5),
+              contactId = getLong(6),
+              number = getString(7),
+              normalizedNumber = getString(8)
+          ))
         }
-        cursor.close()
       }
-
+      cursor?.close()
       return r
     }
   }

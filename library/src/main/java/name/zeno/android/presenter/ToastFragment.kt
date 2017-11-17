@@ -23,9 +23,6 @@ open class ToastFragment : Fragment() {
     fragmentView = view
   }
 
-  // TODO 强制返回非空了，需要一个更好的处理方式
-  override fun getContext(): Context = super.getContext()!!
-
   override fun onDestroy() {
     super.onDestroy()
     if (progressDialog != null) {

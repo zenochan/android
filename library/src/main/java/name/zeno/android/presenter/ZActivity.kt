@@ -73,6 +73,11 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
     onViewCreated()
   }
 
+  override fun onStart() {
+    super.onStart()
+    listeners.forEach { it.onStart() }
+  }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     listeners.forEach { it.onCreate() }
@@ -104,6 +109,7 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
 
   override fun onPause() {
     super.onPause()
+    listeners.forEach { it.onPause() }
     loadingDialog?.dismiss()
     loadingDialog = null
   }

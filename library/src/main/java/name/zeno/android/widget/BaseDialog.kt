@@ -5,15 +5,14 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import name.zeno.android.common.annotations.DataClass
 
 /**
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/1/10.
  */
-class BaseDialog : Dialog {
+@DataClass
+open class BaseDialog : Dialog {
   constructor(context: Context) : super(context)
   constructor(context: Context, themeResId: Int) : super(context, themeResId)
   constructor(context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener) : super(context, cancelable, cancelListener)

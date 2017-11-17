@@ -42,7 +42,7 @@ object CalendarUtils {
   }
 
   fun today(timestamp: Long): Boolean {
-    return ZDate.longToString(System.currentTimeMillis(), "yyyy-MM-dd") == ZDate.longToString(timestamp, "yyyy-MM-dd")
+    return ZDate.format(System.currentTimeMillis(), "yyyy-MM-dd") == ZDate.format(timestamp, "yyyy-MM-dd")
   }
 
   fun addDay(calendar: Calendar, deltaDay: Int) {

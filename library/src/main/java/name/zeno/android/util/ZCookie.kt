@@ -1,11 +1,10 @@
 package name.zeno.android.util
 
 import android.app.Application
-import android.content.ContentProvider
 import android.content.Context
 import android.content.SharedPreferences
-
 import com.alibaba.fastjson.JSON
+import name.zeno.android.data.CommonConnector
 
 /**
  * Create Date: 16/6/1
@@ -37,27 +36,23 @@ object ZCookie {
     return isFirstOpen
   }
 
-  operator fun <T> get(key: String, clazz: Class<T>): T? {
+  fun <T> get(key: String, clazz: Class<T>): T? {
     var t: T?
     try {
-      if (!spInited()) {
-        t = null
-      } else if (clazz == Long::class.java) {
-        t = sp!!.getLong(key, 0).toLong() as T
-      } else if (clazz == String::class.java) {
-        t = sp!!.getString(key, null) as T
-      } else if (clazz == Float::class.java) {
-        t = sp!!.getFloat(key, 0f).toFloat() as T
-      } else if (clazz == Int::class.java) {
-        t = sp!!.getInt(key, 0).toInt() as T
-      } else if (clazz == Boolean::class.java) {
-        t = sp!!.getBoolean(key, false) as T
-      } else {
-        val jsonStr = sp!!.getString(key, null)
-        t = if (jsonStr == null) null else JSON.parseObject(jsonStr, clazz)
+      t = when {
+        !spInited() -> null
+        clazz == Long::class.java -> sp!!.getLong(key, 0) as T
+        clazz == String::class.java -> sp!!.getString(key, null) as T
+        clazz == Float::class.java -> sp!!.getFloat(key, 0f) as T
+        clazz == Int::class.java -> sp!!.getInt(key, 0) as T
+        clazz == Boolean::class.java -> sp!!.getBoolean(key, false) as T
+        else -> {
+          val jsonStr = sp!!.getString(key, null)
+          if (jsonStr == null) null else JSON.parseObject(jsonStr, clazz)
+        }
       }
     } catch (e: Exception) {
-      ZLog.e(TAG, e.message, e)
+      CommonConnector.sendCrash(e)
       t = null
     }
 

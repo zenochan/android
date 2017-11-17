@@ -37,17 +37,17 @@ object TintHelper {
     applySupportBackgroundTint(view, info)
   }
 
-  fun setSupportBackgroundTintList(view: View, info: TintInfo, tint: ColorStateList) {
+  fun setSupportBackgroundTintList(view: View, info: TintInfo, tint: ColorStateList?) {
     info.tintList = tint
     applySupportBackgroundTint(view, info)
   }
 
-  fun setSupportDrawableTintList(view: ImageView, info: TintInfo, tint: ColorStateList) {
+  fun setSupportDrawableTintList(view: ImageView, info: TintInfo, tint: ColorStateList?) {
     info.tintList = tint
     applySupportTint(view, info)
   }
 
-  fun setSupportCompoundDrawableTintList(view: TextView, info: TintInfo, tint: ColorStateList) {
+  fun setSupportCompoundDrawableTintList(view: TextView, info: TintInfo, tint: ColorStateList?) {
     info.tintList = tint
     val drawables = view.compoundDrawables
     for (drawable in drawables) {
@@ -61,7 +61,7 @@ object TintHelper {
     return info?.tintList
   }
 
-  fun setSupportTintMode(view: View, info: TintInfo?, tintMode: PorterDuff.Mode) {
+  fun setSupportTintMode(view: View, info: TintInfo?, tintMode: PorterDuff.Mode?) {
     val tintInfo = info ?: TintInfo()
     tintInfo.tintMode = tintMode
     tintInfo.hasTintMode = true
@@ -88,17 +88,13 @@ object TintHelper {
   }
 
   internal fun parseTintMode(value: Int, defaultMode: PorterDuff.Mode?): PorterDuff.Mode? {
-    when (value) {
-      3 -> return PorterDuff.Mode.SRC_OVER
-      5 -> return PorterDuff.Mode.SRC_IN
-      9 -> return PorterDuff.Mode.SRC_ATOP
-      14 -> return PorterDuff.Mode.MULTIPLY
-      15 -> return PorterDuff.Mode.SCREEN
-      16 -> return if (Build.VERSION.SDK_INT >= 11)
-        PorterDuff.Mode.valueOf("ADD")
-      else
-        defaultMode
-      else -> return defaultMode
+    return when (value) {
+      3 -> PorterDuff.Mode.SRC_OVER
+      5 -> PorterDuff.Mode.SRC_IN
+      9 -> PorterDuff.Mode.SRC_ATOP
+      14 -> PorterDuff.Mode.MULTIPLY
+      15 -> PorterDuff.Mode.SCREEN
+      else -> defaultMode
     }
   }
 }

@@ -20,6 +20,8 @@ class RxActivityResult(val launcher: ActivityLauncher) {
 
   init {
     launcher.registerLifecycleListener(object : LifecycleListener {
+      override fun onStart() {}
+
       override fun onCreate() {}
       override fun onResume() {}
 

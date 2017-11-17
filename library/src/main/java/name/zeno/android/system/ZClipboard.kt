@@ -12,17 +12,13 @@ import android.content.Context
  */
 object ZClipboard {
   // 设置剪贴板内容
-  fun setText(context: Context, txt: String?, label: String? = null) {
-    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    clipboard.primaryClip = ClipData.newPlainText(label, txt)
+  fun setText(context: Context, clipboard: Clipboard?) {
+    val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    cm.primaryClip = ClipData.newPlainText(clipboard?.label, clipboard?.txt)
   }
 
-  //
-  /**
-   * # 获取剪贴板内容
-   * @return [label,result]
-   */
-  fun getText(context: Context): Array<String?> {
+  /** # 获取剪贴板内容 */
+  fun getText(context: Context): Clipboard? {
     var result: String? = null
     var label: String? = null
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -33,6 +29,9 @@ object ZClipboard {
       label = l?.toString()
     }
 
-    return arrayOf(label, result)
+    return when {
+      result != null -> Clipboard(result, label)
+      else -> null
+    }
   }
 }

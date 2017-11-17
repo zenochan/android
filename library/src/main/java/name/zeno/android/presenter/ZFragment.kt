@@ -26,6 +26,8 @@ import java.util.*
 open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
   protected val TAG: String = javaClass.simpleName
   protected val RESULT_OK = Activity.RESULT_OK
+  @Suppress("unused")
+  val inflater by lazy { LayoutInflater.from(activity) }
 
   private val listenerList = ArrayList<LifecycleListener>()
   private val activityResult = RxActivityResult(this)
@@ -35,7 +37,6 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
       listenerList.add(listener)
     }
   }
-
 
   override fun showLoading() = super.showLoading("加载中...")
 
@@ -51,6 +52,10 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     registerOtto(this)
   }
 
+  override fun onStart() {
+    super.onStart()
+    listenerList.forEach { it.onStart() }
+  }
 
   @CallSuper
   override fun onResume() {
@@ -92,6 +97,11 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
   override fun onStop() {
     super.onStop()
     ZLog.v(TAG, "onStop()")
+  }
+
+  override fun onPause() {
+    super.onPause()
+    listenerList.forEach { it.onPause() }
   }
 
   @CallSuper

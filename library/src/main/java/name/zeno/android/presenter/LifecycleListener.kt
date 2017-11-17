@@ -8,17 +8,21 @@ import android.content.Intent
  * @author 陈治谋 (513500085@qq.com)
  */
 interface LifecycleListener {
-  fun onCreate()
+  fun onStart() {}
 
-  fun onResume()
+  fun onCreate() {}
 
-  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+  fun onResume() {}
+
+  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {}
 
   /** fragment  */
-  fun onViewCreated()
+  fun onViewCreated() {}
+
+  fun onPause() {}
 
   /** fragment  */
-  fun onDestroyView()
+  fun onDestroyView() {}
 
-  fun onDestroy()
+  fun onDestroy() {}
 }

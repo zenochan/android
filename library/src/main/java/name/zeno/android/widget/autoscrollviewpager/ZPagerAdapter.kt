@@ -11,21 +11,10 @@ import android.widget.ImageView
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-abstract class ZPagerAdapter<T> : PagerAdapter {
-  var data: List<T>? = null
+abstract class ZPagerAdapter<T>(var data: List<T>? = null) : PagerAdapter() {
 
-
-  @JvmOverloads constructor(data: List<T>? = null) {
-    this.data = data
-  }
-
-  fun getItem(position: Int): T? {
-    return if (data == null || position > data!!.size - 1) null else data!![position]
-  }
-
-  override fun getCount(): Int {
-    return if (data == null) 0 else data!!.size
-  }
+  fun getItem(position: Int): T? = data?.getOrNull(position)
+  override fun getCount(): Int = data?.size ?: 0
 
   override fun isViewFromObject(view: View, `object`: Any): Boolean {
     return view === `object`
@@ -43,7 +32,5 @@ abstract class ZPagerAdapter<T> : PagerAdapter {
     return view
   }
 
-  fun loadImage(view: ImageView, t: T) {
-    // 加载图片
-  }
+  open fun loadImage(view: ImageView, item: T){}
 }

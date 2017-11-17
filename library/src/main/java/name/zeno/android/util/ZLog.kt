@@ -18,7 +18,7 @@ object ZLog {
   init {
     Logger.addLogAdapter(object : AndroidLogAdapter() {
       override fun isLoggable(priority: Int, tag: String?): Boolean {
-        return DEBUG || priority >= Logger.ERROR
+        return DEBUG || priority >= Logger.WARN
       }
     })
   }

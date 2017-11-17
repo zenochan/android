@@ -61,7 +61,7 @@ object TintManager {
 
   private fun getPorterDuffColorFilter(color: Int, mode: PorterDuff.Mode): PorterDuffColorFilter {
     // First, lets see if the cache already contains the color filter
-    var filter: PorterDuffColorFilter? = COLOR_FILTER_CACHE[color, mode]
+    var filter: PorterDuffColorFilter? = COLOR_FILTER_CACHE.get(color, mode)
 
     if (filter == null) {
       // Cache miss, so create a color filter and add it to the cache
@@ -72,21 +72,12 @@ object TintManager {
     return filter
   }
 
+  /** ColorFilterLruCache */
+  private class ColorFilterLruCache(maxSize: Int) : LruCache<Int, PorterDuffColorFilter?>(maxSize) {
+    internal fun get(color: Int, mode: PorterDuff.Mode) = get(key(color, mode))
+    internal fun put(color: Int, mode: PorterDuff.Mode, filter: PorterDuffColorFilter) = put(key(color, mode), filter)
 
-  /**
-   * ColorFilterLruCache
-   */
-  private class ColorFilterLruCache(maxSize: Int) : LruCache<Int, PorterDuffColorFilter>(maxSize) {
-
-    internal operator fun get(color: Int, mode: PorterDuff.Mode): PorterDuffColorFilter {
-      return get(generateCacheKey(color, mode))
-    }
-
-    internal fun put(color: Int, mode: PorterDuff.Mode, filter: PorterDuffColorFilter): PorterDuffColorFilter {
-      return put(generateCacheKey(color, mode), filter)
-    }
-
-    private fun generateCacheKey(color: Int, mode: PorterDuff.Mode): Int {
+    private fun key(color: Int, mode: PorterDuff.Mode): Int {
       var hashCode = 1
       hashCode = 31 * hashCode + color
       hashCode = 31 * hashCode + mode.hashCode()

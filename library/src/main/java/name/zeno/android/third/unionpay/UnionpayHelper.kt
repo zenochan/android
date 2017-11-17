@@ -48,8 +48,7 @@ object UnionpayHelper {
 
 
   fun onActivityResult(data: Intent?) {
-    if (data == null) return
-    val str = data.getStringExtra("pay_result")!!.toLowerCase()
+    val str = data?.getStringExtra("pay_result")?.toLowerCase() ?: return
     when (str) {
       "success" -> {
         onResult?.invoke(true, "支付成功")

@@ -1,6 +1,7 @@
 package name.zeno.android.util
 
 import android.app.Activity
+import android.app.Fragment
 import android.content.Context
 import android.content.CursorLoader
 import android.content.Intent
@@ -8,7 +9,6 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.support.annotation.RequiresPermission
-import android.support.v4.app.Fragment
 import android.support.v4.content.FileProvider
 import com.orhanobut.logger.Logger
 import name.zeno.android.presenter.activities.IDCardCameraActivity
@@ -38,9 +38,7 @@ class PhotoCaptureHelper(
     var fragment: Fragment? = null,
     var activity: Activity? = null
 ) {
-
-
-  private var context: WeakReference<Context> = WeakReference(activity ?: fragment!!.context!!)
+  private var context: WeakReference<Context> = WeakReference(activity ?: fragment!!.activity)
   private var cachePath: String? = null
   private var fileName: String? = null
 

@@ -12,8 +12,7 @@ import kale.adapter.LoadAdapterWrapper
 import kale.adapter.item.AdapterItem
 import kotlinx.android.synthetic.main.fragment_search_poi.view.*
 import name.zeno.android.core.data
-import name.zeno.android.core.ok
-import name.zeno.android.presenter.Extra
+import name.zeno.android.core.okAndFinish
 import name.zeno.android.presenter.ZFragment
 import name.zeno.android.presenter.items.PoiItem
 import name.zeno.android.system.ZPermission
@@ -108,6 +107,6 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
 
   // 选择热点
   private fun onClickPoi(poiInfo: PoiInfo) {
-    ok(PoiModel(poiInfo), true)
+    okAndFinish(PoiModel(poiInfo))
   }
 }

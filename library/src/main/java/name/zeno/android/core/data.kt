@@ -19,7 +19,7 @@ fun <R : Parcelable> Activity.dataOrNull(): R? = Extra.getData(intent)
 fun <R : Parcelable> Fragment.dataOrNull(): R? = Extra.getData(arguments)
 
 fun <T : Fragment, A : Activity> T.args(activity: A): T = args<T>(activity.dataOrNull())
-fun <T : Fragment> T.args(data: Parcelable?): T {
+fun <T : Fragment> T.args(data: Parcelable? = null): T {
   if (data != null) {
     val args = this.arguments ?: Bundle()
     Extra.setData(args, data)
@@ -28,22 +28,29 @@ fun <T : Fragment> T.args(data: Parcelable?): T {
   return this
 }
 
-fun Fragment.cancel(data: Parcelable?, finish: Boolean = false) {
+fun Fragment.cancel(data: Parcelable? = null) {
   if (data == null) {
     activity?.setResult(Activity.RESULT_CANCELED)
   } else {
     activity?.setResult(Activity.RESULT_CANCELED, Extra.setData(data))
   }
-
-  if (finish) activity?.finish()
 }
 
-fun Fragment.ok(data: Parcelable?, finish: Boolean = false) {
+fun Fragment.cancelAndFinish(data: Parcelable? = null) {
+  cancel(data)
+  activity.finish()
+}
+
+fun Fragment.ok(data: Parcelable? = null) {
   if (data == null) {
     activity?.setResult(Activity.RESULT_OK)
   } else {
     activity?.setResult(Activity.RESULT_OK, Extra.setData(data))
   }
-
-  if (finish) activity?.finish()
 }
+
+fun Fragment.okAndFinish(data: Parcelable? = null) {
+  ok(data)
+  activity.finish()
+}
+

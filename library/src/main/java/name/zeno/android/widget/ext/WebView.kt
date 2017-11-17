@@ -1,57 +1,28 @@
+@file:Suppress("unused")
+
 package name.zeno.android.widget.ext
 
 import android.os.Build
 import android.webkit.WebView
-import azadev.kotlin.css.*
-import azadev.kotlin.css.colors.rgba
-import azadev.kotlin.css.dimens.percent
-import azadev.kotlin.css.dimens.px
+import name.zeno.android.core.lollipop
 import name.zeno.android.webkit.ZWebViewClient
 
-private val lollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
 
 val WebView.MIME: String
-  get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-    "text/html; charset=UTF-8"
-  } else {
-    "text/html"
+  get() = when {
+    lollipop -> "text/html; charset=UTF-8"
+    else -> "text/html"
   }
 
 val WebView.ENCODING
-  get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-    null
-  } else {
-    "utf-8"
+  get() = when {
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> null
+    else -> "utf-8"
   }
 
 
-val DEFAULT_STYLE =
-    Stylesheet {
-      "*"{
-        fontSize = 13.px
-        color = rgba(0, 0, 0, 0.87)
-      }
-      p {
-        overflow = HIDDEN
-      }
-
-      img {
-        maxWidth = 100.percent
-        height = AUTO
-        marginTop = (-1).px
-      }
-      body {
-        padding = 0.px
-        margin = 0.px
-      }
-    }
-
-val BODY_PADDING_8PX =
-    Stylesheet {
-      body {
-        padding = 8.px
-      }
-    }
+val WebView.DEFAULT_STYLE
+  get() = style
 
 
 /**
@@ -59,8 +30,8 @@ val BODY_PADDING_8PX =
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/10/12
  */
-fun WebView.handlerUrl(shouldOverride: (url: String) -> Boolean) {
-  val client = ZWebViewClient(shouldOverride = shouldOverride)
+fun WebView.handlerUrl(shouldOverride: ZWebViewClient.(url: String) -> Boolean) {
+  val client = ZWebViewClient().override(shouldOverride)
   this.webViewClient = client
 }
 
@@ -72,12 +43,12 @@ fun WebView.handlerUrl(shouldOverride: (url: String) -> Boolean) {
 fun WebView.loadData(
     data: String?,
     baseUrl: String? = null,
-    style: () -> Stylesheet? = { DEFAULT_STYLE }
+    style: () -> String? = { DEFAULT_STYLE }
 ) {
   val css =
       """
       <style type="text/css">
-        ${style()?.render()}
+        ${style()}
       </style>
       """
   if (baseUrl == null) {
@@ -86,3 +57,22 @@ fun WebView.loadData(
     loadDataWithBaseURL(baseUrl, css + (data ?: ""), MIME, ENCODING, null)
   }
 }
+
+private const val style = """
+*{
+  font-size:13px;
+  color:rgba(0,0,0,.87)
+}
+p{
+  overflow:hidden
+}
+img{
+  max-width:100%;
+  height:auto;
+  margin-top:-1px
+}
+body{
+  padding:0;
+  margin:0
+}
+"""

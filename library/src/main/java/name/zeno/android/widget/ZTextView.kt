@@ -22,7 +22,10 @@ import name.zeno.android.util.R
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-class ZTextView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : AppCompatTextView(context, attrs, defStyleAttr), TintableCompoundDrawableView {
+class ZTextView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : AppCompatTextView(context, attrs, defStyleAttr),
+    TintableCompoundDrawableView {
   private val compoundDrawableTint: TintInfo
 
   internal var drawableGravity = -1

@@ -66,7 +66,7 @@ open class ZImageView @JvmOverloads constructor(context: Context, attrs: Attribu
   override fun setImageDrawable(drawable: Drawable?) {
     super.setImageDrawable(drawable)
     if (drawableTintInfo != null) {
-      TintHelper.setSupportDrawableTintList(this, drawableTintInfo, drawableTintInfo.tintList!!)
+      TintHelper.setSupportDrawableTintList(this, drawableTintInfo, drawableTintInfo.tintList)
     }
   }
 

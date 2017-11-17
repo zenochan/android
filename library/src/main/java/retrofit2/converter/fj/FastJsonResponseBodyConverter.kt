@@ -18,14 +18,14 @@ class FastJsonResponseBodyConverter<T>(
     private val features: Array<Feature>? = null
 ) : Converter<ResponseBody, T> {
 
-  var resTransformer: ValueTransformer<String, String>? = null
+  var resTransformer: ((String) -> String)? = null
 
   @Throws(IOException::class)
   override fun convert(value: ResponseBody): T {
     try {
       var res = value.string()
       if (resTransformer != null) {
-        res = resTransformer!!.apply(res)
+        res = resTransformer?.invoke(res)
       }
       return JSON.parseObject(res, mType, config, featureValues, *features ?: EMPTY_SERIALIZER_FEATURES)
     } finally {

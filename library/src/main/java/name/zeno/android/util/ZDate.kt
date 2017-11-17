@@ -1,7 +1,5 @@
 package name.zeno.android.util
 
-import android.util.Log
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -43,40 +41,22 @@ object ZDate {
 
 
   /**
-   * @param dateFmt eg. "yyyy-MM-dd HH:mm:ss" , "yyyy年MM月dd日 HH时mm分ss秒"
+   * @param format eg. "yyyy-MM-dd HH:mm:ss" , "yyyy年MM月dd日 HH时mm分ss秒"
    * @return strDate
    */
-  fun longToString(longDate: Long, dateFmt: String?): String? {
-    var dateStr: String? = null
-    if (dateFmt != null) {
-      dateStr = SimpleDateFormat(dateFmt, Locale.CHINESE).format(longDate)
-    }
-    return dateStr
-  }
+  fun format(date: Long, format: String = "yyyy-MM-dd HH:mm:ss"): String
+      = SimpleDateFormat(format, Locale.CHINESE).format(date)
+
+  fun date(longDate: Long): Date = Date(longDate)
 
   /**
    * strDate的时间格式必须要与dateFmt的时间格式相同
    *
-   * @param strDate eg. "2014-10-21"
-   * @param dateFmt eg. "yyyy-MM-dd HH:mm:ss" , "yyyy年MM月dd日 HH时mm分ss秒"
+   * @param date eg. "2014-10-21"
+   * @param format eg. "yyyy-MM-dd HH:mm:ss" , "yyyy年MM月dd日 HH时mm分ss秒"
    */
-  fun stringToDate(strDate: String, dateFmt: String): Date? {
-    var date: Date? = null
-
-    try {
-      val formatter = SimpleDateFormat(dateFmt, Locale.CHINESE)
-      date = formatter.parse(strDate)
-    } catch (ignore: ParseException) {
-      Log.e(TAG, "时间格式错误", ignore)
-      //ignore
-    }
-
-    return date
-  }
-
-  fun longToDate(longDate: Long): Date {
-    return Date(longDate)
-  }
+  fun date(date: String, format: String = "yyyy-MM-dd HH:mm:ss"): Date
+      = SimpleDateFormat(format, Locale.CHINESE).parse(date)
 
   /**
    * strDate的时间格式必须要与dateFmt的时间格式相同
@@ -85,12 +65,8 @@ object ZDate {
    * @param dateFmt eg. "yyyy-MM-dd HH:mm:ss" , "yyyy年MM月dd日 HH时mm分ss秒"
    */
   fun longDate(strDate: String, dateFmt: String): Long {
-    var longDate: Long = 0
-    val date = stringToDate(strDate, dateFmt)
-    if (date != null) {
-      longDate = longDate(date)
-    }
-    return longDate
+    val date = date(strDate, dateFmt)
+    return longDate(date)
   }
 
   fun longDate(date: Date): Long {
@@ -111,13 +87,13 @@ object ZDate {
 
     if (deltaDay == 0L) {
       strings[0] = "今天"
-      strings[1] = longToString(date, "HH:mm") ?: "00:00"
+      strings[1] = format(date, "HH:mm") ?: "00:00"
     } else if (deltaDay == 1L) {
       strings[0] = "昨天"
-      strings[1] = longToString(date, "HH:mm") ?: "00:00"
+      strings[1] = format(date, "HH:mm") ?: "00:00"
     } else {
-      strings[0] = longToString(date, "EEEE") ?: "星期一"
-      strings[1] = longToString(date, "MM-dd") ?: "01-01"
+      strings[0] = format(date, "EEEE") ?: "星期一"
+      strings[1] = format(date, "MM-dd") ?: "01-01"
     }
     return strings
   }

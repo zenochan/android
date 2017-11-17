@@ -22,3 +22,5 @@ const val N_MR1 = 25;
 const val O = 26;
 /** 8.1 */
 const val O_MR1 = 27;
+
+val lollipop = sdkInt >= LOLLIPOP

@@ -24,7 +24,7 @@ class MenuItem(private val onClick: (Class<out Activity>) -> Unit) : AdapterItem
   }
 
   override fun setViews() {
-    this.view!!.setOnClickListener { v -> onClick.invoke(clazz) }
+    this.view!!.setOnClickListener { onClick.invoke(clazz) }
   }
 
   override fun handleData(aClass: Class<out Activity>, position: Int) {

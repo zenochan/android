@@ -11,22 +11,36 @@ import name.zeno.android.util.ZLog
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/12/2.
  */
-open class ZWebViewClient @JvmOverloads constructor(
-    var onPageStarted: ((url: String) -> Unit)? = null,
-    var onPageFinished: ((url: String) -> Unit)? = null,
-    var shouldOverride: ((url: String) -> Boolean)? = null
-) : WebViewClient() {
+open class ZWebViewClient : WebViewClient() {
+  lateinit var view: WebView
+  private var onPageStarted: (ZWebViewClient.(url: String) -> Unit)? = null
+  private var onPageFinished: (ZWebViewClient.(url: String) -> Unit)? = null
+  private var shouldOverride: (ZWebViewClient.(url: String) -> Boolean)? = null
+
+  fun onStart(action: (ZWebViewClient.(url: String) -> Unit)) = apply {
+    this.onPageStarted = action
+  }
+
+  fun onFinish(action: ZWebViewClient.(url: String) -> Unit) = apply {
+    this.onPageFinished = action
+  }
+
+  fun override(action: ZWebViewClient.(url: String) -> Boolean) = apply {
+    this.shouldOverride = action
+  }
 
   override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
     super.onPageStarted(view, url, favicon)
     ZLog.v(TAG, "page started: " + url)
-    onPageStarted?.invoke(url)
+    this.view = view
+    onPageStarted?.invoke(this, url)
   }
 
   override fun onPageFinished(view: WebView, url: String) {
     super.onPageFinished(view, url)
     ZLog.v(TAG, "page finished: " + url)
-    onPageFinished?.invoke(url)
+    this.view = view
+    onPageFinished?.invoke(this, url)
   }
 
   override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
@@ -36,9 +50,9 @@ open class ZWebViewClient @JvmOverloads constructor(
   }
 
   override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-    val suplerHandle = super.shouldOverrideUrlLoading(view, url)
     ZLog.v(TAG, "override url: " + url)
-    return shouldOverride?.invoke(url) ?: suplerHandle
+    this.view = view
+    return shouldOverride?.invoke(this, url) ?: false || super.shouldOverrideUrlLoading(view, url)
   }
 
   /** 打印错误日志 */

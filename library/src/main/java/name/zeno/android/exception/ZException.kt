@@ -12,7 +12,7 @@ import java.io.StringWriter
 @Suppress("unused")
 class ZException : RuntimeException {
 
-  private var errCode: Int = 0
+  var errCode: Int = 0
 
   constructor() : super()
   constructor(message: String?) : super(message)

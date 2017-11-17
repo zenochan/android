@@ -34,7 +34,7 @@ class FastJsonConverterFactory private constructor() : Converter.Factory() {
   private val propertyPreFilter: PropertyPreFilter? = null
 
 
-  private var resTransformer: ValueTransformer<String, String>? = null
+  private var resTransformer: ((String) -> String)? = null
 
   override fun responseBodyConverter(type: Type, annotations: Array<Annotation>?, retrofit: Retrofit?): Converter<ResponseBody, *>? {
     val converter = FastJsonResponseBodyConverter<Any>(type, mParserConfig, featureValues, features)
@@ -68,16 +68,12 @@ class FastJsonConverterFactory private constructor() : Converter.Factory() {
     return features
   }
 
-  fun setParserFeatures(features: Array<Feature>): FastJsonConverterFactory {
+  fun setParserFeatures(features: Array<Feature>) = apply {
     this.features = features
-    return this
   }
 
-  fun getSerializeConfig(): SerializeConfig? {
-    return serializeConfig
-  }
 
-  fun setSerializeConfig(serializeConfig: SerializeConfig): FastJsonConverterFactory {
+  fun serializeConfig(serializeConfig: SerializeConfig)=apply{
     this.serializeConfig = serializeConfig
     return this
   }
@@ -91,7 +87,7 @@ class FastJsonConverterFactory private constructor() : Converter.Factory() {
     return this
   }
 
-  fun setResTransformer(resTransformer: ValueTransformer<String, String>) {
+  fun setResTransformer(resTransformer: (String) -> String) {
     this.resTransformer = resTransformer
   }
 

@@ -3,7 +3,6 @@ package name.zeno.android.app
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.TELEPHONY_SERVICE
-import android.content.pm.PackageInfo
 import android.content.res.Resources
 import android.os.Build
 import android.telephony.TelephonyManager
@@ -12,7 +11,6 @@ import name.zeno.android.data.CommonConnector
 import name.zeno.android.system.ZPermission
 import name.zeno.android.util.PrintUtils
 import name.zeno.android.util.SystemUtils
-import name.zeno.android.util.ZLog
 
 /**
  * Create Date: 16/6/9
@@ -24,8 +22,8 @@ object AppInfo {
 
   lateinit var dType: String
   lateinit var dVersion: String
-  lateinit var imei: String
-  lateinit var phoneNumber: String
+  var imei: String? = null
+  var phoneNumber: String? = null
 
   lateinit var appName: String
   lateinit var packageName: String

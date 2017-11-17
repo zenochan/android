@@ -14,12 +14,12 @@ import io.reactivex.Emitter
 import io.reactivex.Observable
 import name.zeno.android.app.AppInfo
 import name.zeno.android.core.data
+import name.zeno.android.core.exit
 import name.zeno.android.data.CommonConnector
 import name.zeno.android.data.models.UpdateInfo
 import name.zeno.android.exception.ZException
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
-import name.zeno.android.presenter.ZNav
 import name.zeno.android.system.ZPermission
 import name.zeno.android.third.rxjava.RxUtils
 import name.zeno.android.third.rxjava.ZObserver
@@ -62,7 +62,7 @@ class UpdateActivity : ZActivity() {
       builder.title("发现新版本,需要升级后才能继续使用,是否现在升级?")
       builder.content(version.versionInfo ?: "")
       builder.negativeText("退出应用")
-      builder.onNegative { _, _ -> ZNav.exit(this) }
+      builder.onNegative { _, _ -> exit() }
     }
 
     builder.show()
@@ -80,7 +80,7 @@ class UpdateActivity : ZActivity() {
 
   private fun permisionDenied(forceUpdate: Boolean) {
     if (forceUpdate) {
-      ZNav.exit(this)
+      exit()
     } else {
       finish()
     }
@@ -185,7 +185,7 @@ class UpdateActivity : ZActivity() {
               .autoDismiss(false)
               .cancelable(false)
               .onPositive { _, _ -> installAPK(file) }
-              .onNegative { _, _ -> ZNav.exit(this@UpdateActivity) }
+              .onNegative { _, _ -> exit() }
               .show()
           installAPK(file)
         }

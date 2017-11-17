@@ -17,7 +17,6 @@
 
     <activity
       android:name="name.zeno.android.presenter.activities.UpdateActivity"
-      android:screenOrientation="portrait"
       android:theme="@style/DefaultTheme.Transparent"
       />
 
