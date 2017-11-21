@@ -28,8 +28,11 @@ object ZPermission {
   const val CALL_PHONE = Manifest.permission.CALL_PHONE
   const val CAMERA = Manifest.permission.CAMERA
 
-  fun granted(context: Context, vararg permissions: String) = permissions.all {
-    ContextCompat.checkSelfPermission(context, it) == ZPermission.GRANTED
-  }
+  const val MOUNT_UNMOUNT_FILESYSTEMS = Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS
+  const val READ_CONTACTS = Manifest.permission.READ_CONTACTS
 
+  fun granted(context: Context, vararg permissions: String) = permissions.all {
+    ContextCompat.checkSelfPermission(context, it) == GRANTED
+  }
 }
+

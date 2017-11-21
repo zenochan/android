@@ -22,8 +22,7 @@ val WebView.ENCODING
 
 
 val WebView.DEFAULT_STYLE
-  get() = style
-
+  get() = STYLE
 
 /**
  * @param shouldOverride (url:[String])  ->  shouldOverride:[Boolean]
@@ -40,7 +39,7 @@ fun WebView.handlerUrl(shouldOverride: ZWebViewClient.(url: String) -> Boolean) 
  * @param baseUrl 主要影响一些不完整链接 src 的引用
  * @param style 样式
  */
-fun WebView.loadData(
+fun WebView.load(
     data: String?,
     baseUrl: String? = null,
     style: () -> String? = { DEFAULT_STYLE }
@@ -51,14 +50,10 @@ fun WebView.loadData(
         ${style()}
       </style>
       """
-  if (baseUrl == null) {
-    loadData(css + (data ?: ""), MIME, ENCODING)
-  } else {
-    loadDataWithBaseURL(baseUrl, css + (data ?: ""), MIME, ENCODING, null)
-  }
+  loadDataWithBaseURL(baseUrl, css + (data ?: ""), MIME, ENCODING, null)
 }
 
-private const val style = """
+private const val STYLE = """
 *{
   font-size:13px;
   color:rgba(0,0,0,.87)

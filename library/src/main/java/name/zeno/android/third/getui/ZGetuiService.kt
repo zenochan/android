@@ -12,12 +12,12 @@ import com.igexin.sdk.GTServiceManager
 abstract class ZGetuiService : Service() {
   override fun onCreate() = GTServiceManager.getInstance().onCreate(this)
 
-  override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     super.onStartCommand(intent, flags, startId)
     return GTServiceManager.getInstance().onStartCommand(this, intent, flags, startId)
   }
 
-  override fun onBind(intent: Intent): IBinder? = GTServiceManager.getInstance().onBind(intent)
+  override fun onBind(intent: Intent?): IBinder? = GTServiceManager.getInstance().onBind(intent)
   override fun onDestroy() = GTServiceManager.getInstance().onDestroy()
   override fun onLowMemory() = GTServiceManager.getInstance().onLowMemory()
 }

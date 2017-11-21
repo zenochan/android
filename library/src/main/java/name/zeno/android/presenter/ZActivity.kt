@@ -60,6 +60,12 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
     }
   }
 
+  override fun unregisterLifecycleListener(listener: LifecycleListener) {
+    if (listeners.contains(listener)) {
+      listeners.remove(listener)
+    }
+  }
+
   override fun setContentView(@LayoutRes layoutResID: Int) {
     super.setContentView(layoutResID)
     onViewCreated()

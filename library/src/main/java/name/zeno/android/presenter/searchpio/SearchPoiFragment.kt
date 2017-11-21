@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.baidu.mapapi.search.core.PoiInfo
-import com.tbruyelle.rxpermissions2.RxPermissions
 import kale.adapter.CommonRcvAdapter
 import kale.adapter.LoadAdapterWrapper
 import kale.adapter.item.AdapterItem
 import kotlinx.android.synthetic.main.fragment_search_poi.view.*
 import name.zeno.android.core.data
 import name.zeno.android.core.okAndFinish
+import name.zeno.android.core.rxPermissions
 import name.zeno.android.presenter.ZFragment
 import name.zeno.android.presenter.items.PoiItem
 import name.zeno.android.system.ZPermission
@@ -46,7 +46,7 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
 
 
   override fun requestLocationPermission(next: () -> Unit) {
-    RxPermissions(activity).request(
+    rxPermissions(
         ZPermission.WRITE_EXTERNAL_STORAGE,
         ZPermission.ACCESS_COARSE_LOCATION,
         ZPermission.ACCESS_FINE_LOCATION
@@ -70,10 +70,7 @@ class SearchPoiFragment : ZFragment(), SearchPoiView {
     btn_input.setOnClickListener { customInput(tv_keyword.text.toString()) }
 
     adapter = object : CommonRcvAdapter<PoiInfo>(presenter.getInfoList()) {
-      override fun createItem(type: Any): AdapterItem<*> {
-        val item = PoiItem(onClickPoi)
-        return item
-      }
+      override fun createItem(type: Any) = PoiItem(onClickPoi)
     }
 
     wrapper = LoadAdapterWrapper.Builder(context)

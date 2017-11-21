@@ -10,8 +10,8 @@ mavenConf {
   groupId "name.zeno"
   // zeno android kotlin
   artifactId "zako"
-  version "2.0.0.20171118"
-  //version "2.0.1-SNAPSHOT"
+  version "2.0.0.20171121"
+//  version "2.0.0-SNAPSHOT"
 
 //  repositoryUrl "file:///Users/zenochan/.m2/repository"
   repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"
@@ -30,7 +30,7 @@ repositories {
 
 android {
   compileSdkVersion 27
-  buildToolsVersion '27.0.0'
+  buildToolsVersion '27.0.1'
 
   dataBinding { enabled = true }
 
@@ -84,7 +84,6 @@ dependencies {
   api 'com.orhanobut:logger:2.1.1'
 
   //Glide https://github.com/bumptech/glide
-  //implementation"com.github.bumptech.glide:glide:3.7.0";
   api 'com.github.bumptech.glide:glide:4.2.0'
   kapt 'com.github.bumptech.glide:compiler:4.2.0'
   api('com.github.bumptech.glide:okhttp3-integration:4.1.1') {
@@ -105,7 +104,6 @@ dependencies {
   api "io.reactivex.rxjava2:rxandroid:2.0.1"
   //https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
   api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-  implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4'
 
 //  // For Lifecycles, LiveData, and ViewModel
 //  api "android.arch.lifecycle:runtime:1.0.3"

@@ -45,9 +45,8 @@ class ZArrayAdapter<T>(
     return position.toLong()
   }
 
-  override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
-    return getViewFromResouce(position, convertView, parent, mResouce)
-  }
+  override fun getView(position: Int, convertView: View?, parent: ViewGroup): View =
+      getViewFromResouce(position, convertView, parent, mResouce)
 
   private fun getViewFromResouce(position: Int, convertView: View?, parent: ViewGroup, layoutRes: Int): View {
     val tv: TextView = (convertView ?: inflater.inflate(layoutRes, parent, false)) as TextView
@@ -103,7 +102,7 @@ class ZArrayAdapter<T>(
     }
 
     //发布过滤结果
-    override fun publishResults(constraint: CharSequence, results: Filter.FilterResults) {
+    override fun publishResults(constraint: CharSequence?, results: Filter.FilterResults) {
       //把搜索结果赋值给mObject这样每次输入字符串的时候就不必
       //从所有的字符串中查找，从而提高了效率
       mObject = results.values as List<T>

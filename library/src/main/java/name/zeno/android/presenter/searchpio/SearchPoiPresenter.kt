@@ -34,11 +34,7 @@ class SearchPoiPresenter(view: SearchPoiView) : ZPresenter<SearchPoiView>(view) 
     })
   }
 
-  override fun onResume() {
-    super.onViewCreated()
-    if (!requestLocation) return
-    requestLocation = false
-
+  override fun onViewCreated() {
     view.requestLocationPermission {
       LocationHelper.getInstance(view.ctx).requestLocation(sub({
         this.bdLocation = it

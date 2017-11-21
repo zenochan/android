@@ -9,12 +9,12 @@ import android.os.Environment
 import android.support.v4.content.FileProvider
 import android.view.View
 import com.afollestad.materialdialogs.MaterialDialog
-import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.Emitter
 import io.reactivex.Observable
 import name.zeno.android.app.AppInfo
 import name.zeno.android.core.data
 import name.zeno.android.core.exit
+import name.zeno.android.core.rxPermissions
 import name.zeno.android.data.CommonConnector
 import name.zeno.android.data.models.UpdateInfo
 import name.zeno.android.exception.ZException
@@ -36,7 +36,6 @@ import java.io.RandomAccessFile
  */
 class UpdateActivity : ZActivity() {
 
-  private val rxPermissions: RxPermissions = RxPermissions(this)
   private lateinit var updateInfo: UpdateInfo
   private var localFilePath: String? = null
 
@@ -69,8 +68,11 @@ class UpdateActivity : ZActivity() {
   }
 
   private fun preDownload(updateInfo: UpdateInfo) {
-    rxPermissions.request(ZPermission.READ_EXTERNAL_STORAGE, ZPermission.WRITE_EXTERNAL_STORAGE).subscribe { granted ->
-      if (granted!!) {
+    rxPermissions(
+        ZPermission.READ_EXTERNAL_STORAGE,
+        ZPermission.WRITE_EXTERNAL_STORAGE
+    ).subscribe { granted ->
+      if (granted) {
         download(updateInfo.versionUrl ?: "", updateInfo.versionCode)
       } else {
         permisionDenied(updateInfo.isForceUpdate)

@@ -1,7 +1,8 @@
 package name.zeno.android.util
 
-import android.os.Build
 import android.webkit.WebView
+import name.zeno.android.core.lollipop
+import name.zeno.android.util.WebViewHelper.NO_PADDING
 
 /**
  * <h1>加载 html 内容, 根据版本设置 MIME 和 ENCODING</h1>
@@ -32,7 +33,6 @@ object WebViewHelper {
       """
 
   init {
-    val lollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
     if (lollipop) {
       MIME = "text/html; charset=UTF-8"
       ENCODING = null
@@ -43,10 +43,10 @@ object WebViewHelper {
   }
 
   fun loadData(webView: WebView, data: String?, baseUrl: String? = null) {
-    if (baseUrl == null) {
-      webView.loadData(DEFAULT_STYLE + (data ?: ""), MIME, ENCODING)
-    } else {
-      webView.loadDataWithBaseURL(baseUrl, DEFAULT_STYLE + (data ?: ""), MIME, ENCODING, null)
-    }
+    /**
+     * [WebView.loadData] 在 5.0 以下，中文显示乱码,
+     * 统一使用 [WebView.loadDataWithBaseURL]
+     */
+    webView.loadDataWithBaseURL(baseUrl, DEFAULT_STYLE + (data ?: ""), MIME, ENCODING, null)
   }
 }

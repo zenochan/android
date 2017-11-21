@@ -2,12 +2,15 @@
 
 package name.zeno.android.core
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
 import android.content.Intent
+import android.os.Build
 import android.os.Parcelable
 import android.os.Process
+import android.support.annotation.RequiresApi
 import name.zeno.android.data.models.UpdateInfo
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
@@ -65,7 +68,12 @@ fun <T : Parcelable> Fragment.nav(clazz: Class<out Activity>, data: Parcelable? 
   }
 }
 
-fun Fragment.navigator() = fragmentManager.navigator()
+@SuppressLint("NewApi")
+fun Fragment.navigator() = when {
+  sdkInt > JELLY_BEAN_MR1 -> childFragmentManager.navigator()
+  else -> fragmentManager.navigator()
+}
+
 fun Activity.navigator() = fragmentManager.navigator()
 
 private fun FragmentManager.navigator(): ZFragment {

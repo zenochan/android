@@ -6,4 +6,5 @@ package name.zeno.android.presenter
  */
 interface LifeCycleObservable {
   fun registerLifecycleListener(listener: LifecycleListener)
+  fun unregisterLifecycleListener(listener: LifecycleListener)
 }

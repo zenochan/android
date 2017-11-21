@@ -41,6 +41,12 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     }
   }
 
+  override fun unregisterLifecycleListener(listener: LifecycleListener) {
+    if (listenerList.contains(listener)) {
+      listenerList.remove(listener)
+    }
+  }
+
   @SuppressLint("NewApi")
   override fun getContext(): Context? = if (sdkInt >= 23) super.getContext() else activity
 
