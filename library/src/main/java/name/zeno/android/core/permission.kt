@@ -15,27 +15,23 @@ import name.zeno.android.system.permission.RxPermissions
 fun Activity.rxPermissions(vararg permissions: String) = RxPermissions(this).request(*permissions)
 
 fun Fragment.rxPermissions(vararg permissions: String): Observable<Boolean> {
-  if (isAdded) {
-    return RxPermissions(this).request(*permissions)
-  } else {
-    return Observable.create<Boolean> { e ->
-      // 确保在正确的周期执行请求
-      if (isAdded) {
-        e.onNext(true)
-        e.onComplete()
-      } else {
-        val nav = navigator()
-        nav.registerLifecycleListener(object : LifecycleListener {
-          override fun onResume() {
-            nav.unregisterLifecycleListener(this)
-            e.onNext(true)
-            e.onComplete()
-          }
-        })
-      }
-    }.flatMap {
-      RxPermissions(activity).request(*permissions)
+  return Observable.create<Boolean> { e ->
+    // 确保在正确的周期执行请求
+    if (isResumed) {
+      e.onNext(true)
+      e.onComplete()
+    } else {
+      val nav = navigator()
+      nav.registerLifecycleListener(object : LifecycleListener {
+        override fun onResume() {
+          nav.unregisterLifecycleListener(this)
+          e.onNext(true)
+          e.onComplete()
+        }
+      })
     }
+  }.flatMap {
+    RxPermissions(this).request(*permissions)
   }
 }
 

@@ -10,7 +10,7 @@ mavenConf {
   groupId "name.zeno"
   // zeno android kotlin
   artifactId "zako"
-  version "2.0.0.20171121"
+  version "2.0.0.20171123"
 //  version "2.0.0-SNAPSHOT"
 
 //  repositoryUrl "file:///Users/zenochan/.m2/repository"
