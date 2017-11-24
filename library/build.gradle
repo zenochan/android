@@ -8,13 +8,12 @@ apply plugin: 'kotlin-allopen'
 apply from: 'http://maven.mjtown.cn/maven.gradle'
 mavenConf {
   groupId "name.zeno"
-  // zeno android kotlin
   artifactId "zako"
-  version "2.0.0.20171123"
-//  version "2.0.0-SNAPSHOT"
+//  version "2.0.0.20171123"
+  version "2.0.0-SNAPSHOT"
 
-//  repositoryUrl "file:///Users/zenochan/.m2/repository"
-  repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"
+  repositoryUrl "file:///Users/zenochan/.m2/repository"
+//  repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"
 }
 confMaven()
 

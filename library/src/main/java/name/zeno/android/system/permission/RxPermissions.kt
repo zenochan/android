@@ -28,6 +28,7 @@ import io.reactivex.ObservableTransformer
 import io.reactivex.functions.Function
 import io.reactivex.subjects.PublishSubject
 import name.zeno.android.core.JELLY_BEAN_MR1
+import name.zeno.android.core.marshmallow
 import name.zeno.android.core.sdkInt
 import java.util.*
 
@@ -40,15 +41,13 @@ class RxPermissions(fragmentManager: FragmentManager) {
   })
 
   private var mRxPermissionsFragment: RxPermissionsFragment
-  private val isMarshmallow: Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
 
   init {
     mRxPermissionsFragment = getRxPermissionsFragment(fragmentManager)
   }
 
   private fun getRxPermissionsFragment(fragmentManager: FragmentManager): RxPermissionsFragment {
-    var rxPermissionsFragment: RxPermissionsFragment?
-        = fragmentManager.findFragmentByTag(TAG) as? RxPermissionsFragment
+    var rxPermissionsFragment: RxPermissionsFragment? = fragmentManager.findFragmentByTag(TAG) as? RxPermissionsFragment
     if (rxPermissionsFragment == null) {
       rxPermissionsFragment = RxPermissionsFragment()
       fragmentManager.beginTransaction()
@@ -56,11 +55,12 @@ class RxPermissions(fragmentManager: FragmentManager) {
           .commitAllowingStateLoss()
       fragmentManager.executePendingTransactions()
     }
+
     return rxPermissionsFragment
   }
 
-  fun setLogging(logging: Boolean) {
-    mRxPermissionsFragment.setLogging(logging)
+  fun logging(logging: Boolean) = apply {
+    mRxPermissionsFragment.log = logging
   }
 
   /**
@@ -126,8 +126,8 @@ class RxPermissions(fragmentManager: FragmentManager) {
     if (permissions.isEmpty()) {
       throw IllegalArgumentException("RxPermissions.request/requestEach requires at least one input permission")
     }
-    return oneOf(trigger, pending(*permissions))
-        .flatMap { requestImplementation(*permissions) }
+
+    return oneOf(trigger, pending(*permissions)).flatMap { requestImplementation(*permissions) }
   }
 
   private fun pending(vararg permissions: String): Observable<*> {
@@ -152,37 +152,39 @@ class RxPermissions(fragmentManager: FragmentManager) {
 
     // In case of multiple permissions, we create an Observable for each of them.
     // At the end, the observables are combined to have a unique response.
-    for (permission in permissions) {
+    // 多个权限申请，为每个权限创建一个 Observable， 最后，observables 组合成响应序列
+    permissions.forEach { permission ->
       mRxPermissionsFragment.log("Requesting permission " + permission)
+
       if (isGranted(permission)) {
         // Already granted, or not Android M
         // Return a granted Permission object.
-        list.add(Observable.just(Permission(permission, true, false)))
-        continue
-      }
-
-      if (isRevoked(permission)) {
+        // 已经授权，获取系统低于 Android M，添加到已授权权限列表
+        list.add(Observable.just(Permission(permission, true)))
+      } else if (isRevoked(permission)) {
         // Revoked by a policy, return a denied Permission object.
-        list.add(Observable.just(Permission(permission, false, false)))
-        continue
+        // 被策略撤销权限
+        list.add(Observable.just(Permission(permission, false)))
+      } else {
+        // 需要用户授权
+        var subject: PublishSubject<Permission>? = mRxPermissionsFragment.getSubjectByPermission(permission)
+        // Create a new subject if not exists
+        if (subject == null) {
+          unrequestedPermissions.add(permission)
+          subject = PublishSubject.create<Permission>()
+          mRxPermissionsFragment.setSubjectForPermission(permission, subject!!)
+        }
+
+        list.add(subject)
       }
 
-      var subject: PublishSubject<Permission>? = mRxPermissionsFragment.getSubjectByPermission(permission)
-      // Create a new subject if not exists
-      if (subject == null) {
-        unrequestedPermissions.add(permission)
-        subject = PublishSubject.create<Permission>()
-        mRxPermissionsFragment.setSubjectForPermission(permission, subject!!)
-      }
-
-      list.add(subject)
     }
 
     if (!unrequestedPermissions.isEmpty()) {
       val unrequestedPermissionsArray = unrequestedPermissions.toTypedArray()
       requestPermissionsFromFragment(unrequestedPermissionsArray)
     }
-    return Observable.concat<Permission>(Observable.fromIterable<Observable<Permission>>(list))
+    return Observable.concat(Observable.fromIterable(list))
   }
 
   /**
@@ -198,13 +200,13 @@ class RxPermissions(fragmentManager: FragmentManager) {
    * You shouldn't call this method if all permissions have been granted.
    *
    *
-   * For SDK &lt; 23, the observable will always emit false.
+   * For SDK < 23, the observable will always emit false.
    */
-  fun shouldShowRequestPermissionRationale(activity: Activity, vararg permissions: String): Observable<Boolean> {
-    return if (!isMarshmallow) {
-      Observable.just(false)
-    } else Observable.just(shouldShowRequestPermissionRationaleImplementation(activity, *permissions))
-  }
+  fun shouldShowRequestPermissionRationale(activity: Activity, vararg permissions: String): Observable<Boolean> =
+      when {
+        marshmallow -> Observable.just(shouldShowRequestPermissionRationaleImplementation(activity, *permissions))
+        else -> Observable.just(false)
+      }
 
   @TargetApi(Build.VERSION_CODES.M)
   private fun shouldShowRequestPermissionRationaleImplementation(activity: Activity, vararg permissions: String): Boolean {
@@ -224,12 +226,8 @@ class RxPermissions(fragmentManager: FragmentManager) {
 
   /**
    * Returns true if the permission is already granted.
-   *
-   *
-   * Always true if SDK &lt; 23.
    */
-  fun isGranted(permission: String): Boolean =
-      !isMarshmallow || mRxPermissionsFragment.isGranted(permission)
+  fun isGranted(permission: String): Boolean = mRxPermissionsFragment.isGranted(permission)
 
   /**
    * Returns true if the permission has been revoked by a policy.
@@ -237,17 +235,14 @@ class RxPermissions(fragmentManager: FragmentManager) {
    *
    * Always false if SDK < 23.
    */
-  fun isRevoked(permission: String): Boolean =
-      isMarshmallow && mRxPermissionsFragment.isRevoked(permission)
+  fun isRevoked(permission: String): Boolean = marshmallow && mRxPermissionsFragment.isRevoked(permission)
 
   internal fun onRequestPermissionsResult(permissions: Array<String>, grantResults: IntArray) {
     mRxPermissionsFragment.onRequestPermissionsResult(permissions, grantResults, BooleanArray(permissions.size))
   }
 
   companion object {
-
     internal val TAG = "RxPermissions"
     internal val TRIGGER = Any()
   }
-
 }

@@ -9,15 +9,24 @@ import android.os.Bundle
 import android.util.Log
 import io.reactivex.subjects.PublishSubject
 import name.zeno.android.core.JELLY_BEAN_MR1
+import name.zeno.android.core.isPermissionGranted
+import name.zeno.android.core.isPermissionRevoked
 import name.zeno.android.core.sdkInt
 import java.util.*
 
+/**
+ * - [shouldShowRequestPermissionRationale]
+ *    - 弹出的对话框会有一个类似于“拒绝后不再询问”的勾选项
+ *    - 若用户打了勾，并选择拒绝，那么下次程序调用Activity.requestPermissions()方法时，将不会弹出对话框
+ *    - 提示用户类似于“您已经拒绝了使用该功能所需要的权限，若需要使用该功能，请手动开启权限”的信息
+ * - [onRequestPermissionsResult] 接收授权结果
+ */
 class RxPermissionsFragment : Fragment() {
 
   // Contains all the current permission requests.
   // Once granted or denied, they are removed from it.
   private val mSubjects = HashMap<String, PublishSubject<Permission>>()
-  private var mLogging: Boolean = false
+  var log: Boolean = false
 
   @SuppressLint("NewApi")
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,11 +48,10 @@ class RxPermissionsFragment : Fragment() {
 
     if (requestCode != PERMISSIONS_REQUEST_CODE) return
 
-    val shouldShowRequestPermissionRationale = BooleanArray(permissions.size)
 
-    for (i in permissions.indices) {
-      shouldShowRequestPermissionRationale[i] = shouldShowRequestPermissionRationale(permissions[i])
-    }
+    val shouldShowRequestPermissionRationale = permissions.map {
+      shouldShowRequestPermissionRationale(it)
+    }.toBooleanArray()
 
     onRequestPermissionsResult(permissions, grantResults, shouldShowRequestPermissionRationale)
   }
@@ -68,29 +76,19 @@ class RxPermissionsFragment : Fragment() {
     }
   }
 
-  @TargetApi(Build.VERSION_CODES.M)
-  internal fun isGranted(permission: String): Boolean =
-      activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+  internal fun isGranted(permission: String): Boolean = activity.isPermissionGranted(permission)
 
   @TargetApi(Build.VERSION_CODES.M)
-  internal fun isRevoked(permission: String): Boolean =
-      activity.packageManager.isPermissionRevokedByPolicy(permission, activity.packageName)
+  internal fun isRevoked(permission: String): Boolean = activity.isPermissionRevoked(permission)
 
-  fun setLogging(logging: Boolean) {
-    mLogging = logging
-  }
-
-  fun getSubjectByPermission(permission: String): PublishSubject<Permission>?
-      = mSubjects[permission]
-
-  fun containsByPermission(permission: String): Boolean
-      = mSubjects.containsKey(permission)
+  fun getSubjectByPermission(permission: String): PublishSubject<Permission>? = mSubjects[permission]
+  fun containsByPermission(permission: String): Boolean = mSubjects.containsKey(permission)
 
   fun setSubjectForPermission(permission: String, subject: PublishSubject<Permission>): PublishSubject<Permission>?
       = mSubjects.put(permission, subject)
 
   internal fun log(message: String) {
-    if (mLogging) {
+    if (log) {
       Log.d(RxPermissions.TAG, message)
     }
   }

@@ -4,12 +4,22 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.alibaba.fastjson.JSON
-import name.zeno.android.data.CommonConnector
+import name.zeno.android.util.ZCookie.get
+import name.zeno.android.util.ZCookie.getBoolean
+import name.zeno.android.util.ZCookie.put
+import name.zeno.android.util.ZCookie.putBoolean
 
 /**
- * Create Date: 16/6/1
+ * - [get]
+ * - [put]
+ *
+ * - [getBoolean]
+ * - [putBoolean]
+ *
+ * - [Context.MODE_MULTI_PROCESS] 多进程 sp
  *
  * @author 陈治谋 (513500085@qq.com)
+ * @since  16/6/1
  */
 object ZCookie {
   private val TAG = "ZCookie"
@@ -36,36 +46,33 @@ object ZCookie {
     return isFirstOpen
   }
 
+  @Suppress("UNCHECKED_CAST")
   fun <T> get(key: String, clazz: Class<T>): T? {
-    var t: T?
-    try {
-      t = when {
-        !spInited() -> null
-        clazz == Long::class.java -> sp!!.getLong(key, 0) as T
-        clazz == String::class.java -> sp!!.getString(key, null) as T
-        clazz == Float::class.java -> sp!!.getFloat(key, 0f) as T
-        clazz == Int::class.java -> sp!!.getInt(key, 0) as T
-        clazz == Boolean::class.java -> sp!!.getBoolean(key, false) as T
+    val sp = sp ?: return null
+
+    return try {
+      when (clazz) {
+        Long::class.java -> sp.getLong(key, 0) as T
+        String::class.java -> sp.getString(key, null) as T
+        Float::class.java -> sp.getFloat(key, 0f) as T
+        Int::class.java -> sp.getInt(key, 0) as T
+        Boolean::class.java -> sp.getBoolean(key, false) as T
         else -> {
-          val jsonStr = sp!!.getString(key, null)
+          val jsonStr = sp.getString(key, null)
           if (jsonStr == null) null else JSON.parseObject(jsonStr, clazz)
         }
       }
     } catch (e: Exception) {
-      CommonConnector.sendCrash(e)
-      t = null
+      sp.edit().remove(key).apply()
+      null
     }
-
-    return t
   }
 
   //获取列表
   fun <T> getList(key: String, clazz: Class<T>): List<T>? {
-    if (!spInited()) {
-      return null
-    }
+    val sp = this.sp ?: return null
 
-    val jsonStr = sp!!.getString(key, null)
+    val jsonStr = sp.getString(key, null)
     var list: List<T>? = null
     try {
       list = if (jsonStr == null) null else JSON.parseArray(jsonStr, clazz)
@@ -77,47 +84,31 @@ object ZCookie {
   }
 
   fun put(k: String, v: Any?) {
-    if (!spInited()) {
-      return
-    }
+    val sp = this.sp ?: return
 
-    val editor = sp!!.edit()
-    if (v == null) {
-      editor.remove(k).apply()
-      return
+    val editor = sp.edit()
+    when (v) {
+      null -> editor.remove(k)
+      is Long -> editor.putLong(k, v)
+      is String -> editor.putString(k, v)
+      is Float -> editor.putFloat(k, v)
+      is Int -> editor.putInt(k, v)
+      is Boolean -> editor.putBoolean(k, v)
+      else -> editor.putString(k, JSON.toJSONString(v))
     }
-
-    if (v is Long) {
-      editor.putLong(k, (v as Long?)!!)
-    } else if (v is String) {
-      editor.putString(k, v as String?)
-    } else if (v is Float) {
-      editor.putFloat(k, (v as Float?)!!)
-    } else if (v is Int) {
-      editor.putInt(k, (v as Int?)!!)
-    } else if (v is Boolean) {
-      editor.putBoolean(k, (v as Boolean?)!!)
-    } else {
-      val jsonStr = JSON.toJSONString(v)
-      editor.putString(k, jsonStr)
-    }
-
     editor.apply()
   }
 
-  fun getBoolean(key: String): Boolean {
-    return sp!!.getBoolean(key, false)
-  }
+  @Deprecated("")
+  fun getBoolean(key: String): Boolean = this[key]
 
-  fun putBoolean(key: String, v: Boolean) {
-    sp!!.edit().putBoolean(key, v).apply()
-  }
+  @Deprecated("")
+  fun putBoolean(key: String, v: Boolean) = set(key, v)
 
-  private fun spInited(): Boolean {
-    if (sp == null) {
-      ZLog.e("calling method init(Application) before use ZCookie")
-    }
-    return sp != null
-  }
+  operator fun get(key: String): Boolean = sp?.getBoolean(key, false) ?: false
 
+  operator fun set(key: String, value: Boolean) {
+    val sp = this.sp ?: return
+    sp.edit().putBoolean(key, value).apply()
+  }
 }

@@ -14,12 +14,12 @@ mavenConf {
 confMaven()
 
 android {
-  compileSdkVersion 26
+  compileSdkVersion 27
   buildToolsVersion build_tools_version
 
   defaultConfig {
     minSdkVersion 15
-    targetSdkVersion 26
+    targetSdkVersion 27
     versionCode 1
     versionName mavenConf.version
 
@@ -37,7 +37,7 @@ android {
 
 dependencies {
   api fileTree(dir: 'libs', include: ['*.jar'])
-  provided 'com.android.support:appcompat-v7:26.1.0'
+  provided "com.android.support:appcompat-v7:$support_version"
   testApi 'junit:junit:4.12'
   androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
     exclude group: 'com.android.support', module: 'support-annotations'
