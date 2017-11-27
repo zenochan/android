@@ -3,12 +3,12 @@ package name.zeno.android.third.wxapi
 import android.graphics.Bitmap
 import android.os.Parcel
 import android.os.Parcelable
+import android.support.annotation.DrawableRes
 import com.tencent.mm.opensdk.modelbase.BaseReq
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject
 import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
 import name.zeno.android.app.ZApplication
 import name.zeno.android.common.annotations.DataClass
 import name.zeno.android.core.drawable
@@ -17,6 +17,8 @@ import name.zeno.android.util.ZBitmap
 
 /**
  * 发送网页消息
+ *
+ * - [drawable]
  *
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/4/27
@@ -31,26 +33,26 @@ import name.zeno.android.util.ZBitmap
     var scene: Int = 0
 ) : WxReq(), Parcelable {
   override fun build(): Observable<BaseReq> {
-    return Observable.create<Bitmap>(source@ { subscriber: ObservableEmitter<Bitmap> ->
+    return Observable.create<Bitmap>(source@ { emitter ->
       // 选择分享主图
       if (thumbImage != null) {
-        subscriber.onNext(thumbImage!!)
-        subscriber.onComplete()
+        emitter.onNext(thumbImage!!)
+        emitter.onComplete()
         return@source
       }
 
       if (thumbImageUrl != null) {
         val bitmap = ZBitmap.bitmap(thumbImageUrl)
         if (bitmap != null) {
-          subscriber.onNext(bitmap)
-          subscriber.onComplete()
+          emitter.onNext(bitmap)
+          emitter.onComplete()
           return@source
         }
       }
 
-      val bitmap = ZBitmap.bitmap(ZApplication.application.drawable(R.mipmap.ic_add), true)
-      subscriber.onNext(bitmap)
-      subscriber.onComplete()
+      val bitmap = ZBitmap.bitmap(ZApplication.application.drawable(drawable), true)
+      emitter.onNext(bitmap)
+      emitter.onComplete()
     }).map { bitmap ->
       // 对大图片处理
       if (bitmap.width <= 256 && bitmap.height <= 256)
@@ -94,6 +96,9 @@ import name.zeno.android.util.ZBitmap
   }
 
   companion object {
+
+    @DrawableRes
+    var drawable: Int = R.mipmap.ic_launcher_zeno
     @JvmField
     val CREATOR: Parcelable.Creator<ZWebpageMessageReq> = object : Parcelable.Creator<ZWebpageMessageReq> {
       override fun createFromParcel(source: Parcel): ZWebpageMessageReq = ZWebpageMessageReq(source)
