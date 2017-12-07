@@ -20,31 +20,17 @@ class RxActivityResult(val launcher: ActivityLauncher) {
 
   init {
     launcher.registerLifecycleListener(object : LifecycleListener {
-      override fun onStart() {}
-
-      override fun onCreate() {}
-      override fun onResume() {}
-
       override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        this@RxActivityResult.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE) {
+          onResult?.invoke(resultCode == Activity.RESULT_OK, data)
+        }
+        onResult = null
       }
-
-      override fun onViewCreated() {}
-      override fun onDestroyView() {}
-      override fun onDestroy() {}
     })
-
   }
 
   fun startActivityForResult(intent: Intent, onResult: (Boolean, Intent?) -> Unit) {
     this.onResult = onResult
     launcher.startActivityForResult(intent, REQUEST_CODE)
-  }
-
-  private fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    if (requestCode == REQUEST_CODE) {
-      onResult?.invoke(resultCode == Activity.RESULT_OK, data)
-    }
-    onResult = null
   }
 }

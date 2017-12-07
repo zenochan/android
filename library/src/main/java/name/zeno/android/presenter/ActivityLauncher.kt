@@ -1,7 +1,6 @@
 package name.zeno.android.presenter
 
 import android.content.Intent
-import android.support.annotation.RequiresPermission
 
 /**
  * @author 陈治谋 (513500085@qq.com)
@@ -10,5 +9,5 @@ import android.support.annotation.RequiresPermission
 
 interface ActivityLauncher : LifeCycleObservable {
   fun startActivity(intent: Intent)
-  fun startActivityForResult(@RequiresPermission intent: Intent, requestCode: Int)
+  fun startActivityForResult(intent: Intent, requestCode: Int)
 }

@@ -26,6 +26,7 @@ import name.zeno.android.util.ZBitmap
  * # [Android Camera身份证取景](https://github.com/lizhangqu/Camera)
  *
  * 在manifest 根节点添加
+ *
  * ```
  * <uses-feature android:name="android.hardware.camera"></uses-feature>
  * <uses-feature android:name="android.hardware.camera.autofocus"></uses-feature>

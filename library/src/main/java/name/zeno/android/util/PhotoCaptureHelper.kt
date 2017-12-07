@@ -11,6 +11,8 @@ import android.provider.MediaStore
 import android.support.annotation.RequiresPermission
 import android.support.v4.content.FileProvider
 import com.orhanobut.logger.Logger
+import name.zeno.android.core.N
+import name.zeno.android.core.sdkInt
 import name.zeno.android.presenter.activities.IDCardCameraActivity
 import name.zeno.android.system.ZPermission
 import java.io.File
@@ -23,8 +25,8 @@ import java.lang.ref.WeakReference
  * - 将方法[onActivityResult],[onDestroy] 与 activity/fragment 周期同步
  *
  *
- * - 使用 [getImageFromAlbum] 从相册获取图片;<br></br>
- * - 使用 [getImageFromCamera] 从相机获取图片;
+ * - 使用 [getImageFromAlbum] 从相册获取图片
+ * - 使用 [getImageFromCamera] 从相机获取图片
  *
  *
  * - 使用 [listener] 设置回调监听器监听完成后的图片存储路径
@@ -34,24 +36,25 @@ import java.lang.ref.WeakReference
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/6/3
  */
-class PhotoCaptureHelper(
-    var fragment: Fragment? = null,
-    var activity: Activity? = null
+class PhotoCaptureHelper private constructor(
+    context: Context,
+    val nav: (Intent, code: Int) -> Unit
 ) {
-  private var context: WeakReference<Context> = WeakReference(activity ?: fragment!!.activity)
-  private var cachePath: String? = null
-  private var fileName: String? = null
+  private val contextRef: WeakReference<Context> = WeakReference(context)
+  private var cachePath: String = getCachePath(context)
+  private lateinit var fileName: String
 
-  val nav: (Intent, code: Int) -> Unit
   var listener: ((path: String?) -> Unit)? = null
 
-  init {
-    cachePath = getCachePath(context.get()!!)
-    nav = { intent, code ->
-      fragment?.startActivityForResult(intent, code)
-      activity?.startActivityForResult(intent, code)
-    }
-  }
+  constructor(activity: Activity) : this(
+      activity,
+      { intent, code -> activity.startActivityForResult(intent, code) }
+  )
+
+  constructor(fragment: Fragment) : this(
+      fragment.activity,
+      { intent, code -> fragment.startActivityForResult(intent, code) }
+  )
 
   /** 从相册选择图片  */
   @RequiresPermission("android.permission.READ_EXTERNAL_STORAGE")
@@ -68,12 +71,10 @@ class PhotoCaptureHelper(
     val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
     fileName = newFileName()
 
-    val photoFile = File(cachePath, fileName!!)
+    val photoFile = File(cachePath, fileName)
     val imageUri: Uri = when {
-      Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
-        //通过FileProvider创建一个content类型的Uri
-        FileProvider.getUriForFile(context.get()!!, fileProvider, photoFile)
-      }
+    //通过FileProvider创建一个content类型的Uri
+      sdkInt >= N -> FileProvider.getUriForFile(contextRef.get()!!, fileProvider, photoFile)
       else -> Uri.fromFile(photoFile)
     }
 
@@ -85,7 +86,7 @@ class PhotoCaptureHelper(
   @RequiresPermission(allOf = arrayOf(ZPermission.WRITE_EXTERNAL_STORAGE, ZPermission.CAMERA))
   fun getIdCardFromCamera() {
     fileName = newFileName()
-    val intent = IDCardCameraActivity.getCallingIntent(context.get()!!, cachePath!! + fileName!!)
+    val intent = IDCardCameraActivity.getCallingIntent(contextRef.get()!!, cachePath + fileName)
     nav(intent, REQUEST_CODE_CAMERA)
   }
 
@@ -96,21 +97,13 @@ class PhotoCaptureHelper(
     }
 
     when (requestCode) {
-      REQUEST_CODE_ALBUM -> {
-        if (data == null) {
-          onImageSelected(null)
-          return
-        }
-        onImageFromAlbum(data)
-      }
-      REQUEST_CODE_CAMERA -> onImageSelected(cachePath!! + fileName!!)
+      REQUEST_CODE_ALBUM -> if (data != null) onImageFromAlbum(data)
+      REQUEST_CODE_CAMERA -> onImageSelected(cachePath + fileName)
     }
   }
 
   fun onDestroy() {
-    activity = null
-    fragment = null
-    context.clear()
+    contextRef.clear()
   }
 
 
@@ -124,11 +117,11 @@ class PhotoCaptureHelper(
     //Android 4.4 +
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       uri = data.data
-      filePath = PictureUtils.getPath(context.get()!!, uri!!)
+      filePath = PictureUtils.getPath(contextRef.get()!!, uri!!)
     } else {
       uri = data.data
       val projection = arrayOf(MediaStore.Images.Media.DATA)
-      val cursor = CursorLoader(context.get(), uri, projection, null, null, null).loadInBackground()
+      val cursor = CursorLoader(contextRef.get(), uri, projection, null, null, null).loadInBackground()
       val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
       cursor.moveToFirst()
       filePath = cursor.getString(columnIndex)// 图片在的路径
@@ -149,6 +142,7 @@ class PhotoCaptureHelper(
       return String.format("%s-%d.jpg", TAG, System.currentTimeMillis())
     }
 
+    /** 外部/内部存储缓存路径 */
     @JvmStatic
     fun getCachePath(context: Context): String =
         (context.externalCacheDir ?: context.cacheDir).absolutePath + "/"

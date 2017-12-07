@@ -11,45 +11,15 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
+import org.jetbrains.anko.contentView
 import java.lang.reflect.Field
 
 /**
+ * - [透明状态栏](http://blog.csdn.net/lisdye2/article/details/51331602)
  * @author 陈治谋 (513500085@qq.com)
- * @see [透明状态栏
  * @since 2016/10/11.
-](http://blog.csdn.net/lisdye2/article/details/51331602) */
+ */
 object ZStatusBar {
-
-  /**
-   * 系统 bar 高度
-   *
-   * @return {statusBarHeight,navigationBarHeight}
-   */
-  private fun barSize(): IntArray {
-    //{statusBarHeight,navigationBarHeight}
-    val size = intArrayOf(0, 0)
-
-    val resources = Resources.getSystem()
-    val resIdStatusbarHeight = resources.getIdentifier("status_bar_height", "dimen", "Android")
-
-    if (resIdStatusbarHeight > 0) {
-      size[0] = resources.getDimensionPixelSize(resIdStatusbarHeight)//状态栏高度
-    }
-
-    val resIdShow = resources.getIdentifier("config_showNavigationBar", "bool", "android")
-    var hasNavigationBar = false
-    if (resIdShow > 0) {
-      hasNavigationBar = resources.getBoolean(resIdShow)//是否显示底部navigationBar
-    }
-    if (hasNavigationBar) {
-      val resIdNavigationBar = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-      if (resIdNavigationBar > 0) {
-        size[1] = resources.getDimensionPixelSize(resIdNavigationBar)//navigationBar高度
-      }
-    }
-
-    return size
-  }
 
 
   /**
@@ -76,14 +46,10 @@ object ZStatusBar {
     }
   }
 
-  /**
-   * 填充状态栏
-   */
+  /** 填充状态栏 */
   fun transparentAndFit(activity: Activity) = transparentAndFit(activity.window)
 
-  /**
-   * 填充状态栏
-   */
+  /**  填充状态栏 */
   fun transparentAndFit(window: Window) {
     //window.requestFeature(Window.FEATURE_NO_TITLE);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -141,10 +107,8 @@ object ZStatusBar {
    * 设置根布局参数，让跟布局参数适应透明状态栏
    */
   private fun setRootView(activity: Activity) {
-    //获取到activity_main.xml文件
-    val rootView = (activity.findViewById<View>(android.R.id.content) as ViewGroup).getChildAt(0) as ViewGroup
     //如果不是设置参数，会使内容显示到状态栏上
-    rootView.fitsSystemWindows = true
+    activity.contentView?.fitsSystemWindows = true
   }
 
   /**
@@ -206,11 +170,11 @@ object ZStatusBar {
   /**
    * 需要 MIUI V6 以上
    *
+   * - [「状态栏黑色字符」实现方法变更通知 - 2017.7.10](https://dev.mi.com/doc/p=10416/index.html)
+   *
    * @param dark 是否把状态栏文字及图标颜色设置为深色
    * @return boolean 成功执行返回true
    */
-  private fun miuiLightMode(activity: Activity, dark: Boolean): Boolean = miuiLightMode(activity.window, dark)
-
   private fun miuiLightMode(window: Window, dark: Boolean): Boolean {
     var result = false
 
@@ -275,5 +239,36 @@ object ZStatusBar {
     }
 
     return result
+  }
+
+  /**
+   * 系统 bar 高度
+   *
+   * @return {statusBarHeight,navigationBarHeight}
+   */
+  private fun barSize(): IntArray {
+    //{statusBarHeight,navigationBarHeight}
+    val size = intArrayOf(0, 0)
+
+    val resources = Resources.getSystem()
+    val resIdStatusbarHeight = resources.getIdentifier("status_bar_height", "dimen", "Android")
+
+    if (resIdStatusbarHeight > 0) {
+      size[0] = resources.getDimensionPixelSize(resIdStatusbarHeight)//状态栏高度
+    }
+
+    val resIdShow = resources.getIdentifier("config_showNavigationBar", "bool", "android")
+    var hasNavigationBar = false
+    if (resIdShow > 0) {
+      hasNavigationBar = resources.getBoolean(resIdShow)//是否显示底部navigationBar
+    }
+    if (hasNavigationBar) {
+      val resIdNavigationBar = resources.getIdentifier("navigation_bar_height", "dimen", "android")
+      if (resIdNavigationBar > 0) {
+        size[1] = resources.getDimensionPixelSize(resIdNavigationBar)//navigationBar高度
+      }
+    }
+
+    return size
   }
 }

@@ -19,9 +19,15 @@ import name.zeno.android.presenter.activities.UpdateActivity
 import kotlin.reflect.KClass
 
 /**
+ * - [Activity.nav]
+ * - [Fragment.nav]
+ *
+ * - [Activity.home] 后台运行，回到安卓首页
+ * - [Activity.runOnBack] 后台运行，回到安卓首页
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/10/18
  */
+
 
 fun Activity.nav(clazz: KClass<out Activity>, data: Parcelable? = null) = nav(clazz.java, data)
 
@@ -96,7 +102,6 @@ fun Activity.home() {
   intent.addCategory(Intent.CATEGORY_HOME)
   intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
   startActivity(intent)
-  //    activity.moveTaskToBack(true);
 }
 
 /** 后台运行,回到安卓首页  */

@@ -29,7 +29,7 @@ class ClipActivity : ZActivity() {
     dialog
   }
 
-  private val cachePath: String by lazy { PhotoCaptureHelper.getCachePath(this@ClipActivity) }
+  private val cachePath: String by lazy { PhotoCaptureHelper.getCachePath(this) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -72,8 +72,8 @@ class ClipActivity : ZActivity() {
 
     }.compose(RxUtils.applySchedulers()).subscribe(object : ZObserver<String>() {
       override fun onComplete() = loadingDialog.dismiss()
-      override fun onNext(path: String) {
-        setResult(Activity.RESULT_OK, Extra.setData(BaseData(path)))
+      override fun onNext(value: String) {
+        setResult(Activity.RESULT_OK, Extra.setData(BaseData(value)))
         finish()
       }
     })

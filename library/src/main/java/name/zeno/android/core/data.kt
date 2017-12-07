@@ -28,29 +28,32 @@ fun <T : Fragment> T.args(data: Parcelable? = null): T {
   return this
 }
 
-fun Fragment.cancel(data: Parcelable? = null) {
+fun Fragment.cancel(data: Parcelable? = null) = activity?.cancel(data)
+fun Activity.cancel(data: Parcelable? = null) {
   if (data == null) {
-    activity?.setResult(Activity.RESULT_CANCELED)
+    setResult(Activity.RESULT_CANCELED)
   } else {
-    activity?.setResult(Activity.RESULT_CANCELED, Extra.setData(data))
+    setResult(Activity.RESULT_CANCELED, Extra.setData(data))
   }
 }
 
-fun Fragment.cancelAndFinish(data: Parcelable? = null) {
+fun Fragment.cancelAndFinish(data: Parcelable? = null) = activity?.cancelAndFinish(data)
+fun Activity.cancelAndFinish(data: Parcelable? = null) {
   cancel(data)
-  activity.finish()
+  finish()
 }
 
-fun Fragment.ok(data: Parcelable? = null) {
+fun Fragment.ok(data: Parcelable? = null) = activity?.ok(data)
+fun Activity.ok(data: Parcelable? = null) {
   if (data == null) {
-    activity?.setResult(Activity.RESULT_OK)
+    setResult(Activity.RESULT_OK)
   } else {
-    activity?.setResult(Activity.RESULT_OK, Extra.setData(data))
+    setResult(Activity.RESULT_OK, Extra.setData(data))
   }
 }
 
-fun Fragment.okAndFinish(data: Parcelable? = null) {
+fun Fragment.okAndFinish(data: Parcelable? = null) = activity?.okAndFinish(data)
+fun Activity.okAndFinish(data: Parcelable? = null) {
   ok(data)
-  activity.finish()
+  finish()
 }
-
