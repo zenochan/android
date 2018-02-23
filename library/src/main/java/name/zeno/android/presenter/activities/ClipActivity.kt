@@ -1,5 +1,6 @@
 package name.zeno.android.presenter.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -40,7 +41,6 @@ class ClipActivity : ZActivity() {
     loadBmp()
   }
 
-
   private fun loadBmp() {
     val path = data<BaseData>().string
 
@@ -58,6 +58,7 @@ class ClipActivity : ZActivity() {
     layout_clip_img.setBitmap(bitmap)
   }
 
+  @SuppressLint("MissingPermission")
   private fun onSubmit() {
     loadingDialog.show()
     Observable.create<String> { emitter ->

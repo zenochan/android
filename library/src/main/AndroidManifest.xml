@@ -2,6 +2,8 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   package="name.zeno.android.util"
   >
+  <!-- 引用自升级，Android O 需要次权限才可以安装-->
+  <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
   <application>
     <activity

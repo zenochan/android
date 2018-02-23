@@ -9,8 +9,8 @@ apply from: 'http://maven.mjtown.cn/maven.gradle'
 mavenConf {
   groupId "name.zeno"
   artifactId "zako"
-  version "2.0.0.20171127"
-//  version "2.0.0-SNAPSHOT"
+//  version "2.0.0.20171127"
+  version "2.0.0.20180223.1"
 
 //  repositoryUrl "file:///Users/zenochan/.m2/repository"
   repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"
@@ -61,7 +61,7 @@ dependencies {
   compileOnly 'com.alipay:alipay:20170623'
   compileOnly 'com.unionpay:unionpay:3.3.7'
   compileOnly 'com.baidu.mapapi:LocPoiLBSMap:4.5.0'
-  compileOnly 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.1.6'
+  compileOnly 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.4.0'
 
   //support 家族
   //https://developer.android.com/topic/libraries/support-library/features.html
@@ -148,7 +148,7 @@ dependencies {
 
   //kotlin kits
   api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-  api "org.jetbrains.anko:anko:0.10.3"
+  api "org.jetbrains.anko:anko:0.10.4"
 
   // 86KB https://github.com/olegcherr/Aza-Kotlin-CSS
   // api "azadev.kotlin:aza-kotlin-css:1.0"

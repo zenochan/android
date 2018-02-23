@@ -50,6 +50,14 @@ dependencies{
 
 ## CHANGE LOG
 
+
+#### 2.0.0.20180223.1
+- 添加安装应用权限
+```xml
+<!-- 引用自升级，Android O 需要次权限才可以安装-->
+<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+```
+
 #### 1.0.6
 
 - libs update

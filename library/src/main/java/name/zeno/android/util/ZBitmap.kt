@@ -1,5 +1,6 @@
 package name.zeno.android.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.*
@@ -8,8 +9,13 @@ import android.graphics.drawable.Drawable
 import android.os.Environment
 import android.support.annotation.DrawableRes
 import android.support.annotation.FloatRange
+import android.support.annotation.RequiresPermission
 import android.util.Log
 import android.widget.ImageView
+import name.zeno.android.kt.circle
+import name.zeno.android.kt.gray
+import name.zeno.android.kt.zoom
+import name.zeno.android.system.ZPermission
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -31,67 +37,58 @@ object ZBitmap {
     return bd.bitmap
   }
 
-  @JvmOverloads
   fun bitmap(drawable: Drawable, whiteBg: Boolean = false): Bitmap {
-    val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight,
-        if (drawable.opacity != PixelFormat.OPAQUE) Bitmap.Config.ARGB_8888 else Bitmap.Config.RGB_565)
+    val config = when {
+      drawable.opacity != PixelFormat.OPAQUE -> Bitmap.Config.ARGB_8888
+      else -> Bitmap.Config.RGB_565
+    }
+
+    val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, config)
     val canvas = Canvas(bitmap)
     drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
 
     //绘制白底
-    if (whiteBg) {
-      canvas.drawRGB(255, 255, 255)
-    }
+    if (whiteBg) canvas.drawColor(Color.WHITE)
     drawable.draw(canvas)
 
     return bitmap
   }
 
 
-  // 根据图片url获取图片对象
+  @SuppressLint("MissingPermission")
+// 根据图片url获取图片对象
   fun bitmap(urlPath: String?): Bitmap? {
-    val cache = File(Environment.getExternalStorageDirectory(), "cache")
-    if (urlPath != null && (cache.exists() || cache.mkdirs())) {
-      val name = Encode.md5(urlPath)
-      val file = File(cache, name!!)
-      if (file.exists()) {
-        // 如果图片存在本地缓存目录，则不去服务器下载
-        return BitmapFactory.decodeFile(file.absolutePath)
-      } else {
-        // 从网络上获取图片
-        try {
-          val url = URL(urlPath)
-          val conn = url.openConnection() as HttpURLConnection
-          conn.connectTimeout = 5000
-          conn.requestMethod = "GET"
-          conn.doInput = true
-          if (conn.responseCode == 200) {
-
-            val inputStream = conn.inputStream
-            val fos = FileOutputStream(file)
-            val buffer = ByteArray(1024)
-
-            var len: Int
-            do {
-              len = inputStream.read(buffer)
-              if (len != -1) fos.write(buffer, 0, len)
-            } while (len != -1)
-
-            inputStream.close()
-            fos.close()
-            // 返回一个URI对象
-            return BitmapFactory.decodeFile(file.absolutePath)
-          }
-        } catch (e: Exception) {
-          e.printStackTrace()
-          Log.e(TAG, "download image failed", e)
-        }
-
-      }
-      return null
-    } else {
-      return null
+    val fileName = when {
+      urlPath != null -> Encode.md5(urlPath)
+      else -> return null
     }
+
+
+    val cachePath = Environment.getDownloadCacheDirectory()
+    val cache = File(cachePath, "wexin_share_icons")
+    val file = File(cache, fileName)
+    if (file.exists()) {
+      // 如果图片存在本地缓存目录，则不去服务器下载
+      return BitmapFactory.decodeFile(file.absolutePath)
+    }
+
+    // 从网络上获取图片
+    try {
+      val url = URL(urlPath)
+      val conn = url.openConnection() as HttpURLConnection
+      conn.connectTimeout = 5000
+      conn.requestMethod = "GET"
+      conn.doInput = true
+      if (conn.responseCode == 200) {
+        val bmp = BitmapFactory.decodeStream(conn.inputStream)
+        savePhotoToSDCard(bmp, cache.absolutePath, fileName)
+        return bmp
+      }
+    } catch (e: Exception) {
+      ZLog.e(TAG, "download image failed", e)
+    }
+
+    return null
   }
 
   /**
@@ -136,48 +133,15 @@ object ZBitmap {
    * @param bitmap 原图
    * @return 圆形bitmap
    */
-  fun circleBitmap(bitmap: Bitmap): Bitmap {
-    val output = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(output)
-    val color = -0xbdbdbe
-    val rect = Rect(0, 0, bitmap.width, bitmap.height)
-    val paint = Paint()
-    paint.isAntiAlias = true
-    canvas.drawARGB(0, 0, 0, 0)
-    paint.color = color
-    val x = bitmap.width
-    canvas.drawCircle((x / 2).toFloat(), (x / 2).toFloat(), (x / 2).toFloat(), paint)
-    paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-    canvas.drawBitmap(bitmap, rect, rect, paint)
-    return output
-  }
+  @Deprecated("use Bitmap.circle()")
+  fun circleBitmap(bitmap: Bitmap): Bitmap = bitmap.circle()
 
-  //  转为灰阶图片
-  fun grayBitmap(bmp: Bitmap): Bitmap {
-    val width = bmp.width
-    val height = bmp.height
-    val pixels = IntArray(width * height)
-    bmp.getPixels(pixels, 0, width, 0, 0, width, height)
-
-    val alpha = -0x1000000
-    var r: Int
-    var g: Int
-    var b: Int
-    var grey: Int
-    for (i in pixels.indices) {
-      grey = pixels[i]
-      r = grey and 0xFF0000 shr 16
-      g = grey and 0x00FF00 shr 8
-      b = grey and 0x0000FF
-      grey = (r * 0.3 + g * 0.59 + b * 0.11).toInt()
-      grey = grey or (alpha or (grey shl 16) or (grey shl 8))
-      pixels[i] = grey
-    }
-
-    val greyBmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
-    greyBmp.setPixels(pixels, 0, width, 0, 0, width, height)
-    return greyBmp
-  }
+  //
+  /**
+   * #   转为灰阶图片
+   */
+  @Deprecated("use Bitmap.gray()")
+  fun grayBitmap(bmp: Bitmap) = bmp.gray()
 
   /***
    * 图片的缩放方法
@@ -205,19 +169,8 @@ object ZBitmap {
    * @param newWidth  ：缩放后宽度
    * @param newHeight ：缩放后高度
    */
-  fun zoom(bgImage: Bitmap, newWidth: Double, newHeight: Double): Bitmap {
-    // 获取这个图片的宽和高
-    val width = bgImage.width.toFloat()
-    val height = bgImage.height.toFloat()
-    // 创建操作图片用的matrix对象
-    val matrix = Matrix()
-    // 计算宽高缩放率
-    val scaleWidth = newWidth.toFloat() / width
-    val scaleHeight = newHeight.toFloat() / height
-    // 缩放图片动作
-    matrix.postScale(scaleWidth, scaleHeight)
-    return Bitmap.createBitmap(bgImage, 0, 0, width.toInt(), height.toInt(), matrix, true)
-  }
+  fun zoom(bgImage: Bitmap, newWidth: Double, newHeight: Double): Bitmap
+      = bgImage.zoom(newWidth.toInt(), newHeight.toInt())
 
   /**
    * @param maxSize 图片允许最大空间   单位：KB
@@ -519,6 +472,7 @@ object ZBitmap {
   /**
    * Save image to the SD card
    */
+  @RequiresPermission(ZPermission.WRITE_EXTERNAL_STORAGE)
   fun savePhotoToSDCard(photoBitmap: Bitmap?, path: String, photoName: String) {
     if (Environment.getExternalStorageState() != Environment.MEDIA_MOUNTED) {
       Log.e("ImageUtil", "SDCardDisabled")
@@ -526,18 +480,19 @@ object ZBitmap {
     }
 
     val dir = File(path)
-    if (dir.exists() || dir.mkdirs()) {
-      try {
+    try {
+      if (dir.exists() && dir.isDirectory || dir.mkdirs()) {
         val photoFile = File(path, photoName)
         val fileOutputStream = FileOutputStream(photoFile)
         if (photoBitmap != null && photoBitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)) {
           fileOutputStream.flush()
         }
         fileOutputStream.close()
-      } catch (e: IOException) {
-        Log.e("ImageUtil", "io exception")
       }
-
+    } catch (e: IOException) {
+      ZLog.e(TAG, "io exception: ${e.message}")
+    } catch (other: Throwable) {
+      ZLog.e(TAG, "保存文件错误: ${other.message}")
     }
   }
 

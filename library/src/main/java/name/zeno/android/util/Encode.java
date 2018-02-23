@@ -100,7 +100,6 @@ public class Encode
     return base64AndUriEncode("" + content);
   }
 
-
   public static String debase64AndUriDecode(String content)
   {
     String encodedString = URLDecoder.decode(content);
