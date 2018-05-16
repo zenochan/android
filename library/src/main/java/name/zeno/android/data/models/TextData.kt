@@ -24,7 +24,7 @@ import name.zeno.android.common.annotations.DataClass
     var btnBackground: Int = 0
 ) : Parcelable {
 
-  @IntDef(TYPE_TEXT.toLong(), TYPE_NUMBER.toLong(), TYPE_PHONE.toLong(), TYPE_CONTENT.toLong())
+  @IntDef(TYPE_TEXT, TYPE_NUMBER, TYPE_PHONE, TYPE_CONTENT)
   internal annotation class Type()
 
   constructor(source: Parcel) : this(

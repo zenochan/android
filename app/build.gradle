@@ -13,7 +13,7 @@ repositories {
 
 android {
   compileSdkVersion 27
-  buildToolsVersion '27.0.1'
+  buildToolsVersion '27.0.3'
 
 //  compileOptions {
 //    sourceCompatibility JavaVersion.VERSION_1_8
@@ -41,7 +41,7 @@ android {
 
 dependencies {
   api fileTree(dir: 'libs', include: ['*.jar'])
-  testCompile 'junit:junit:4.12'
+  testImplementation 'junit:junit:4.12'
   api project(':library')
   api 'com.baidu.mapapi:LocPoiLBSMap:4.5.0'
 }

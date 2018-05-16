@@ -19,7 +19,7 @@ class PoiModel(
     var longitude: Double = 0.0,
     var time: Long = System.currentTimeMillis()
 ) : Parcelable {
-  @IntDef(POINT.toLong(), BUS_STATION.toLong(), BUS_LINE.toLong(), SUBWAY_STATION.toLong(), SUBWAY_LINE.toLong())
+  @IntDef(POINT, BUS_STATION, BUS_LINE, SUBWAY_STATION, SUBWAY_LINE)
   annotation class PoiTypeInt()
 
   constructor(poiInfo: PoiInfo) : this(

@@ -121,7 +121,7 @@ class SortHeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
     var sort: Int = 0
     var weight = 1f
 
-    @IntDef(NONE.toLong(), ASC.toLong(), DESC.toLong())
+    @IntDef(NONE, ASC, DESC)
     annotation class SortInt
 
     companion object {

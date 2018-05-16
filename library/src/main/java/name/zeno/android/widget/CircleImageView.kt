@@ -55,7 +55,8 @@ class CircleImageView @JvmOverloads constructor(
     const val CLIP = 1   // 裁剪画布
   }
 
-  @IntDef(OVERDRAW.toLong(), CLIP.toLong()) annotation class Mode()
+  @IntDef(OVERDRAW, CLIP)
+  annotation class Mode()
 
   init {
     init(mContext, attrs)

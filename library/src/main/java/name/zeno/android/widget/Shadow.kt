@@ -33,7 +33,7 @@ class Shadow @JvmOverloads constructor(context: Context, attrs: AttributeSet? = 
     const val CORNERS = 2           // 圆角
   }
 
-  @IntDef(BEZIER.toLong(), TRIANGLE.toLong()) internal annotation class Mode()
+  @IntDef(BEZIER, TRIANGLE) internal annotation class Mode()
 
   init {
     init(context, attrs)
