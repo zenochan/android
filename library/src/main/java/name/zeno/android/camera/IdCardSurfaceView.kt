@@ -1,10 +1,8 @@
 package name.zeno.android.camera
 
 import android.content.Context
-import android.graphics.Point
 import android.util.AttributeSet
 import android.view.SurfaceView
-
 import name.zeno.android.util.MeasureUtils
 
 /**

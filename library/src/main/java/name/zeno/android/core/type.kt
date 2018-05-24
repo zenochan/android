@@ -10,7 +10,7 @@ import java.lang.reflect.*
  */
 fun ZType<*>.type(): Type {
   try {
-    val type = this.javaClass.declaredMethods[2].parameterTypes[0];
+    val type = this.javaClass.declaredMethods[1].parameterTypes[0];
     when {
       hasUnresolvableType(type) -> throw RuntimeException("Method return type must not include a type variable or wildcard: " + type);
       type == Void::class.java -> throw RuntimeException("Service methods cannot return void.");

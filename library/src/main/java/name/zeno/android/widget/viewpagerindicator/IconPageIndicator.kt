@@ -16,22 +16,18 @@
  */
 package name.zeno.android.widget.viewpagerindicator
 
+
 import android.content.Context
-import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v4.view.ViewPager.OnPageChangeListener
 import android.util.AttributeSet
 import android.view.Gravity
-import android.view.View
-import android.widget.HorizontalScrollView
-import android.widget.ImageView
-
-
-import name.zeno.android.util.R
-
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
+import name.zeno.android.util.R
 
 /**
  * This widget implements the dynamic action bar tab behavior that can change
@@ -81,34 +77,26 @@ class IconPageIndicator @JvmOverloads constructor(context: Context, attrs: Attri
   }
 
   override fun onPageScrollStateChanged(arg0: Int) {
-    if (mListener != null) {
-      mListener!!.onPageScrollStateChanged(arg0)
-    }
+    mListener?.onPageScrollStateChanged(arg0)
   }
 
   override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-    if (mListener != null) {
-      mListener!!.onPageScrolled(arg0, arg1, arg2)
-    }
+    mListener?.onPageScrolled(arg0, arg1, arg2)
   }
 
   override fun onPageSelected(arg0: Int) {
     setCurrentItem(arg0)
-    if (mListener != null) {
-      mListener!!.onPageSelected(arg0)
-    }
+    mListener?.onPageSelected(arg0)
   }
 
   override fun setViewPager(view: ViewPager) {
     if (mViewPager === view) {
       return
     }
-    if (mViewPager != null) {
-      mViewPager!!.setOnPageChangeListener(null)
-    }
-    val adapter = view.adapter ?: throw IllegalStateException("ViewPager does not have adapter instance.")
+    mViewPager?.removeOnPageChangeListener(this)
+    if (view.adapter == null) throw IllegalStateException("ViewPager does not have adapter instance.")
     mViewPager = view
-    view.setOnPageChangeListener(this)
+    view.addOnPageChangeListener(this)
     notifyDataSetChanged()
   }
 
@@ -134,11 +122,9 @@ class IconPageIndicator @JvmOverloads constructor(context: Context, attrs: Attri
   }
 
   override fun setCurrentItem(item: Int) {
-    if (mViewPager == null) {
-      throw IllegalStateException("ViewPager has not been bound.")
-    }
+    checkNotNull(mViewPager) { "ViewPager has not been bound." }
     mSelectedIndex = item
-    mViewPager!!.currentItem = item
+    mViewPager?.currentItem = item
 
     val tabCount = mIconsLayout.childCount
     for (i in 0 until tabCount) {

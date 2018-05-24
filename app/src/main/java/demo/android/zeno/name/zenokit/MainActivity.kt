@@ -4,18 +4,20 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.hwangjr.rxbus.annotation.Subscribe
 import demo.android.zeno.name.zenokit.item.MenuItem
+import io.reactivex.Observable
 import kale.adapter.CommonRcvAdapter
 import kale.adapter.item.AdapterItem
 import kotlinx.android.synthetic.main.activity_main.*
-import name.zeno.android.core.ZType
 import name.zeno.android.core.nav
-import name.zeno.android.core.type
-import name.zeno.android.data.models.BaseData
+import name.zeno.android.data.models.TextData
 import name.zeno.android.presenter.ZActivity
-import name.zeno.android.presenter.searchpio.SearchPoiActivity
-import name.zeno.android.presenter.searchpio.SearchPoiRequest
-import name.zeno.android.third.baidu.PoiModel
+import name.zeno.android.third.rxbus.registerRxBus
+import name.zeno.android.third.rxbus.rxBus
+import name.zeno.android.third.rxjava.RxUtils
+import name.zeno.android.util.ZLog
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ZActivity() {
 
@@ -30,8 +32,6 @@ class MainActivity : ZActivity() {
   }
 
   private fun init() {
-    nav<PoiModel>(SearchPoiActivity::class, SearchPoiRequest()) { ok, data -> }
-
     classes = listOf(
         TimeButtonActivity::class,
         ShapeActivity::class,
@@ -45,7 +45,5 @@ class MainActivity : ZActivity() {
     }
     rcv_class.layoutManager = LinearLayoutManager(this)
     rcv_class.adapter = adapter
-
-    println(ZType<List<BaseData>> {}.type())
   }
 }

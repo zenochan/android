@@ -43,7 +43,9 @@ dependencies {
   api fileTree(dir: 'libs', include: ['*.jar'])
   testImplementation 'junit:junit:4.12'
   api project(':library')
-  api 'com.baidu.mapapi:LocPoiLBSMap:4.5.0'
+//  implementation project(':jiguang')
+//  api 'com.baidu.mapapi:LocPoiLBSMap:4.5.0'
+  compile 'com.android.support:multidex:1.0.3'
 }
 
 kotlin {

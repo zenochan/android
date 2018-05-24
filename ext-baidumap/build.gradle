@@ -37,11 +37,11 @@ android {
 
 dependencies {
   api fileTree(dir: 'libs', include: ['*.jar'])
-  provided "com.android.support:appcompat-v7:$support_version"
-  testApi 'junit:junit:4.12'
+  compileOnly "com.android.support:appcompat-v7:$support_version"
+  androidTestImplementation 'junit:junit:4.12'
   androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  provided "com.baidu.mapapi:LocPoiLBSMap:4.5.0"
+  compileOnly "com.baidu.mapapi:LocPoiLBSMap:4.5.0"
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }

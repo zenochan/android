@@ -41,11 +41,11 @@ class TabPageIndicator @JvmOverloads constructor(context: Context, attrs: Attrib
 
   private val mTabClickListener = OnClickListener { view ->
     val tabView = view as TabView
-    val oldSelected = mViewPager!!.currentItem
+    val oldSelected = mViewPager?.currentItem
     val newSelected = tabView.index
-    mViewPager!!.currentItem = newSelected
-    if (oldSelected == newSelected && mTabReselectedListener != null) {
-      mTabReselectedListener!!.onTabReselected(newSelected)
+    mViewPager?.currentItem = newSelected
+    if (oldSelected == newSelected) {
+      mTabReselectedListener?.onTabReselected(newSelected)
     }
   }
 
@@ -151,49 +151,41 @@ class TabPageIndicator @JvmOverloads constructor(context: Context, attrs: Attrib
   }
 
   override fun onPageScrollStateChanged(arg0: Int) {
-    if (mListener != null) {
-      mListener!!.onPageScrollStateChanged(arg0)
-    }
+    mListener?.onPageScrollStateChanged(arg0)
   }
 
   override fun onPageScrolled(arg0: Int, arg1: Float, arg2: Int) {
-    if (mListener != null) {
-      mListener!!.onPageScrolled(arg0, arg1, arg2)
-    }
+    mListener?.onPageScrolled(arg0, arg1, arg2)
   }
 
   override fun onPageSelected(arg0: Int) {
     setCurrentItem(arg0)
-    if (mListener != null) {
-      mListener!!.onPageSelected(arg0)
-    }
+    mListener?.onPageSelected(arg0)
   }
 
   override fun setViewPager(view: ViewPager) {
     if (mViewPager === view) {
       return
     }
-    if (mViewPager != null) {
-      mViewPager!!.setOnPageChangeListener(null)
-    }
-    val adapter = view.adapter ?: throw IllegalStateException("ViewPager does not have adapter instance.")
+    mViewPager?.removeOnPageChangeListener(this)
+    checkNotNull(view.adapter) { "ViewPager does not have adapter instance." }
     mViewPager = view
-    view.setOnPageChangeListener(this)
+    view.addOnPageChangeListener(this)
     notifyDataSetChanged()
   }
 
   override fun notifyDataSetChanged() {
     mTabLayout.removeAllViews()
-    val adapter = mViewPager!!.adapter
-    val iconAdapter: IconPagerAdapter? = adapter as? IconPagerAdapter
+    val adapter = mViewPager?.adapter ?: return
+    val iconAdapter: IconPagerAdapter = adapter as IconPagerAdapter
 
-    val count = adapter!!.count
+    val count = adapter.count
     for (i in 0 until count) {
       var title: CharSequence? = adapter.getPageTitle(i)
       if (title == null) {
         title = EMPTY_TITLE
       }
-      val iconResId = iconAdapter?.getIconResId(i) ?: 0
+      val iconResId = iconAdapter.getIconResId(i)
       addTab(i, title, iconResId)
     }
     if (mSelectedTabIndex > count) {
@@ -209,11 +201,9 @@ class TabPageIndicator @JvmOverloads constructor(context: Context, attrs: Attrib
   }
 
   override fun setCurrentItem(item: Int) {
-    if (mViewPager == null) {
-      throw IllegalStateException("ViewPager has not been bound.")
-    }
+    checkNotNull(mViewPager) { "ViewPager has not been bound." }
     mSelectedTabIndex = item
-    mViewPager!!.currentItem = item
+    mViewPager?.currentItem = item
 
     val tabCount = mTabLayout.childCount
     for (i in 0 until tabCount) {

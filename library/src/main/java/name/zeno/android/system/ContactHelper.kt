@@ -76,12 +76,21 @@ class ContactHelper {
     val REQUEST_SELECT_CONTACT = 0x100F
 
     // 查询的字段
-    private val projection = arrayOf(ContactsContract.CommonDataKinds.Phone._ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, "sort_key", ContactsContract.CommonDataKinds.Phone.TIMES_CONTACTED, ContactsContract.CommonDataKinds.Phone.LAST_TIME_CONTACTED, ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY,
+    private val projection = arrayOf(
+        ContactsContract.CommonDataKinds.Phone._ID,
+        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+        "sort_key",
+        ContactsContract.CommonDataKinds.Phone.TIMES_CONTACTED,
+        ContactsContract.CommonDataKinds.Phone.LAST_TIME_CONTACTED,
+        ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY,
 
-        ContactsContract.CommonDataKinds.Phone.CONTACT_ID, ContactsContract.CommonDataKinds.Phone.NUMBER,
+        ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+        ContactsContract.CommonDataKinds.Phone.NUMBER,
         //need api 16
         //ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER,
-        ContactsContract.CommonDataKinds.Phone.DATA4, ContactsContract.CommonDataKinds.Phone.PHOTO_ID)
+        ContactsContract.CommonDataKinds.Phone.DATA4,
+        ContactsContract.CommonDataKinds.Phone.PHOTO_ID
+    )
 
     @RequiresPermission(Manifest.permission.READ_CONTACTS)
     fun contactsSync(context: Context): Observable<List<Contact>> {

@@ -28,10 +28,8 @@ dependencies{
     - [glide-transformations](https://github.com/wasabeef/glide-transformations)
 
 - Json 解析: [FastJson](https://github.com/alibaba/fastjson)
-- View 绑定: [butterknife](https://github.com/JakeWharton/butterknife)
 - 网络请求: [Retrofit](http://square.github.io/retrofit/) + RxAndroid + RxJava2Adapter + FastJsonConverter
-- [Lombok](https://projectlombok.org/)
-- 事件: [otto](https://github.com/square/otto)
+- 事件: [RxBus](https://github.com/AndroidKnife/RxBus/tree/2.x)
 - 动态权限: RxPermission
 - [消息推送(个推)](./docs/getui.md)
 
@@ -41,11 +39,14 @@ dependencies{
 - dialog: [material-dialogs](https://github.com/afollestad/material-dialogs)
 - [Material Datetime Picker](https://github.com/wdullaer/MaterialDateTimePicker)
 
+- <strike>removed</strike>View 绑定: [butterknife](https://github.com/JakeWharton/butterknife)
+- <strike>removed</strike>[Lombok](https://projectlombok.org/)
+- <strike>removed</strike>事件: [otto](https://github.com/square/otto)
+
 
 ## TODO
 
 - [ ] 添加 kotlin 后必须依赖 Provider 依赖才能使用 lib，待优化
-- [ ] Otto 替换为 RxBus - Otto 官方推荐
 - [ ] [数据库框架研究](https://www.zhihu.com/question/46449188?sort=created)
 
 ## CHANGE LOG

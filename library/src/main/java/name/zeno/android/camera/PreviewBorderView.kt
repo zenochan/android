@@ -1,17 +1,9 @@
 package name.zeno.android.camera
 
 import android.content.Context
-import android.content.res.TypedArray
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Point
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-
 import name.zeno.android.util.MeasureUtils
 import name.zeno.android.util.R
 import name.zeno.android.util.ZDimen
@@ -27,8 +19,8 @@ class PreviewBorderView @JvmOverloads constructor(context: Context, attrs: Attri
   private var screenW: Int = 0
 
   private val rectF = RectF()
-  private var paint: Paint? = null
-  private var paintLine: Paint? = null
+  private lateinit var paint: Paint
+  private lateinit var paintLine: Paint
 
   private var tipTextSize: Float = 0.toFloat()
   private var tipTextColor: Int = 0
@@ -59,24 +51,24 @@ class PreviewBorderView @JvmOverloads constructor(context: Context, attrs: Attri
 
     //中间去除遮罩
     rectF.set(l, t, r, b)
-    canvas.drawRect(rectF, paint!!)
+    canvas.drawRect(rectF, paint)
 
     //四个角
-    canvas.drawLine(l, t, l, t + 50, paintLine!!)
-    canvas.drawLine(l, t, l + 50, t, paintLine!!)
-    canvas.drawLine(r, t, r, t + 50, paintLine!!)
-    canvas.drawLine(r, t, r - 50, t, paintLine!!)
-    canvas.drawLine(l, b, l, b - 50, paintLine!!)
-    canvas.drawLine(l, b, l + 50, b, paintLine!!)
-    canvas.drawLine(r, b, r, b - 50, paintLine!!)
-    canvas.drawLine(r, b, r - 50, b, paintLine!!)
+    canvas.drawLine(l, t, l, t + 50, paintLine)
+    canvas.drawLine(l, t, l + 50, t, paintLine)
+    canvas.drawLine(r, t, r, t + 50, paintLine)
+    canvas.drawLine(r, t, r - 50, t, paintLine)
+    canvas.drawLine(l, b, l, b - 50, paintLine)
+    canvas.drawLine(l, b, l + 50, b, paintLine)
+    canvas.drawLine(r, b, r, b - 50, paintLine)
+    canvas.drawLine(r, b, r - 50, b, paintLine)
 
     //提示文本
-    paintLine!!.textSize = tipTextSize
-    paintLine!!.isAntiAlias = true
-    paintLine!!.isDither = true
-    val length = paintLine!!.measureText(tipText)
-    canvas.drawText(tipText!!, screenW / 2 - length / 2, unit * 0.5f - tipTextSize, paintLine!!)
+    paintLine.textSize = tipTextSize
+    paintLine.isAntiAlias = true
+    paintLine.isDither = true
+    val length = paintLine.measureText(tipText)
+    canvas.drawText(tipText!!, screenW / 2 - length / 2, unit * 0.5f - tipTextSize, paintLine)
   }
 
 
@@ -102,14 +94,14 @@ class PreviewBorderView @JvmOverloads constructor(context: Context, attrs: Attri
 
   private fun init() {
     paint = Paint()
-    paint?.isAntiAlias = true
-    paint?.color = Color.WHITE
-    paint?.style = Paint.Style.FILL_AND_STROKE
-    paint?.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+    paint.isAntiAlias = true
+    paint.color = Color.WHITE
+    paint.style = Paint.Style.FILL_AND_STROKE
+    paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
     paintLine = Paint()
-    paintLine!!.color = tipTextColor
-    paintLine!!.strokeWidth = 3.0f
+    paintLine.color = tipTextColor
+    paintLine.strokeWidth = 3.0f
     keepScreenOn = true
   }
 

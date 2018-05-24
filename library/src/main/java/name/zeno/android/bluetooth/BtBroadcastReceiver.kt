@@ -54,41 +54,30 @@ class BtBroadcastReceiver : BroadcastReceiver() {
   }
 
   fun startDiscover() {
-    if (listener != null) {
-      listener!!.onStartDiscovery()
-    }
+    listener?.onStartDiscovery()
   }
 
   fun finishDiscover() {
-    if (listener != null) {
-      listener!!.onFinishDiscovery()
-    }
+    listener?.onFinishDiscovery()
   }
 
   fun stateChanged() {
-    if (listener != null) {
-      val btEnable = BluetoothHelper.isBluetoothEnable
-      listener!!.onStatusChanged(btEnable)
-    }
+    listener?.onStatusChanged(BluetoothHelper.isBluetoothEnable)
   }
 
   fun foundDevice(intent: Intent) {
-    if (listener != null) {
+    listener?.let {
       val device = intent.getParcelableExtra<BluetoothDevice>(BluetoothDevice.EXTRA_DEVICE)
-      listener!!.onFoundDevice(device)
+      it.onFoundDevice(device)
     }
   }
 
   fun bondStateChanged(intent: Intent) {
-    if (listener != null) {
-      listener!!.onBondStatusChange(intent)
-    }
+    listener?.onBondStatusChange(intent)
   }
 
   private fun pairingRequest(intent: Intent) {
-    if (listener != null) {
-      listener!!.btPairingRequest(intent)
-    }
+    listener?.btPairingRequest(intent)
   }
 
 }

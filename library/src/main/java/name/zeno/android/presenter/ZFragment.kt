@@ -11,8 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import name.zeno.android.core.sdkInt
-import name.zeno.android.third.otto.registerOtto
-import name.zeno.android.third.otto.unregisterOtto
+import name.zeno.android.third.rxbus.registerRxBus
+import name.zeno.android.third.rxbus.unregisterRxBus
 import name.zeno.android.third.rxjava.RxActivityResult
 import name.zeno.android.third.umeng.ZUmeng
 import name.zeno.android.util.ZLog
@@ -65,7 +65,7 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     super.onCreate(savedInstanceState)
     ZLog.v(TAG, "onCreate()")
     listenerList.forEach { it.onCreate() }
-    registerOtto(this)
+    registerRxBus()
   }
 
   override fun onStart() {
@@ -125,7 +125,7 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     super.onDestroy()
     ZLog.v(TAG, "onDestroy()")
     listenerList.forEach { it.onDestroy() }
-    unregisterOtto(this)
+    unregisterRxBus()
   }
   //</editor-fold>
 

@@ -23,7 +23,7 @@ class ZoomOutTransformer : ViewPager.PageTransformer {
     val pageWidth = view.width
     val pageHeight = view.height
     var alpha = 0f
-    if (0 <= position && position <= 1) {
+    if (position in 0.0..1.0) {
       alpha = 1 - position
     } else if (-1 < position && position < 0) {
       val scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position))

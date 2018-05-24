@@ -17,32 +17,26 @@
 package name.zeno.android.widget.viewpagerindicator
 
 import android.content.Context
-import android.content.res.Resources
-import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.Paint.Style
-import android.graphics.drawable.Drawable
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.v4.view.MotionEventCompat
-import android.support.v4.view.ViewConfigurationCompat
+import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
-
-import name.zeno.android.util.R
-
-import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.widget.LinearLayout.HORIZONTAL
 import android.widget.LinearLayout.VERTICAL
+import name.zeno.android.util.R
 
 class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = R.attr.vpiCirclePageIndicatorStyle) : View(context, attrs, defStyle), PageIndicator {
 
   // 默认 3dp
-  private var radiusNormal: Float = 0.toFloat()
+  private var radiusNormal: Float = 0F
   // 选中的 radius， 默认为 radiusNormal
   private var radiusSelected = -1f
   // 间距，默认为 radiusSelected  * 3
@@ -161,13 +155,14 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
 
     val background = a.getDrawable(R.styleable.CirclePageIndicator_android_background)
     if (background != null) {
-      setBackgroundDrawable(background)
+//      setBackgroundDrawable(background)
+      ViewCompat.setBackground(this, background)
     }
 
     a.recycle()
 
     val configuration = ViewConfiguration.get(context)
-    mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration)
+    mTouchSlop = configuration.scaledPagingTouchSlop
   }
 
   override fun onDraw(canvas: Canvas) {
@@ -269,20 +264,20 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
       return true
     }
 
-    val count = mViewPager?.adapter?.count ?: 0
+    var count = mViewPager?.adapter?.count ?: 0
     if (count <= 0) return false
 
 
-    val action = ev.action and MotionEventCompat.ACTION_MASK
+    val action = ev.action and MotionEvent.ACTION_MASK
     when (action) {
       MotionEvent.ACTION_DOWN -> {
-        mActivePointerId = MotionEventCompat.getPointerId(ev, 0)
+        mActivePointerId = ev.getPointerId(0)
         mLastMotionX = ev.x
       }
 
       MotionEvent.ACTION_MOVE -> {
-        val activePointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId)
-        val x = MotionEventCompat.getX(ev, activePointerIndex)
+        val activePointerIndex = ev.findPointerIndex(mActivePointerId)
+        val x = ev.getX(activePointerIndex)
         val deltaX = x - mLastMotionX
 
         if (!mIsDragging) {
@@ -293,15 +288,13 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
 
         if (mIsDragging) {
           mLastMotionX = x
-          if (mViewPager!!.isFakeDragging || mViewPager!!.beginFakeDrag()) {
-            mViewPager!!.fakeDragBy(deltaX)
-          }
+          mViewPager?.let { if (it.isFakeDragging || it.beginFakeDrag()) it.fakeDragBy(deltaX) }
         }
       }
 
       MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
         if (!mIsDragging) {
-          val count = mViewPager!!.adapter!!.count
+          count = mViewPager?.adapter?.count ?: 0
           val width = width
           val halfWidth = width / 2f
           val sixthWidth = width / 6f
@@ -321,23 +314,23 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
 
         mIsDragging = false
         mActivePointerId = INVALID_POINTER
-        if (mViewPager!!.isFakeDragging) mViewPager!!.endFakeDrag()
+        mViewPager?.let { if (it.isFakeDragging) it.endFakeDrag() }
       }
 
-      MotionEventCompat.ACTION_POINTER_DOWN -> {
-        val index = MotionEventCompat.getActionIndex(ev)
-        mLastMotionX = MotionEventCompat.getX(ev, index)
-        mActivePointerId = MotionEventCompat.getPointerId(ev, index)
+      MotionEvent.ACTION_POINTER_DOWN -> {
+        val index = ev.actionIndex
+        mLastMotionX = ev.getX(index)
+        mActivePointerId = ev.getPointerId(index)
       }
 
-      MotionEventCompat.ACTION_POINTER_UP -> {
-        val pointerIndex = MotionEventCompat.getActionIndex(ev)
-        val pointerId = MotionEventCompat.getPointerId(ev, pointerIndex)
+      MotionEvent.ACTION_POINTER_UP -> {
+        val pointerIndex = ev.actionIndex
+        val pointerId = ev.getPointerId(pointerIndex)
         if (pointerId == mActivePointerId) {
           val newPointerIndex = if (pointerIndex == 0) 1 else 0
-          mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex)
+          mActivePointerId = ev.getPointerId(newPointerIndex)
         }
-        mLastMotionX = MotionEventCompat.getX(ev, MotionEventCompat.findPointerIndex(ev, mActivePointerId))
+        mLastMotionX = ev.getX(ev.findPointerIndex(mActivePointerId))
       }
     }
 
@@ -348,14 +341,13 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
     if (mViewPager === view) {
       return
     }
-    if (mViewPager != null) {
-      mViewPager!!.setOnPageChangeListener(null)
-    }
+    mViewPager?.removeOnPageChangeListener(this)
+
     if (view.adapter == null) {
       throw IllegalStateException("ViewPager does not have adapter instance.")
     }
     mViewPager = view
-    mViewPager!!.setOnPageChangeListener(this)
+    mViewPager?.addOnPageChangeListener(this)
     invalidate()
   }
 
@@ -368,7 +360,7 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
     if (mViewPager == null) {
       throw IllegalStateException("ViewPager has not been bound.")
     }
-    mViewPager!!.currentItem = item
+    mViewPager?.currentItem = item
     mCurrentPage = item
     invalidate()
   }
@@ -379,10 +371,7 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
 
   override fun onPageScrollStateChanged(state: Int) {
     mScrollState = state
-
-    if (mListener != null) {
-      mListener!!.onPageScrollStateChanged(state)
-    }
+    mListener?.onPageScrollStateChanged(state)
   }
 
   override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -390,9 +379,7 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
     mPageOffset = positionOffset
     invalidate()
 
-    if (mListener != null) {
-      mListener!!.onPageScrolled(position, positionOffset, positionOffsetPixels)
-    }
+    mListener?.onPageScrolled(position, positionOffset, positionOffsetPixels)
   }
 
   override fun onPageSelected(position: Int) {
@@ -402,9 +389,7 @@ class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: Att
       invalidate()
     }
 
-    if (mListener != null) {
-      mListener!!.onPageSelected(position)
-    }
+    mListener?.onPageSelected(position)
   }
 
   override fun setOnPageChangeListener(listener: ViewPager.OnPageChangeListener) {
