@@ -5,147 +5,15 @@
   >
 
 
-  <!--&lt;!&ndash; Required &ndash;&gt;-->
-  <!--<permission-->
-    <!--android:name="${applicationId}.permission.JPUSH_MESSAGE"-->
-    <!--android:protectionLevel="signature"-->
-    <!--/>-->
-
-  <!--&lt;!&ndash; Required &ndash;&gt;-->
-  <!--<uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE"/>-->
-  <!--<uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>-->
-  <!--<uses-permission android:name="android.permission.INTERNET"/>-->
-  <!--<uses-permission android:name="android.permission.WAKE_LOCK"/>-->
-  <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
-  <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
-  <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>-->
-  <!--<uses-permission android:name="android.permission.VIBRATE"/>-->
-  <!--<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>-->
-  <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>-->
-  <!--<uses-permission android:name="android.permission.WRITE_SETTINGS"/>-->
-  <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>-->
-
-
-  <!--<application>-->
-  <!--&lt;!&ndash; Required SDK 核心功能&ndash;&gt;-->
-  <!--&lt;!&ndash; 可配置android:process参数将PushService放在其他进程中 &ndash;&gt;-->
-  <!--<service-->
-  <!--android:name="cn.jpush.android.service.PushService"-->
-  <!--android:enabled="true"-->
-  <!--android:exported="false"-->
-  <!--android:process="jpush"-->
-  <!--&gt;-->
-  <!--<intent-filter>-->
-  <!--<action android:name="cn.jpush.android.intent.REGISTER"/>-->
-  <!--<action android:name="cn.jpush.android.intent.REPORT"/>-->
-  <!--<action android:name="cn.jpush.android.intent.PushService"/>-->
-  <!--<action android:name="cn.jpush.android.intent.PUSH_TIME"/>-->
-  <!--</intent-filter>-->
-  <!--</service>-->
-
-
-  <!--&lt;!&ndash; since 3.0.9 Required SDK 核心功能&ndash;&gt;-->
-  <!--<provider-->
-  <!--android:name="cn.jpush.android.service.DataProvider"-->
-  <!--android:authorities="${applicationId}.DataProvider"-->
-  <!--android:exported="true"-->
-  <!--/>-->
-
-  <!--&lt;!&ndash; since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 &ndash;&gt;-->
-  <!--&lt;!&ndash; 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 &ndash;&gt;-->
-  <!--<service-->
-  <!--android:name="cn.jpush.android.service.DaemonService"-->
-  <!--android:enabled="true"-->
-  <!--android:exported="true"-->
-  <!--&gt;-->
-  <!--<intent-filter>-->
-  <!--<action android:name="cn.jpush.android.intent.DaemonService"/>-->
-  <!--<category android:name="${applicationId}"/>-->
-  <!--</intent-filter>-->
-  <!--</service>-->
-
-  <!--&lt;!&ndash; since 3.1.0 Required SDK 核心功能&ndash;&gt;-->
-  <!--<provider-->
-  <!--android:name="cn.jpush.android.service.DownloadProvider"-->
-  <!--android:authorities="${applicationId}.DownloadProvider"-->
-  <!--android:exported="true"-->
-  <!--/>-->
-
-  <!--&lt;!&ndash; Required SDK核心功能&ndash;&gt;-->
-  <!--<receiver-->
-  <!--android:name="cn.jpush.android.service.PushReceiver"-->
-  <!--android:enabled="true"-->
-  <!--&gt;-->
-  <!--<intent-filter android:priority="1000">-->
-  <!--<action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY"/>-->
-  <!--<category android:name="${applicationId}"/>-->
-  <!--</intent-filter>-->
-  <!--<intent-filter>-->
-  <!--<action android:name="android.intent.action.USER_PRESENT"/>-->
-  <!--<action-->
-  <!--android:name="android.net.conn.CONNECTIVITY_CHANGE"-->
-  <!--tools:ignore="BatteryLife"-->
-  <!--/>-->
-  <!--</intent-filter>-->
-  <!--&lt;!&ndash; Optional &ndash;&gt;-->
-  <!--<intent-filter>-->
-  <!--<action android:name="android.intent.action.PACKAGE_ADDED"/>-->
-  <!--<action android:name="android.intent.action.PACKAGE_REMOVED"/>-->
-
-  <!--<data android:scheme="package"/>-->
-  <!--</intent-filter>-->
-  <!--</receiver>-->
-
-  <!--&lt;!&ndash; Required SDK核心功能&ndash;&gt;-->
-  <!--<activity-->
-  <!--android:name="cn.jpush.android.ui.PushActivity"-->
-  <!--android:configChanges="orientation|keyboardHidden"-->
-  <!--android:exported="false"-->
-  <!--android:theme="@android:style/Theme.NoTitleBar"-->
-  <!--&gt;-->
-  <!--<intent-filter>-->
-  <!--<action android:name="cn.jpush.android.ui.PushActivity"/>-->
-
-  <!--<category android:name="android.intent.category.DEFAULT"/>-->
-  <!--<category android:name="${applicationId}"/>-->
-  <!--</intent-filter>-->
-  <!--</activity>-->
-  <!--&lt;!&ndash; SDK核心功能&ndash;&gt;-->
-  <!--<activity-->
-  <!--android:name="cn.jpush.android.ui.PopWinActivity"-->
-  <!--android:configChanges="orientation|keyboardHidden"-->
-  <!--android:exported="false"-->
-  <!--android:theme="@style/MyDialogStyle"-->
-  <!--&gt;-->
-  <!--<intent-filter>-->
-  <!--<category android:name="android.intent.category.DEFAULT"/>-->
-  <!--<category android:name="${applicationId}"/>-->
-  <!--</intent-filter>-->
-  <!--</activity>-->
-
-  <!--&lt;!&ndash; Required SDK核心功能&ndash;&gt;-->
-  <!--<service-->
-  <!--android:name="cn.jpush.android.service.DownloadService"-->
-  <!--android:enabled="true"-->
-  <!--android:exported="false"-->
-  <!--&gt;-->
-  <!--</service>-->
-
-  <!--&lt;!&ndash; Required SDK核心功能&ndash;&gt;-->
-  <!--<receiver android:name="cn.jpush.android.service.AlarmReceiver"/>-->
-
-  <!--&lt;!&ndash; Required since 3.0.7 &ndash;&gt;-->
-  <!--&lt;!&ndash; 新的tag/alias接口结果返回需要开发者配置一个自定的广播 &ndash;&gt;-->
-  <!--&lt;!&ndash; 该广播需要继承JPush提供的JPushMessageReceiver类, 并如下新增一个 Intent-Filter &ndash;&gt;-->
-  <!--&lt;!&ndash;<receiver&ndash;&gt;-->
-  <!--&lt;!&ndash;android:name="自定义 Receiver"&ndash;&gt;-->
-  <!--&lt;!&ndash;android:enabled="true"&ndash;&gt;-->
-  <!--&lt;!&ndash;&gt;&ndash;&gt;-->
-  <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
-  <!--&lt;!&ndash;<action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE"/>&ndash;&gt;-->
-  <!--&lt;!&ndash;<category android:name="您应用的包名"/>&ndash;&gt;-->
-  <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
-  <!--&lt;!&ndash;</receiver>&ndash;&gt;-->
-  <!--</application>-->
-
+  <application>
+    <receiver
+      android:name=".RxJPushMessageReceiver"
+      tools:ignore="ExportedReceiver"
+      >
+      <intent-filter>
+        <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE"/>
+        <category android:name="${applicationId}"/>
+      </intent-filter>
+    </receiver>
+  </application>
 </manifest>

@@ -29,6 +29,12 @@ android {
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    manifestPlaceholders = [
+        JPUSH_PKGNAME: applicationId,
+        JPUSH_APPKEY : "你的appkey", //JPush上注册的包名对应的appkey.
+        JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+    ]
   }
   buildTypes {
 
@@ -43,7 +49,7 @@ dependencies {
   api fileTree(dir: 'libs', include: ['*.jar'])
   testImplementation 'junit:junit:4.12'
   api project(':library')
-//  implementation project(':jiguang')
+  implementation project(':jiguang')
 //  api 'com.baidu.mapapi:LocPoiLBSMap:4.5.0'
   compile 'com.android.support:multidex:1.0.3'
 }

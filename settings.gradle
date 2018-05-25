@@ -1,1 +1,1 @@
-include ':app', ':library', ':ext-baidumap', ':uicore', ':demo-hencoder', ':jiguang'
+include ':app', ':library', ':ext-baidumap', ':uicore', ':demo-hencoder', ':jiguang', ':zako'
