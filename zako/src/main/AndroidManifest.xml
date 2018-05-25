@@ -20,9 +20,8 @@
       </intent-filter>
     </activity>
 
-
     <receiver
-      android:name="JPushReceiver"
+      android:name=".JPushReceiver"
       android:enabled="true"
       >
       <intent-filter>
@@ -32,6 +31,9 @@
         <category android:name="${applicationId}"/>
       </intent-filter>
     </receiver>
+
+    <activity android:name=".ArouterActivity">
+    </activity>
   </application>
 
 </manifest>
