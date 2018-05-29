@@ -7,10 +7,8 @@ import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
 import android.content.Intent
-import android.os.Build
 import android.os.Parcelable
 import android.os.Process
-import android.support.annotation.RequiresApi
 import name.zeno.android.data.models.UpdateInfo
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
@@ -33,8 +31,7 @@ fun Activity.nav(clazz: KClass<out Activity>, data: Parcelable? = null) = nav(cl
 
 fun Activity.nav(clazz: Class<out Activity>, data: Parcelable? = null) = nav<Parcelable>(clazz, data)
 
-fun <T : Parcelable> Activity.nav(clazz: KClass<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null)
-    = nav(clazz.java, data, onResult)
+fun <T : Parcelable> Activity.nav(clazz: KClass<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null) = nav(clazz.java, data, onResult)
 
 fun <T : Parcelable> Activity.nav(clazz: Class<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null) {
   val intent = Intent(this, clazz)
@@ -55,8 +52,7 @@ fun Fragment.nav(clazz: KClass<out Activity>, data: Parcelable? = null) = nav(cl
 
 fun Fragment.nav(clazz: Class<out Activity>, data: Parcelable? = null) = nav<Parcelable>(clazz, data)
 
-fun <T : Parcelable> Fragment.nav(clazz: KClass<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null)
-    = nav(clazz.java, data, onResult)
+fun <T : Parcelable> Fragment.nav(clazz: KClass<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null) = nav(clazz.java, data, onResult)
 
 fun <T : Parcelable> Fragment.nav(clazz: Class<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null) {
   val intent = Intent(this.activity, clazz)
@@ -76,6 +72,7 @@ fun <T : Parcelable> Fragment.nav(clazz: Class<out Activity>, data: Parcelable? 
 
 @SuppressLint("NewApi")
 fun Fragment.navigator() = when {
+  this is ZFragment -> this
   sdkInt > JELLY_BEAN_MR1 -> childFragmentManager.navigator()
   else -> fragmentManager.navigator()
 }

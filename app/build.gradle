@@ -51,7 +51,7 @@ dependencies {
   api project(':library')
   implementation project(':jiguang')
 //  api 'com.baidu.mapapi:LocPoiLBSMap:4.5.0'
-  compile 'com.android.support:multidex:1.0.3'
+  implementation 'com.android.support:multidex:1.0.3'
 }
 
 kotlin {

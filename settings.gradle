@@ -1,1 +1,4 @@
-include ':app', ':library', ':ext-baidumap', ':uicore', ':demo-hencoder', ':jiguang', ':zako'
+include ':app', ':zako', ':submodule',
+    ':library', ':ext-baidumap',
+    ':uicore', ':demo-hencoder',
+    ':jiguang', ':arouterx', ':alipay'

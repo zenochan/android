@@ -7,7 +7,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import android.support.annotation.CallSuper
-import android.support.multidex.MultiDexApplication
+import androidx.multidex.MultiDexApplication
 import com.baidu.mapapi.SDKInitializer
 import com.igexin.sdk.PushManager
 import name.zeno.android.third.getui.ZGetuiMessageService

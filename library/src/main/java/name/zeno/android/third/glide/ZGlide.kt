@@ -27,14 +27,14 @@ import java.util.*
 @GlideModule
 @Suppress("unused")
 class ZGlide : AppGlideModule() {
-  override fun applyOptions(context: Context?, builder: GlideBuilder) {
+  override fun applyOptions(context: Context, builder: GlideBuilder) {
     // Glide使用bitmap的编码为RGB565，所以有时的时候由于过度压缩导致了图片变绿。
     // 所以要改变一下Glide的bitmap编码。
     val options = RequestOptions().format(DecodeFormat.PREFER_ARGB_8888)
     builder.setDefaultRequestOptions(options)
   }
 
-  override fun registerComponents(context: Context?, glide: Glide?, registry: Registry) {
+  override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
     super.registerComponents(context, glide, registry)
     //配置glide网络加载框架
     registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory())

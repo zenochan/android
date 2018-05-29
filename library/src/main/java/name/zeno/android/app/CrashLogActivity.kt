@@ -60,4 +60,10 @@ class CrashLogActivity : ZActivity() {
     startActivity(intent)
     super.finish()
   }
+
+  fun t(vararg t: Int?, next: () -> Unit) {
+   
+    t {}
+
+  }
 }

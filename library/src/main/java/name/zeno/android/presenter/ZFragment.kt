@@ -5,10 +5,15 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.annotation.CallSuper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.alibaba.android.arouter.facade.Postcard
+import com.alibaba.android.arouter.facade.callback.NavigationCallback
+import com.alibaba.android.arouter.launcher.ARouter
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import name.zeno.android.core.sdkInt
 import name.zeno.android.third.rxbus.registerRxBus
@@ -148,6 +153,12 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
   }
 
   fun startActivityForResult(intent: Intent, next: (Boolean, Intent?) -> Unit) {
-    activityResult.startActivityForResult(intent, next)
+    if (isAdded) {
+      activityResult.startActivityForResult(intent, next)
+    } else {
+      Handler(Looper.getMainLooper()).postDelayed({
+        startActivityForResult(intent, next)
+      }, 50)
+    }
   }
 }

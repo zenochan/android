@@ -11,7 +11,7 @@ import java.io.InputStream
 
 @GlideModule
 class SizableUrlGlideModule : LibraryGlideModule() {
-  override fun registerComponents(context: Context?, glide: Glide?, registry: Registry) {
+  override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
     registry.append(SizableUrlModel::class.java, InputStream::class.java, SizableUrlModelFactory())
   }
 }

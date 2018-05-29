@@ -20,7 +20,7 @@ fun Application.jPushInit(debug: Boolean? = null) {
     JPushInterface.init(this)
     it.onSuccess(System.currentTimeMillis() - start)
   }.subscribeOn(Schedulers.io()).subscribe { t ->
-    Log.e("JPUSH", "initialized in $t ms")
+    Log.e("JPush", "initialized in $t ms")
   }
 }
 
