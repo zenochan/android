@@ -15,7 +15,7 @@ import android.widget.ImageView
 import name.zeno.android.kt.circle
 import name.zeno.android.kt.gray
 import name.zeno.android.kt.zoom
-import name.zeno.android.system.ZPermission
+import name.zeno.ktrxpermission.ZPermission
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream

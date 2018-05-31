@@ -14,7 +14,7 @@ import com.orhanobut.logger.Logger
 import name.zeno.android.core.N
 import name.zeno.android.core.sdkInt
 import name.zeno.android.presenter.activities.IDCardCameraActivity
-import name.zeno.android.system.ZPermission
+import name.zeno.ktrxpermission.ZPermission
 import java.io.File
 import java.lang.ref.WeakReference
 

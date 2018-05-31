@@ -10,10 +10,10 @@ import cn.jpush.android.api.JPushInterface
  * @since 2018/5/24
  */
 abstract class AbsJPushReceiver : BroadcastReceiver() {
-
-
-  final override fun onReceive(context: Context?, intent: Intent?) {
-    when (intent?.action) {
+  lateinit var context: Context
+  final override fun onReceive(context: Context, intent: Intent) {
+    this.context = context
+    when (intent.action) {
       JPushInterface.ACTION_REGISTRATION_ID -> {
         // SDK 向 JPush Server 注册所得到的注册 ID 。
         val id = intent.getStringExtra(JPushInterface.EXTRA_REGISTRATION_ID)
@@ -36,11 +36,13 @@ abstract class AbsJPushReceiver : BroadcastReceiver() {
       JPushInterface.ACTION_NOTIFICATION_CLICK_ACTION,
       JPushInterface.ACTION_CONNECTION_CHANGE,
       JPushInterface.ACTION_RICHPUSH_CALLBACK,
-      JPushInterface.ACTION_NOTIFICATION_RECEIVED_PROXY -> Unit
+      JPushInterface.ACTION_NOTIFICATION_RECEIVED_PROXY -> other(intent.action, intent)
     }
   }
 
   abstract fun onReceivedRegistrationId(id: String)
 
   abstract fun onReceivedMessage(msg: JPushMsg)
+
+  fun other(action: String, data: Intent) {}
 }

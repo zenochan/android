@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.alibaba.fastjson.JSON
 import name.zeno.android.util.ZCookie.get
-import name.zeno.android.util.ZCookie.getBoolean
 import name.zeno.android.util.ZCookie.put
-import name.zeno.android.util.ZCookie.putBoolean
 
 /**
  * - [get]
@@ -98,12 +96,6 @@ object ZCookie {
     }
     editor.apply()
   }
-
-  @Deprecated("")
-  fun getBoolean(key: String): Boolean = this[key]
-
-  @Deprecated("")
-  fun putBoolean(key: String, v: Boolean) = set(key, v)
 
   operator fun get(key: String): Boolean = sp?.getBoolean(key, false) ?: false
 

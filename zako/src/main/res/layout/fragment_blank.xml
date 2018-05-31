@@ -8,6 +8,11 @@
   tools:context=".BlankFragment"
   >
 
+  <name.zeno.android.widget.StatusBarView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    />
+
   <!-- TODO: Update blank fragment layout -->
   <TextView
     android:layout_width="match_parent"

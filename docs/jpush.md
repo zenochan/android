@@ -3,9 +3,12 @@
 > [Android SDK 集成指南](https://docs.jiguang.cn/jpush/client/Android/android_guide/)
 
 
+## USAGE
+
+- groovy 配置
 ```groovy
 repositories {
-  jcenter()
+  maven { url 'http://maven.mjtown.cn/'}
 }
 
 android {
@@ -14,8 +17,7 @@ android {
 
     ndk {
         //选择要添加的对应cpu类型的.so库。
-        abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-        // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86', 'x86_64', 'mips', 'mips64'
     }
 
     manifestPlaceholders = [
@@ -27,14 +29,11 @@ android {
 }
 
 dependencies {
-  compile 'cn.jiguang.sdk:jpush:3.1.1'  // 此处以JPush 3.1.1 版本为例。
-  compile 'cn.jiguang.sdk:jcore:1.1.9'  // 此处以JCore 1.1.9 版本为例。
+  implementation 'name.zeno:jiguang:0.0.1.1805251'
 }
 ```
 
-
-
-## Receiver
+- 定义 receiver
 ```kotlin
 class JPushReceiver : AbsJPushReceiver() {
   override fun onReceivedRegistrationId(id: String) {
@@ -47,27 +46,52 @@ class JPushReceiver : AbsJPushReceiver() {
 }
 ```
 
+- 注册 receiver
 ```xml
 <receiver
-    android:name="JPushReceiver"
-    android:enabled="true">
-    <intent-filter>
-        <action android:name="cn.jpush.android.intent.REGISTRATION" />
-        <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
-        <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
-        <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
-        <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
-        <action android:name="cn.jpush.android.intent.CONNECTION" />
-        <category android:name="${applicationId}"/>
-    </intent-filter>
+  android:name=".JPushReceiver"
+  android:enabled="true"
+  >
+  <intent-filter>
+    <action android:name="cn.jpush.android.intent.REGISTRATION"/>
+    <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED"/>
+    <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+    <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+    <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+    <action android:name="cn.jpush.android.intent.CONNECTION" />
+
+    <category android:name="${applicationId}"/>
+  </intent-filter>
 </receiver>
 ```
 
+## API
+
+#### 基础
+- fun Application.jPushInit(debug: Boolean? = null)
+- var Context.jPushStop
+- val Context.jPushId
+
+#### 别名
+- fun Context.jPushSetAlias(alias: String): Observable<String>
+- fun Context.jPushGetAlias(): Observable<String>
+- fun Context.jPushDeleteAlias(): Observable<String>
+
+#### TAG
+- fun Context.jPushSetTags(vararg tags: String): Observable<Set<String>>
+- fun Context.jPushAddTags(vararg tags: String): Observable<Set<String>>
+- fun Context.jPushDeleteTags(vararg tags: String): Observable<Set<String>>
+- fun Context.jPushCleanTags(): Observable<Set<String>>
+- fun Context.jPushGetAllTags(): Observable<Set<String>>
+- fun Context.jPushCheckTagBindState(tag: String): Observable<Boolean>
+
+#### 手机号，用于短信补充
+- fun Context.jPushSetMobile(mobile: String?): Observable<String>
 
 
 ## Proguard
 
-```properties
+```proguard
 -dontoptimize
 -dontpreverify
 

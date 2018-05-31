@@ -8,9 +8,9 @@ import android.os.Build
 import android.telephony.TelephonyManager
 import com.orhanobut.logger.Logger
 import name.zeno.android.data.CommonConnector
-import name.zeno.android.system.ZPermission
 import name.zeno.android.util.PrintUtils
 import name.zeno.android.util.SystemUtils
+import name.zeno.ktrxpermission.ZPermission
 
 /**
  * Create Date: 16/6/9
@@ -54,7 +54,12 @@ object AppInfo {
     if (ZPermission.granted(context, ZPermission.READ_PHONE_STATE)) {
       try {
         val tm = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager
-        imei = tm.deviceId
+        imei = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          tm.imei
+        } else {
+          @Suppress("DEPRECATION")
+          tm.deviceId
+        }
         phoneNumber = tm.line1Number
       } catch (ignore: Exception) {
       }

@@ -13,14 +13,15 @@ import android.view.View
  *
  * 主要的方法
  *
- *  * [.onDirectionNestedPreScroll]
- *  * [.onNestedVerticalOverScroll]
- *  * [.onNestedDirectionFling]
+ *  * [onDirectionNestedPreScroll]
+ *  * [onNestedVerticalOverScroll]
+ *  * [onNestedDirectionFling]
  *
  *
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/8/22
  */
+@Suppress("UNUSED_PARAMETER")
 abstract class VerticalScrollingBehavior<V : View> : CoordinatorLayout.Behavior<V> {
 
   private var mTotalDyUnconsumed = 0
@@ -41,12 +42,16 @@ abstract class VerticalScrollingBehavior<V : View> : CoordinatorLayout.Behavior<
   @Retention(AnnotationRetention.SOURCE)
   annotation class ScrollDirection()
 
-  override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, child: V, directTargetChild: View, target: View, nestedScrollAxes: Int): Boolean {
-    return nestedScrollAxes and ViewCompat.SCROLL_AXIS_VERTICAL != 0
+  override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, child: V, directTargetChild: View, target: View, axes: Int, type: Int): Boolean {
+    return when (type) {
+      ViewCompat.TYPE_TOUCH -> axes and ViewCompat.SCROLL_AXIS_VERTICAL != 0
+      else -> super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, axes, type)
+    }
   }
 
-  override fun onNestedPreScroll(coordinatorLayout: CoordinatorLayout, child: V, target: View, dx: Int, dy: Int, consumed: IntArray) {
-    super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed)
+  override fun onNestedPreScroll(coordinatorLayout: CoordinatorLayout, child: V, target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
+    super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
+
     if (dy > 0 && mTotalDy < 0) {
       mTotalDy = 0
       mScrollDirection = SCROLL_DIRECTION_UP
@@ -58,8 +63,8 @@ abstract class VerticalScrollingBehavior<V : View> : CoordinatorLayout.Behavior<
     onDirectionNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, mScrollDirection)
   }
 
-  override fun onNestedScroll(coordinatorLayout: CoordinatorLayout, child: V, target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int) {
-    super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed)
+  override fun onNestedScroll(coordinatorLayout: CoordinatorLayout, child: V, target: View, dxConsumed: Int, dyConsumed: Int, dxUnconsumed: Int, dyUnconsumed: Int, type: Int) {
+    super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type)
     if (dyUnconsumed > 0 && mTotalDyUnconsumed < 0) {
       mTotalDyUnconsumed = 0
       mOverScrollDirection = SCROLL_DIRECTION_UP

@@ -73,7 +73,7 @@ class FastJsonConverterFactory private constructor() : Converter.Factory() {
   }
 
 
-  fun serializeConfig(serializeConfig: SerializeConfig)=apply{
+  fun serializeConfig(serializeConfig: SerializeConfig) = apply {
     this.serializeConfig = serializeConfig
     return this
   }

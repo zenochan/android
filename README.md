@@ -18,7 +18,8 @@ dependencies{
 ##  Modules
 
 - [微信 open sdk](./docs/wxsdk.md)
-- [HotFix](./docs/hotfix.md)
+- [支付宝 App 支付](./docs/alipay.md)
+- [HotFix](./docs/hotfix.md)<strike>[deprecated]</strike> 不支持 kotlin 
 - [百度地图](./docs/baidumap.md)
 
 #### 其他
@@ -30,7 +31,7 @@ dependencies{
 - Json 解析: [FastJson](https://github.com/alibaba/fastjson)
 - 网络请求: [Retrofit](http://square.github.io/retrofit/) + RxAndroid + RxJava2Adapter + FastJsonConverter
 - 事件: [RxBus](https://github.com/AndroidKnife/RxBus/tree/2.x)
-- 动态权限: RxPermission
+- 动态权限: KtRxPermission
 - [消息推送(个推)](./docs/getui.md)
 
 - 分析统计: U 盟+

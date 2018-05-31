@@ -1,4 +1,4 @@
-package com.alipay;
+package name.zeno;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

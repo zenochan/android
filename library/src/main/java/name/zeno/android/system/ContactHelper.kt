@@ -9,6 +9,7 @@ import android.provider.ContactsContract
 import android.support.annotation.RequiresPermission
 import android.support.v4.app.Fragment
 import io.reactivex.Observable
+import org.jetbrains.anko.support.v4.ctx
 import java.util.*
 
 /**
@@ -18,7 +19,7 @@ import java.util.*
  */
 class ContactHelper {
 
-  private var activity: Activity? = null
+  private lateinit var activity: Activity
   private var fragment: Fragment? = null
 
   private var onSelected: ((List<Contact>) -> Unit)? = null
@@ -30,7 +31,7 @@ class ContactHelper {
 
   constructor(fragment: Fragment) {
     this.fragment = fragment
-    this.activity = fragment.activity
+    this.activity = fragment.ctx as Activity
   }
 
   @SuppressLint("MissingPermission")
@@ -39,18 +40,20 @@ class ContactHelper {
 
     if (resultCode == Activity.RESULT_OK && data != null) {
       val contactData = data.data
-      val cursor = activity!!.managedQuery(contactData, null, null, null, null)
+      val cursor = activity.contentResolver.query(contactData, null, null, null, null)
       // may cursor NPE
       if (cursor != null) {
         cursor.moveToFirst()
         val idColumn = cursor.getColumnIndex(ContactsContract.Contacts._ID)
         val contactId = cursor.getLong(idColumn)
 
-        val contacts = contacts(activity!!, contactId)
+        val contacts = contacts(activity, contactId)
         onSelected?.invoke(contacts)
+        cursor.close()
       } else {
         onSelected?.invoke(emptyList())
       }
+
     } else {
       onCancelListener?.invoke()
     }
@@ -60,9 +63,9 @@ class ContactHelper {
   fun select(next: (List<Contact>) -> Unit) {
     val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
     if (null != fragment) {
-      fragment!!.startActivityForResult(intent, REQUEST_SELECT_CONTACT)
+      fragment?.startActivityForResult(intent, REQUEST_SELECT_CONTACT)
     } else {
-      activity!!.startActivityForResult(intent, REQUEST_SELECT_CONTACT)
+      activity?.startActivityForResult(intent, REQUEST_SELECT_CONTACT)
     }
 
     onSelected = next

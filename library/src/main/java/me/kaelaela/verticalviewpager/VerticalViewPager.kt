@@ -21,7 +21,10 @@ import android.view.MotionEvent
 
 import me.kaelaela.verticalviewpager.transforms.DefaultTransformer
 
-class VerticalViewPager @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ViewPager(context, attrs) {
+class VerticalViewPager @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : ViewPager(context, attrs) {
 
   init {
     setPageTransformer(false, DefaultTransformer())
@@ -45,9 +48,4 @@ class VerticalViewPager @JvmOverloads constructor(context: Context, attrs: Attri
     swapTouchEvent(event)
     return intercept
   }
-
-  override fun onTouchEvent(ev: MotionEvent): Boolean {
-    return super.onTouchEvent(swapTouchEvent(ev))
-  }
-
 }

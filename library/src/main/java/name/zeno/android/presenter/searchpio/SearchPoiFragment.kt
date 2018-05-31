@@ -8,18 +8,17 @@ import android.view.ViewGroup
 import com.baidu.mapapi.search.core.PoiInfo
 import kale.adapter.CommonRcvAdapter
 import kale.adapter.LoadAdapterWrapper
-import kale.adapter.item.AdapterItem
 import kotlinx.android.synthetic.main.fragment_search_poi.view.*
 import name.zeno.android.core.data
 import name.zeno.android.core.okAndFinish
-import name.zeno.android.core.rxPermissions
 import name.zeno.android.presenter.ZFragment
 import name.zeno.android.presenter.items.PoiItem
-import name.zeno.android.system.ZPermission
 import name.zeno.android.third.baidu.PoiModel
 import name.zeno.android.util.R
 import name.zeno.android.util.ZString
 import name.zeno.android.widget.ZTextWatcher
+import name.zeno.ktrxpermission.ZPermission
+import name.zeno.ktrxpermission.rxPermissions
 
 /**
  * @author 陈治谋 (513500085@qq.com)

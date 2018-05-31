@@ -14,15 +14,15 @@ import io.reactivex.Observable
 import name.zeno.android.app.AppInfo
 import name.zeno.android.core.data
 import name.zeno.android.core.exit
-import name.zeno.android.core.rxPermissions
 import name.zeno.android.data.CommonConnector
 import name.zeno.android.data.models.UpdateInfo
 import name.zeno.android.exception.ZException
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
-import name.zeno.android.system.ZPermission
 import name.zeno.android.third.rxjava.RxUtils
 import name.zeno.android.third.rxjava.ZObserver
+import name.zeno.ktrxpermission.ZPermission
+import name.zeno.ktrxpermission.rxPermissions
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -101,7 +101,7 @@ class UpdateActivity : ZActivity() {
         .build()
     dialog.show()
 
-    Observable.create(source@ { subscriber: Emitter<Float> ->
+    Observable.create(source@{ subscriber: Emitter<Float> ->
       val contentLength: Long
       var completeSize: Long = 0
 

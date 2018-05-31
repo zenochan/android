@@ -12,6 +12,7 @@ import android.view.View
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/8/17
  */
+@Suppress("UNUSED_PARAMETER")
 class HideHeadBehavior : VerticalScrollingBehavior<View> {
 
   private var anim: ViewPropertyAnimatorCompat? = null
@@ -37,12 +38,12 @@ class HideHeadBehavior : VerticalScrollingBehavior<View> {
 
     if (anim == null) {
       anim = ViewCompat.animate(view)
-      anim!!.duration = 300
-      anim!!.interpolator = LinearOutSlowInInterpolator()
+      anim?.duration = 300
+      anim?.interpolator = LinearOutSlowInInterpolator()
     } else {
-      anim!!.cancel()
+      anim?.cancel()
     }
-    anim!!.translationY((if (this.hide) -view.measuredHeight else 0).toFloat()).start()
+    anim?.translationY((if (this.hide) -view.measuredHeight else 0).toFloat())?.start()
 
     //    int pt = this.hide ? 0 : view.getMeasuredHeight();
     //    target.setPadding(target.getPaddingLeft(), pt, target.getPaddingRight(), target.getPaddingBottom());

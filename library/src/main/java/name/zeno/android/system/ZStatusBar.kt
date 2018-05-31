@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
+import name.zeno.android.util.ZLog
 import org.jetbrains.anko.contentView
 import java.lang.reflect.Field
 
@@ -115,6 +116,9 @@ object ZStatusBar {
    * 获取状态栏的高度
    */
   fun getStatusBarHeight(context: Context): Int {
+//    val oppoOutCut = context.packageManager.hasSystemFeature("com.oppo.feature.screen.heteromorphism")
+//    ZLog.e(oppoOutCut.toString())
+
     val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
     return context.resources.getDimensionPixelOffset(resourceId)
   }

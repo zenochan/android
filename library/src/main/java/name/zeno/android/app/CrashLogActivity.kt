@@ -19,7 +19,7 @@ import name.zeno.android.widget.SimpleActionbar
  *
  * 点击发送奔溃日志邮件
  *
- * @author 陈治谋 (513500085@qq.com)
+ * @author [陈治谋](513500085@qq.com)
  * @since 1.3.0
  */
 class CrashLogActivity : ZActivity() {
@@ -59,11 +59,5 @@ class CrashLogActivity : ZActivity() {
     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
     startActivity(intent)
     super.finish()
-  }
-
-  fun t(vararg t: Int?, next: () -> Unit) {
-   
-    t {}
-
   }
 }

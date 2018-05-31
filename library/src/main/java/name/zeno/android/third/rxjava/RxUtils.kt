@@ -2,6 +2,7 @@ package name.zeno.android.third.rxjava
 
 import io.reactivex.Emitter
 import io.reactivex.ObservableTransformer
+import io.reactivex.SingleTransformer
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.plugins.RxJavaPlugins
@@ -18,6 +19,14 @@ object RxUtils {
 
   fun <T> applySchedulers(): ObservableTransformer<T, T> {
     return ObservableTransformer {
+      it.subscribeOn(if (UNIT_TEST) Schedulers.trampoline() else Schedulers.from(JobExecutor))
+          .observeOn(if (UNIT_TEST) Schedulers.trampoline() else AndroidSchedulers.mainThread())
+    }
+  }
+
+
+  fun <T> applySchedulersSingle(): SingleTransformer<T, T> {
+    return SingleTransformer {
       it.subscribeOn(if (UNIT_TEST) Schedulers.trampoline() else Schedulers.from(JobExecutor))
           .observeOn(if (UNIT_TEST) Schedulers.trampoline() else AndroidSchedulers.mainThread())
     }

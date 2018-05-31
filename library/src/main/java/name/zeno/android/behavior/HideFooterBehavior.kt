@@ -12,6 +12,7 @@ import android.view.View
  * @author 陈治谋 (513500085@qq.com)
  * @since 16/8/17
  */
+@Suppress("UNUSED_PARAMETER")
 class HideFooterBehavior(context: Context, attrs: AttributeSet) : VerticalScrollingBehavior<View>(context, attrs) {
   private var anim: ViewPropertyAnimatorCompat? = null
   private var hide = false
