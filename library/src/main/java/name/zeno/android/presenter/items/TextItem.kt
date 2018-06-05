@@ -12,7 +12,7 @@ import kale.adapter.item.AdapterItem
 @Suppress("unused")
 class TextItem : AdapterItem<String> {
   private lateinit var root: TextView
-  override fun getLayoutResId(): Int = android.R.layout.simple_list_item_1
+  override val layoutResId: Int = android.R.layout.simple_list_item_1
 
   override fun bindViews(root: View) {
     this.root = root as TextView

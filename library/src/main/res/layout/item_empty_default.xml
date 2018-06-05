@@ -24,7 +24,7 @@
     android:layout_below="@id/view_anchor"
     android:gravity="center"
     android:lineSpacingExtra="4sp"
-    android:text="这里啥也没有"
+    android:text="没有数据"
     android:textSize="@dimen/md.textBody"
     />
 

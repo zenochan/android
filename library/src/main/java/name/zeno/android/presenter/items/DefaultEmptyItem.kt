@@ -10,8 +10,8 @@ import name.zeno.android.util.R
  * @since 2016/12/21.
  */
 class DefaultEmptyItem : AdapterItem<Any> {
-  override fun getLayoutResId(): Int = R.layout.item_empty_default
   override fun bindViews(root: View) {}
   override fun setViews() {}
-  override fun handleData(o: Any, position: Int) {}
+  override fun handleData(t: Any, position: Int) {}
+  override val layoutResId: Int = R.layout.item_empty_default
 }

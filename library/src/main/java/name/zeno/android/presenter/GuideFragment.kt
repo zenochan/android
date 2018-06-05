@@ -73,7 +73,7 @@ class GuideFragment : ZFragment() {
         return v
       }
 
-      override fun getViewFromItem(item: AppCompatImageView?, position: Int): View {
+      override fun getViewFromItem(item: AppCompatImageView, position: Int): View {
         (item as ImageView).setImageDrawable(ContextCompat.getDrawable(view.context, resIds!![position]))
         return item
       }

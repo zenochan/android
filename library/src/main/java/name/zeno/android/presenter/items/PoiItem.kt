@@ -18,7 +18,7 @@ class PoiItem(
   private lateinit var root: View
   private lateinit var data: PoiInfo
 
-  override fun getLayoutResId(): Int = R.layout.item_poi_info
+  override val layoutResId: Int = R.layout.item_poi_info
 
   override fun bindViews(root: View) {
     this.root = root

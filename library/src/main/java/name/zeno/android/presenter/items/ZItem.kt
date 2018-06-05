@@ -16,8 +16,8 @@ abstract class ZItem<T : Any> : AdapterItem<T> {
     this.root = root
   }
 
-  override final fun handleData(t: T?, position: Int) {
-    if (t != null) data = t
+  override final fun handleData(t: T, position: Int) {
+    data = t
     this.position = position
     render()
   }

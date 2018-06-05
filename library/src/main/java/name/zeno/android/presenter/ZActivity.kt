@@ -199,12 +199,10 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
    *
    * @param provider fragment provider
    */
-  protected inline fun <T : Fragment> setContentView(provider: () -> T)
-      = setContentView(provider())
+  protected inline fun <T : Fragment> setContentView(provider: () -> T) = setContentView(provider())
 
   protected fun setContentView(fragment: Fragment) {
-    frameLayout { id = R.id.layout_container }
-    addFragment(R.id.layout_container, fragment)
+    addFragment(android.R.id.content, fragment)
   }
 
   protected fun snack(text: String) {

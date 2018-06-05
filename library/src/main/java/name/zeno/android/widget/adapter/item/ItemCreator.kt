@@ -7,6 +7,6 @@ import kale.adapter.item.AdapterItem
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-interface ItemCreator<T> {
+interface ItemCreator<T : Any> {
   fun create(t: T): AdapterItem<T>
 }
