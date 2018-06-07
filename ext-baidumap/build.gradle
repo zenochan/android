@@ -1,12 +1,18 @@
-apply plugin: 'com.android.library'
+def dev = false
+
+if (dev) {
+  apply plugin: 'com.android.application'
+} else {
+  apply plugin: 'com.android.library'
+}
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 apply from: 'http://maven.mjtown.cn/maven.gradle'
 mavenConf {
   groupId "name.zeno.ext"
-  artifactId "BaiduMap"
-  version "0.0.2-SNAPSHOT"
+  artifactId "baidu-map"
+  version "0.0.2.201806071"
 
   repositoryUrl "file:///Users/zenochan/.m2/repository"
 //  repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"
@@ -14,34 +20,80 @@ mavenConf {
 confMaven()
 
 android {
+  signingConfigs {
+    zeno {
+      keyAlias 'zeno'
+      keyPassword 'zenochan'
+      storeFile file('/Users/zenochan/Documents/zeno.jks')
+      storePassword 'eternalMAM27'
+    }
+  }
   compileSdkVersion 27
   buildToolsVersion build_tools_version
+
+
+  if (dev) {
+    sourceSets {
+      debug {
+        manifest.srcFile 'src/debug/AndroidManifest.xml'
+        kotlin.srcDirs += 'src/debug/java'
+      }
+    }
+
+
+
+    if (dev) {
+      defaultConfig {
+        applicationId "name.zeno.bdmap"
+      }
+
+    }
+  }
+
 
   defaultConfig {
     minSdkVersion 15
     targetSdkVersion 27
     versionCode 1
     versionName mavenConf.version
-
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    signingConfig signingConfigs.zeno
 
   }
-
   buildTypes {
     release {
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
+
+    debug {
+      signingConfig signingConfigs.zeno
+      manifestPlaceholders = [
+          BAIDU_AK: "brL04kOkc8scN7eIc18w15O5VtVkpGwL"
+      ]
+    }
+  }
+  productFlavors {
   }
 }
 
 dependencies {
-  api fileTree(dir: 'libs', include: ['*.jar'])
-  compileOnly "com.android.support:appcompat-v7:$support_version"
+  api fileTree(include: ['*.jar'], dir: 'libs')
+  api "com.android.support:appcompat-v7:$support_version"
   androidTestImplementation 'junit:junit:4.12'
   androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
-  compileOnly "com.baidu.mapapi:LocPoiLBSMap:4.5.0"
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+  //  compileOnly "com.baidu.mapapi:LocPoiLBSMap:4.5.0"
+  //  debugImplementation "com.baidu.mapapi:LocPoiLBSMap:4.5.0"
+  if (dev) {
+    implementation "com.baidu:location-base:7.5.0"
+    implementation "name.zeno:kt-rx-permission:0.0.2.20180531"
+  } else {
+    compileOnly "com.baidu:location-base:7.5.0"
+  }
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  // rx 家族
+  api 'io.reactivex.rxjava2:rxjava:2.1.9'
+  api 'io.reactivex.rxjava2:rxandroid:2.0.2'
 }
