@@ -1,13 +1,10 @@
 package name.zeno.android.util
 
 import android.content.Context
-import io.reactivex.Emitter
-
+import io.reactivex.Single
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
-
-import io.reactivex.Observable
 
 
 /**
@@ -15,26 +12,25 @@ import io.reactivex.Observable
  * @since 2016/10/13.
  */
 object IOUtils {
-  fun readString(context: Context, file: String): Observable<String> {
-    return Observable.create(souse@ { subscriber: Emitter<String> ->
+  fun readString(context: Context, file: String): Single<String> {
+    return Single.create(souse@{ emitter ->
       var inputStream: InputStream? = null
       try {
         inputStream = context.assets.open(file)
       } catch (e: IOException) {
-        subscriber.onError(e)
+        emitter.onError(e)
       }
 
       if (inputStream == null) {
-        subscriber.onError(IllegalArgumentException("file not found"))
+        emitter.onError(IllegalArgumentException("file not found"))
         return@souse
       }
 
       try {
-        subscriber.onNext(readString(inputStream))
-        subscriber.onComplete()
+        emitter.onSuccess(readString(inputStream))
         inputStream.close()
       } catch (e: IOException) {
-        subscriber.onError(e)
+        emitter.onError(e)
       }
     })
   }

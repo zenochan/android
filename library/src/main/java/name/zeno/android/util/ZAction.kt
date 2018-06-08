@@ -92,8 +92,11 @@ object ZAction {
     }
   }
 
+  /**
+   * 发送文本内容
+   */
   fun sendText(context: Context, text: String) {
-    if (ZString.isEmpty(text)) {
+    if (text.isEmpty()) {
       return
     }
 

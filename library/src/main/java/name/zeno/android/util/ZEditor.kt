@@ -29,7 +29,7 @@ import java.util.*
  */
 object ZEditor {
   fun actionDone(view: TextView, action: () -> Unit) {
-    view.setOnEditorActionListener { v, actionId, event ->
+    view.setOnEditorActionListener { v, actionId, _ ->
       if (actionId == EditorInfo.IME_ACTION_DONE) action()
       true
     }

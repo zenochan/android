@@ -26,10 +26,7 @@ object ZDimen {
       return Point(dm.widthPixels, dm.heightPixels)
     }
 
-  @Deprecated(message = "使用 anko dip()")
-  fun dp2px(dp: Float): Int {
-    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics).toInt()
-  }
+  fun dp2px(dp: Float): Int = dp.dp
 
   fun sp2px(sp: Float): Int {
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, displayMetrics).toInt()
@@ -43,6 +40,12 @@ object ZDimen {
     return (px / displayMetrics.scaledDensity + 0.5f).toInt()
   }
 
-  val displayMetrics
-    get() = Resources.getSystem().displayMetrics
 }
+
+val displayMetrics
+  get() = Resources.getSystem().displayMetrics
+
+val Float.dp: Int
+  get() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, displayMetrics).toInt()
+val Int.dp: Int
+  get() = this.toFloat().dp

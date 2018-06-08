@@ -11,9 +11,6 @@ import android.support.annotation.CallSuper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alibaba.android.arouter.facade.Postcard
-import com.alibaba.android.arouter.facade.callback.NavigationCallback
-import com.alibaba.android.arouter.launcher.ARouter
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import name.zeno.android.core.sdkInt
 import name.zeno.android.third.rxbus.registerRxBus
@@ -21,7 +18,6 @@ import name.zeno.android.third.rxbus.unregisterRxBus
 import name.zeno.android.third.rxjava.RxActivityResult
 import name.zeno.android.third.umeng.ZUmeng
 import name.zeno.android.util.ZLog
-import name.zeno.android.util.ZString
 import java.util.*
 
 /**
@@ -33,7 +29,8 @@ import java.util.*
  */
 open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
   protected val TAG: String = javaClass.simpleName
-  protected val RESULT_OK = Activity.RESULT_OK
+
+
   @Suppress("unused")
   val inflater by lazy { LayoutInflater.from(activity) }
 
@@ -84,7 +81,7 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     super.onResume()
     listenerList.forEach { it.onResume() }
     var pageName = TAG
-    if (ZString.notEmpty(pageName())) pageName += " | " + pageName()
+    if (pageName().isNotEmpty()) pageName += " | " + pageName()
     ZUmeng.onPageStart(pageName)
   }
 
@@ -160,5 +157,10 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
         startActivityForResult(intent, next)
       }, 50)
     }
+  }
+
+  companion object {
+    @Suppress("unused")
+    const val RESULT_OK = Activity.RESULT_OK
   }
 }

@@ -123,10 +123,10 @@ object ZUmeng {
         }
       }
       json.put("mac", mac)
-      if (ZString.isEmpty(device_id)) {
+      if (device_id.isNullOrEmpty()) {
         device_id = mac
       }
-      if (ZString.isEmpty(device_id)) {
+      if (device_id.isNullOrEmpty()) {
         device_id = android.provider.Settings.Secure.getString(context.contentResolver,
             android.provider.Settings.Secure.ANDROID_ID)
       }

@@ -12,7 +12,7 @@ apply from: 'http://maven.mjtown.cn/maven.gradle'
 mavenConf {
   groupId "name.zeno.ext"
   artifactId "baidu-map"
-  version "0.0.2.201806071"
+  version "0.0.2.201806072"
 
   repositoryUrl "file:///Users/zenochan/.m2/repository"
 //  repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"

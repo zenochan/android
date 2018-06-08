@@ -10,7 +10,10 @@ import name.zeno.android.data.models.TextData
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.system.ZStatusBar
-import name.zeno.android.util.*
+import name.zeno.android.util.R
+import name.zeno.android.util.ZDimen
+import name.zeno.android.util.ZEditor
+import name.zeno.android.util.ZRex
 import name.zeno.android.widget.ZTextWatcher
 import java.util.regex.Pattern
 
@@ -46,7 +49,7 @@ class InputActivity : ZActivity() {
     }
 
     textData.result = ""
-    if (ZString.notEmpty(textData.regex)) {
+    if (textData.regex.isNullOrEmpty().not()) {
       pattern = Pattern.compile(textData.regex)
     }
 

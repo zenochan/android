@@ -28,32 +28,34 @@ fun <T : Fragment> T.args(data: Parcelable? = null): T {
   return this
 }
 
-fun Fragment.cancel(data: Parcelable? = null) = activity?.cancel(data)
-fun Activity.cancel(data: Parcelable? = null) {
+/**
+ * 把 Activity 的参数 copy 一份, 方便配合 ARouter 的传参
+ */
+fun <T : Fragment, A : Activity> T.withArgs(activity: A): T {
+  val args = this.arguments ?: Bundle()
+  val actArgs = activity.intent.extras
+  if (actArgs != null) args.putAll(actArgs)
+  return this
+}
+
+fun Fragment.cancel(data: Parcelable? = null, finish: Boolean = true) = activity?.cancel(data, finish)
+fun Activity.cancel(data: Parcelable? = null, finish: Boolean = true) {
   if (data == null) {
     setResult(Activity.RESULT_CANCELED)
   } else {
     setResult(Activity.RESULT_CANCELED, Extra.setData(data))
   }
+
+  if (finish) finish()
 }
 
-fun Fragment.cancelAndFinish(data: Parcelable? = null) = activity?.cancelAndFinish(data)
-fun Activity.cancelAndFinish(data: Parcelable? = null) {
-  cancel(data)
-  finish()
-}
-
-fun Fragment.ok(data: Parcelable? = null) = activity?.ok(data)
-fun Activity.ok(data: Parcelable? = null) {
+fun Fragment.ok(data: Parcelable? = null, finish: Boolean = true) = activity?.ok(data, finish)
+fun Activity.ok(data: Parcelable? = null, finish: Boolean = true) {
   if (data == null) {
     setResult(Activity.RESULT_OK)
   } else {
     setResult(Activity.RESULT_OK, Extra.setData(data))
   }
-}
 
-fun Fragment.okAndFinish(data: Parcelable? = null) = activity?.okAndFinish(data)
-fun Activity.okAndFinish(data: Parcelable? = null) {
-  ok(data)
-  finish()
+  if (finish) finish()
 }

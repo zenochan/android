@@ -1,7 +1,6 @@
 package com.alibaba.android.arouter.launcher
 
 import android.app.Fragment
-import android.content.Context
 import android.os.Parcelable
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.NavigationCallback

@@ -11,9 +11,6 @@ import name.zeno.android.util.ZCookie.put
  * - [get]
  * - [put]
  *
- * - [getBoolean]
- * - [putBoolean]
- *
  * - [Context.MODE_MULTI_PROCESS] 多进程 sp
  *
  * @author 陈治谋 (513500085@qq.com)
@@ -21,33 +18,63 @@ import name.zeno.android.util.ZCookie.put
  */
 object ZCookie {
   private val TAG = "ZCookie"
+  private var version = 0
 
-  private var sp: SharedPreferences? = null
+  private lateinit var sp: SharedPreferences
 
-  fun init(application: Application) {
-    sp = application.getSharedPreferences(TAG, Context.MODE_MULTI_PROCESS)
+  fun init(context: Application) {
+    sp = context.getSharedPreferences(TAG, Context.MODE_MULTI_PROCESS)
+    val info = context.packageManager.getPackageInfo(context.packageName, 0)
+    version = info.versionCode
   }
 
   /**
    * @return versionCode 版本第一次打开
    */
-  fun firstOpen(versionCode: Int): Boolean {
+  fun firstOpen(): Boolean {
     var isFirstOpen = false
-
-    if (!sp!!.getBoolean("versionCode_" + versionCode, false)) {
-      val editor = sp!!.edit()
-      editor.putBoolean("versionCode_" + versionCode, true)
-      editor.apply()
+    val key = "version_opened_$version"
+    if (!get(key)) {
+      set(key, true)
       isFirstOpen = true
     }
 
     return isFirstOpen
   }
 
+
+  //获取列表
+  fun <T> getList(key: String, clazz: Class<T>): List<T>? {
+    val jsonStr = sp.getString(key, null)
+    var list: List<T>? = null
+    try {
+      list = if (jsonStr == null) null else JSON.parseArray(jsonStr, clazz)
+    } catch (e: Exception) {
+      ZLog.e("数据格式过期", e.message)
+    }
+
+    return list
+  }
+
+  fun put(k: String, v: Any?) {
+
+    val editor = sp.edit()
+    when (v) {
+      null -> editor.remove(k)
+      is Long -> editor.putLong(k, v)
+      is String -> editor.putString(k, v)
+      is Float -> editor.putFloat(k, v)
+      is Int -> editor.putInt(k, v)
+      is Boolean -> editor.putBoolean(k, v)
+      else -> editor.putString(k, JSON.toJSONString(v))
+    }
+    editor.apply()
+  }
+
+  operator fun get(key: String): Boolean = sp.getBoolean(key, false)
+
   @Suppress("UNCHECKED_CAST")
   fun <T> get(key: String, clazz: Class<T>): T? {
-    val sp = sp ?: return null
-
     return try {
       when (clazz) {
         Long::class.java -> sp.getLong(key, 0) as T
@@ -66,41 +93,7 @@ object ZCookie {
     }
   }
 
-  //获取列表
-  fun <T> getList(key: String, clazz: Class<T>): List<T>? {
-    val sp = this.sp ?: return null
-
-    val jsonStr = sp.getString(key, null)
-    var list: List<T>? = null
-    try {
-      list = if (jsonStr == null) null else JSON.parseArray(jsonStr, clazz)
-    } catch (e: Exception) {
-      ZLog.e("数据格式过期", e.message)
-    }
-
-    return list
-  }
-
-  fun put(k: String, v: Any?) {
-    val sp = this.sp ?: return
-
-    val editor = sp.edit()
-    when (v) {
-      null -> editor.remove(k)
-      is Long -> editor.putLong(k, v)
-      is String -> editor.putString(k, v)
-      is Float -> editor.putFloat(k, v)
-      is Int -> editor.putInt(k, v)
-      is Boolean -> editor.putBoolean(k, v)
-      else -> editor.putString(k, JSON.toJSONString(v))
-    }
-    editor.apply()
-  }
-
-  operator fun get(key: String): Boolean = sp?.getBoolean(key, false) ?: false
-
   operator fun set(key: String, value: Boolean) {
-    val sp = this.sp ?: return
     sp.edit().putBoolean(key, value).apply()
   }
 }

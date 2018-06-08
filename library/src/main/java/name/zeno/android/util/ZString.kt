@@ -19,22 +19,6 @@ import java.util.regex.Pattern
  * @author 陈治谋 (513500085@qq.com)
  */
 object ZString {
-  @Deprecated(message = "使用 kotlin 库的方法", replaceWith = ReplaceWith("String?.isNullOrEmpty"))
-  @JvmStatic
-  fun isEmpty(str: CharSequence?): Boolean {
-    return str == null || str.length == 0 || str.toString().trim { it <= ' ' }.isEmpty()
-  }
-
-  @JvmStatic
-  fun notEmpty(str: CharSequence?): Boolean {
-    return !isEmpty(str)
-  }
-
-  @JvmStatic
-  fun length(s: String?): Int {
-    return s?.length ?: 0
-  }
-
   @JvmStatic
   fun trimLength(s: String?): Int {
     return s?.trim { it <= ' ' }?.length ?: 0
@@ -91,7 +75,7 @@ object ZString {
         c[i] = 32.toChar()
         continue
       }
-      if (c[i].toInt() > 65280 && c[i].toInt() < 65375)
+      if (c[i].toInt() in 65281..65374)
         c[i] = (c[i].toInt() - 65248).toChar()
     }
     return String(c)
@@ -100,15 +84,15 @@ object ZString {
   /** 全角转半角  */
   @JvmStatic
   fun toSBC(input: String): String {
-    val c = input.toCharArray()
-    for (i in c.indices) {
-      if (c[i] == ' ') {
-        c[i] = '\u3000'
-      } else if (c[i] < '\u007f') {
-        c[i] = (c[i].toInt() + 65248).toChar()
+    val chars = input.toCharArray()
+    for (i in chars.indices) {
+      if (chars[i] == ' ') {
+        chars[i] = '\u3000'
+      } else if (chars[i] < '\u007f') {
+        chars[i] = (chars[i].toInt() + 65248).toChar()
       }
     }
-    return String(c)
+    return String(chars)
   }
 
   @JvmStatic
@@ -149,7 +133,7 @@ object ZString {
       throw IllegalArgumentException("start > end")
     }
 
-    if (isEmpty(str)) {
+    if (str.isEmpty()) {
       return ""
     }
 
@@ -162,3 +146,5 @@ object ZString {
     return str.substring(start, end)
   }
 }
+
+fun String?.length(): Int = this.orEmpty().length

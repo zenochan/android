@@ -8,7 +8,6 @@ import android.app.Application
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import androidx.multidex.MultiDexApplication
-import com.baidu.mapapi.SDKInitializer
 import com.igexin.sdk.PushManager
 import name.zeno.android.third.getui.ZGetuiMessageService
 import name.zeno.android.third.getui.ZGetuiService
@@ -32,26 +31,11 @@ open class ZApplication : MultiDexApplication() {
     ZCookie.init(this)
     ZLog.DEBUG = isDebug
     AppInfo.init(this)
-
-    registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
-      override fun onActivityCreated(activity: Activity, bundle: Bundle?) {}
-      override fun onActivityStarted(activity: Activity) {}
-      override fun onActivityResumed(activity: Activity) {}
-      override fun onActivityPaused(activity: Activity) {}
-      override fun onActivityStopped(activity: Activity) {}
-      override fun onActivitySaveInstanceState(activity: Activity, bundle: Bundle) {}
-      override fun onActivityDestroyed(activity: Activity) {}
-    })
   }
 
   override fun onTerminate() {
     super.onTerminate()
     application = null
-  }
-
-  // 初始化百度地图
-  protected fun initBDMap() {
-    SDKInitializer.initialize(this)
   }
 
   protected fun <T : ZGetuiService, I : ZGetuiMessageService> initGetui(tClazz: Class<T>, intentServiceClass: Class<I>) {

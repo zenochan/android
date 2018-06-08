@@ -3,7 +3,7 @@ package name.zeno.android.presenter.searchpio
 import android.os.Bundle
 import name.zeno.android.core.args
 import name.zeno.android.presenter.ZActivity
-import name.zeno.android.third.baidu.PoiModel
+//import name.zeno.android.third.baidu.PoiModel
 
 /**
  * - req: [SearchPoiRequest]
@@ -15,6 +15,6 @@ import name.zeno.android.third.baidu.PoiModel
 class SearchPoiActivity : ZActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView { SearchPoiFragment().args(this) }
+//    setContentView { SearchPoiFragment().args(this) }
   }
 }

@@ -9,12 +9,30 @@ import name.zeno.android.third.umeng.ZUmeng
 import name.zeno.android.util.ZLog
 
 /**
- * Create Date: 16/6/30
+ * # 异常捕获上报
  *
- * @author 陈治谋 (513500085@qq.com)
+ * ### USAGE
+ * ```kotlin
+ *     val account = if (LocalData.isLogin) JSON.toJSONString(LocalData.buyer) else null
+ *     ZExceptionHandler(
+ *     app = this,
+ *     mainClass = MainActivity::class.java,
+ *     email = ChurgoConf.SUBSCRIBE_EMAIL,
+ *     accountJson = account
+ *     ).apply()
+ * ```
+ *
+ * @param context [Application]
+ * @param mainClass 点击关闭或回到什么页面
+ * @param email 用户发送邮件的接收地址
+ * @param accountJson 用户数据 JSON 串
+ * @param onError 错误回调
+ *
+ * @author [陈治谋](mailto:513500085@qq.com)
+ * @since 16/6/30
  */
-class ZExceptionHandler @JvmOverloads constructor(
-    private val app: Application,
+class ZExceptionHandler(
+    private val context: Application,
     private var mainClass: Class<out Activity>,
     private var email: String,
     private var accountJson: String? = null,
@@ -29,16 +47,17 @@ class ZExceptionHandler @JvmOverloads constructor(
 
     if (ZUmeng.supported) {
       //友盟错误上报
-      MobclickAgent.reportError(app, throwable)
-      MobclickAgent.onKillProcess(app)
+      MobclickAgent.reportError(context, throwable)
+      MobclickAgent.onKillProcess(context)
     }
 
     val info = ExceptionInfo(throwable, email, mainClass, accountJson)
 
-    val intent = Intent(app, CrashLogActivity::class.java)
+    val intent = Intent(context, CrashLogActivity::class.java)
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION)
     Extra.setData(intent, info)
-    app.startActivity(intent)
+    context.startActivity(intent)
 
     System.exit(1)
   }

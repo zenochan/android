@@ -9,9 +9,8 @@ import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnClickListener
-
-import java.util.Timer
-import java.util.TimerTask
+import name.zeno.android.util.Rx2Timer
+import java.util.*
 
 /**
  * PS: 由于发现 timer 每次 cancel() 之后不能重新schedule方法,所以计时完毕置空timer.
@@ -118,30 +117,21 @@ class TimeButton @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
   private fun clearTimer() {
     if (timerTask != null) {
-      timerTask!!.cancel()
+      timerTask?.cancel()
       timerTask = null
     }
     if (timer != null)
-      timer!!.cancel()
+      timer?.cancel()
     timer = null
   }
 
-  override fun setOnClickListener(l: OnClickListener?) {
+  override fun setOnClickListener(l: OnClickListener) {
     if (l is TimeButton) {
       super.setOnClickListener(l)
     } else {
       mOnclickListener = l
     }
   }
-
-  //  /**
-  //   * 和activity的onCreate()方法同步
-  //   */
-  //  public void onCreate()
-  //  {
-  //    Log.w(TAG, "onCreate()");
-  //
-  //  }
 
   /**
    * 设置计时时候显示的文本

@@ -44,8 +44,7 @@ object ZDate {
    * @param format eg. "yyyy-MM-dd HH:mm:ss" , "yyyy年MM月dd日 HH时mm分ss秒"
    * @return strDate
    */
-  fun format(date: Long, format: String = "yyyy-MM-dd HH:mm:ss"): String
-      = SimpleDateFormat(format, Locale.CHINESE).format(date)
+  fun format(date: Long, format: String = "yyyy-MM-dd HH:mm:ss"): String = SimpleDateFormat(format, Locale.CHINESE).format(date)
 
   fun date(longDate: Long): Date = Date(longDate)
 
@@ -55,8 +54,7 @@ object ZDate {
    * @param date eg. "2014-10-21"
    * @param format eg. "yyyy-MM-dd HH:mm:ss" , "yyyy年MM月dd日 HH时mm分ss秒"
    */
-  fun date(date: String, format: String = "yyyy-MM-dd HH:mm:ss"): Date
-      = SimpleDateFormat(format, Locale.CHINESE).parse(date)
+  fun date(date: String, format: String = "yyyy-MM-dd HH:mm:ss"): Date = SimpleDateFormat(format, Locale.CHINESE).parse(date)
 
   /**
    * strDate的时间格式必须要与dateFmt的时间格式相同
@@ -78,7 +76,7 @@ object ZDate {
   }
 
   fun friendly(date: Long): Array<String> {
-    val strings = arrayOf<String>("", "")
+    val strings = arrayOf("", "")
 
     val delta = System.currentTimeMillis() - date
 
@@ -87,13 +85,13 @@ object ZDate {
 
     if (deltaDay == 0L) {
       strings[0] = "今天"
-      strings[1] = format(date, "HH:mm") ?: "00:00"
+      strings[1] = format(date, "HH:mm")
     } else if (deltaDay == 1L) {
       strings[0] = "昨天"
-      strings[1] = format(date, "HH:mm") ?: "00:00"
+      strings[1] = format(date, "HH:mm")
     } else {
-      strings[0] = format(date, "EEEE") ?: "星期一"
-      strings[1] = format(date, "MM-dd") ?: "01-01"
+      strings[0] = format(date, "EEEE")
+      strings[1] = format(date, "MM-dd")
     }
     return strings
   }

@@ -23,6 +23,7 @@ import org.jetbrains.anko.sensorManager
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/11/16
  */
+@Suppress("unused")
 class Shake private constructor(
     val context: Context
 ) : LifecycleListener, SensorEventListener {

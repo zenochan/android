@@ -20,6 +20,11 @@ import java.util.concurrent.TimeUnit
 
 @Suppress("unused")
 /**
+ * - [Rx2Timer.with] 获取实例，自动周期管理
+ *
+ * - [start] 开始倒计时
+ * - [stop] 停止倒计时
+ *
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/5/9
  */
@@ -60,7 +65,7 @@ class Rx2Timer private constructor() : LifecycleListener {
   }
 
   fun stop() {
-    if (disposable != null && !disposable!!.isDisposed) {
+    if (disposable?.isDisposed == false) {
       disposable?.dispose()
       disposable = null
     }
@@ -87,6 +92,9 @@ class Rx2Timer private constructor() : LifecycleListener {
     this.expiredIn = expiredIn
   }
 
+  /**
+   * 周期，s
+   */
   fun period(period: Int) = apply {
     this.period = period
   }

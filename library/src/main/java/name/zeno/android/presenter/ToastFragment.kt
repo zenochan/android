@@ -32,9 +32,8 @@ open class ToastFragment : Fragment() {
 
   //<editor-fold desc="snack & toast">
   open fun snack(msg: String?) {
-    val msg = msg ?: ""
     try {
-      Snackbar.make(fragmentView!!, msg, Snackbar.LENGTH_LONG).show()
+      Snackbar.make(fragmentView!!, msg ?: "", Snackbar.LENGTH_LONG).show()
     } catch (e: IllegalStateException) {
       //java.lang.IllegalStateException: Fatal Exception thrown on Scheduler.
       //Caused by: java.lang.IllegalArgumentException: No suitable parent found from the given view. Please provide a valid view.

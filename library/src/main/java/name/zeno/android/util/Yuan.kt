@@ -27,7 +27,7 @@ object Yuan {
   fun prefix(value: String?): String? {
     var result = value
     if (result != null && !result.startsWith("￥")) {
-      result = "￥" + result
+      result = "￥$result"
     }
     return result
   }

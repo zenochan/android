@@ -6,8 +6,6 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 
-import name.zeno.android.util.ZString
-
 /**
  * # 对显示的字符串进行格式化 比如输入：出生年月 输出结果：出正生正年正月
  *
@@ -20,7 +18,7 @@ object AlignedTextUtils {
 
   @JvmOverloads
   fun formatStr(str: String, destL: Int = 6): String {
-    if (ZString.isEmpty(str)) {
+    if (str.isEmpty()) {
       return ""
     }
     val n = str.length
@@ -51,7 +49,7 @@ object AlignedTextUtils {
    */
   @JvmOverloads
   fun formatText(str: String, destL: Int = 6): SpannableString? {
-    if (ZString.isEmpty(str)) {
+    if (str.isEmpty()) {
       return null
     }
     val formatStr = formatStr(str, destL)

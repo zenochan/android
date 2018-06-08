@@ -1,7 +1,11 @@
 package name.zeno.ext.baidumap
 
+import android.app.Activity
+import android.app.Fragment
 import android.content.Context
 import android.content.pm.PackageManager
+import com.baidu.location.BDLocation
+import io.reactivex.subjects.Subject
 import java.io.ByteArrayInputStream
 import java.security.MessageDigest
 import java.security.cert.CertificateFactory
@@ -49,3 +53,6 @@ private fun byte2HexFormatted(arr: ByteArray): String {
   }
   return str.toString()
 }
+
+fun <T : Fragment> T.requestLocation(): Subject<BDLocation> = ILocation.getInstance(activity).requestLocation()
+fun <T : Activity> T.requestLocation(): Subject<BDLocation> = ILocation.getInstance(this).requestLocation()

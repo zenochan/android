@@ -10,7 +10,7 @@ import java.util.Random
  *
  * @author 陈治谋 (513500085@qq.com)
  */
-object CommonUtils {
+object ZColor {
   @ColorInt
   @JvmStatic
   fun randomColor(): Int {

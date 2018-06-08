@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.hardware.Camera
 import android.os.Bundle
+import android.support.annotation.RequiresPermission
 import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.SurfaceHolder
@@ -21,6 +22,7 @@ import name.zeno.android.presenter.ZActivity
 import name.zeno.android.third.rxjava.RxUtils
 import name.zeno.android.util.R
 import name.zeno.android.util.ZBitmap
+import name.zeno.ktrxpermission.ZPermission
 
 /**
  * # [Android Camera身份证取景](https://github.com/lizhangqu/Camera)
@@ -130,6 +132,7 @@ class IDCardCameraActivity : ZActivity(), SurfaceHolder.Callback {
 
   }
 
+  @RequiresPermission(ZPermission.WRITE_EXTERNAL_STORAGE)
   private fun resolveImage(bytes: ByteArray) {
     Observable.create({ subscriber: Emitter<Boolean> ->
       val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
