@@ -4,12 +4,11 @@ import android.Manifest
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import android.support.annotation.RequiresPermission
 import android.widget.Toast
+import java.io.File
 
 /**
  * <h1>跳转工具类</h1>
@@ -92,9 +91,7 @@ object ZAction {
     }
   }
 
-  /**
-   * 发送文本内容
-   */
+
   fun sendText(context: Context, text: String) {
     if (text.isEmpty()) {
       return
@@ -106,6 +103,37 @@ object ZAction {
     val chooserIntent = Intent.createChooser(intent, "选择分享方式")
     if (chooserIntent != null) {
       context.startActivity(chooserIntent)
+    }
+  }
+
+  /**
+   * # 分享文本 or 图片
+   *
+   * @param context             上下文
+   * @param shareTitle          dialog 标题
+   * @param msgTitle            消息标题
+   * @param msgText             消息内容
+   * @param imgPath             图片路径，不分享图片则传null
+   * @author [陈治谋](mailto:513500085@qq.com)
+   * @since 2017/11/21
+   */
+  fun shareMsg(context: Context, shareTitle: String, msgTitle: String, msgText: String, imgPath: String? = null) {
+    val intent = Intent(Intent.ACTION_SEND)
+    if (imgPath.isNullOrEmpty()) {
+      intent.type = "text/plain" // 纯文本
+    } else {
+      val f = File(imgPath)
+      if (f.exists() && f.isFile) {
+        intent.type = "image/jpg"
+        val u = Uri.fromFile(f)
+        intent.putExtra(Intent.EXTRA_STREAM, u)
+      }
+    }
+    intent.putExtra(Intent.EXTRA_SUBJECT, msgTitle)
+    intent.putExtra(Intent.EXTRA_TEXT, msgText)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    if (intent.resolveActivity(context.packageManager) != null) {
+      context.startActivity(Intent.createChooser(intent, shareTitle))
     }
   }
 

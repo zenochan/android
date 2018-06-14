@@ -6,6 +6,7 @@
       <enum name="triangle" value="0"/>
       <enum name="bezier" value="1"/>
       <enum name="corners" value="2"/>
+      <enum name="circle" value="3"/>
     </attr>
     <attr name="radius"/>
     <attr name="borderWidth"/>

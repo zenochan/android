@@ -9,13 +9,11 @@ import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnClickListener
-import name.zeno.android.util.Rx2Timer
 import java.util.*
 
 /**
  * PS: 由于发现 timer 每次 cancel() 之后不能重新schedule方法,所以计时完毕置空timer.
  * 每次开始计时的时候重新设置timer, 没想到好办法初次下策
- * 注意把该类的onCreate()onDestroy()和activity的onCreate()onDestroy()同步处理
  */
 class TimeButton @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : AppCompatButton(context, attrs, defStyleAttr), OnClickListener, Handler.Callback {
 
@@ -50,8 +48,7 @@ class TimeButton @JvmOverloads constructor(context: Context, attrs: AttributeSet
   }
 
   override fun onClick(v: View) {
-    if (mOnclickListener != null)
-      mOnclickListener!!.onClick(v)
+    mOnclickListener?.onClick(v)
     startTime()
   }
 
@@ -59,7 +56,7 @@ class TimeButton @JvmOverloads constructor(context: Context, attrs: AttributeSet
     initTimer()
     text = (time / 1000).toString() + textAfter
     super.setEnabled(false)
-    timer!!.schedule(timerTask, 0, 1000)
+    timer?.schedule(timerTask, 0, 1000)
   }
 
   override fun setEnabled(enabled: Boolean) {

@@ -11,11 +11,14 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
-import name.zeno.android.util.ZLog
+import name.zeno.android.system.ZStatusBar.lightMode
 import org.jetbrains.anko.contentView
 import java.lang.reflect.Field
 
 /**
+ * - [lightMode]
+ *
+ *
  * - [透明状态栏](http://blog.csdn.net/lisdye2/article/details/51331602)
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/10/11.
@@ -147,10 +150,8 @@ object ZStatusBar {
    *
    * @return -1: not support， 1:MIUUI 2:Flyme 3:android6.0
    */
-  @JvmOverloads
   fun lightMode(activity: Activity, dark: Boolean = true): Int = lightMode(activity.window, dark)
 
-  @JvmOverloads
   fun lightMode(window: Window, dark: Boolean = true): Int {
     var result = 0
 

@@ -11,30 +11,23 @@ import name.zeno.android.presenter.Extra
  * @since 2017/10/13
  */
 
-fun <R : Parcelable> Activity.data(): R = Extra.getData(intent)!!
+fun <R : Parcelable> Activity.data(): R = Extra.getData(intent)
+    ?: throw IllegalStateException("获取参数失败")
 
-fun <R : Parcelable> Fragment.data(): R = Extra.getData(arguments)!!
+fun <R : Parcelable> Fragment.data(): R = Extra.getData(arguments)
+    ?: throw IllegalStateException("获取参数失败")
 
 fun <R : Parcelable> Activity.dataOrNull(): R? = Extra.getData(intent)
 fun <R : Parcelable> Fragment.dataOrNull(): R? = Extra.getData(arguments)
 
-fun <T : Fragment, A : Activity> T.args(activity: A): T = args<T>(activity.dataOrNull())
-fun <T : Fragment> T.args(data: Parcelable? = null): T {
-  if (data != null) {
-    val args = this.arguments ?: Bundle()
-    Extra.setData(args, data)
-    this.arguments = args
-  }
-  return this
-}
-
 /**
  * 把 Activity 的参数 copy 一份, 方便配合 ARouter 的传参
  */
-fun <T : Fragment, A : Activity> T.withArgs(activity: A): T {
+fun <T : Fragment, A : Activity> T.args(activity: A): T {
   val args = this.arguments ?: Bundle()
   val actArgs = activity.intent.extras
   if (actArgs != null) args.putAll(actArgs)
+  arguments = args
   return this
 }
 

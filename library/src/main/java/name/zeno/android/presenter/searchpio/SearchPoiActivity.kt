@@ -1,7 +1,6 @@
 package name.zeno.android.presenter.searchpio
 
 import android.os.Bundle
-import name.zeno.android.core.args
 import name.zeno.android.presenter.ZActivity
 //import name.zeno.android.third.baidu.PoiModel
 
