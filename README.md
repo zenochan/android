@@ -9,7 +9,8 @@ repositories{
   maven {url "http://maven.mjtown.cn/"}
 }
 dependencies{
-  compile "name.zeno:android:1.0.6"
+  // compile "name.zeno:android:1.0.6"
+  implementation  "name.zeno:zako:2.0.1806190"
 }
 ```
 

@@ -19,15 +19,20 @@ class Shadow @JvmOverloads constructor(context: Context, attrs: AttributeSet? = 
   private lateinit var paint: Paint
   private lateinit var path: Path
 
-  private var cornersRadius = ZDimen.dp2px(4f)
-  private var color = Color.WHITE
+  var cornersRadius = ZDimen.dp2px(4f)
+  var color = Color.WHITE
 
   private val rect = RectF()
-  private var mode = CORNERS
+  var mode = CORNERS
+    set(value) {
+      field = value
+      invalidate()
+    }
+
   @ColorInt
-  private var borderColor = 0
+  var borderColor = 0
   @Dimension
-  private var borderWidth = 0
+  var borderWidth = 0
 
   companion object {
     const val TRIANGLE = 0         // 三角形
@@ -59,21 +64,22 @@ class Shadow @JvmOverloads constructor(context: Context, attrs: AttributeSet? = 
         canvas.drawPath(path, paint)
       }
       CORNERS -> {
-        if(isInEditMode) return
+        // 编辑模式时 Path.FillType.INVERSE_WINDING 不生效
+        if (isInEditMode) return
 
         rect.set(0f, 0f, w, h)
         path.fillType = Path.FillType.INVERSE_WINDING
         path.addRoundRect(rect, cornersRadius.toFloat(), cornersRadius.toFloat(), Path.Direction.CW)
         canvas.drawPath(path, paint)
         if (borderWidth > 0) {
-          val halfW = ((borderWidth + 0.5) / 2).toInt()
-          rect.set(halfW.toFloat(), halfW.toFloat(), (w - halfW), (h - halfW))
+          val halfW = (borderWidth - 1) / 2F
+          rect.set(halfW, halfW, (w - halfW), (h - halfW))
           paint.strokeWidth = borderWidth.toFloat()
           paint.color = borderColor
           paint.style = Paint.Style.STROKE
-          path.reset()
           path.fillType = Path.FillType.WINDING
-          path.addRoundRect(rect, (cornersRadius - halfW).toFloat(), (cornersRadius - halfW).toFloat(), Path.Direction.CW)
+          path.reset()
+          path.addRoundRect(rect, cornersRadius - halfW, cornersRadius - halfW, Path.Direction.CW)
           canvas.drawPath(path, paint)
         }
       }
