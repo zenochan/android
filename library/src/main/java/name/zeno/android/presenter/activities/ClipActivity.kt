@@ -3,9 +3,11 @@ package name.zeno.android.presenter.activities
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_clip_image.*
 import name.zeno.android.core.data
@@ -13,6 +15,7 @@ import name.zeno.android.data.models.BaseData
 import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.system.ZStatusBar
+import name.zeno.android.system.navbarHeight
 import name.zeno.android.third.rxjava.RxUtils
 import name.zeno.android.third.rxjava.ZObserver
 import name.zeno.android.util.PhotoCaptureHelper
@@ -34,10 +37,16 @@ class ClipActivity : ZActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    ZStatusBar.setImage(this)
     setContentView(R.layout.activity_clip_image)
     btn_submit.setOnClickListener { onSubmit() }
     btn_cancel.setOnClickListener { finish() }
+
+    ZStatusBar.setImage(this)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+      (btn_cancel.layoutParams as? ConstraintLayout.LayoutParams)?.bottomMargin = navbarHeight
+      (btn_submit.layoutParams as? ConstraintLayout.LayoutParams)?.bottomMargin = navbarHeight
+    }
+
     loadBmp()
   }
 
@@ -62,7 +71,6 @@ class ClipActivity : ZActivity() {
   private fun onSubmit() {
     loadingDialog.show()
     Observable.create<String> { emitter ->
-
       var bitmap = layout_clip_img.clip()
       bitmap = ZBitmap.zoom(bitmap, 500.0, 500.0)
       val fileName = (+System.currentTimeMillis()).toString() + ".jpg"

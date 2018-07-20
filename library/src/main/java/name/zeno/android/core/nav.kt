@@ -48,6 +48,35 @@ fun <T : Parcelable> Activity.nav(clazz: Class<out Activity>, data: Parcelable? 
   }
 }
 
+fun <T : Parcelable> Activity.nav(intent:Intent, onResult: ((Boolean, T?) -> Unit)? = null) {
+  if (onResult != null) {
+    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, Extra.getData(intentData)) }
+
+    when {
+      this is ZActivity -> startActivityForResult(intent, next)
+      else -> navigator().startActivityForResult(intent, next)
+    }
+  } else {
+    startActivity(intent)
+  }
+}
+
+
+fun <T : Parcelable> ZFragment.nav(intent:Intent, onResult: ((Boolean, T?) -> Unit)? = null) {
+  if (onResult != null) {
+    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, Extra.getData(intentData)) }
+
+    when {
+      this is ZActivity -> startActivityForResult(intent, next)
+      else -> navigator().startActivityForResult(intent, next)
+    }
+  } else {
+    startActivity(intent)
+  }
+}
+
+
+
 fun Fragment.nav(clazz: KClass<out Activity>, data: Parcelable? = null) = nav(clazz.java, data)
 
 fun Fragment.nav(clazz: Class<out Activity>, data: Parcelable? = null) = nav<Parcelable>(clazz, data)

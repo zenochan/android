@@ -44,7 +44,7 @@ class PhotoCaptureHelper private constructor(
   private var cachePath: String = getCachePath(context)
   private lateinit var fileName: String
 
-  var listener: ((path: String?) -> Unit)? = null
+  var listener: ((path: String) -> Unit)? = null
 
   constructor(activity: Activity) : this(
       activity,
@@ -66,15 +66,23 @@ class PhotoCaptureHelper private constructor(
   }
 
   /** 从相机获取图片  */
-  @RequiresPermission(allOf = arrayOf("android.permission.READ_EXTERNAL_STORAGE", "android.permission.CAMERA"))
-  fun getImageFromCamera(fileProvider: String) {
+  @RequiresPermission(allOf = [
+    ZPermission.READ_EXTERNAL_STORAGE,
+    ZPermission.CAMERA
+  ])
+  fun getImageFromCamera() {
+    val ctx = contextRef.get() ?: return
+
     val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
     fileName = newFileName()
 
     val photoFile = File(cachePath, fileName)
     val imageUri: Uri = when {
     //通过FileProvider创建一个content类型的Uri
-      sdkInt >= N -> FileProvider.getUriForFile(contextRef.get()!!, fileProvider, photoFile)
+      sdkInt >= N -> {
+        val fileProvider = "${ctx.packageName}.fileprovider";
+        FileProvider.getUriForFile(ctx, fileProvider, photoFile)
+      }
       else -> Uri.fromFile(photoFile)
     }
 
@@ -83,7 +91,10 @@ class PhotoCaptureHelper private constructor(
     nav(intent, REQUEST_CODE_CAMERA)
   }
 
-  @RequiresPermission(allOf = arrayOf(ZPermission.WRITE_EXTERNAL_STORAGE, ZPermission.CAMERA))
+  @RequiresPermission(allOf = [
+    ZPermission.WRITE_EXTERNAL_STORAGE,
+    ZPermission.CAMERA
+  ])
   fun getIdCardFromCamera() {
     fileName = newFileName()
     val intent = IDCardCameraActivity.getCallingIntent(contextRef.get()!!, cachePath + fileName)
@@ -92,7 +103,7 @@ class PhotoCaptureHelper private constructor(
 
   fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     if (resultCode != Activity.RESULT_OK) {
-      Logger.e("resultCode: " + resultCode)
+      Logger.e("resultCode: $resultCode")
       return
     }
 
@@ -108,7 +119,7 @@ class PhotoCaptureHelper private constructor(
 
 
   private fun onImageSelected(filePath: String?) {
-    listener?.invoke(filePath)
+    if (filePath != null) listener?.invoke(filePath)
   }
 
   private fun onImageFromAlbum(data: Intent) {
@@ -140,6 +151,20 @@ class PhotoCaptureHelper private constructor(
     @JvmStatic
     fun newFileName(): String {
       return String.format("%s-%d.jpg", TAG, System.currentTimeMillis())
+    }
+
+    fun newUri(ctx: Context): Uri {
+      val fileName = newFileName()
+      val photoFile = File(getCachePath(ctx), fileName)
+
+      return when {
+      //通过FileProvider创建一个content类型的Uri
+        sdkInt >= N -> {
+          val fileProvider = "${ctx.packageName}.fileprovider";
+          FileProvider.getUriForFile(ctx, fileProvider, photoFile)
+        }
+        else -> Uri.fromFile(photoFile)
+      }
     }
 
     /** 外部/内部存储缓存路径 */

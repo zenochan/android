@@ -10,6 +10,9 @@ import java.io.File
  */
 
 object RequestBodyBuilder {
+  /**
+   * @Part("photo\"; filename=\"photo.jpg") photo: RequestBody,
+   */
   fun image(file: File) = RequestBody.create(MediaType.parse("image/*"), file)
 }
 

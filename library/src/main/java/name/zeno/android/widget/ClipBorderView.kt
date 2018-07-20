@@ -10,9 +10,15 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
+import name.zeno.android.util.ZLog
 
-class ClipBorderView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : View(context, attrs, defStyle) {
+class ClipBorderView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : View(context, attrs, defStyle) {
   /**
    * 水平方向与View的边距
    */
@@ -26,7 +32,6 @@ class ClipBorderView @JvmOverloads constructor(context: Context, attrs: Attribut
   private val circlePaint: Paint
 
   init {
-
     mBorderWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, mBorderWidth.toFloat(), resources.displayMetrics).toInt()
     setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 
@@ -44,7 +49,6 @@ class ClipBorderView @JvmOverloads constructor(context: Context, attrs: Attribut
     circlePaint.style = Style.STROKE
   }
 
-
   override fun onDraw(canvas: Canvas) {
     super.onDraw(canvas)
 
@@ -52,7 +56,7 @@ class ClipBorderView @JvmOverloads constructor(context: Context, attrs: Attribut
     val h = height
 
     //灰色底色遮罩
-    canvas.drawARGB(100, 0, 0, 0)
+    canvas.drawARGB(200, 0, 0, 0)
 
     //中间去除遮罩
     canvas.drawCircle((w / 2).toFloat(), (h / 2).toFloat(), (w / 2 - mHorizontalPadding).toFloat(), clearPaint)

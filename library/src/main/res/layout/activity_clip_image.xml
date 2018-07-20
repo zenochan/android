@@ -1,5 +1,6 @@
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   style="@style/layout.full"
   android:background="@android:color/black"
   >
@@ -11,22 +12,26 @@
 
   <Button
     android:id="@+id/btn_cancel"
-    android:layout_width="56dp"
-    android:layout_height="56dp"
-    android:layout_alignParentBottom="true"
-    android:layout_margin="64dp"
-    android:alpha="0.87"
-    android:background="@mipmap/btn_cancel"
+    style="@style/layout.wrap"
+    android:background="@color/z.transparent"
+    android:padding="16dp"
+    android:text="取消"
+    android:textColor="@color/z.white"
+    android:textSize="16sp"
+    app:layout_constraintBottom_toBottomOf="parent"
     />
 
-  <Button
+  <android.support.v7.widget.AppCompatButton
     android:id="@+id/btn_submit"
-    android:layout_width="56dp"
-    android:layout_height="56dp"
-    android:layout_alignParentBottom="true"
+    style="@style/layout.wrap"
     android:layout_alignParentRight="true"
-    android:layout_margin="64dp"
-    android:background="@mipmap/btn_ok"
+    android:background="@color/z.transparent"
+    android:padding="8dp"
+    android:text="完成"
+    android:textColor="@color/z.white"
+    android:textSize="16sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
     />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,16 +9,12 @@ import android.widget.RelativeLayout
 
 class ClipImageLayout(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
 
-  private val clipView: ClipImageView
-  private val borderView: ClipBorderView
+  private val clipView: ClipImageView = ClipImageView(context)
+  private val borderView: ClipBorderView = ClipBorderView(context)
 
   private var paddingHorizontal = 60
 
   init {
-
-    clipView = ClipImageView(context)
-    borderView = ClipBorderView(context)
-
     val lp = RelativeLayout.LayoutParams(-1, -1)
     this.addView(clipView, lp)
     this.addView(borderView, lp)

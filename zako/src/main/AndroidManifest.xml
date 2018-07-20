@@ -4,6 +4,9 @@
           package="name.zeno.zako"
   >
 
+  <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
   <application
     android:name=".ZakoApp"
     android:allowBackup="false"
@@ -37,6 +40,8 @@
     <activity android:name=".ArouterActivity">
     </activity>
     <activity android:name=".ShadowActivity"/>
+    <activity android:name=".AvatarActivity"/>
+    <activity android:name=".GlideActivity"/>
   </application>
 
 </manifest>

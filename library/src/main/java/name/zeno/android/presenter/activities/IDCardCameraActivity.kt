@@ -1,5 +1,6 @@
 package name.zeno.android.presenter.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -42,6 +43,7 @@ class IDCardCameraActivity : ZActivity(), SurfaceHolder.Callback {
   private var takeIv: ImageView? = null
 
   private var cameraManager: CameraManager? = null
+  @SuppressLint("MissingPermission")
   private val jpegCallBack: Camera.PictureCallback = Camera.PictureCallback { data, _ ->
     resolveImage(data)
     cameraManager?.stopPreview()
@@ -132,9 +134,10 @@ class IDCardCameraActivity : ZActivity(), SurfaceHolder.Callback {
 
   }
 
+  @SuppressLint("MissingPermission")
   @RequiresPermission(ZPermission.WRITE_EXTERNAL_STORAGE)
   private fun resolveImage(bytes: ByteArray) {
-    Observable.create({ subscriber: Emitter<Boolean> ->
+    Observable.create { subscriber: Emitter<Boolean> ->
       val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
       val width = bitmap.width
       val height = bitmap.height
@@ -160,7 +163,7 @@ class IDCardCameraActivity : ZActivity(), SurfaceHolder.Callback {
       ZBitmap.savePhotoToSDCard(tem, filePath, fileName)
 
       subscriber.onNext(true)
-    }).compose(RxUtils.applySchedulers()).subscribe(object : Observer<Boolean> {
+    }.compose(RxUtils.applySchedulers()).subscribe(object : Observer<Boolean> {
       override fun onSubscribe(d: Disposable) {}
 
       override fun onComplete() {}

@@ -14,3 +14,8 @@ fun Context.drawable(@DrawableRes res: Int, colorInt: Int = Color.LTGRAY)
 
 - Fragment.navigator():ZFragment
 - AppcompatActivity.navigator():ZFragment
+
+
+#### assets
+- Fragment.assets(file:String)
+- Fragment.assets(file:String)

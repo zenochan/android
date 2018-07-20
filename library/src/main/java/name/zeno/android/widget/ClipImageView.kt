@@ -17,14 +17,19 @@ import android.view.ScaleGestureDetector.OnScaleGestureListener
 import android.view.ViewTreeObserver
 import android.widget.ImageView
 
-class ClipImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : AppCompatImageView(context, attrs), OnScaleGestureListener, ViewTreeObserver.OnGlobalLayoutListener {
+class ClipImageView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : AppCompatImageView(context, attrs),
+    OnScaleGestureListener,
+    ViewTreeObserver.OnGlobalLayoutListener {
 
   /** 初始化时的缩放比例，如果图片宽或高大于屏幕，此值将小于0  */
   private var initScale = 1.0f
   private var once = true
 
   /** 缩放的手势检测  */
-  private var mScaleGestureDetector: ScaleGestureDetector? = null
+  private var mScaleGestureDetector = ScaleGestureDetector(context, this)
   /** 用于双击检测  */
   private val mGestureDetector: GestureDetector
 
@@ -36,8 +41,8 @@ class ClipImageView @JvmOverloads constructor(context: Context, attrs: Attribute
 
   private val mTouchSlop: Int = 0
 
-  private var mLastX: Float = 0.toFloat()
-  private var mLastY: Float = 0.toFloat()
+  private var mLastX: Float = 0F
+  private var mLastY: Float = 0F
 
   /** 水平方向与View的边距  */
   private var paddingHorizontal: Int = 0//——屏幕边缘离截图区的宽度
@@ -93,7 +98,6 @@ class ClipImageView @JvmOverloads constructor(context: Context, attrs: Attribute
         return true
       }
     })
-    mScaleGestureDetector = ScaleGestureDetector(context, this)
   }
 
   /**
@@ -326,8 +330,8 @@ class ClipImageView @JvmOverloads constructor(context: Context, attrs: Attribute
 
   companion object {
 
-    var SCALE_MAX = 4.0f
-    private var SCALE_MID = 2.0f
+    var SCALE_MAX = 4f
+    private var SCALE_MID = 2f
 
     internal val BIGGER = 1.07f
     internal val SMALLER = 0.93f

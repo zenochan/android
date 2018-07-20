@@ -6,6 +6,7 @@ import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.alibaba.android.arouter.launcher.ARouterX
 import com.alibaba.android.arouter.launcher.nav
 import name.zeno.android.presenter.ZFragment
@@ -18,28 +19,53 @@ class BlankFragment : ZFragment() {
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     return UI {
-      verticalLayout {
-        addView(StatusBarView(ctx))
+      scrollView {
 
-        button {
-          text = "Arouter Nav In Fragment"
-          onClick {
-            ARouterX.build("/test/router").nav<Parcelable>(this@BlankFragment) { ok, data ->
-              toast("23424")
+        verticalLayout {
+          addView(StatusBarView(ctx))
+
+          button {
+            text = "Arouter Nav In Fragment"
+            onClick {
+              ARouterX.build("/test/router").nav<Parcelable>(this@BlankFragment) { ok, data ->
+                toast("23424")
+              }
             }
+          }
+
+          button {
+            text = "/sub/test"
+            onClick { ARouterX.build(text.toString()).navigation() }
+          }
+
+          button {
+            text = "/app/shadow"
+            onClick { ARouterX.build(text.toString()).navigation() }
+          }
+
+
+          button {
+            text = "/app/shadow"
+            onClick { nav(text) }
+          }
+
+          button {
+            text = "/app/avatar"
+            onClick { nav(text) }
+          }
+
+
+          button {
+            text = "/app/glide"
+            onClick { nav(text) }
           }
         }
 
-        button {
-          text = "/sub/test"
-          onClick { ARouterX.build(text.toString()).navigation() }
-        }
-
-        button {
-          text = "/app/shadow"
-          onClick { ARouterX.build(text.toString()).navigation() }
-        }
       }
     }.view
+  }
+
+  fun nav(text: CharSequence) {
+    ARouterX.build(text.toString()).navigation()
   }
 }

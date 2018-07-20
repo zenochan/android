@@ -141,6 +141,13 @@ fun TextView.strike() {
 }
 
 /**
+ * 粗体
+ */
+fun TextView.bold(bold: Boolean = true) {
+  paint.isFakeBoldText = bold
+}
+
+/**
  * 获取正确的 index
  */
 fun Int.remain(size: Int): Int {

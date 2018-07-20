@@ -56,7 +56,6 @@ abstract class ZPresenter<T : View>(view: T) : Presenter {
     }
   }
 
-  @JvmOverloads
   fun <E> sub(
       next: (E) -> Unit,
       error: (ZException) -> Unit = { e -> ZLog.e(TAG, "ERROR!", e) },
@@ -80,6 +79,8 @@ abstract class ZPresenter<T : View>(view: T) : Presenter {
       removeDisposable(d)
     }
   }
+
+  protected fun <E> Observable<E>.sub(next: (E) -> Unit) = this.subscribe(this@ZPresenter.sub(next))
 
   protected fun <E> Observable<E>.sub(
       next: (E) -> Unit,

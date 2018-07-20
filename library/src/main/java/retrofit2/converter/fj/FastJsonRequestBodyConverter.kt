@@ -22,20 +22,23 @@ internal class FastJsonRequestBodyConverter<T>(
 
   @Throws(IOException::class)
   override fun convert(value: T): RequestBody {
-    val content: ByteArray
-    if (serializeConfig != null) {
-      if (serializerFeatures != null) {
-        content = JSON.toJSONBytes(value, serializeConfig, *serializerFeatures)
+    val content: ByteArray = when {
+    // 字符串不做 json 转换, 否则 string 会被转换成 “string”
+      value is String -> value.toByteArray()
+      serializeConfig != null -> if (serializerFeatures != null) {
+        JSON.toJSONBytes(value, serializeConfig, *serializerFeatures)
       } else {
-        content = JSON.toJSONBytes(value, serializeConfig)
+        JSON.toJSONBytes(value, serializeConfig)
       }
-    } else {
-      if (serializerFeatures != null) {
-        content = JSON.toJSONBytes(value, *serializerFeatures)
+      else -> if (serializerFeatures != null) {
+        JSON.toJSONBytes(value, *serializerFeatures)
       } else {
-        content = JSON.toJSONBytes(value)
+        JSON.toJSONBytes(value)
       }
     }
+
+
+
 
     return RequestBody.create(MEDIA_TYPE, content)
   }

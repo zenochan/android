@@ -15,9 +15,17 @@ import io.reactivex.Observable
 import name.zeno.android.third.glide.ZGlide.Companion.clearCache
 import name.zeno.android.third.glide.ZGlide.Companion.getDiskCacheSize
 import name.zeno.android.third.rxjava.RxUtils
+import okhttp3.OkHttpClient
 import java.io.File
+import java.io.IOException
 import java.io.InputStream
+import java.security.KeyStore
+import java.security.SecureRandom
+import java.security.cert.CertificateException
+import java.security.cert.CertificateFactory
+import java.security.cert.X509Certificate
 import java.util.*
+import javax.net.ssl.*
 
 
 /**
@@ -37,7 +45,8 @@ class ZGlide : AppGlideModule() {
   override fun registerComponents(context: Context, glide: Glide, registry: Registry) {
     super.registerComponents(context, glide, registry)
     //配置glide网络加载框架
-    registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory())
+//    registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory())
+    registry.replace(GlideUrl::class.java, InputStream::class.java, OkHttpUrlLoader.Factory(createOkHttpClient()))
   }
 
   override fun isManifestParsingEnabled(): Boolean {
@@ -64,12 +73,12 @@ class ZGlide : AppGlideModule() {
       val glide = GlideApp.get(context)
       // 清除内存缓存必须在UI线程
       glide.clearMemory()
-      return Observable.create({ subscriber: Emitter<Boolean> ->
+      return Observable.create { subscriber: Emitter<Boolean> ->
         // 清除磁盘缓存必须在UI线程
         glide.clearDiskCache()
         subscriber.onNext(true)
         subscriber.onComplete()
-      }).compose(RxUtils.applySchedulers())
+      }.compose(RxUtils.applySchedulers())
     }
 
     private fun getFolderSize(directory: File): Long {
@@ -101,5 +110,37 @@ class ZGlide : AppGlideModule() {
 
       return String.format(Locale.CHINA, "%.02f %s", value, unit[level])
     }
+  }
+
+  private fun createOkHttpClient(): OkHttpClient {
+//    val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+//    trustManagerFactory.init(null as KeyStore?)
+//    val trustManagers = trustManagerFactory.trustManagers
+//    if (trustManagers.size != 1 || trustManagers[0] !is X509TrustManager) {
+//      throw IllegalStateException("Unexpected default trust managers:" + Arrays.toString(trustManagers))
+//    }
+//    val trustManager = trustManagers[0] as X509TrustManager
+//    val sslContext = SSLContext.getInstance("SSL")
+//    sslContext.init(null, arrayOf(trustManager), null)
+//    val sslSocketFactory = sslContext.socketFactory
+
+
+    // Create a trust manager that does not validate certificate chains
+    val trustAllCert = object : X509TrustManager {
+      override fun getAcceptedIssuers(): Array<X509Certificate> = emptyArray()
+      override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+      override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+    }
+
+    // Install the all-trusting trust manager
+    val sslContext = SSLContext.getInstance("SSL")
+    sslContext.init(null, arrayOf(trustAllCert), null)
+    // Create an ssl socket factory with our all-trusting manager
+    val sslSocketFactory = sslContext.socketFactory
+
+    return OkHttpClient.Builder()
+        .hostnameVerifier { _, _ -> true }
+        .sslSocketFactory(sslSocketFactory, trustAllCert)
+        .build()
   }
 }

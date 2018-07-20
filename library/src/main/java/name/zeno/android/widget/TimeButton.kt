@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Message
-import android.support.annotation.StringRes
 import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
 import android.view.View
@@ -20,14 +19,21 @@ class TimeButton @JvmOverloads constructor(context: Context, attrs: AttributeSet
   private val preferences: SharedPreferences
 
   private var length = (60 * 1000).toLong()// 倒计时长度,默认60s
-  private var textAfter = "秒后重新获取~"
-  private var textBefore = "点击获取验证码~"
   private val TIME = "time"
   private val C_TIME = "cTime"
   private var mOnclickListener: OnClickListener? = null
   private var timer: Timer? = null
   private var timerTask: TimerTask? = null
   private var time: Long = 0
+
+
+  var textAfterSuffix = ")重新获取"
+  var textAfterPrefix = "("
+  var textNormal = "获取验证码"
+    set(value) {
+      field = value
+      text = textNormal
+    }
 
   internal var han = Handler(this)
 
@@ -37,11 +43,11 @@ class TimeButton @JvmOverloads constructor(context: Context, attrs: AttributeSet
   }
 
   override fun handleMessage(msg: Message): Boolean {
-    text = (time / 1000).toString() + textAfter
+    text = textAfterPrefix + (time / 1000).toString() + textAfterSuffix
     time -= 1000
     if (time < 0) {
       super.setEnabled(true)
-      text = textBefore
+      text = textNormal
       clearTimer()
     }
     return true
@@ -54,7 +60,7 @@ class TimeButton @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
   fun startTime() {
     initTimer()
-    text = (time / 1000).toString() + textAfter
+    text = textAfterPrefix + (time / 1000).toString() + textAfterSuffix
     super.setEnabled(false)
     timer?.schedule(timerTask, 0, 1000)
   }
@@ -78,7 +84,7 @@ class TimeButton @JvmOverloads constructor(context: Context, attrs: AttributeSet
       initTimer()
       this.time = Math.abs(time)
       timer!!.schedule(timerTask, 0, 1000)
-      text = time.toString() + textAfter
+      text = time.toString() + textAfterSuffix
       super.setEnabled(false)
     }
   }
@@ -128,30 +134,6 @@ class TimeButton @JvmOverloads constructor(context: Context, attrs: AttributeSet
     } else {
       mOnclickListener = l
     }
-  }
-
-  /**
-   * 设置计时时候显示的文本
-   */
-  fun setTextAfter(afterText: String): TimeButton {
-    textAfter = afterText
-    return this
-  }
-
-  /**
-   * 设置点击之前的文本
-   */
-  fun setTextBefore(beforeText: String): TimeButton {
-    textBefore = beforeText
-    text = textBefore
-    return this
-  }
-
-  /**
-   * 设置点击之前的文本
-   */
-  fun setTextBefore(@StringRes resID: Int): TimeButton {
-    return setTextBefore(resources.getString(resID))
   }
 
   /**

@@ -1,7 +1,7 @@
 package name.zeno.android.util
 
 import android.content.Context
-import io.reactivex.Single
+import io.reactivex.Observable
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -12,8 +12,8 @@ import java.io.InputStream
  * @since 2016/10/13.
  */
 object IOUtils {
-  fun readString(context: Context, file: String): Single<String> {
-    return Single.create(souse@{ emitter ->
+  fun readString(context: Context, file: String): Observable<String> {
+    return Observable.create souse@{ emitter ->
       var inputStream: InputStream? = null
       try {
         inputStream = context.assets.open(file)
@@ -27,12 +27,13 @@ object IOUtils {
       }
 
       try {
-        emitter.onSuccess(readString(inputStream))
+        emitter.onNext(readString(inputStream))
+        emitter.onComplete()
         inputStream.close()
       } catch (e: IOException) {
         emitter.onError(e)
       }
-    })
+    }
   }
 
   /** # 将InputStream转换成某种字符编码的String */

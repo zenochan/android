@@ -22,11 +22,17 @@ dependencies{
 - [支付宝 App 支付](./docs/alipay.md)
 - [百度地图](./docs/baidumap.md)
 
+
+## 图片处理
+- [图片加载 - Glide](./docs/glide.md)
+    - [glide-transformations](https://github.com/wasabeef/glide-transformations)
+- 图片裁剪
+    - ZFragment.cropByNative 使用系统自带工具
+    - ZActivity.cropByNative 使用系统自带工具
+
 #### 其他
 
 - [日志打印 - logger](https://github.com/orhanobut/logger)
-- [图片加载 - Glide](./docs/glide.md)
-    - [glide-transformations](https://github.com/wasabeef/glide-transformations)
 
 - Json 解析: [FastJson](https://github.com/alibaba/fastjson)
 - 网络请求: [Retrofit](http://square.github.io/retrofit/) + RxAndroid + RxJava2Adapter + FastJsonConverter
@@ -48,10 +54,11 @@ android {
  dataBinding { enabled true }
 }
 
-dependencies {
-  kapt "com.android.databinding:compiler:3.1.2"
-
-}
+// 新版本 gradle 已经不需要
+//dependencies {
+//  kapt "com.android.databinding:compiler:3.1.2"
+//
+//}
 
 
 ```
