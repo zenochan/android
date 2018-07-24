@@ -9,7 +9,7 @@ apply from: 'http://maven.mjtown.cn/maven.gradle'
 mavenConf {
   groupId "name.zeno"
   artifactId "zako"
-  version "2.0.1807200"
+  version "2.0.1807240"
 
   repositoryUrl "file:///Users/zenochan/.m2/repository"
 //  repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"

@@ -1,10 +1,8 @@
-package name.zeno.android.widget
+package name.zeno.android.widget.sort
 
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.annotation.DrawableRes
-import android.support.annotation.FloatRange
-import android.support.annotation.IntDef
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -19,15 +17,17 @@ import java.util.*
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/11/11.
  */
-class SortHeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : LinearLayout(context, attrs, defStyleAttr) {
-  private var sortFiledList = emptyList<SortFiled>()
+class SortHeaderView(
+    context: Context,
+    attrs: AttributeSet?,
+    defStyleAttr: Int
+) : LinearLayout(context, attrs, defStyleAttr) {
+  private var sortFiledList = emptyList<SortField>()
   private lateinit var onCLickListener: View.OnClickListener
-  private var onSort: ((SortFiled) -> Unit)? = null
+  private var onSort: ((SortField) -> Unit)? = null
 
   private val drawableRes = intArrayOf(R.mipmap.ic_sortable, R.mipmap.ic_sorted_asc, R.mipmap.ic_sorted_desc)
-
-
-  private val drawables = arrayOfNulls<Drawable>(3)
+  private var drawables = arrayOfNulls<Drawable>(3)
 
   private val sortItems = ArrayList<RelativeLayout>()
 
@@ -37,14 +37,22 @@ class SortHeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
       drawables[i] = getDrawable(drawableRes[i])
     }
     onCLickListener = View.OnClickListener { view ->
-      val filed = view.tag as? SortFiled
+      val filed = view.tag as? SortField
       if (filed != null) {
         onClickSort(filed)
       }
     }
   }
 
-  fun setSortFiled(vararg filed: SortFiled) {
+  fun setDrawables(ascDrawable: Drawable, descDrawable: Drawable, noneDrawable: Drawable) {
+    drawables = arrayOf(noneDrawable, ascDrawable, descDrawable)
+  }
+
+  fun setDrawables(@DrawableRes ascRes: Int, @DrawableRes descRes: Int, @DrawableRes noneRes: Int) {
+    drawables = arrayOf(noneRes, ascRes, descRes).map { getDrawable(it) }.toTypedArray()
+  }
+
+  fun setSortField(vararg filed: SortField) {
     sortFiledList = Arrays.asList(*filed)
     invalidate()
   }
@@ -73,7 +81,14 @@ class SortHeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
       val rl = sortItems[index]
       rl.tag = sortFiled
       val view = rl.getChildAt(0) as TextView
-      view.setCompoundDrawables(null, null, drawables[sortFiled.sort], null)
+
+      val cusDrawable = sortFiled.drawableRes(sortFiled.sort)
+      val drawableRight = when (cusDrawable) {
+        null -> drawables[sortFiled.sort]
+        else -> getDrawable(cusDrawable)
+      }
+
+      view.setCompoundDrawables(null, null, drawableRight, null)
       view.gravity = Gravity.CENTER
       view.text = sortFiled.name
     }
@@ -88,15 +103,16 @@ class SortHeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
     }
   }
 
-  private fun onClickSort(sortFiled: SortFiled) {
+  private fun onClickSort(sortFiled: SortField) {
     for (filed in sortFiledList) {
       if (filed !== sortFiled) {
-        filed.sort = SortFiled.NONE
+        filed.sort = SortField.NONE
       } else {
-        sortFiled.sort = if (sortFiled.sort != SortFiled.ASC)
-          SortFiled.ASC
-        else
-          SortFiled.DESC
+        sortFiled.sort = when {
+          sortFiled.sort != SortField.ASC && sortFiled.ascEnable -> SortField.ASC
+          sortFiled.sort != SortField.DESC && sortFiled.descEnable -> SortField.DESC
+          else -> SortField.NONE
+        }
       }
     }
 
@@ -110,36 +126,8 @@ class SortHeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) 
     return drawable
   }
 
-  fun setOnSort(onSort: (SortFiled) -> Unit) {
+  fun setOnSort(onSort: (SortField) -> Unit) {
     this.onSort = onSort
-  }
-
-  class SortFiled {
-    var name: String? = null
-    var filed: String? = null
-    @SortInt
-    var sort: Int = 0
-    var weight = 1f
-
-    @IntDef(NONE, ASC, DESC)
-    annotation class SortInt
-
-    companion object {
-
-      const val NONE = 0
-      const val ASC = 1
-      const val DESC = 2
-
-
-      @JvmOverloads
-      fun newInstance(name: String, filed: String, @FloatRange(from = 1.0) weight: Float = 1f): SortFiled {
-        val f = SortFiled()
-        f.name = name
-        f.filed = filed
-        f.weight = weight
-        return f
-      }
-    }
   }
 
 }
