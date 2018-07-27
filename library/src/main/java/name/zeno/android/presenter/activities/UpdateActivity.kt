@@ -12,12 +12,10 @@ import com.afollestad.materialdialogs.MaterialDialog
 import io.reactivex.Emitter
 import io.reactivex.Observable
 import name.zeno.android.app.AppInfo
-import name.zeno.android.core.data
 import name.zeno.android.core.exit
 import name.zeno.android.data.CommonConnector
 import name.zeno.android.data.models.UpdateInfo
 import name.zeno.android.exception.ZException
-import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.third.rxjava.RxUtils
 import name.zeno.android.third.rxjava.ZObserver
@@ -31,6 +29,8 @@ import java.io.RandomAccessFile
 /**
  * 下载更新apk
  *
+ * @param data [UpdateInfo]
+ *
  * @author 陈治谋 (513500085@qq.com)
  * @since 2016/11/21.
  */
@@ -42,7 +42,7 @@ class UpdateActivity : ZActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(View(this))
-    updateInfo = data()
+    updateInfo = intent.getParcelableExtra("data")
     showUpdate(updateInfo)
   }
 
@@ -223,9 +223,7 @@ class UpdateActivity : ZActivity() {
 
   companion object {
     fun getCallingIntent(context: Context, updateInfo: UpdateInfo): Intent {
-      val intent = Intent(context, UpdateActivity::class.java)
-      Extra.setData(intent, updateInfo)
-      return intent
+      return Intent(context, UpdateActivity::class.java).putExtra("data", updateInfo)
     }
   }
 }

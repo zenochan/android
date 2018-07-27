@@ -56,7 +56,7 @@ class ZExceptionHandler(
     val intent = Intent(context, CrashLogActivity::class.java)
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION)
-    Extra.setData(intent, info)
+    intent.putExtra("data", info)
     context.startActivity(intent)
 
     System.exit(1)

@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
-import android.os.Parcelable
 import android.widget.Toast
 import com.alibaba.android.arouter.core.LogisticsCenter
 import com.alibaba.android.arouter.exception.HandlerException
@@ -21,13 +20,9 @@ import com.alibaba.android.arouter.facade.enums.RouteType
 import com.alibaba.android.arouter.facade.service.DegradeService
 import com.alibaba.android.arouter.facade.service.InterceptorService
 import com.alibaba.android.arouter.facade.service.PathReplaceService
-import com.alibaba.android.arouter.facade.template.ILogger
 import com.alibaba.android.arouter.utils.Consts
-import com.alibaba.android.arouter.utils.DefaultLogger
 import com.alibaba.android.arouter.utils.TextUtils
 import name.zeno.android.core.navigator
-import name.zeno.android.presenter.Extra
-import name.zeno.android.presenter.ZFragment
 import android.support.v4.app.Fragment as V4Fragment
 
 /**
@@ -92,11 +87,11 @@ class _ARouterX private constructor() {
     }
   }
 
-  internal fun <T : Parcelable> navigation(
+  internal fun  navigation(
       fragment: Fragment,
       postcard: Postcard,
       callback: NavigationCallback?,
-      onResult: ((Boolean, T?) -> Unit)? = null
+      onResult: ((Boolean, Intent?) -> Unit)? = null
   ) {
     try {
       LogisticsCenter.completion(postcard)
@@ -138,11 +133,11 @@ class _ARouterX private constructor() {
     }
   }
 
-  private fun <T : Parcelable> _navigation(
+  private fun _navigation(
       fragment: Fragment,
       postcard: Postcard,
       callback: NavigationCallback?,
-      onResult: ((Boolean, T?) -> Unit)? = null
+      onResult: ((Boolean, Intent?) -> Unit)? = null
   ) {
     val currentContext = fragment.activity ?: mContext
 
@@ -165,7 +160,7 @@ class _ARouterX private constructor() {
     // Navigation in main looper.
     Handler(Looper.getMainLooper()).post {
       if (onResult != null) {  // Need start for result
-        val next = { ok: Boolean, intentData: Intent? -> onResult(ok, Extra.getData(intentData)) }
+        val next = { ok: Boolean, intentData: Intent? -> onResult(ok, intentData) }
         fragment.navigator().startActivityForResult(intent, next)
       } else {
         fragment.startActivity(intent)

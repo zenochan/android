@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
-import android.os.Parcelable
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import io.reactivex.Observable
@@ -66,7 +65,7 @@ fun <T : ZFragment> T.cropByNative(
     intent.putExtra("noFaceDetection", true)
 
     if (intent.resolveActivity(ctx.packageManager) != null) {
-      nav<Parcelable>(intent) { ok, _ ->
+      nav(intent) { ok, _ ->
         if (ok) {
           it.onNext("$path/$fileName")
           it.onComplete()
@@ -130,7 +129,7 @@ fun <T : ZActivity> T.cropByNative(
     intent.putExtra("noFaceDetection", true)
 
     if (intent.resolveActivity(ctx.packageManager) != null) {
-      nav<Parcelable>(intent) { ok, _ ->
+      nav(intent) { ok, _ ->
         if (ok) {
           it.onNext("$path/$fileName")
           it.onComplete()

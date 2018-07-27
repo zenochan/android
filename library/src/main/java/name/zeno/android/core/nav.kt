@@ -7,10 +7,8 @@ import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
 import android.content.Intent
-import android.os.Parcelable
 import android.os.Process
 import name.zeno.android.data.models.UpdateInfo
-import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.presenter.ZFragment
 import name.zeno.android.presenter.activities.UpdateActivity
@@ -27,17 +25,11 @@ import kotlin.reflect.KClass
  */
 
 
-fun Activity.nav(clazz: KClass<out Activity>, data: Parcelable? = null) = nav(clazz.java, data)
-
-fun Activity.nav(clazz: Class<out Activity>, data: Parcelable? = null) = nav<Parcelable>(clazz, data)
-
-fun <T : Parcelable> Activity.nav(clazz: KClass<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null) = nav(clazz.java, data, onResult)
-
-fun <T : Parcelable> Activity.nav(clazz: Class<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null) {
-  val intent = Intent(this, clazz)
-  Extra.setData(intent, data)
+fun Activity.nav(clazz: KClass<out Activity>, data: (Intent.() -> Unit)? = null, onResult: ((Boolean, Intent?) -> Unit)? = null) {
+  val intent = Intent(this, clazz.java)
+  data?.invoke(intent)
   if (onResult != null) {
-    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, Extra.getData(intentData)) }
+    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, intentData) }
 
     when {
       this is ZActivity -> startActivityForResult(intent, next)
@@ -48,9 +40,21 @@ fun <T : Parcelable> Activity.nav(clazz: Class<out Activity>, data: Parcelable? 
   }
 }
 
-fun <T : Parcelable> Activity.nav(intent:Intent, onResult: ((Boolean, T?) -> Unit)? = null) {
+fun Activity.nav(intent: Intent, onResult: ((ok: Boolean, data: Intent?) -> Unit)? = null) {
   if (onResult != null) {
-    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, Extra.getData(intentData)) }
+    when {
+      this is ZActivity -> startActivityForResult(intent, onResult)
+      else -> navigator().startActivityForResult(intent, onResult)
+    }
+  } else {
+    startActivity(intent)
+  }
+}
+
+
+fun ZFragment.nav(intent: Intent, onResult: ((Boolean, Intent?) -> Unit)? = null) {
+  if (onResult != null) {
+    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, intentData) }
 
     when {
       this is ZActivity -> startActivityForResult(intent, next)
@@ -62,33 +66,16 @@ fun <T : Parcelable> Activity.nav(intent:Intent, onResult: ((Boolean, T?) -> Uni
 }
 
 
-fun <T : Parcelable> ZFragment.nav(intent:Intent, onResult: ((Boolean, T?) -> Unit)? = null) {
-  if (onResult != null) {
-    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, Extra.getData(intentData)) }
-
-    when {
-      this is ZActivity -> startActivityForResult(intent, next)
-      else -> navigator().startActivityForResult(intent, next)
-    }
-  } else {
-    startActivity(intent)
-  }
-}
-
-
-
-fun Fragment.nav(clazz: KClass<out Activity>, data: Parcelable? = null) = nav(clazz.java, data)
-
-fun Fragment.nav(clazz: Class<out Activity>, data: Parcelable? = null) = nav<Parcelable>(clazz, data)
-
-fun <T : Parcelable> Fragment.nav(clazz: KClass<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null) = nav(clazz.java, data, onResult)
-
-fun <T : Parcelable> Fragment.nav(clazz: Class<out Activity>, data: Parcelable? = null, onResult: ((Boolean, T?) -> Unit)? = null) {
-  val intent = Intent(this.activity, clazz)
-  Extra.setData(intent, data)
+fun Fragment.nav(
+    clazz: KClass<out Activity>,
+    data: (Intent.() -> Unit)? = null,
+    onResult: ((Boolean, Intent?) -> Unit)? = null
+) {
+  val intent = Intent(this.activity, clazz.java)
+  data?.invoke(intent)
   if (onResult != null) {
 
-    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, Extra.getData(intentData)) }
+    val next = { ok: Boolean, intentData: Intent? -> onResult(ok, intentData) }
     if (this is ZFragment) {
       startActivityForResult(intent, next)
     } else {

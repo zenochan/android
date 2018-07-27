@@ -3,6 +3,7 @@ package com.alibaba.android.arouter.launcher
 import android.app.Application
 import android.app.Fragment
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Parcelable
 import android.util.Log
@@ -24,11 +25,11 @@ class ARouterX private constructor() {
     return _ARouterX.getInstance().build(path)
   }
 
-  fun <T : Parcelable> navigation(
+  fun navigation(
       fragment: Fragment,
       postcard: Postcard,
       callback: NavigationCallback?,
-      onResult: ((Boolean, T?) -> Unit)? = null
+      onResult: ((Boolean, Intent?) -> Unit)? = null
   ): Any? {
     return _ARouterX.getInstance().navigation(fragment, postcard, callback, onResult)
   }

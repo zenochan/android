@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import kotlinx.android.synthetic.main.activity_bigbang.*
-import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.system.ZStatusBar
 import name.zeno.android.util.R
@@ -13,6 +12,7 @@ import name.zeno.android.util.ZString
 import java.util.*
 
 /**
+ * @param data [String] 需要分词的字符串
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/1/3.
  */
@@ -23,7 +23,7 @@ class BigBangActivity : ZActivity(), BigBangView {
     super.onCreate(savedInstanceState)
     ZStatusBar.setImage(this)
     setContentView(R.layout.activity_bigbang)
-    segments(intent.getStringExtra(Extra.KEY))
+    segments(intent.getStringExtra("data"))
 
   }
 
@@ -45,7 +45,7 @@ class BigBangActivity : ZActivity(), BigBangView {
   companion object {
     fun callIntent(context: Context, text: String): Intent {
       val intent = Intent(context, BigBangActivity::class.java)
-      intent.putExtra(Extra.KEY, text)
+      intent.putExtra("data", text)
       return intent
     }
   }

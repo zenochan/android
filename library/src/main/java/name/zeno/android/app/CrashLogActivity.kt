@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_crash_log.*
-import name.zeno.android.core.data
 import name.zeno.android.data.CommonConnector
 import name.zeno.android.exception.ZException
 import name.zeno.android.presenter.ZActivity
@@ -34,7 +33,7 @@ class CrashLogActivity : ZActivity() {
     super.onCreate(savedInstanceState)
     try {
       setContentView(R.layout.activity_crash_log)
-      info = data()
+      info = intent.getParcelableExtra("data")
 
       val actionbar = findViewById<SimpleActionbar>(R.id.layout_actionbar)
       actionbar.onAction { this.sendLog() }

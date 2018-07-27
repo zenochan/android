@@ -1,13 +1,12 @@
 package name.zeno.android.presenter.input
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
 import android.view.Gravity
 import kotlinx.android.synthetic.main.activity_input.*
-import name.zeno.android.core.data
 import name.zeno.android.data.models.TextData
-import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.system.ZStatusBar
 import name.zeno.android.util.R
@@ -18,6 +17,9 @@ import name.zeno.android.widget.ZTextWatcher
 import java.util.regex.Pattern
 
 /**
+ * @param data [TextData]
+ * @return data [TextData]
+ *
  * @author 陈治谋 (513500085@qq.com)
  * @since 2017/8/14
  */
@@ -33,7 +35,7 @@ class InputActivity : ZActivity() {
     ZTextWatcher.watch(et_content, { _, s -> textData.result = s })
     btn_submit.setOnClickListener { submit() }
 
-    textData = data()
+    textData = intent.getParcelableExtra("data")
 
     if (textData.isWhiteStatusBar) {
       ZStatusBar.lightMode(this)
@@ -83,7 +85,7 @@ class InputActivity : ZActivity() {
       return
     }
 
-    setResult(RESULT_OK, Extra.setData(textData))
+    setResult(RESULT_OK, Intent().putExtra("data", textData))
     finish()
   }
 }

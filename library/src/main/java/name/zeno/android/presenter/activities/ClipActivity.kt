@@ -3,6 +3,7 @@ package name.zeno.android.presenter.activities
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,9 +11,6 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_clip_image.*
-import name.zeno.android.core.data
-import name.zeno.android.data.models.BaseData
-import name.zeno.android.presenter.Extra
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.system.ZStatusBar
 import name.zeno.android.system.navbarHeight
@@ -24,7 +22,8 @@ import name.zeno.android.util.ZBitmap
 import java.io.File
 
 /**
- * @param extra [BaseData.string] path
+ * @param data [String] path
+ * @return data [String] path
  */
 class ClipActivity : ZActivity() {
   private val loadingDialog: ProgressDialog by lazy {
@@ -51,7 +50,7 @@ class ClipActivity : ZActivity() {
   }
 
   private fun loadBmp() {
-    val path = data<BaseData>().string
+    val path = intent.getStringExtra("data")
 
     if (TextUtils.isEmpty(path) || !File(path).exists()) {
       Toast.makeText(this, "图片加载失败", Toast.LENGTH_SHORT).show()
@@ -82,7 +81,9 @@ class ClipActivity : ZActivity() {
     }.compose(RxUtils.applySchedulers()).subscribe(object : ZObserver<String>() {
       override fun onComplete() = loadingDialog.dismiss()
       override fun onNext(value: String) {
-        setResult(Activity.RESULT_OK, Extra.setData(BaseData(value)))
+        val result = Intent()
+        result.putExtra("data", value)
+        setResult(Activity.RESULT_OK, result)
         finish()
       }
     })
