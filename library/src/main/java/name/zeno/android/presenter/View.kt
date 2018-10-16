@@ -1,7 +1,7 @@
 package name.zeno.android.presenter
 
 import android.content.Context
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 
 /**
  * Create Date: 16/6/18

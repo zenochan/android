@@ -23,12 +23,10 @@ import com.alibaba.android.arouter.facade.service.PathReplaceService
 import com.alibaba.android.arouter.utils.Consts
 import com.alibaba.android.arouter.utils.TextUtils
 import name.zeno.android.core.navigator
-import android.support.v4.app.Fragment as V4Fragment
 
 /**
- * ARouter core (Facade patten)
+ * [_ARouter] 不允许修改，copy一份修改内容
  *
- * @author Alex [Contact me.](mailto:zhilong.liu@aliyun.com)
  * @version 1.0
  * @since 16/8/16 14:39
  */
@@ -87,7 +85,7 @@ class _ARouterX private constructor() {
     }
   }
 
-  internal fun  navigation(
+  internal fun navigation(
       fragment: Fragment,
       postcard: Postcard,
       callback: NavigationCallback?,

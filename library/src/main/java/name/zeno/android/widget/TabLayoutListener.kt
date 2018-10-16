@@ -1,6 +1,6 @@
 package name.zeno.android.widget
 
-import android.support.design.widget.TabLayout
+import com.google.android.material.tabs.TabLayout
 
 /**
  * @author 陈治谋 (513500085@qq.com)

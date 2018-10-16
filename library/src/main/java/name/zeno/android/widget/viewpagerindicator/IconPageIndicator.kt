@@ -18,8 +18,6 @@ package name.zeno.android.widget.viewpagerindicator
 
 
 import android.content.Context
-import android.support.v4.view.ViewPager
-import android.support.v4.view.ViewPager.OnPageChangeListener
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -27,6 +25,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
+import androidx.viewpager.widget.ViewPager
 import name.zeno.android.util.R
 
 /**
@@ -37,7 +36,7 @@ class IconPageIndicator @JvmOverloads constructor(context: Context, attrs: Attri
   private val mIconsLayout: IcsLinearLayout
 
   private var mViewPager: ViewPager? = null
-  private var mListener: OnPageChangeListener? = null
+  private var mListener: ViewPager.OnPageChangeListener? = null
   private var mIconSelector: Runnable? = null
   private var mSelectedIndex: Int = 0
 
@@ -137,7 +136,7 @@ class IconPageIndicator @JvmOverloads constructor(context: Context, attrs: Attri
     }
   }
 
-  override fun setOnPageChangeListener(listener: OnPageChangeListener) {
+  override fun setOnPageChangeListener(listener: ViewPager.OnPageChangeListener) {
     mListener = listener
   }
 }

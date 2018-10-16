@@ -3,7 +3,7 @@ package name.zeno.android.util
 import android.app.NotificationManager
 import android.content.Context
 import android.net.Uri
-import android.support.annotation.RawRes
+import androidx.annotation.RawRes
 
 /**
  * @author 陈治谋 (513500085@qq.com)

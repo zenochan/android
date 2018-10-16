@@ -3,9 +3,6 @@ package name.zeno.android.app
 import android.app.Activity
 import android.app.Application
 import android.content.Intent
-import com.umeng.analytics.MobclickAgent
-import name.zeno.android.presenter.Extra
-import name.zeno.android.third.umeng.ZUmeng
 import name.zeno.android.util.ZLog
 
 /**
@@ -45,11 +42,6 @@ class ZExceptionHandler(
 
     onError?.invoke(throwable)
 
-    if (ZUmeng.supported) {
-      //友盟错误上报
-      MobclickAgent.reportError(context, throwable)
-      MobclickAgent.onKillProcess(context)
-    }
 
     val info = ExceptionInfo(throwable, email, mainClass, accountJson)
 

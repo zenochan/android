@@ -19,11 +19,8 @@ package name.zeno.android.widget
 
 import android.annotation.TargetApi
 import android.content.Context
-import android.content.res.Resources
-import android.content.res.TypedArray
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.annotation.DrawableRes
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.SparseBooleanArray
@@ -35,7 +32,7 @@ import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.LinearLayout
 import android.widget.TextView
-
+import androidx.annotation.DrawableRes
 import name.zeno.android.util.R
 
 

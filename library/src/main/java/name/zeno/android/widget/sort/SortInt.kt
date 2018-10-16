@@ -1,6 +1,6 @@
 package name.zeno.android.widget.sort
 
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 
 /**
  * @author Zeno [mail](mailto:zenochan@qq.com)

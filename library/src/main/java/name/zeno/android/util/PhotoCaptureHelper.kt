@@ -8,8 +8,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.support.annotation.RequiresPermission
-import android.support.v4.content.FileProvider
+import androidx.annotation.RequiresPermission
+import androidx.core.content.FileProvider
 import com.orhanobut.logger.Logger
 import name.zeno.android.core.N
 import name.zeno.android.core.sdkInt
@@ -80,7 +80,7 @@ class PhotoCaptureHelper private constructor(
     val imageUri: Uri = when {
     //通过FileProvider创建一个content类型的Uri
       sdkInt >= N -> {
-        val fileProvider = "${ctx.packageName}.fileprovider";
+        val fileProvider = "${ctx.packageName}.fileprovider"
         FileProvider.getUriForFile(ctx, fileProvider, photoFile)
       }
       else -> Uri.fromFile(photoFile)

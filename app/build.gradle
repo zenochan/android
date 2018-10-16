@@ -12,20 +12,15 @@ repositories {
 }
 
 android {
-  compileSdkVersion 27
-  buildToolsVersion '27.0.3'
-
-//  compileOptions {
-//    sourceCompatibility JavaVersion.VERSION_1_8
-//    targetCompatibility JavaVersion.VERSION_1_8
-//  }
+  compileSdkVersion compile_sdk_version
+  buildToolsVersion build_tools_version
 
 
   defaultConfig {
     multiDexEnabled true
     applicationId "demo.android.zeno.name.zenokit"
-    minSdkVersion 15
-    targetSdkVersion 27
+    minSdkVersion 16
+    targetSdkVersion target_sdk_version
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

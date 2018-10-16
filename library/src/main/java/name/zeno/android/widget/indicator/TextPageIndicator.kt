@@ -1,10 +1,9 @@
 package name.zeno.android.widget.indicator
 
 import android.content.Context
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
-
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.viewpager.widget.ViewPager
 import name.zeno.android.widget.PageIndicator
 
 /**

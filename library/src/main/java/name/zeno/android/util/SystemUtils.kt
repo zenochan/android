@@ -9,23 +9,18 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
-import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
 import android.os.Build
-import android.support.annotation.RequiresPermission
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.EditText
-
+import androidx.annotation.RequiresPermission
 import java.lang.reflect.Method
-import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.SocketException
-import java.util.Enumeration
-import java.util.Locale
+import java.util.*
 
 object SystemUtils {
   private val TAG = "SystemUtils"

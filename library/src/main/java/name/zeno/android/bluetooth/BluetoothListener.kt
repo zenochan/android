@@ -3,7 +3,7 @@ package name.zeno.android.bluetooth
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
-import android.support.annotation.IntRange
+import androidx.annotation.IntRange
 
 interface BluetoothListener {
 

@@ -2,12 +2,9 @@ package name.zeno.android.util
 
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.content.Context
-import android.content.SharedPreferences
-import android.support.annotation.RequiresPermission
 import android.text.TextUtils
-
+import androidx.annotation.RequiresPermission
 import name.zeno.android.app.AppInfo
 
 /**

@@ -16,7 +16,7 @@ import name.zeno.ktrxpermission.ZPermission
 import name.zeno.ktrxpermission.rxPermissions
 import org.jetbrains.anko.button
 import org.jetbrains.anko.imageView
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.verticalLayout
 
 
@@ -47,8 +47,8 @@ class AvatarActivity : ZActivity() {
       button {
         text = "相册"
         onClick {
-          rxPermissions(ZPermission.READ_EXTERNAL_STORAGE).subscribe {
-            if (it) capture.getImageFromAlbum()
+          rxPermissions(ZPermission.READ_EXTERNAL_STORAGE).subscribe { granted ->
+            if (granted) capture.getImageFromAlbum()
           }
         }
       }
@@ -59,8 +59,8 @@ class AvatarActivity : ZActivity() {
           rxPermissions(
               ZPermission.READ_EXTERNAL_STORAGE,
               ZPermission.CAMERA
-          ).subscribe {
-            if (it) capture.getImageFromCamera()
+          ).subscribe { granted ->
+            if (granted) capture.getImageFromCamera()
           }
         }
       }
@@ -72,8 +72,8 @@ class AvatarActivity : ZActivity() {
           rxPermissions(
               ZPermission.WRITE_EXTERNAL_STORAGE,
               ZPermission.CAMERA
-          ).subscribe {
-            if (it) capture.getIdCardFromCamera()
+          ).subscribe { granted ->
+            if (granted) capture.getIdCardFromCamera()
           }
         }
       }

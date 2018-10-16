@@ -69,7 +69,7 @@ class InputActivity : ZActivity() {
     }
     et_content.hint = textData.hint
     et_content.setText(textData.preFill)
-    et_content.setSelection(et_content.text.length)
+    et_content.setSelection(et_content.text?.length ?: 0)
     ZEditor.actionDone(et_content) { submit() }
   }
 

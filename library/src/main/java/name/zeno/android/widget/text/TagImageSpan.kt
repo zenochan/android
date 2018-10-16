@@ -4,8 +4,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
-import android.support.annotation.ColorInt
 import android.text.style.ImageSpan
+import androidx.annotation.ColorInt
 
 /**
  * <pre>

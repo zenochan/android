@@ -1,7 +1,7 @@
 package name.zeno.android.core
 
 import android.graphics.PointF
-import android.support.annotation.FloatRange
+import androidx.annotation.FloatRange
 
 /**
  * 二次贝塞尔曲线插值

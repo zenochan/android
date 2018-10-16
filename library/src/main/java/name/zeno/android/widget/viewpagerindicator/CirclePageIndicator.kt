@@ -23,14 +23,14 @@ import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.Paint.Style
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.v4.view.ViewCompat
-import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.widget.LinearLayout.HORIZONTAL
 import android.widget.LinearLayout.VERTICAL
+import androidx.core.view.ViewCompat
+import androidx.viewpager.widget.ViewPager
 import name.zeno.android.util.R
 
 class CirclePageIndicator @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = R.attr.vpiCirclePageIndicatorStyle) : View(context, attrs, defStyle), PageIndicator {

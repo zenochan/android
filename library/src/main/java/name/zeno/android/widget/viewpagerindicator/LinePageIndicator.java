@@ -23,14 +23,14 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewConfigurationCompat;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import androidx.core.view.MotionEventCompat;
+import androidx.core.view.ViewConfigurationCompat;
+import androidx.viewpager.widget.ViewPager;
 import name.zeno.android.util.R;
 
 
@@ -42,18 +42,18 @@ public class LinePageIndicator extends View implements PageIndicator
 {
   private static final int INVALID_POINTER = -1;
 
-  private final Paint mPaintUnselected = new Paint(Paint.ANTI_ALIAS_FLAG);
-  private final Paint mPaintSelected   = new Paint(Paint.ANTI_ALIAS_FLAG);
-  private ViewPager                      mViewPager;
-  private ViewPager.OnPageChangeListener mListener;
-  private int                            mCurrentPage;
-  private boolean                        mCentered;
-  private float                          mLineWidth;
-  private float                          mGapWidth;
+  private final Paint                          mPaintUnselected = new Paint(Paint.ANTI_ALIAS_FLAG);
+  private final Paint                          mPaintSelected   = new Paint(Paint.ANTI_ALIAS_FLAG);
+  private       ViewPager                      mViewPager;
+  private       ViewPager.OnPageChangeListener mListener;
+  private       int                            mCurrentPage;
+  private       boolean                        mCentered;
+  private       float                          mLineWidth;
+  private       float                          mGapWidth;
 
-  private int mTouchSlop;
-  private float mLastMotionX     = -1;
-  private int   mActivePointerId = INVALID_POINTER;
+  private int     mTouchSlop;
+  private float   mLastMotionX     = -1;
+  private int     mActivePointerId = INVALID_POINTER;
   private boolean mIsDragging;
 
 
@@ -75,12 +75,12 @@ public class LinePageIndicator extends View implements PageIndicator
     final Resources res = getResources();
 
     //Load defaults from resources
-    final int defaultSelectedColor = res.getColor(R.color.default_line_indicator_selected_color);
-    final int defaultUnselectedColor = res.getColor(R.color.default_line_indicator_unselected_color);
-    final float defaultLineWidth = res.getDimension(R.dimen.default_line_indicator_line_width);
-    final float defaultGapWidth = res.getDimension(R.dimen.default_line_indicator_gap_width);
-    final float defaultStrokeWidth = res.getDimension(R.dimen.default_line_indicator_stroke_width);
-    final boolean defaultCentered = res.getBoolean(R.bool.default_line_indicator_centered);
+    final int     defaultSelectedColor   = res.getColor(R.color.default_line_indicator_selected_color);
+    final int     defaultUnselectedColor = res.getColor(R.color.default_line_indicator_unselected_color);
+    final float   defaultLineWidth       = res.getDimension(R.dimen.default_line_indicator_line_width);
+    final float   defaultGapWidth        = res.getDimension(R.dimen.default_line_indicator_gap_width);
+    final float   defaultStrokeWidth     = res.getDimension(R.dimen.default_line_indicator_stroke_width);
+    final boolean defaultCentered        = res.getBoolean(R.bool.default_line_indicator_centered);
 
     //Retrieve styles attributes
     TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LinePageIndicator, defStyle, 0);
@@ -190,12 +190,12 @@ public class LinePageIndicator extends View implements PageIndicator
     }
 
     final float lineWidthAndGap = mLineWidth + mGapWidth;
-    final float indicatorWidth = (count * lineWidthAndGap) - mGapWidth;
-    final float paddingTop = getPaddingTop();
-    final float paddingLeft = getPaddingLeft();
-    final float paddingRight = getPaddingRight();
+    final float indicatorWidth  = (count * lineWidthAndGap) - mGapWidth;
+    final float paddingTop      = getPaddingTop();
+    final float paddingLeft     = getPaddingLeft();
+    final float paddingRight    = getPaddingRight();
 
-    float verticalOffset = paddingTop + ((getHeight() - paddingTop - getPaddingBottom()) / 2.0f);
+    float verticalOffset   = paddingTop + ((getHeight() - paddingTop - getPaddingBottom()) / 2.0f);
     float horizontalOffset = paddingLeft;
     if (mCentered) {
       horizontalOffset += ((getWidth() - paddingLeft - paddingRight) / 2.0f) - (indicatorWidth / 2.0f);
@@ -226,9 +226,9 @@ public class LinePageIndicator extends View implements PageIndicator
         break;
 
       case MotionEvent.ACTION_MOVE: {
-        final int activePointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
-        final float x = MotionEventCompat.getX(ev, activePointerIndex);
-        final float deltaX = x - mLastMotionX;
+        final int   activePointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+        final float x                  = MotionEventCompat.getX(ev, activePointerIndex);
+        final float deltaX             = x - mLastMotionX;
 
         if (!mIsDragging) {
           if (Math.abs(deltaX) > mTouchSlop) {
@@ -249,9 +249,9 @@ public class LinePageIndicator extends View implements PageIndicator
       case MotionEvent.ACTION_CANCEL:
       case MotionEvent.ACTION_UP:
         if (!mIsDragging) {
-          final int count = mViewPager.getAdapter().getCount();
-          final int width = getWidth();
-          final float halfWidth = width / 2f;
+          final int   count      = mViewPager.getAdapter().getCount();
+          final int   width      = getWidth();
+          final float halfWidth  = width / 2f;
           final float sixthWidth = width / 6f;
 
           if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
@@ -383,8 +383,8 @@ public class LinePageIndicator extends View implements PageIndicator
   private int measureWidth(int measureSpec)
   {
     float result;
-    int specMode = MeasureSpec.getMode(measureSpec);
-    int specSize = MeasureSpec.getSize(measureSpec);
+    int   specMode = MeasureSpec.getMode(measureSpec);
+    int   specSize = MeasureSpec.getSize(measureSpec);
 
     if ((specMode == MeasureSpec.EXACTLY) || (mViewPager == null)) {
       //We were told how big to be
@@ -410,8 +410,8 @@ public class LinePageIndicator extends View implements PageIndicator
   private int measureHeight(int measureSpec)
   {
     float result;
-    int specMode = MeasureSpec.getMode(measureSpec);
-    int specSize = MeasureSpec.getSize(measureSpec);
+    int   specMode = MeasureSpec.getMode(measureSpec);
+    int   specSize = MeasureSpec.getSize(measureSpec);
 
     if (specMode == MeasureSpec.EXACTLY) {
       //We were told how big to be

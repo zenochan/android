@@ -5,9 +5,9 @@
 
 package name.zeno.android.system
 
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.BottomSheetDialog
 import android.widget.FrameLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import name.zeno.android.util.R
 
 /**

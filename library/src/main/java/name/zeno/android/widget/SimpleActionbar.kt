@@ -4,12 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.annotation.StringRes
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.annotation.StringRes
 import name.zeno.android.util.R
 
 @Suppress("unused")

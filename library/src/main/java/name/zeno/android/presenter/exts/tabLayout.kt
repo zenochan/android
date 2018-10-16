@@ -5,10 +5,10 @@
 
 package name.zeno.android.presenter.exts
 
-import android.support.annotation.DrawableRes
-import android.support.design.widget.TabLayout
-import android.support.v4.content.ContextCompat
 import android.widget.LinearLayout
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
+import com.google.android.material.tabs.TabLayout
 
 
 /** 设置 tab layout 的分割线 */

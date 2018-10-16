@@ -2,11 +2,12 @@ package name.zeno.android.presenter
 
 import android.app.Fragment
 import android.os.Bundle
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.snackbar.Snackbar
+import org.jetbrains.anko.act
 
 /**
  * @author 陈治谋 (513500085@qq.com)
@@ -121,7 +122,7 @@ open class ToastFragment : Fragment() {
         .neutralText("好")
         .onNeutral { dialog, _ ->
           dialog.dismiss()
-          activity.finish()
+          activity?.finish()
         }
         .cancelable(false)
         .show()

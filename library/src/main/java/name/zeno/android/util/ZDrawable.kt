@@ -2,9 +2,8 @@ package name.zeno.android.util
 
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
-import android.support.annotation.ColorInt
 import android.widget.TextView
-
+import androidx.annotation.ColorInt
 import name.zeno.android.tint.TintInfo
 import name.zeno.android.tint.TintManager
 

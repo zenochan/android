@@ -1,7 +1,7 @@
 package me.kaelaela.verticalviewpager.transforms
 
-import android.support.v4.view.ViewPager
 import android.view.View
+import androidx.viewpager.widget.ViewPager
 
 /**
  * Copyright (C) 2015 Kaelaela

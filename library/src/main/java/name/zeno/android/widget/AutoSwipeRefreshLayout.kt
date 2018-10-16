@@ -1,9 +1,9 @@
 package name.zeno.android.widget
 
 import android.content.Context
-import android.support.v4.widget.SwipeRefreshLayout
 import android.util.AttributeSet
 import android.view.View
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import name.zeno.android.util.ZLog
 
 /**

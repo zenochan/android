@@ -1,6 +1,6 @@
 package name.zeno.android.third
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
 
 /**

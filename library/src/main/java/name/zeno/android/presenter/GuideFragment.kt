@@ -3,19 +3,19 @@ package name.zeno.android.presenter
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.annotation.DrawableRes
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewPager
-import android.support.v7.widget.AppCompatImageView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
+import androidx.viewpager.widget.ViewPager
 import kale.adapter.BasePagerAdapter
 import kotlinx.android.synthetic.main.fragment_guide.view.*
 import name.zeno.android.util.R
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 /**
  * 简单的引导页, 使用 [.newInstance] 新建 fragment

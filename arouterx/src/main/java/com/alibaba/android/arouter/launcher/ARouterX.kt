@@ -2,22 +2,14 @@ package com.alibaba.android.arouter.launcher
 
 import android.app.Application
 import android.app.Fragment
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.os.Parcelable
-import android.util.Log
 import com.alibaba.android.arouter.exception.InitException
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.NavigationCallback
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import name.zeno.android.core.initInIOThread
-import name.zeno.android.core.now
-import java.util.logging.Logger
 
 /**
- * 扩展 ARouter, 使其支持 zako 库的跳转
+ * 扩展 [ARouter], 使其支持 zako 库的跳转
  * @since 2018-05-28 10:30:25
  */
 class ARouterX private constructor() {

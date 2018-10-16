@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.support.v4.content.FileProvider
+import androidx.core.content.FileProvider
 import io.reactivex.Observable
 import name.zeno.android.core.nav
 import name.zeno.android.data.models.CropOptions

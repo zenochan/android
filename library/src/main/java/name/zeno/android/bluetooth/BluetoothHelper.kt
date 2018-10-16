@@ -2,10 +2,10 @@ package name.zeno.android.bluetooth
 
 import android.Manifest
 import android.app.Activity
+import android.app.Fragment
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
-import android.support.annotation.RequiresPermission
-import android.support.v4.app.Fragment
+import androidx.annotation.RequiresPermission
 
 /**
  * @author 陈治谋 (513500085@qq.com)

@@ -2,8 +2,9 @@ package name.zeno.android.widget
 
 import android.content.Context
 import android.graphics.*
-import android.support.annotation.IntDef
 import android.util.AttributeSet
+import androidx.annotation.IntDef
+import androidx.databinding.adapters.ViewBindingAdapter.setPadding
 import name.zeno.android.util.R
 import name.zeno.android.util.R.styleable.*
 

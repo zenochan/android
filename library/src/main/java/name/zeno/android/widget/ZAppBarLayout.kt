@@ -4,12 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.support.annotation.ColorInt
-import android.support.design.widget.AppBarLayout
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
-
+import androidx.annotation.ColorInt
+import com.google.android.material.appbar.AppBarLayout
 import name.zeno.android.system.ZStatusBar
 import name.zeno.android.util.R
 

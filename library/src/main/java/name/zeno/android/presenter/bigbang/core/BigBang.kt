@@ -5,7 +5,7 @@
 package name.zeno.android.presenter.bigbang.core
 
 import android.content.Context
-import android.support.annotation.StringDef
+import androidx.annotation.StringDef
 import name.zeno.android.presenter.bigbang.action.Action
 import name.zeno.android.presenter.bigbang.action.BaiduSearchAction
 import name.zeno.android.presenter.bigbang.action.CopyAction

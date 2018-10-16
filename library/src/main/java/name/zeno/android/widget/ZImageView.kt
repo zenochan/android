@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.AppCompatImageView
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatImageView
 import name.zeno.android.tint.TintHelper
 import name.zeno.android.tint.TintInfo
 import name.zeno.android.tint.TintableDrawableView

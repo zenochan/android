@@ -2,9 +2,7 @@ package name.zeno.android.presenter.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-
-import name.zeno.android.third.umeng.ZUmeng
+import androidx.appcompat.app.AppCompatActivity
 import name.zeno.android.util.ZLog
 
 /**
@@ -26,7 +24,6 @@ abstract class ZLogActivity : AppCompatActivity() {
   override fun onResume() {
     super.onResume()
     ZLog.v(TAG, "onResume()")
-    ZUmeng.onResume(this)
   }
 
   override fun onNewIntent(intent: Intent) {
@@ -37,7 +34,6 @@ abstract class ZLogActivity : AppCompatActivity() {
   override fun onPause() {
     super.onPause()
     ZLog.v(TAG, "onPause()")
-    ZUmeng.onPause(this)
   }
 
   override fun onSaveInstanceState(outState: Bundle) {

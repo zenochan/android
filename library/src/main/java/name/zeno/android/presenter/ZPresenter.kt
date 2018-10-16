@@ -1,7 +1,7 @@
 package name.zeno.android.presenter
 
 import android.content.Intent
-import android.support.annotation.CallSuper
+import androidx.annotation.CallSuper
 import com.orhanobut.logger.Logger
 import io.reactivex.Observable
 import io.reactivex.Observer

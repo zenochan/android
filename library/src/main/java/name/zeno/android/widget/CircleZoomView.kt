@@ -4,10 +4,9 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.View
-
+import androidx.annotation.ColorInt
 import name.zeno.android.anim.InterpolationObservableAnimation
 
 

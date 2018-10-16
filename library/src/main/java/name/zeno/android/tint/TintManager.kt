@@ -9,8 +9,8 @@ import android.graphics.drawable.DrawableContainer
 import android.graphics.drawable.InsetDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
-import android.support.v4.util.LruCache
 import android.util.Log
+import androidx.collection.LruCache
 
 object TintManager {
 

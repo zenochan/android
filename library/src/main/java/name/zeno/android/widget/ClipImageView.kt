@@ -7,7 +7,6 @@ import android.graphics.Bitmap.Config
 import android.graphics.Canvas
 import android.graphics.Matrix
 import android.graphics.RectF
-import android.support.v7.widget.AppCompatImageView
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.GestureDetector.SimpleOnGestureListener
@@ -16,6 +15,7 @@ import android.view.ScaleGestureDetector
 import android.view.ScaleGestureDetector.OnScaleGestureListener
 import android.view.ViewTreeObserver
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatImageView
 
 class ClipImageView @JvmOverloads constructor(
     context: Context,

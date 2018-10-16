@@ -7,11 +7,11 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Environment
-import android.support.annotation.DrawableRes
-import android.support.annotation.FloatRange
-import android.support.annotation.RequiresPermission
 import android.util.Log
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
+import androidx.annotation.FloatRange
+import androidx.annotation.RequiresPermission
 import name.zeno.android.kt.circle
 import name.zeno.android.kt.gray
 import name.zeno.android.kt.zoom

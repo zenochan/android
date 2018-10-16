@@ -13,7 +13,7 @@ mavenConf {
 confMaven()
 
 android {
-  compileSdkVersion 27
+  compileSdkVersion compile_sdk_version
 
   def calendar = Calendar.getInstance()
   def date = String.format("%d%02d%02d",
@@ -24,7 +24,7 @@ android {
 
   defaultConfig {
     minSdkVersion 15
-    targetSdkVersion 27
+    targetSdkVersion target_sdk_version
     versionCode date
     versionName mavenConf.version
 
@@ -49,7 +49,7 @@ repositories {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-  provided 'com.android.support:appcompat-v7:27.1.1'
+  compileOnly 'com.android.support:appcompat-v7:27.1.1'
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'com.android.support.test:runner:1.0.2'
   androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -57,6 +57,6 @@ dependencies {
   api 'cn.jiguang.sdk:jpush:3.1.3'  // 此处以JPush 3.1.1 版本为例。
   api 'cn.jiguang.sdk:jcore:1.2.1' // 此处以JCore 1.1.9 版本为例。
   api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-  api "io.reactivex.rxjava2:rxjava:2.1.9"
-  api "io.reactivex.rxjava2:rxandroid:2.0.2"
+  api "io.reactivex.rxjava2:rxjava:$rxjava_version"
+  api "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 }

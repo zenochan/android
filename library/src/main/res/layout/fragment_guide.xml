@@ -6,12 +6,12 @@
   tools:context="name.zeno.android.presenter.GuideFragment"
   >
 
-  <android.support.v4.view.ViewPager
+  <androidx.viewpager.widget.ViewPager
     android:id="@+id/pager_guide"
     style="@style/layout.full"
     />
 
-  <android.support.v7.widget.AppCompatButton
+  <androidx.appcompat.widget.AppCompatButton
     android:id="@+id/btn_skip"
     android:layout_width="64sp"
     android:layout_height="32dp"
@@ -22,7 +22,7 @@
     android:textColor="@color/z.white"
     />
 
-  <android.support.v7.widget.AppCompatButton
+  <androidx.appcompat.widget.AppCompatButton
     android:id="@+id/btn_start"
     style="@style/button.main.small"
     android:layout_alignParentBottom="true"

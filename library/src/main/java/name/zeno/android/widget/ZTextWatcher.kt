@@ -1,10 +1,10 @@
 package name.zeno.android.widget
 
-import android.support.annotation.CallSuper
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.CallSuper
 import java.util.regex.Pattern
 
 /**

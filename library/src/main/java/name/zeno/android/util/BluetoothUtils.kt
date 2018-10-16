@@ -6,7 +6,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.IntentFilter
-import android.support.annotation.RequiresPermission
+import androidx.annotation.RequiresPermission
 
 /**
  * Create Date: 16/6/9

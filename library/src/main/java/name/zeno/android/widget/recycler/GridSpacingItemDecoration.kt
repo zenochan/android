@@ -1,9 +1,9 @@
 package name.zeno.android.widget.recycler
 
 import android.graphics.Rect
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * @author 陈治谋 (513500085@qq.com)
@@ -20,7 +20,7 @@ class GridSpacingItemDecoration(
   internal var rectHook: ((outRect: Rect, span: Int) -> Unit)? = null
 
 
-  override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State?) {
+  override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
     if (manager == null) {
       manager = parent.layoutManager as GridLayoutManager
       spanCount = manager!!.spanCount

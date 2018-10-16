@@ -9,17 +9,17 @@ noArg { annotation("aaa.bbb.ccc.ddd.Poko") }
 allOpen { annotation("aaa.bbb.ccc.ddd.Poko") }
 
 android {
-  compileSdkVersion 27
+  compileSdkVersion 28
 
   defaultConfig {
     applicationId "name.zeno.zako"
-    minSdkVersion 15
-    targetSdkVersion 27
+    minSdkVersion 16
+    targetSdkVersion 28
     versionCode 1
     versionName "1.0"
     multiDexEnabled true
 
-    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     manifestPlaceholders = [
         JPUSH_PKGNAME: applicationId,
@@ -27,12 +27,6 @@ android {
         JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
     ]
 
-    // aRouter
-    kapt {
-      arguments {
-        arg("moduleName", project.getName())
-      }
-    }
 
   }
 
@@ -45,16 +39,26 @@ android {
 
 }
 
+
+// aRouter
+kapt {
+  arguments {
+    arg("moduleName", project.getName())
+  }
+}
+
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
   testImplementation 'junit:junit:4.12'
-  androidTestImplementation 'com.android.support.test:runner:1.0.2'
-  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+  androidTestImplementation 'androidx.test:runner:1.1.0-beta02'
+  androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta02'
 
 //  implementation project(':jiguang')
   implementation "name.zeno:jiguang:0.0.1.1805251"
 
   implementation project(':library')
+
+  api 'name.zeno:arouterx:1.3.1.1807261'
   kapt 'com.alibaba:arouter-compiler:1.1.4'
 }
 

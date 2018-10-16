@@ -1,9 +1,8 @@
 package name.zeno.android.util
 
-import android.support.annotation.ColorInt
-import android.support.annotation.FloatRange
-
-import java.util.Random
+import androidx.annotation.ColorInt
+import androidx.annotation.FloatRange
+import java.util.*
 
 /**
  * Create Date: 16/5/30

@@ -6,15 +6,14 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.Handler
 import android.os.Message
-import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
-import java.util.Timer
-import java.util.TimerTask
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import name.zeno.android.anim.InterpolationObservableAnimation
-import name.zeno.android.util.ZDimen
 import name.zeno.android.util.R
+import name.zeno.android.util.ZDimen
+import java.util.*
 
 /**
  * 单行文字信息纵向滚动

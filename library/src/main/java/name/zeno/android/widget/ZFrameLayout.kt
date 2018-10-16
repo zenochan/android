@@ -3,10 +3,10 @@ package name.zeno.android.widget
 import android.content.Context
 import android.graphics.Rect
 import android.os.Build
-import android.support.annotation.AttrRes
 import android.util.AttributeSet
 import android.view.WindowInsets
 import android.widget.FrameLayout
+import androidx.annotation.AttrRes
 
 /**
  * 重写 [fitSystemWindows] ，解决 window resizing 失效的问题

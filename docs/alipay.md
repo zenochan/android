@@ -21,7 +21,7 @@ implementation "name.zeno:alipay:0.0.1+"
 ```kotlin
 class PaymentActivity : Activity{
   fun callAlipay(){
-    paypay(payInfo) { alipayResult ->
+    alipay(payInfo) { alipayResult ->
       if (alipayResult.resultStatus == 9000) {
         onPaySuccess()
       } else {

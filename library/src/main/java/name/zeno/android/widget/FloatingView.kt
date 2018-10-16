@@ -11,10 +11,10 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.net.Uri
 import android.os.Build
-import android.support.v7.widget.AppCompatImageView
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.WindowManager
+import androidx.appcompat.widget.AppCompatImageView
 import name.zeno.android.util.R
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder

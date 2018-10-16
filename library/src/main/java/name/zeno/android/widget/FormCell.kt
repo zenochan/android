@@ -3,21 +3,20 @@ package name.zeno.android.widget
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.support.annotation.ColorInt
-import android.support.annotation.Dimension
-import android.support.annotation.DrawableRes
-import android.support.annotation.StringRes
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-
+import androidx.annotation.ColorInt
+import androidx.annotation.Dimension
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import kotlinx.android.synthetic.main.view_form_cell.view.*
 import name.zeno.android.presenter.exts.show
 import name.zeno.android.util.R
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 
 /**
@@ -43,7 +42,8 @@ class FormCell @JvmOverloads constructor(
     contentTv = tv_content
   }
 
-  @ColorInt private var colorLabelText = 0
+  @ColorInt
+  private var colorLabelText = 0
 
 
   var text: String?

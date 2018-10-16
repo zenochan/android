@@ -7,16 +7,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.annotation.CallSuper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import name.zeno.android.core.sdkInt
 import name.zeno.android.third.rxbus.registerRxBus
 import name.zeno.android.third.rxbus.unregisterRxBus
 import name.zeno.android.third.rxjava.RxActivityResult
-import name.zeno.android.third.umeng.ZUmeng
 import name.zeno.android.util.ZLog
 import java.util.*
 
@@ -80,9 +79,6 @@ open class ZFragment : ToastFragment(), ActivityLauncher, LoadDataView {
     ZLog.v(TAG, "onResume()")
     super.onResume()
     listenerList.forEach { it.onResume() }
-    var pageName = TAG
-    if (pageName().isNotEmpty()) pageName += " | " + pageName()
-    ZUmeng.onPageStart(pageName)
   }
 
   @CallSuper

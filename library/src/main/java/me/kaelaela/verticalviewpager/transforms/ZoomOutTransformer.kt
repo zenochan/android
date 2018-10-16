@@ -14,8 +14,8 @@ package me.kaelaela.verticalviewpager.transforms
  * the License.
  */
 
-import android.support.v4.view.ViewPager
 import android.view.View
+import androidx.viewpager.widget.ViewPager
 
 class ZoomOutTransformer : ViewPager.PageTransformer {
 

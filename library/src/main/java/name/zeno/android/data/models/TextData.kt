@@ -2,8 +2,8 @@ package name.zeno.android.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.annotation.DrawableRes
-import android.support.annotation.IntDef
+import androidx.annotation.DrawableRes
+import androidx.annotation.IntDef
 import name.zeno.android.common.annotations.DataClass
 
 /**

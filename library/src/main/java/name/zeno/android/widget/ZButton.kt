@@ -1,11 +1,8 @@
 package name.zeno.android.widget
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.content.res.TypedArray
-import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
-
+import androidx.appcompat.widget.AppCompatButton
 import name.zeno.android.tint.TintHelper
 import name.zeno.android.util.R
 

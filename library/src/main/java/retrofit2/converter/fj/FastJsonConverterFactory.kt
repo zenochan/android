@@ -6,13 +6,11 @@ import com.alibaba.fastjson.parser.ParserConfig
 import com.alibaba.fastjson.serializer.PropertyPreFilter
 import com.alibaba.fastjson.serializer.SerializeConfig
 import com.alibaba.fastjson.serializer.SerializerFeature
-import java.lang.reflect.Type
-
-import name.zeno.android.third.rxjava.ValueTransformer
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import retrofit2.Retrofit
+import java.lang.reflect.Type
 
 
 /**

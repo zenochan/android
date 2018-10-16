@@ -1,10 +1,10 @@
 package name.zeno.android.widget.autoscrollviewpager
 
 import android.graphics.Color
-import android.support.v4.view.PagerAdapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.viewpager.widget.PagerAdapter
 
 /**
  * Create Date: 16/7/13
@@ -32,5 +32,5 @@ abstract class ZPagerAdapter<T>(var data: List<T>? = null) : PagerAdapter() {
     return view
   }
 
-  open fun loadImage(view: ImageView, item: T){}
+  open fun loadImage(view: ImageView, item: T) {}
 }

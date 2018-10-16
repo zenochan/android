@@ -1,11 +1,11 @@
 package name.zeno.android.behavior
 
 import android.content.Context
-import android.support.annotation.IntDef
-import android.support.design.widget.CoordinatorLayout
-import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.IntDef
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
 
 /**
  * <h1>垂直滚动</h1>

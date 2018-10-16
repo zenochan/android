@@ -2,11 +2,11 @@ package name.zeno.android.widget
 
 import android.content.Context
 import android.graphics.*
-import android.support.annotation.ColorInt
-import android.support.annotation.Dimension
-import android.support.annotation.IntDef
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.ColorInt
+import androidx.annotation.Dimension
+import androidx.annotation.IntDef
 import name.zeno.android.util.R
 import name.zeno.android.util.ZDimen
 
@@ -14,7 +14,11 @@ import name.zeno.android.util.ZDimen
  * @author 陈治谋 (微信: puppet2436)
  * @since 2017/4/15
  */
-class Shadow @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
+class Shadow @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
   private lateinit var paint: Paint
   private lateinit var path: Path

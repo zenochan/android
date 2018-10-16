@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Message
-import android.support.v7.widget.AppCompatButton
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnClickListener
+import androidx.appcompat.widget.AppCompatButton
 import java.util.*
 
 /**

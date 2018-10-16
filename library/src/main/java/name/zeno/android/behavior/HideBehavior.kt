@@ -1,12 +1,12 @@
 package name.zeno.android.behavior
 
 import android.content.Context
-import android.support.design.widget.CoordinatorLayout
-import android.support.v4.view.ViewCompat
-import android.support.v4.view.ViewPropertyAnimatorCompat
-import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import android.util.AttributeSet
 import android.view.View
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.core.view.ViewPropertyAnimatorCompat
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 
 /**
  * @author 陈治谋 (513500085@qq.com)
@@ -32,9 +32,10 @@ class HideBehavior(context: Context, attrs: AttributeSet) : VerticalScrollingBeh
     this.hide = hide
 
     if (anim == null) {
-      anim = ViewCompat.animate(child)
-      anim?.duration = 300
-      anim?.interpolator = LinearOutSlowInInterpolator()
+      anim = ViewCompat.animate(child).apply {
+        duration = 300
+        interpolator = LinearOutSlowInInterpolator()
+      }
     } else {
       anim?.cancel()
     }

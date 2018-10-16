@@ -2,13 +2,13 @@ package name.zeno.android.widget.sort
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.support.annotation.DrawableRes
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import name.zeno.android.core.drawable
 import name.zeno.android.util.R
 import java.util.*

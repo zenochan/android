@@ -18,8 +18,6 @@ package name.zeno.android.widget.viewpagerindicator
 
 
 import android.content.Context
-import android.support.v4.view.ViewPager
-import android.support.v4.view.ViewPager.OnPageChangeListener
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.OnClickListener
@@ -29,6 +27,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.viewpager.widget.ViewPager
 import name.zeno.android.util.R
 
 /**
@@ -52,7 +51,7 @@ class TabPageIndicator @JvmOverloads constructor(context: Context, attrs: Attrib
   private val mTabLayout: IcsLinearLayout
 
   private var mViewPager: ViewPager? = null
-  private var mListener: OnPageChangeListener? = null
+  private var mListener: ViewPager.OnPageChangeListener? = null
 
   private var mMaxTabWidth: Int = 0
   private var mSelectedTabIndex: Int = 0
@@ -216,7 +215,7 @@ class TabPageIndicator @JvmOverloads constructor(context: Context, attrs: Attrib
     }
   }
 
-  override fun setOnPageChangeListener(listener: OnPageChangeListener) {
+  override fun setOnPageChangeListener(listener: ViewPager.OnPageChangeListener) {
     mListener = listener
   }
 

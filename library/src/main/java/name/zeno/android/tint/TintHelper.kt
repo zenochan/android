@@ -1,16 +1,14 @@
 package name.zeno.android.tint
 
 import android.content.res.ColorStateList
-import android.content.res.TypedArray
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.os.Build
-import android.support.annotation.StyleableRes
-import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.StyleableRes
+import androidx.core.view.ViewCompat
 
 
 object TintHelper {

@@ -3,13 +3,13 @@ package name.zeno.android.system
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.provider.ContactsContract
-import android.support.annotation.RequiresPermission
-import android.support.v4.app.Fragment
+import androidx.annotation.RequiresPermission
 import io.reactivex.Observable
-import org.jetbrains.anko.support.v4.ctx
+import org.jetbrains.anko.ctx
 import java.util.*
 
 /**

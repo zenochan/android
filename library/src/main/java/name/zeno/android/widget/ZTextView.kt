@@ -6,12 +6,10 @@ import android.content.res.TypedArray
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.PorterDuff
-import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.AppCompatTextView
 import android.util.AttributeSet
-
+import androidx.appcompat.widget.AppCompatTextView
 import name.zeno.android.tint.TintHelper
 import name.zeno.android.tint.TintInfo
 import name.zeno.android.tint.TintableCompoundDrawableView

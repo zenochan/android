@@ -18,7 +18,7 @@
     app:titleText="程序奔溃"
     />
 
-  <android.support.v7.widget.AppCompatTextView
+  <androidx.appcompat.widget.AppCompatTextView
     style="@style/layout.fullWidth"
     android:background="@color/md.grey100"
     android:padding="16dp"
@@ -27,18 +27,18 @@
     android:textSize="@dimen/md.textSubhead"
     />
 
-  <android.support.v4.widget.NestedScrollView
+  <androidx.core.widget.NestedScrollView
     style="@style/layout.fullWidth"
     android:background="@color/md.grey100"
     android:padding="16dp"
     >
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/tv_crash_log"
       style="@style/layout.fullWidth"
       android:textColor="@color/z.black_a26"
       android:textSize="@dimen/md.textCaption"
       />
-  </android.support.v4.widget.NestedScrollView>
+  </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

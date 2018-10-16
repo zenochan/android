@@ -6,8 +6,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.support.annotation.RequiresPermission
 import android.widget.Toast
+import androidx.annotation.RequiresPermission
+import name.zeno.android.util.ZAction.App
+import name.zeno.android.util.ZAction.isAppInstalled
+import name.zeno.android.util.ZAction.launchApp
 import java.io.File
 
 /**

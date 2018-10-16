@@ -8,22 +8,23 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.hardware.Camera
 import android.os.Bundle
-import android.support.annotation.RequiresPermission
-import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.widget.ImageView
+import androidx.annotation.RequiresPermission
+import androidx.appcompat.app.AlertDialog
 import io.reactivex.Emitter
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.activity_camera.*
 import name.zeno.android.camera.CameraManager
 import name.zeno.android.presenter.ZActivity
 import name.zeno.android.third.rxjava.RxUtils
 import name.zeno.android.util.R
 import name.zeno.android.util.ZBitmap
 import name.zeno.ktrxpermission.ZPermission
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 /**
  * # [Android Camera身份证取景](https://github.com/lizhangqu/Camera)
@@ -40,7 +41,6 @@ import name.zeno.ktrxpermission.ZPermission
 class IDCardCameraActivity : ZActivity(), SurfaceHolder.Callback {
 
   private var surfaceView: SurfaceView? = null
-  private var takeIv: ImageView? = null
 
   private var cameraManager: CameraManager? = null
   @SuppressLint("MissingPermission")
@@ -73,10 +73,9 @@ class IDCardCameraActivity : ZActivity(), SurfaceHolder.Callback {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_camera)
     surfaceView = findViewById(R.id.surface)
-    takeIv = findViewById(R.id.iv_take)
-    takeIv!!.setOnClickListener { v ->
+    iv_take.onClick {
       cameraManager!!.takePicture(jpegCallBack)
-      takeIv!!.isEnabled = false
+      it?.isEnabled = false
     }
     path = intent.getStringExtra(EXTRA_PARAM_PATH)
   }

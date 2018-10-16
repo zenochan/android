@@ -7,19 +7,17 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.annotation.LayoutRes
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.annotation.IdRes
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.snackbar.Snackbar
 import name.zeno.android.presenter.activities.AutoHideIMActivity
 import name.zeno.android.third.rxjava.RxActivityResult
-import name.zeno.android.util.R
-import org.jetbrains.anko.frameLayout
 import java.util.*
 
 /**

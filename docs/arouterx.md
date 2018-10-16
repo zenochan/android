@@ -1,3 +1,25 @@
+
+# ArouterX
+> 对 [ARouter](https://github.com/alibaba/ARouter) 进行适配封装
+
+```groovy
+
+// aRouter
+kapt {
+  arguments {
+    arg("moduleName", project.getName())
+  }
+}
+
+dependencies {
+    //...
+    implementation 'name.zeno:arouterx:1.3.1.1807261'
+    kapt 'com.alibaba:arouter-compiler:1.2.0'
+}
+
+```
+
+
 ## proguard
 ```proguard
 -keep public class com.alibaba.android.arouter.routes.**{*;}

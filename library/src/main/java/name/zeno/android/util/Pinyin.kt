@@ -1,16 +1,14 @@
 package name.zeno.android.util
 
-import android.support.annotation.IntRange
-
+import androidx.annotation.IntRange
 import net.sourceforge.pinyin4j.PinyinHelper
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination
-
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
-import java.util.Random
+import java.util.*
 
 /**
  * 使用：
@@ -113,8 +111,8 @@ object Pinyin {
       hightPos = 176 + Math.abs(random.nextInt(39)) //获取高位值
       lowPos = 161 + Math.abs(random.nextInt(93)) //获取低位值
       val b = ByteArray(2)
-      b[0] = Integer.valueOf(hightPos)!!.toByte()
-      b[1] = Integer.valueOf(lowPos)!!.toByte()
+      b[0] = Integer.valueOf(hightPos).toByte()
+      b[1] = Integer.valueOf(lowPos).toByte()
       try {
         str = String(b, "UTF8" as Charset) //转成中文
       } catch (ex: UnsupportedEncodingException) {
@@ -129,8 +127,8 @@ object Pinyin {
   fun getJianHan(@IntRange(from = 176, to = 215) h: Int, @IntRange(from = 161, to = 254) l: Int): String? {
     var str: String? = null
     val b = ByteArray(2)
-    b[0] = Integer.valueOf(h)!!.toByte()
-    b[1] = Integer.valueOf(l)!!.toByte()
+    b[0] = Integer.valueOf(h).toByte()
+    b[1] = Integer.valueOf(l).toByte()
     try {
       str = String(b, "GBK" as Charset) //转成中文
     } catch (ex: UnsupportedEncodingException) {

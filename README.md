@@ -6,15 +6,41 @@
 
 ```groovy
 repositories{
-  maven {url "http://maven.mjtown.cn/"}
+    maven {url "http://maven.mjtown.cn/"}
 }
+
+android {
+    // 开启数据绑定
+    dataBinding { enabled true }
+}
+
 dependencies{
-  // compile "name.zeno:android:1.0.6"
-  implementation  "name.zeno:zako:2.0.1806190"
+    implementation  "name.zeno:zako:2.0.1806190"
 }
 ```
 
-## [zkt](./docs/zkt.md)
+gradle.properties
+```properties
+# 使用 androidx 支持库
+android.useAndroidX=true
+android.enableJetifier=true
+```
+
+
+
+## FEATURES
+- [x] kotlin扩展 [zkt](./docs/zkt.md)
+- [x] Json解析 [FastJson](https://github.com/alibaba/fastjson)
+- [x] 网络请求 [Retrofit](http://square.github.io/retrofit/) + RxAndroid + RxJava2Adapter + FastJsonConverter
+- [x] 日志打印 [logger](https://github.com/orhanobut/logger)
+- [x] 事件驱动 [RxBus](https://github.com/AndroidKnife/RxBus/tree/2.x)
+- [x] 动态权限 [KtRxPermission](https://github.com/zenochan/KtRxPermission)
+- [x] 日期选择 [Material Datetime Picker](https://github.com/wdullaer/MaterialDateTimePicker)
+- [x] 异常上报 [ZExceptionHandler](library/src/main/java/name/zeno/android/app/ZExceptionHandler.kt)
+- [x] 导航菜单 [BottomBar](https://github.com/roughike/BottomBar)
+- [x] 路由导航 [arouterx](./docs/arouterx.md)
+- [x] dialog [material-dialogs](https://github.com/afollestad/material-dialogs)
+- [ ] androidx.fragment.app.Fragment
 
 ##  Modules
 
@@ -30,39 +56,3 @@ dependencies{
     - ZFragment.cropByNative 使用系统自带工具
     - ZActivity.cropByNative 使用系统自带工具
 
-#### 其他
-
-- [日志打印 - logger](https://github.com/orhanobut/logger)
-
-- Json 解析: [FastJson](https://github.com/alibaba/fastjson)
-- 网络请求: [Retrofit](http://square.github.io/retrofit/) + RxAndroid + RxJava2Adapter + FastJsonConverter
-- [事件 - RxBus](https://github.com/AndroidKnife/RxBus/tree/2.x)
-- [动态权限 - KtRxPermission](https://github.com/zenochan/KtRxPermission)
-- [消息推送(个推)](./docs/getui.md)
-
-- 分析统计: U 盟+
-
-- [BottomBar](https://github.com/roughike/BottomBar)
-- dialog: [material-dialogs](https://github.com/afollestad/material-dialogs)
-- [Material Datetime Picker](https://github.com/wdullaer/MaterialDateTimePicker)
-- [异常上报 - ZExceptionHandler](library/src/main/java/name/zeno/android/app/ZExceptionHandler.kt)
-
-## data binding
-
-```groovy
-android {
- dataBinding { enabled true }
-}
-
-// 新版本 gradle 已经不需要
-//dependencies {
-//  kapt "com.android.databinding:compiler:3.1.2"
-//
-//}
-
-
-```
-
-
-## TODO
-- [ ] [数据库框架研究](https://www.zhihu.com/question/46449188?sort=created)

@@ -4,11 +4,11 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.support.annotation.ColorInt
-import android.support.annotation.ColorRes
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import name.zeno.android.util.R
 import name.zeno.android.util.ZDimen
 
@@ -18,7 +18,8 @@ import name.zeno.android.util.ZDimen
  * @author 陈治谋 (513500085@qq.com)
  */
 class OrderFlowView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
-  @ColorInt private var colorCircle = Color.parseColor("#437af7")
+  @ColorInt
+  private var colorCircle = Color.parseColor("#437af7")
   @ColorInt private var colorLine = Color.parseColor("#9e9e9e")
   private var isStart = false
   private var isEnd = false

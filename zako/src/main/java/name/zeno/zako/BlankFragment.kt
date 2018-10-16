@@ -1,19 +1,15 @@
 package name.zeno.zako
 
 import android.os.Bundle
-import android.os.Parcelable
-import android.support.v4.view.ViewCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.alibaba.android.arouter.launcher.ARouterX
 import com.alibaba.android.arouter.launcher.nav
 import name.zeno.android.presenter.ZFragment
-import name.zeno.android.util.dp
 import name.zeno.android.widget.StatusBarView
 import org.jetbrains.anko.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.sdk27.coroutines.onClick
 
 class BlankFragment : ZFragment() {
 
@@ -27,7 +23,7 @@ class BlankFragment : ZFragment() {
           button {
             text = "Arouter Nav In Fragment"
             onClick {
-              ARouterX.build("/test/router").nav<Parcelable>(this@BlankFragment) { ok, data ->
+              "/test/router".nav(this@BlankFragment) { _, _ ->
                 toast("23424")
               }
             }
