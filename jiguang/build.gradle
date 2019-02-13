@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: 'http://maven.mjtown.cn/maven.gradle'
+apply from: 'http://maven.izeno.cn/maven.gradle'
 mavenConf {
   groupId "name.zeno"
   artifactId "jiguang"

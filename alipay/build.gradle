@@ -25,13 +25,13 @@ android {
 dependencies {
   api fileTree(dir: 'libs', include: ['*.jar'])
 
-  implementation "androidx.annotation:annotation:1.0.0"
+  implementation "androidx.annotation:annotation:1.0.1"
   implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
   implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
-apply from: 'http://maven.mjtown.cn/maven.gradle'
+apply from: 'http://maven.izeno.cn/maven.gradle'
 mavenConf {
   groupId = "name.zeno"
   artifactId = 'alipay'

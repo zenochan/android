@@ -1,14 +1,14 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-apply from: 'http://maven.mjtown.cn/maven.gradle'
+apply from: 'http://maven.izeno.cn/maven.gradle'
 mavenConf {
   groupId "name.zeno"
   artifactId "arouterx"
-  version "1.4.0.1810161"
+  version "1.4.1.1902130"
 
 //  repositoryUrl "file:///Users/zenochan/.m2/repository"
-  repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"
+  repositoryUrl "scp://root@izeno.cn/root/nginx/maven"
 }
 confMaven()
 
@@ -21,7 +21,7 @@ android {
     minSdkVersion 15
     targetSdkVersion target_sdk_version
     versionCode 1
-    versionName "1.4.0"
+    versionName "1.4.1"
   }
 
   buildTypes {
@@ -37,9 +37,9 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   // 对 zako 库强依赖， 不要尝试去优化
-  compileOnly project(':library')
+  api project(':library')
 
-  api 'com.alibaba:arouter-api:1.4.0'
+  api 'com.alibaba:arouter-api:1.4.1'
   api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {

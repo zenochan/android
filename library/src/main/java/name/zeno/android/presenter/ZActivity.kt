@@ -211,7 +211,6 @@ abstract class ZActivity : AutoHideIMActivity(), ActivityLauncher, LoadDataView 
     Snackbar.make(rootView, resId, Snackbar.LENGTH_SHORT).show()
   }
 
-  @JvmOverloads
   protected fun snack(msg: String, button: String, action: (() -> Unit)? = null) {
     Snackbar.make(rootView, msg, Snackbar.LENGTH_LONG)
         .setAction(button) { action?.invoke() }

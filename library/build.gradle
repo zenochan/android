@@ -5,21 +5,21 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-noarg'
 apply plugin: 'kotlin-allopen'
 
-apply from: 'http://maven.mjtown.cn/maven.gradle'
+apply from: 'http://maven.izeno.cn/maven.gradle'
 mavenConf {
   groupId "name.zeno"
   artifactId "zako"
   version "2.0.1807270"
 
-  repositoryUrl "file:///Users/zenochan/.m2/repository"
-//  repositoryUrl "scp://root@mjtown.cn/root/nginx/maven"
+  repositoryUrl "scp://root@izeno.cn/root/nginx/maven"
 }
 confMaven()
 
 repositories {
-  mavenLocal()
+  google()
   mavenCentral()
   maven { url "https://jitpack.io" }
+  maven { url "http://maven.izeno.cn"}
   jcenter()
 
   // 个推 http://docs.getui.com/mobile/android/androidstudio_maven/
@@ -56,16 +56,16 @@ android {
 
 dependencies {
   testImplementation 'junit:junit:4.12';
-  compileOnly fileTree(include: ['*.jar'], dir: 'libs');
+  api fileTree(include: ['*.jar'], dir: 'libs');
 
   /**************************************
    *              框架性依赖             *
    **************************************/
-  implementation "name.zeno:kt-common-adapter:$adapter_version"
+  api "name.zeno:kt-common-adapter:$adapter_version"
 
   // AndroidX https://developer.android.com/jetpack/androidx/migrate
-  api "androidx.appcompat:appcompat:1.0.0"
-  api "androidx.multidex:multidex:2.0.0"
+  api "androidx.appcompat:appcompat:1.0.2"
+  api "androidx.multidex:multidex:2.0.1"
   api 'androidx.constraintlayout:constraintlayout:1.1.3'
   api 'com.google.android.material:material:1.0.0'
   api 'androidx.cardview:cardview:1.0.0'
@@ -91,10 +91,10 @@ dependencies {
   // api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
   //Retrofit http://square.github.io/retrofit/
-  api "com.squareup.retrofit2:retrofit:2.4.0";
+  api "com.squareup.retrofit2:retrofit:2.5.0";
 
   // rx 家族
-  api "io.reactivex.rxjava2:rxjava:2.2.0"
+  api "io.reactivex.rxjava2:rxjava:2.2.5"
   api "io.reactivex.rxjava2:rxandroid:2.1.0"
   //https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
   api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
@@ -127,8 +127,8 @@ dependencies {
   api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
   api "org.jetbrains.anko:anko:0.10.7"
 
-//  kapt 'com.alibaba:arouter-compiler:1.1.4'
-  api "name.zeno:kt-rx-permission:2.0.1810150"
+//  kapt 'com.alibaba:arouter-compiler:1.2.2'
+  api "name.zeno:kt-rx-permission:2.0.1902130"
 }
 
 kotlin {

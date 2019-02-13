@@ -8,7 +8,7 @@ if (dev) {
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-apply from: 'http://maven.mjtown.cn/maven.gradle'
+apply from: 'http://maven.izeno.cn/maven.gradle'
 mavenConf {
   groupId "name.zeno.ext"
   artifactId "baidu-map"
