@@ -22,7 +22,7 @@ import com.alibaba.android.arouter.facade.service.InterceptorService
 import com.alibaba.android.arouter.facade.service.PathReplaceService
 import com.alibaba.android.arouter.utils.Consts
 import com.alibaba.android.arouter.utils.TextUtils
-import name.zeno.android.core.navigator
+import cn.izeno.android.core.navigator
 
 /**
  * [_ARouter] 不允许修改，copy一份修改内容

@@ -1,4 +1,4 @@
-package name.zeno;
+package cn.izeno;
 
 import org.junit.Test;
 

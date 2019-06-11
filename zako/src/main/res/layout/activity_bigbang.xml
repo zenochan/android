@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#8D9FB8"
+  android:orientation="vertical"
+  >
+
+  <cn.izeno.android.presenter.bigbang.core.BigBangLayout
+    android:id="@+id/layout_bigbang"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:padding="10dp"
+    />
+
+</FrameLayout>

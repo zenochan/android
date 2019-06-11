@@ -1,4 +1,4 @@
-package name.zeno.android.jiguang;
+package cn.izeno.android.jiguang;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

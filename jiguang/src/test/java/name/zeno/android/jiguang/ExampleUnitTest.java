@@ -1,4 +1,4 @@
-package name.zeno.android.jiguang;
+package cn.izeno.android.jiguang;
 
 import org.junit.Test;
 

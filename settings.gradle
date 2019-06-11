@@ -1,4 +1,4 @@
-include ':app', ':zako', ':submodule', ':baidulocation-base',
-    ':library', ':ext-baidumap',
-    ':uicore', ':demo-hencoder',
+include ':baidulocation-base',
+    ':zako', ':ext-baidumap',
+    ':uicore',
     ':jiguang', ':arouterx', ':alipay'

@@ -1,4 +1,4 @@
-package name.zeno.android.uicore;
+package cn.izeno.android.uicore;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

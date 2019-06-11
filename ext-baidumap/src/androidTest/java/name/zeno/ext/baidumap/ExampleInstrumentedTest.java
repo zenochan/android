@@ -1,4 +1,4 @@
-package name.zeno.ext.baidumap;
+package cn.izeno.ext.baidumap;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

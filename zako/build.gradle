@@ -1,33 +1,43 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-noarg'
 apply plugin: 'kotlin-allopen'
 
-noArg { annotation("aaa.bbb.ccc.ddd.Poko") }
-allOpen { annotation("aaa.bbb.ccc.ddd.Poko") }
+apply from: 'http://maven.izeno.cn/maven.gradle'
+mavenConf {
+  groupId "cn.izeno"
+  artifactId "zako"
+  version "2.0.190611"
+
+  repositoryUrl "scp://root@izeno.cn/root/nginx/maven"
+}
+confMaven()
+
+repositories {
+  google()
+  mavenCentral()
+  maven { url "https://jitpack.io" }
+  maven { url "http://maven.izeno.cn"}
+  jcenter()
+
+  // 个推 http://docs.getui.com/mobile/android/androidstudio_maven/
+  // http://mvn.gt.igexin.com/nexus/content/repositories/releases/com/getui/sdk/
+  maven { url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/" }
+}
 
 android {
-  compileSdkVersion 28
+  compileSdkVersion compile_sdk_version
+  buildToolsVersion build_tools_version
+
+  dataBinding { enabled = true }
 
   defaultConfig {
-    applicationId "name.zeno.zako"
-    minSdkVersion 16
-    targetSdkVersion 28
+    minSdkVersion 15
+    targetSdkVersion target_sdk_version
     versionCode 1
-    versionName "1.0"
-    multiDexEnabled true
-
-    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-    manifestPlaceholders = [
-        JPUSH_PKGNAME: applicationId,
-        JPUSH_APPKEY : "5b69615239a4a1291a03554b",
-        JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
-    ]
-
-
+    versionName mavenConf.version
   }
 
   buildTypes {
@@ -37,29 +47,88 @@ android {
     }
   }
 
-}
-
-
-// aRouter
-kapt {
-  arguments {
-    arg("moduleName", project.getName())
+  kapt {
+    arguments {
+      arg("moduleName", project.getName())
+    }
   }
 }
 
 dependencies {
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
-  testImplementation 'junit:junit:4.12'
-  androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
+  testImplementation 'junit:junit:4.12';
+  api fileTree(include: ['*.jar'], dir: 'libs');
 
-//  implementation project(':jiguang')
-  implementation "name.zeno:jiguang:0.0.1.1805251"
+  /**************************************
+   *              框架性依赖             *
+   **************************************/
+  api "name.zeno:kt-common-adapter:$adapter_version"
 
-  implementation project(':library')
+  // AndroidX https://developer.android.com/jetpack/androidx/migrate
+  api "androidx.appcompat:appcompat:1.0.2"
+  api "androidx.multidex:multidex:2.0.1"
+  api 'androidx.constraintlayout:constraintlayout:1.1.3'
+  api 'com.google.android.material:material:1.0.0'
+  api 'androidx.cardview:cardview:1.0.0'
 
-  api 'name.zeno:arouterx:1.3.1.1807261'
-  kapt 'com.alibaba:arouter-compiler:1.2.2'
+  compileOnly 'com.belerweb:pinyin4j:2.5.1'
+
+  //Logger https://github.com/orhanobut/logger
+  api 'com.orhanobut:logger:2.2.0'
+
+  //Glide https://github.com/bumptech/glide
+  api 'com.github.bumptech.glide:glide:4.9.0'
+  kapt 'com.github.bumptech.glide:compiler:4.9.0'
+  api('com.github.bumptech.glide:okhttp3-integration:4.9.0') {
+    exclude(module: 'okhttp')
+    exclude(module: 'support-annotations')
+  }
+
+  // 目前1.1.61.android 使用起来比较稳定
+  // 1.1.68 仍然不稳定
+  //FastJson https://github.com/alibaba/fastjson
+  api 'com.alibaba:fastjson:1.1.61.android'
+//  api 'com.alibaba:fastjson:1.1.68.android'
+  // api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+  //Retrofit http://square.github.io/retrofit/
+  api "com.squareup.retrofit2:retrofit:2.6.0";
+
+  // rx 家族
+  api "io.reactivex.rxjava2:rxjava:2.2.9"
+  api "io.reactivex.rxjava2:rxandroid:2.1.1"
+  //https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
+  api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
+  api 'com.hwangjr.rxbus:rxbus:2.0.1'
+
+  /**************************************
+   *              控件性依赖             *
+   **************************************/
+  //  https://github.com/afollestad/material-dialogs
+//  implementation 'com.afollestad.material-dialogs:core:2.0.0-beta4'
+
+  api "com.afollestad.material-dialogs:core:0.9.6.0"
+  api "com.afollestad.material-dialogs:commons:0.9.6.0"
+//  api 'me.zhanghai.android.materialprogressbar:library:1.4.2'
+
+  // use
+  //BottomBar https://github.com/roughike/BottomBar (deprecated)
+  api 'com.roughike:bottom-bar:2.3.1'
+
+  //时间选择 120kb https://github.com/wdullaer/MaterialDateTimePicker
+  // update at 2018年10月9日 4.0.1 不支持原生fragment 仅支持 androidx 中的 fragment
+//  api 'com.wdullaer:materialdatetimepicker:4.0.1'
+  api 'com.wdullaer:materialdatetimepicker:3.6.4'
+
+  //https://github.com/amitshekhariitbhu/Android-Debug-Database
+  debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
+
+  //kotlin kits
+  api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  api "org.jetbrains.anko:anko:0.10.7"
+
+//  kapt 'com.alibaba:arouter-compiler:1.2.2'
+  api "cn.izeno:kt-rx-permission:2.0.1902130"
 }
 
 kotlin {

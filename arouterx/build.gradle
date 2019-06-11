@@ -3,9 +3,9 @@ apply plugin: 'kotlin-android'
 
 apply from: 'http://maven.izeno.cn/maven.gradle'
 mavenConf {
-  groupId "name.zeno"
+  groupId "cn.izeno"
   artifactId "arouterx"
-  version "1.4.1.1902130"
+  version "1.4.1906110"
 
 //  repositoryUrl "file:///Users/zenochan/.m2/repository"
   repositoryUrl "scp://root@izeno.cn/root/nginx/maven"
@@ -37,9 +37,9 @@ dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   // 对 zako 库强依赖， 不要尝试去优化
-  api project(':library')
+  api project(':zako')
 
-  api 'com.alibaba:arouter-api:1.4.1'
+  api 'com.alibaba:arouter-api:1.5.0'
   api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 repositories {

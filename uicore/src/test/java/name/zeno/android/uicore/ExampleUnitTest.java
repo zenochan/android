@@ -1,4 +1,4 @@
-package name.zeno.android.uicore;
+package cn.izeno.android.uicore;
 
 import org.junit.Test;
 

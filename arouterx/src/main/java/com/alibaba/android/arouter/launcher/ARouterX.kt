@@ -6,7 +6,7 @@ import android.content.Intent
 import com.alibaba.android.arouter.exception.InitException
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.callback.NavigationCallback
-import name.zeno.android.core.initInIOThread
+import cn.izeno.android.core.initInIOThread
 
 /**
  * 扩展 [ARouter], 使其支持 zako 库的跳转

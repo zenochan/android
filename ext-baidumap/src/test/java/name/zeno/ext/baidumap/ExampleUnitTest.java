@@ -1,4 +1,4 @@
-package name.zeno.ext.baidumap;
+package cn.izeno.ext.baidumap;
 
 import org.junit.Test;
 

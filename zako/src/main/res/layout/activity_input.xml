@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/layout_content"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  >
+
+  <cn.izeno.android.widget.SimpleActionbar
+    android:id="@+id/actionbar"
+    style="@style/layout.fullWidth"
+    app:preTextBackgroundTint="@color/z.white"
+    app:textColorAction="@color/z.white"
+    app:textColorTitle="@color/z.white"
+    />
+
+  <com.google.android.material.textfield.TextInputEditText
+    android:id="@+id/et_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp"
+    android:background="@color/z.white"
+    android:imeOptions="actionDone"
+    android:paddingLeft="16dp"
+    android:paddingTop="8dp"
+    android:paddingRight="16dp"
+    android:paddingBottom="8dp"
+    android:singleLine="true"
+    android:textSize="14sp"
+    />
+
+  <androidx.appcompat.widget.AppCompatButton
+    android:id="@+id/btn_submit"
+    style="@style/button.main"
+    android:text="完成"
+    />
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package name.zeno;
+package cn.izeno;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
